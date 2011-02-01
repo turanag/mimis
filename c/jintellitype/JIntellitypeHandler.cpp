@@ -146,7 +146,7 @@ void JIntellitypeHandler::doInitialize()
 	//register this window as a shell hook to intercept WM_APPCOMMAND messages
 	WM_SHELLHOOK = RegisterWindowMessage(TEXT("SHELLHOOK"));
 	BOOL (__stdcall *RegisterShellHookWindow)(HWND) = NULL;
-	RegisterShellHookWindow = (BOOL (__stdcall *)(HWND))GetProcAddress(GetModuleHandle("USER32.DLL"), "RegisterShellHookWindow");
+	RegisterShellHookWindow = (BOOL (__stdcall *)(HWND))GetProcAddress(GetModuleHandle((LPCWSTR)"USER32.DLL"), "RegisterShellHookWindow");
 	
 	//make sure it worked
 	if (!RegisterShellHookWindow(m_window)) {

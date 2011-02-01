@@ -149,7 +149,7 @@ JNIEXPORT jboolean JNICALL Java_com_melloware_jintellitype_JIntellitype_isRunnin
     CHAR szAppName[] = "SunAwtFrame";
     const char *cWndName = env->GetStringUTFChars(wndName, 0);
 	// Find out if there's a hidden window with the given title
-	HWND mHwnd = FindWindow(szAppName, cWndName);
+	HWND mHwnd = FindWindow((LPCWSTR)szAppName, (LPCWSTR)cWndName);
 	env->ReleaseStringUTFChars(wndName, cWndName);
 	// If there is, another instance of our app is already running
 	return mHwnd != NULL;    
