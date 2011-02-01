@@ -403,24 +403,27 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 (JNIEnv *env, jobject obj, jobject gath) {
 
 	/* Variables Declarations */
-	int i;
+	int i, a;
 	short leds = 0;
 	jclass cls = (*env)->GetObjectClass(env, gath);
 	jmethodID mid;
-	printf("avant poll, nbMaxwiimotes : %i \n",nbMaxWiimotes);
+	struct nunchuk_t* nc;
+	struct guitar_hero_3_t* gh;
+	struct classic_ctrl_t* cl;
+	//printf("avant poll, nbMaxwiimotes : %i \n",nbMaxWiimotes);
 	if (wiiuse_poll(wiimotes, nbMaxWiimotes)) {
 		/*
 		 *	This happens if something happened on any wiimote.
 		 *	So go through each one and check if anything happened.
 		 */
-		printf("il y a des events\n");
+		//printf("il y a des events\n");
 		for (i=0; i < nbMaxWiimotes; ++i) {
-			printf("recupe events wiimote : %i\n",nbMaxWiimotes);
+			//printf("recupe events wiimote : %i\n",nbMaxWiimotes);
 			switch (wiimotes[i]->event) {
 				case WIIUSE_EVENT:
 				/* a generic event occured */
 					
-				printf("Generic event\n");
+				//printf("Generic event\n");
 				mid = (*env)->GetMethodID(env, cls, "prepareWiiMoteEvent", "(ISSS)V");
 				if (mid == 0) {
 					return;
@@ -434,12 +437,11 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 				 *	Also make sure that we see at least 1 dot.
 				 */
 				if (WIIUSE_USING_IR(wiimotes[i])) {
-					printf("IR event\n");
-					int a;
+					//printf("IR event\n");
+
 					WIIUSE_GET_IR_SENSITIVITY_CORRECTED(wiimotes[i], &a);
 
-					mid = (*env)->GetMethodID(env, cls, "prepareIRevent",
-							"(IIFIIIIIISSSF)V");
+					mid = (*env)->GetMethodID(env, cls, "prepareIRevent", "(IIFIIIIIISSSF)V");
 					if (mid == 0) {
 						return;
 					}
@@ -470,7 +472,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 
 				/* Motion Sensing */
 				if (WIIUSE_USING_ACC(wiimotes[i])) {
-					printf("acc event\n");
+					//printf("acc event\n");
 					/* set orientation and gravity force */
 					mid = (*env)->GetMethodID(env, cls,
 							"addMotionSensingValues", "(FIZFFFFFFFFFSSS)V");
@@ -496,7 +498,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						struct nunchuk_t* nc = (nunchuk_t*)&wiimotes[i]->exp.nunchuk;
+						nc = (nunchuk_t*)&wiimotes[i]->exp.nunchuk;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
@@ -521,7 +523,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						struct guitar_hero_3_t* gh = (guitar_hero_3_t*)&wiimotes[i]->exp.gh3;
+						gh = (guitar_hero_3_t*)&wiimotes[i]->exp.gh3;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
@@ -540,7 +542,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						struct classic_ctrl_t* cl = (classic_ctrl_t*)&wiimotes[i]->exp.classic;
+						cl = (classic_ctrl_t*)&wiimotes[i]->exp.classic;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
