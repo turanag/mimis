@@ -1,6 +1,5 @@
 package pm.device;
 
-import java.util.ArrayList;
 import java.util.Queue;
 
 import pm.event.Event;
