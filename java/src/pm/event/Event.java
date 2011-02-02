@@ -1,16 +1,11 @@
 package pm.event;
 
-import pm.device.feature.Feature;
+import pm.action.Action;
 
 public class Event {
-    public Feature feature;
+    protected Action action;
     
-    public Event(Feature feature) {
-        this.feature = feature;
+    public Event(Action action) {
+        this.action = action;
     }
-    
-    public void Apply() {
-           feature.apply();
-    }
-    
 }
