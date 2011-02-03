@@ -4,8 +4,8 @@ import java.util.Queue;
 
 import pm.action.Action;
 import pm.device.Device;
-import pm.event.ApplicationEvent;
 import pm.event.Event;
+import pm.event.Type;
 
 public class Example extends Device {
     public Example(Queue<Event> eventQueue) {
@@ -13,7 +13,8 @@ public class Example extends Device {
     }
 
     public void initialise() {
-        Event event = new ApplicationEvent(Action.START);
-        eventQueue.add(event);
+        eventQueue.add(new Event(Type.APPLICATION, Action.START));
+        eventQueue.add(new Event(Type.APPLICATION, Action.TEST));
+        eventQueue.add(new Event(Type.MAIN, Action.EXIT));
     }
 }
