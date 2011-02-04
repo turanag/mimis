@@ -2,16 +2,21 @@ package pm.device;
 
 import java.util.Queue;
 
-import pm.event.Event;
+import pm.action.Action;
+import pm.event.Target;
 
 
 public abstract class Device {
-    protected Queue<Event> eventQueue;
+    protected Queue<Action> actionQueue;
 
-    protected Device(Queue<Event> eventQueue) {
-        this.eventQueue = eventQueue;
-        initialise();
+    public Device(Queue<Action> actionQueue) {
+        this.actionQueue = actionQueue;
     }
 
-    public void initialise() {}
+    public void addAction(Action action, Target target) {
+        action.setTarget(target);
+        actionQueue.add(action);
+    }
+
+    public abstract void initialise();
 }

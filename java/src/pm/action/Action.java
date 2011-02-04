@@ -2,6 +2,7 @@ package pm.action;
 
 import java.lang.reflect.Method;
 
+import pm.event.Target;
 import pm.exception.ActionNotImplementedException;
 
 public enum Action {
@@ -10,9 +11,18 @@ public enum Action {
     EXIT ("exit");
 
     protected String action;
+    protected Target target;
 
     Action(String action) {
         this.action = action;
+    }
+
+    public void setTarget(Target target) {
+        this.target = target;        
+    }
+
+    public Target getTarget() {
+        return target;
     }
 
     public Method getMethod(Object object) throws ActionNotImplementedException {

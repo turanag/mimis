@@ -5,29 +5,29 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.action.Action;
-import pm.applicatie.voorbeeld.Voorbeeld;
 import pm.application.Application;
+import pm.application.voorbeeld.Voorbeeld;
 import pm.device.Device;
 import pm.device.example.Example;
-import pm.event.Event;
 import pm.exception.ActionException;
 import pm.exception.ActionNotImplementedException;
 import pm.exception.EventException;
 
-public class Main extends Application {
+public class Main extends Target {
     protected static final int SLEEP = 100;
 
     ArrayList<Application> applicationList;
     ArrayList<Device> deviceList;
-    Queue<Event> eventQueue;
+    Queue<Action> actionQueue;
 
     boolean run;
     Application currentApplication;
 
     public Main() {
         applicationList = new ArrayList<Application>();
+        applicationList.iterator();
         deviceList = new ArrayList<Device>();
-        eventQueue = new ConcurrentLinkedQueue<Event>();
+        actionQueue = new ConcurrentLinkedQueue<Action>();
     }
 
     public void addApplication(Application application) {
@@ -47,7 +47,9 @@ public class Main extends Application {
     }
 
     public void start() throws Exception {
-        addDevice(new Example(eventQueue));
+        Device device = new Example(actionQueue);
+        addDevice(device);
+        device.initialise();
         Application application = new Voorbeeld();
         addApplication(application);
         currentApplication = application;
@@ -57,26 +59,28 @@ public class Main extends Application {
     public void run() throws ActionException, EventException {
         run = true;
         while (run) {
-            if (eventQueue.isEmpty()) {
+            if (actionQueue.isEmpty()) {
                 try {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException e) {}
             } else {
-                Event event = eventQueue.poll();
-                Action action = event.getAction();
-                switch (event.getType()) {
+                Action action = actionQueue.poll();
+                Target target;
+                switch (action.getTarget()) {
                     case MAIN:
+                        target = this;
                         invoke(action);
                         break;
                     case APPLICATION:
-                        try {
-                            currentApplication.invoke(action);
-                        } catch (ActionNotImplementedException e) {
-                            // Todo: log.write(...)
-                        }
+                        target = currentApplication;
                         break;
                     default:
                         throw new EventException("Unknown event type");
+                }
+                try {
+                    target.invoke(action);
+                } catch (ActionNotImplementedException e) {
+                    // Todo: log.write(...)
                 }
             }
         }

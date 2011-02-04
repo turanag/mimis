@@ -1,4 +1,4 @@
-package pm.applicatie.voorbeeld;
+package pm.application.voorbeeld;
 
 import pm.application.Application;
 

@@ -3,15 +3,15 @@ package pm.event;
 import pm.action.Action;
 
 public class Event {
-    protected Type type;
+    protected Target type;
     protected Action action;
 
-    public Event(Type type, Action action) {
+    public Event(Target type, Action action) {
         this.type = type;
         this.action = action;
     }
 
-    public Type getType() {
+    public Target getType() {
         return type;
     }
 

@@ -4,17 +4,16 @@ import java.util.Queue;
 
 import pm.action.Action;
 import pm.device.Device;
-import pm.event.Event;
-import pm.event.Type;
+import pm.event.Target;
 
 public class Example extends Device {
-    public Example(Queue<Event> eventQueue) {
-        super(eventQueue);
+    public Example(Queue<Action> actionQueue) {
+        super(actionQueue);
     }
 
     public void initialise() {
-        eventQueue.add(new Event(Type.APPLICATION, Action.START));
-        eventQueue.add(new Event(Type.APPLICATION, Action.TEST));
-        eventQueue.add(new Event(Type.MAIN, Action.EXIT));
+        addAction(Action.START, Target.APPLICATION);
+        addAction(Action.TEST, Target.APPLICATION);
+        addAction(Action.EXIT, Target.MAIN);
     }
 }
