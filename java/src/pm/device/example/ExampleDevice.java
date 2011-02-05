@@ -1,28 +1,18 @@
 package pm.device.example;
 
-import java.util.Queue;
-
 import pm.action.Action;
 import pm.device.Device;
 import pm.event.Target;
 
 public class ExampleDevice extends Device {
-    public ExampleDevice(Queue<Action> actionQueue) {
-        super(actionQueue);
+    public void start() {
+       System.out.println("Ik hoef niets te starten");
+       addAction(Action.START, Target.APPLICATION);
+       addAction(Action.TEST, Target.APPLICATION);
+       addAction(Action.EXIT, Target.MAIN);
     }
 
-    public void initialise() {
-        addAction(Action.START, Target.APPLICATION);
-        addAction(Action.TEST, Target.APPLICATION);
-        addAction(Action.EXIT, Target.MAIN);
-    }
-    
-    public void processEvent() {
-        /*ExampleEvent de;
-        if (specifiekEvent == start) {
-            addAction()
-        }
-        */
-    }
-    
+    public void exit() {
+        
+    }    
 }

@@ -8,13 +8,11 @@ import pm.action.Action;
 import pm.application.Application;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
-import pm.device.JavaInputDevice;
 import pm.device.example.ExampleDevice;
 import pm.device.rumblepad.RumblepadDevice;
 import pm.exception.ActionException;
 import pm.exception.ActionNotImplementedException;
 import pm.exception.EventException;
-import pm.service.javainput.JavaInputService;
 
 public class Main extends Target {
     protected static final int SLEEP = 100;
@@ -31,8 +29,8 @@ public class Main extends Target {
         //applicationList.iterator();
         deviceList = new ArrayList<Device>();
         actionQueue = new ConcurrentLinkedQueue<Action>();
-        JavaInputService.initialize();
-        //JXInputDevice.jxinputService = new JXInputService();
+        //JavaInputService.initialize();
+        Device.initialise(actionQueue);
     }
 
     public void addApplication(Application application) {
@@ -52,16 +50,17 @@ public class Main extends Target {
     }
 
     public void start() throws Exception {
-        Device device = new ExampleDevice(actionQueue);
-        //addDevice(device);
-        
-        device = new RumblepadDevice(actionQueue);
-        
-        addDevice(device);
-        device.initialise();
+        addDevice(new ExampleDevice());
+        addDevice(new RumblepadDevice());
+   
         Application application = new VoorbeeldApplication();
         addApplication(application);
         currentApplication = application;
+
+        for (Device device : deviceList) {
+            device.start();
+        }
+        
         run();
     }
 
@@ -97,6 +96,10 @@ public class Main extends Target {
 
     public void exit() {
         run = false;
+        for (Device device : deviceList) {
+            device.exit();
+        }
+        System.out.println("Als ie nu niet uit gaat, dan hebben we een verstekeling! Dat is vervelend ende naar!");
     }
 
     public static void main(String[] args) {

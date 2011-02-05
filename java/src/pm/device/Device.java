@@ -7,16 +7,17 @@ import pm.event.Target;
 
 
 public abstract class Device {
-    protected Queue<Action> actionQueue;
-
-    public Device(Queue<Action> actionQueue) {
-        this.actionQueue = actionQueue;
-    }
+    protected static Queue<Action> actionQueue;
 
     public void addAction(Action action, Target target) {
         action.setTarget(target);
         actionQueue.add(action);
     }
 
-    public abstract void initialise();
+    public static void initialise(Queue<Action> actionQueue) {
+        Device.actionQueue = actionQueue;        
+    }
+    
+    public abstract void start();
+    public abstract void exit();
 }

@@ -3,7 +3,6 @@ package pm.service.javainput;
 import de.hardcode.jxinput.JXInputDevice;
 import de.hardcode.jxinput.JXInputManager;
 
-import pm.device.JavaInputDevice;
 import pm.exception.ServiceJavaInputDeviceNotFoundException;
 import pm.exception.ServiceJavaInputException;
 import pm.service.Service;
@@ -22,7 +21,7 @@ public class JavaInputService extends Service {
     }
 
     public static void initialize() {
-        JavaInputDevice.jxinputService = new JavaInputService();        
+        //JavaInputDevice.jxinputService = new JavaInputService();        
     }
 
 }
