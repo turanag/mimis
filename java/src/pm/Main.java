@@ -6,12 +6,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.action.Action;
 import pm.application.Application;
-import pm.application.voorbeeld.Voorbeeld;
+import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
-import pm.device.example.Example;
+import pm.device.JavaInputDevice;
+import pm.device.example.ExampleDevice;
+import pm.device.rumblepad.RumblepadDevice;
 import pm.exception.ActionException;
 import pm.exception.ActionNotImplementedException;
 import pm.exception.EventException;
+import pm.service.javainput.JavaInputService;
 
 public class Main extends Target {
     protected static final int SLEEP = 100;
@@ -22,12 +25,14 @@ public class Main extends Target {
 
     boolean run;
     Application currentApplication;
-
+    
     public Main() {
         applicationList = new ArrayList<Application>();
-        applicationList.iterator();
+        //applicationList.iterator();
         deviceList = new ArrayList<Device>();
         actionQueue = new ConcurrentLinkedQueue<Action>();
+        JavaInputService.initialize();
+        //JXInputDevice.jxinputService = new JXInputService();
     }
 
     public void addApplication(Application application) {
@@ -47,10 +52,14 @@ public class Main extends Target {
     }
 
     public void start() throws Exception {
-        Device device = new Example(actionQueue);
+        Device device = new ExampleDevice(actionQueue);
+        //addDevice(device);
+        
+        device = new RumblepadDevice(actionQueue);
+        
         addDevice(device);
         device.initialise();
-        Application application = new Voorbeeld();
+        Application application = new VoorbeeldApplication();
         addApplication(application);
         currentApplication = application;
         run();

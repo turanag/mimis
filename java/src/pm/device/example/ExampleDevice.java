@@ -6,8 +6,8 @@ import pm.action.Action;
 import pm.device.Device;
 import pm.event.Target;
 
-public class Example extends Device {
-    public Example(Queue<Action> actionQueue) {
+public class ExampleDevice extends Device {
+    public ExampleDevice(Queue<Action> actionQueue) {
         super(actionQueue);
     }
 
@@ -16,4 +16,13 @@ public class Example extends Device {
         addAction(Action.TEST, Target.APPLICATION);
         addAction(Action.EXIT, Target.MAIN);
     }
+    
+    public void processEvent() {
+        /*ExampleEvent de;
+        if (specifiekEvent == start) {
+            addAction()
+        }
+        */
+    }
+    
 }
