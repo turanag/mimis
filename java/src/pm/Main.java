@@ -50,7 +50,7 @@ public class Main extends Target {
     }
 
     public void start() throws Exception {
-        addDevice(new ExampleDevice());
+        //addDevice(new ExampleDevice());
         addDevice(new RumblepadDevice());
    
         Application application = new VoorbeeldApplication();
@@ -67,6 +67,7 @@ public class Main extends Target {
     public void run() throws ActionException, EventException {
         run = true;
         while (run) {
+            //System.out.println("Print!");
             if (actionQueue.isEmpty()) {
                 try {
                     Thread.sleep(SLEEP);

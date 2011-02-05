@@ -13,6 +13,8 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import de.hardcode.jxinput.event.JXInputEventManager;
 
+import pm.action.Action;
+import pm.event.Target;
 import pm.exception.ServiceJavaInputDeviceNotFoundException;
 import pm.exception.ServiceJavaInputException;
 
@@ -56,38 +58,50 @@ public abstract class JavaInputDevice extends Device {
 
     public void start() {
         startListeners();
-        while (run) {
-            boolean sleep = true;
-            if (!axisEventQueue.isEmpty()) {
-                processEvent(axisEventQueue.poll());
-                sleep = false;
+        startUpdateThread();
+    }
+    
+    protected void startUpdateThread() {
+        new Thread() {
+            public void run() {
+                while (run) {
+                    JXInputManager.updateFeatures();
+                    boolean sleep = true;
+                    if (!axisEventQueue.isEmpty()) {
+                        processEvent(axisEventQueue.poll());
+                        sleep = false;
+                    }
+                    if (!buttonEventQueue.isEmpty()) {
+                        processEvent(buttonEventQueue.poll());
+                        sleep = false;
+                    }
+                    if (!directionalEventQueue.isEmpty()) {
+                        processEvent(directionalEventQueue.poll());
+                        sleep = false;
+                    }
+                    if (sleep) {
+                        try {
+                            Thread.sleep(SLEEP);
+                        } catch (InterruptedException e) {}
+                    }
+                }
             }
-            if (!buttonEventQueue.isEmpty()) {
-                processEvent(buttonEventQueue.poll());
-                sleep = false;
-            }
-            if (!directionalEventQueue.isEmpty()) {
-                processEvent(directionalEventQueue.poll());
-                sleep = false;
-            }
-            if (sleep) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException e) {}
-            }
-        }
+        }.start();
     }
 
     protected void processEvent(JXInputAxisEvent event) {
-        
+        addAction(Action.START, Target.APPLICATION);
+        //System.out.println(event);
     }
 
     protected void processEvent(JXInputButtonEvent event) {
-        System.out.println(event);
+        addAction(Action.TEST, Target.APPLICATION);
+        //System.out.println(event);
     }
 
     protected void processEvent(JXInputDirectionalEvent event) {
-        
+        addAction(Action.EXIT, Target.APPLICATION);
+        //System.out.println(event);
     }
 
     protected void startListeners() {
