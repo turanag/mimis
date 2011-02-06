@@ -1,6 +1,5 @@
-package pm.device.rumblepad;
+package pm.device.javainput;
 
-import pm.device.JavaInputDevice;
 import pm.exception.ServiceJavaInputException;
 
 public class RumblepadDevice extends JavaInputDevice {
@@ -9,6 +8,5 @@ public class RumblepadDevice extends JavaInputDevice {
 
     public RumblepadDevice() throws ServiceJavaInputException {
         super(NAME);
-    }
-    
+    }    
 }

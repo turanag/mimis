@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import pm.action.Action;
 import pm.exception.ActionException;
-import pm.exception.ActionInvokeException;
+import pm.exception.InvokeActionException;
 
 public abstract class Target {
     public void invoke(Action action) throws ActionException {
@@ -14,7 +14,7 @@ public abstract class Target {
         } catch (IllegalArgumentException e) {
         } catch (IllegalAccessException e) {
         } catch (InvocationTargetException e) {}
-        throw new ActionInvokeException();
+        throw new InvokeActionException();
         // Todo: informatie doorgeven over wat er precies is foutgegaan
     }
 }

@@ -8,10 +8,9 @@ import pm.action.Action;
 import pm.application.Application;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
-import pm.device.example.ExampleDevice;
-import pm.device.rumblepad.RumblepadDevice;
+import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.exception.ActionException;
-import pm.exception.ActionNotImplementedException;
+import pm.exception.NotImplementedActionException;
 import pm.exception.EventException;
 
 public class Main extends Target {
@@ -51,8 +50,9 @@ public class Main extends Target {
 
     public void start() throws Exception {
         //addDevice(new ExampleDevice());
-        addDevice(new RumblepadDevice());
-   
+        //addDevice(new RumblepadDevice());
+        addDevice(new Extreme3DDevice());
+
         Application application = new VoorbeeldApplication();
         addApplication(application);
         currentApplication = application;
@@ -88,7 +88,7 @@ public class Main extends Target {
                 }
                 try {
                     target.invoke(action);
-                } catch (ActionNotImplementedException e) {
+                } catch (NotImplementedActionException e) {
                     // Todo: log.write(...)
                 }
             }

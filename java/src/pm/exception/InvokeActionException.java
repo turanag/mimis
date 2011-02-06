@@ -1,5 +1,5 @@
 package pm.exception;
 
-public class ServiceException extends Exception {
+public class InvokeActionException extends ActionException {
     protected static final long serialVersionUID = 1L;
 }

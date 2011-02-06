@@ -3,7 +3,7 @@ package pm.action;
 import java.lang.reflect.Method;
 
 import pm.event.Target;
-import pm.exception.ActionNotImplementedException;
+import pm.exception.NotImplementedActionException;
 
 public enum Action {
     START ("start"),
@@ -25,11 +25,11 @@ public enum Action {
         return target;
     }
 
-    public Method getMethod(Object object) throws ActionNotImplementedException {
+    public Method getMethod(Object object) throws NotImplementedActionException {
         try {
             return object.getClass().getMethod(action);
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {}
-        throw new ActionNotImplementedException();
+        throw new NotImplementedActionException();
     }
 }
