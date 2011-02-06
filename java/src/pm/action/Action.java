@@ -3,7 +3,7 @@ package pm.action;
 import java.lang.reflect.Method;
 
 import pm.event.Target;
-import pm.exception.NotImplementedActionException;
+import pm.exception.action.NotImplementedActionException;
 
 public enum Action {
     START ("start"),

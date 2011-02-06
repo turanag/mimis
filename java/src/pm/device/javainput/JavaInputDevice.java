@@ -8,7 +8,9 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 import pm.device.Device;
 import pm.exception.DeviceException;
-import pm.exception.JavaInputDeviceNotFoundException;
+import pm.exception.EventException;
+import pm.exception.device.JavaInputDeviceNotFoundException;
+import pm.exception.event.UnknownDirectionException;
 
 public abstract class JavaInputDevice extends Device {
     protected JavaInputListener javaInputListener;
@@ -35,6 +37,6 @@ public abstract class JavaInputDevice extends Device {
     }
 
     public void processEvent(JXInputAxisEvent event) {}
-    public void processEvent(JXInputButtonEvent event) {}
-    public void processEvent(JXInputDirectionalEvent event) {}
+    public void processEvent(JXInputButtonEvent event) throws EventException {}
+    public void processEvent(JXInputDirectionalEvent event) throws EventException {}
 }

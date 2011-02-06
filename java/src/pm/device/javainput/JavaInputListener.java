@@ -3,6 +3,8 @@ package pm.device.javainput;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import pm.exception.EventException;
+
 import de.hardcode.jxinput.Axis;
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
@@ -70,7 +72,6 @@ public class JavaInputListener extends Thread implements JXInputAxisEventListene
 
     public void run() {
         run = true;
-        System.out.println("begonneuh");
         while (run) {
             JXInputManager.updateFeatures();
             boolean sleep = true;
@@ -79,11 +80,15 @@ public class JavaInputListener extends Thread implements JXInputAxisEventListene
                 sleep = false;
             }
             if (!buttonEventQueue.isEmpty()) {
-                javaInputDevice.processEvent(buttonEventQueue.poll());
+                try {
+                    javaInputDevice.processEvent(buttonEventQueue.poll());
+                } catch (EventException e) {}
                 sleep = false;
             }
             if (!directionalEventQueue.isEmpty()) {
-                javaInputDevice.processEvent(directionalEventQueue.poll());
+                try {
+                    javaInputDevice.processEvent(directionalEventQueue.poll());
+                } catch (EventException e) {e.printStackTrace();}
                 sleep = false;
             }
             if (sleep) {
@@ -92,6 +97,5 @@ public class JavaInputListener extends Thread implements JXInputAxisEventListene
                 } catch (InterruptedException e) {}
             }
         }
-        System.out.println("klaaaur");
     }
 }

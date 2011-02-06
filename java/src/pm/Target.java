@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import pm.action.Action;
 import pm.exception.ActionException;
-import pm.exception.InvokeActionException;
+import pm.exception.action.InvokeActionException;
 
 public abstract class Target {
     public void invoke(Action action) throws ActionException {

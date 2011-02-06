@@ -10,8 +10,9 @@ import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.exception.ActionException;
-import pm.exception.NotImplementedActionException;
 import pm.exception.EventException;
+import pm.exception.action.NotImplementedActionException;
+import pm.exception.action.UnknownTargetException;
 
 public class Main extends Target {
     protected static final int SLEEP = 100;
@@ -64,7 +65,7 @@ public class Main extends Target {
         run();
     }
 
-    public void run() throws ActionException, EventException {
+    public void run() throws ActionException {
         run = true;
         while (run) {
             //System.out.println("Print!");
@@ -84,7 +85,7 @@ public class Main extends Target {
                         target = currentApplication;
                         break;
                     default:
-                        throw new EventException("Unknown event type");
+                        throw new UnknownTargetException();
                 }
                 try {
                     target.invoke(action);

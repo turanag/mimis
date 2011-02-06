@@ -6,11 +6,10 @@ import de.hardcode.jxinput.event.JXInputAxisEvent;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
-import pm.action.Action;
 import pm.device.javainput.JavaInputDevice;
-import pm.device.macro.Macro;
-import pm.event.Target;
 import pm.exception.DeviceException;
+import pm.exception.EventException;
+import pm.exception.event.UnknownDirectionException;
 
 public class Extreme3DDevice extends JavaInputDevice {
 
@@ -36,25 +35,28 @@ public class Extreme3DDevice extends JavaInputDevice {
         //System.out.println(event);
     }
 
-    public void processEvent(JXInputButtonEvent event) {
+    public void processEvent(JXInputButtonEvent event) throws EventException {
         //addAction(Action.TEST, Target.APPLICATION);
-        Button button = event.getButton();
-        Extreme3DButton x = null;
-        try {
-            x = Extreme3DButton.create(button.getName());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (event.getButton().getState()) {
+            // press
+        } else {
+            // release
         }
-        System.out.println(x);
-        //System.out.println(button.getType() + " " + button.getName() +" " + event.getButton().getState());
+        System.out.println(Extreme3DButton.create(event));
+        //System.out.println(button.getType() + " " + button.getName() +" " + );
     }
 
-    public void processEvent(JXInputDirectionalEvent event) {
+    public void processEvent(JXInputDirectionalEvent event) throws UnknownDirectionException {
         //addAction(Action.EXIT, Target.APPLICATION);
-        Directional directional = event.getDirectional();
-        
-        System.out.println(directional.getValue() + " [" + directional.getName() + "] " + directional.getResolution() + " " + directional.getDirection());
+        //Directional directional = event.getDirectional();
+        if (event.getDirectional().isCentered()) {
+            // release
+        } else {
+            // press
+        }
+        System.out.println(Extreme3DDirection.create(event));
+        //System.out.println(Extreme3DButton.create(event));
+        //System.out.println(directional.isCentered() + " " + directional.getValue() + " [" + directional.getName() + "] " + directional.getResolution() + " " + directional.getDirection());
     }
 
 }

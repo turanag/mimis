@@ -1,6 +1,10 @@
 package pm.device.javainput.extreme3d;
 
-public enum Extreme3DButton {
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import pm.device.macro.Button;
+import pm.exception.event.UnknownButtonException;
+
+public enum Extreme3DButton implements Button {
     ONE    ("Button 0"),
     TWO    ("Button 1"),
     THREE  ("Button 2"),
@@ -14,34 +18,26 @@ public enum Extreme3DButton {
     ELEVEN ("Button 10"),
     TWELVE ("Button 11");
 
-    /*TWO   (0x0001),
-    ONE   (0x0002),
-    B     (0x0004),
-    A     (0x0008),
-    MINUS (0x0010),
-    HOME  (0x0080),
-    LEFT  (0x0100),
-    RIGHT (0x0200),
-    DOWN  (0x0400),
-    UP    (0x0800),
-    PLUS  (0x1000),
-    ALL   (0x1F9F);*/
-
     protected String code;
 
-    Extreme3DButton(String code) {
+    private Extreme3DButton(String code) {
         this.code = code;
     }
 
-    /*int getCode() {
+    public String getCode() {
         return code;
-    }*/
+    }
 
-    static Extreme3DButton create(String name) throws Exception {
-        try {
-            return Extreme3DButton.valueOf(name);
-        } catch (IllegalArgumentException e) {
-            throw new Exception("Moet ik nou heeel boos worden?? " + name);
+    public static Extreme3DButton create(String code) throws UnknownButtonException {
+        for (Extreme3DButton button : Extreme3DButton.values()) {
+            if (button.getCode().equals(code)) {
+                return button;
+            }
         }
+        throw new UnknownButtonException();
+    }
+
+    public static Extreme3DButton create(JXInputButtonEvent event) throws UnknownButtonException {
+        return create(event.getButton().getName());      
     }
 }
