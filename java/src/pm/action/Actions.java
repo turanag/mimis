@@ -21,6 +21,7 @@ public enum Actions {
     }
 
     public Targets getTarget() {
+        // Todo: controle op target echt geset?
         return target;
     }
 

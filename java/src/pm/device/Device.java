@@ -4,6 +4,7 @@ import java.util.Queue;
 
 import pm.action.Actions;
 import pm.action.Targets;
+import pm.macro.MacroListener;
 
 public abstract class Device {
     protected static Queue<Actions> actionQueue;

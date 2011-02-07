@@ -10,9 +10,9 @@ import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.exception.ActionException;
-import pm.exception.EventException;
 import pm.exception.action.NotImplementedActionException;
 import pm.exception.action.UnknownTargetException;
+import pm.macro.MacroListener;
 
 public class Main extends Target {
     protected static final int SLEEP = 100;
@@ -31,6 +31,7 @@ public class Main extends Target {
         actionQueue = new ConcurrentLinkedQueue<Actions>();
         //JavaInputService.initialize();
         Device.initialise(actionQueue);
+        MacroListener.initialise(actionQueue);
     }
 
     public void addApplication(Application application) {

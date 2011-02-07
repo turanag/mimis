@@ -1,5 +1,3 @@
 package pm;
 
-public interface Button {
-
-}
+public interface Button {}

@@ -98,4 +98,8 @@ public class JavaInputListener extends Thread implements JXInputAxisEventListene
             }
         }
     }
+
+    public void exit() {
+        run = false;
+    }
 }

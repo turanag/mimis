@@ -3,10 +3,8 @@ package pm.macro.event;
 import pm.Button;
 import pm.macro.Event;
 
-public class Press implements Event {
-    public Button button;
-    
+public class Press extends Event {
     public Press(Button button) {
-        this.button = button;
+        super(button);
     }
 }
