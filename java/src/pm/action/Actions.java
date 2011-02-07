@@ -2,26 +2,25 @@ package pm.action;
 
 import java.lang.reflect.Method;
 
-import pm.event.Target;
 import pm.exception.action.NotImplementedActionException;
 
-public enum Action {
+public enum Actions {
     START ("start"),
     TEST ("test"),
     EXIT ("exit");
 
     protected String action;
-    protected Target target;
+    protected Targets target;
 
-    Action(String action) {
+    Actions(String action) {
         this.action = action;
     }
 
-    public void setTarget(Target target) {
+    public void setTarget(Targets target) {
         this.target = target;        
     }
 
-    public Target getTarget() {
+    public Targets getTarget() {
         return target;
     }
 

@@ -2,11 +2,11 @@ package pm.device;
 
 import java.util.Queue;
 
-import pm.action.Action;
-import pm.event.Target;
+import pm.action.Actions;
+import pm.action.Targets;
 
 public abstract class Device {
-    protected static Queue<Action> actionQueue;
+    protected static Queue<Actions> actionQueue;
     protected MacroListener macroListener;
 
     public Device() {
@@ -14,12 +14,12 @@ public abstract class Device {
         macroListener.start();
     }
 
-    public void addAction(Action action, Target target) {
+    public void addAction(Actions action, Targets target) {
         action.setTarget(target);
         actionQueue.add(action);
     }
 
-    public static void initialise(Queue<Action> actionQueue) {
+    public static void initialise(Queue<Actions> actionQueue) {
         Device.actionQueue = actionQueue;        
     }
 

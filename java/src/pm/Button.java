@@ -1,4 +1,4 @@
-package pm.device.macro;
+package pm;
 
 public interface Button {
 

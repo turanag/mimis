@@ -1,8 +1,8 @@
 package pm.device.example;
 
-import pm.action.Action;
+import pm.action.Actions;
+import pm.action.Targets;
 import pm.device.Device;
-import pm.event.Target;
 
 public class ExampleDevice extends Device {
     public void start() {

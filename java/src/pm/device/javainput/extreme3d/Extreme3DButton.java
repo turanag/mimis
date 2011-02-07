@@ -1,7 +1,7 @@
 package pm.device.javainput.extreme3d;
 
 import de.hardcode.jxinput.event.JXInputButtonEvent;
-import pm.device.macro.Button;
+import pm.Button;
 import pm.exception.event.UnknownButtonException;
 
 public enum Extreme3DButton implements Button {

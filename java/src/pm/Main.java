@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import pm.action.Action;
+import pm.action.Actions;
 import pm.application.Application;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
@@ -19,16 +19,16 @@ public class Main extends Target {
 
     ArrayList<Application> applicationList;
     ArrayList<Device> deviceList;
-    Queue<Action> actionQueue;
+    Queue<Actions> actionQueue;
 
     boolean run;
     Application currentApplication;
-    
+
     public Main() {
         applicationList = new ArrayList<Application>();
         //applicationList.iterator();
         deviceList = new ArrayList<Device>();
-        actionQueue = new ConcurrentLinkedQueue<Action>();
+        actionQueue = new ConcurrentLinkedQueue<Actions>();
         //JavaInputService.initialize();
         Device.initialise(actionQueue);
     }
@@ -74,12 +74,11 @@ public class Main extends Target {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException e) {}
             } else {
-                Action action = actionQueue.poll();
+                Actions action = actionQueue.poll();
                 Target target;
                 switch (action.getTarget()) {
                     case MAIN:
                         target = this;
-                        invoke(action);
                         break;
                     case APPLICATION:
                         target = currentApplication;

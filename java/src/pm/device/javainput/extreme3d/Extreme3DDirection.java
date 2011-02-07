@@ -1,7 +1,7 @@
 package pm.device.javainput.extreme3d;
 
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
-import pm.device.macro.Button;
+import pm.Button;
 import pm.exception.event.UnknownDirectionException;
 
 public enum Extreme3DDirection implements Button {

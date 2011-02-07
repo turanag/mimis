@@ -2,12 +2,12 @@ package pm;
 
 import java.lang.reflect.InvocationTargetException;
 
-import pm.action.Action;
+import pm.action.Actions;
 import pm.exception.ActionException;
 import pm.exception.action.InvokeActionException;
 
 public abstract class Target {
-    public void invoke(Action action) throws ActionException {
+    public void invoke(Actions action) throws ActionException {
         try {
             action.getMethod(this).invoke(this);
             return;

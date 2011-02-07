@@ -1,11 +1,10 @@
 package pm.device.javainput.extreme3d;
 
-import de.hardcode.jxinput.Button;
-import de.hardcode.jxinput.Directional;
 import de.hardcode.jxinput.event.JXInputAxisEvent;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
+import pm.Macro;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.EventException;
@@ -21,13 +20,13 @@ public class Extreme3DDevice extends JavaInputDevice {
 
     public void start() {
         super.start();
-        /*macroListener.addMacro(
+        macroListener.addMacro(
             new Macro(
                 new Hold(Button.A),
                 new Press(Button.B),
                 new Press(Button.TWO),
                 new Release(Button.A)),
-            Action.EXIT, Target.APPLICATION));*/
+            Action.EXIT, Target.APPLICATION));
     }
 
     public void processEvent(JXInputAxisEvent event) {
