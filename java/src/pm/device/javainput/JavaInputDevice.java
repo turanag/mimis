@@ -19,7 +19,6 @@ import pm.macro.event.Release;
 
 public abstract class JavaInputDevice extends Device {
     protected JavaInputListener javaInputListener;
-    //protected JXInputDevice jxinputDevice;
     protected Button previousDirectionalButton;
 
     protected JavaInputDevice(String name) throws DeviceException {
@@ -47,12 +46,10 @@ public abstract class JavaInputDevice extends Device {
     }
 
     public void processEvent(JXInputAxisEvent event) {
-        //addAction(Action.START, Target.APPLICATION);
         //System.out.println(event);
     }
 
     public void processEvent(JXInputButtonEvent event) throws EventException {
-        //addAction(Action.TEST, Target.APPLICATION);
         Button button = Extreme3DButton.create(event);
         if (event.getButton().getState()) {
             System.out.println("Press: " + button);
@@ -61,13 +58,9 @@ public abstract class JavaInputDevice extends Device {
             System.out.println("Release: " + button);
             add(new Release(button));
         }
-        //System.out.println(button);
-        //System.out.println(button.getType() + " " + button.getName() +" " + );
     }
 
     public void processEvent(JXInputDirectionalEvent event) throws UnknownDirectionException {
-        //addAction(Action.EXIT, Target.APPLICATION);
-        //Directional directional = event.getDirectional();
         Button button = Extreme3DDirection.create(event);
         if (event.getDirectional().isCentered()) {
             if (previousDirectionalButton != null) {
@@ -79,8 +72,5 @@ public abstract class JavaInputDevice extends Device {
             add(new Press(button));
             previousDirectionalButton = button;
         }
-        //System.out.println(Extreme3DDirection.create(event));
-        //System.out.println(Extreme3DButton.create(event));
-        //System.out.println(directional.isCentered() + " " + directional.getValue() + " [" + directional.getName() + "] " + directional.getResolution() + " " + directional.getDirection());
     }
 }

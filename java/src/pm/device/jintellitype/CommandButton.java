@@ -51,7 +51,7 @@ public enum CommandButton implements Button {
     DICTATE_OR_COMMAND_CONTROL_TOGGLE (JIntellitype.APPCOMMAND_DICTATE_OR_COMMAND_CONTROL_TOGGLE),
     MIC_ON_OFF_TOGGLE      (JIntellitype.APPCOMMAND_MIC_ON_OFF_TOGGLE),
     CORRECTION_LIST        (JIntellitype.APPCOMMAND_CORRECTION_LIST);
-    
+
     protected int code;
 
     private CommandButton(int code) {

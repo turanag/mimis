@@ -4,7 +4,7 @@ import pm.Button;
 
 public abstract class Event {
     protected Button button;
-    
+
     public Event(Button button) {
         this.button = button;
     }

@@ -11,19 +11,19 @@ public class Hotkey extends Press {
     protected static JIntellitype jit;
 
     public Hotkey(int modifier, int keycode) {
-        super(null);
+        super(null); // Todo: nettere oplossing zoeken / controleren op null
         int id = hotkeyList.size();
         button = new HotkeyButton(id);
         jit.registerHotKey(id, modifier, keycode);
         hotkeyList.add(this);
     }
 
-    public Hotkey(int modifier, char keycode) {
-        this(modifier, (int) keycode);
+    public Hotkey(int modifier, char key) {
+        this(modifier, (int) Character.toUpperCase(key));
     }
 
-    public Hotkey(char keycode) {
-        this(0, (int) keycode);
+    public Hotkey(char key) {
+        this(0, (int) Character.toUpperCase(key));
     }
 
     public Hotkey(int keycode) {

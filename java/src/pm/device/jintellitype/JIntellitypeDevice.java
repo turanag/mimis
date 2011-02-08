@@ -7,6 +7,7 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import pm.Action;
+import pm.Macro;
 import pm.Target;
 import pm.device.Device;
 import pm.exception.EventException;
@@ -30,7 +31,10 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.addIntellitypeListener(this);
         try {
             add(
-                new Hotkey(HotkeyButton.MOD_CTRL | HotkeyButton.MOD_WIN, 'I'),
+                new Macro(
+                    new Hotkey('r'),
+                    new Hotkey('i'),
+                    new Hotkey('k')),
                 Action.EXIT.setTarget(Target.MAIN));
             add(
                 new Press(CommandButton.VOLUME_UP),
@@ -48,8 +52,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             add(new Press(commandButton));
             add(new Release(commandButton));
         } catch (EventException e) {
-            // Todo: deze exception verder omhoog gooien
-            e.printStackTrace();
+            e.printStackTrace(); // Todo: deze exception verder omhoog gooien
         }        
     }
 

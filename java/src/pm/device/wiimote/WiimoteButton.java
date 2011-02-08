@@ -1,6 +1,8 @@
 package pm.device.wiimote;
 
-public enum WiimoteButton {
+import pm.Button;
+
+public enum WiimoteButton implements Button {
     TWO   (0x0001),
     ONE   (0x0002),
     B     (0x0004),
@@ -13,7 +15,7 @@ public enum WiimoteButton {
     UP    (0x0800),
     PLUS  (0x1000),
     ALL   (0x1F9F);
-    
+
     protected int code;
 
     private WiimoteButton(int code) {

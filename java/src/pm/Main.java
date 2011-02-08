@@ -9,6 +9,7 @@ import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.wiimote.WiimoteDevice;
 import pm.exception.ActionException;
 import pm.exception.action.NotImplementedActionException;
 import pm.exception.action.UnknownTargetException;
@@ -52,6 +53,7 @@ public class Main {
         //add(new RumblepadDevice());
         add(new Extreme3DDevice());
         add(new JIntellitypeDevice());
+        add(new WiimoteDevice());
         
         Application application = new VoorbeeldApplication();
         add(application);

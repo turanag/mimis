@@ -20,7 +20,9 @@ public class Extreme3DDevice extends JavaInputDevice {
     public void start() {
         super.start();
         try {
-            add(new Macro(new Press(Extreme3DButton.TWELVE)), Action.TEST.setTarget(Target.APPLICATION));
+            add(
+                new Press(Extreme3DButton.TWELVE),
+                Action.TEST.setTarget(Target.APPLICATION));
             add(
                 new Macro(
                     new Hold(Extreme3DButton.ONE),
