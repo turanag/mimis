@@ -7,6 +7,7 @@ import pm.exception.DeviceException;
 import pm.exception.MacroException;
 import pm.macro.event.Press;
 import wiiusej.Wiimote;
+import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
 public class WiimoteDevice extends Device {
     protected static final int CONNECT_MAX = 10;
@@ -32,5 +33,9 @@ public class WiimoteDevice extends Device {
         } catch (MacroException e) {
             e.printStackTrace();
         }
+    }
+
+    public void onButtonsEvent(WiimoteButtonsEvent event) {
+        //evm.macroEvent(event, getWiimote(event));
     }
 }
