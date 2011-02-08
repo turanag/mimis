@@ -56,10 +56,10 @@ public abstract class JavaInputDevice extends Device {
         Button button = Extreme3DButton.create(event);
         if (event.getButton().getState()) {
             System.out.println("Press: " + button);
-            macroListener.add(new Press(button));
+            add(new Press(button));
         } else {
             System.out.println("Release: " + button);
-            macroListener.add(new Release(button));
+            add(new Release(button));
         }
         //System.out.println(button);
         //System.out.println(button.getType() + " " + button.getName() +" " + );
@@ -72,11 +72,11 @@ public abstract class JavaInputDevice extends Device {
         if (event.getDirectional().isCentered()) {
             if (previousDirectionalButton != null) {
                 System.out.println("Release: " + previousDirectionalButton);
-                macroListener.add(new Release(previousDirectionalButton));
+                add(new Release(previousDirectionalButton));
             }
         } else {
             System.out.println("Press: " + button);
-            macroListener.add(new Press(button));
+            add(new Press(button));
             previousDirectionalButton = button;
         }
         //System.out.println(Extreme3DDirection.create(event));

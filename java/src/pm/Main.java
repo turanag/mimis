@@ -8,6 +8,7 @@ import pm.application.Application;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
+import pm.device.jintellitype.JIntellitypeDevice;
 import pm.exception.ActionException;
 import pm.exception.action.NotImplementedActionException;
 import pm.exception.action.UnknownTargetException;
@@ -47,10 +48,11 @@ public class Main {
     }
 
     public void start() throws Exception {
-        //addDevice(new ExampleDevice());
-        //addDevice(new RumblepadDevice());
+        //add(new ExampleDevice());
+        //add(new RumblepadDevice());
         add(new Extreme3DDevice());
-
+        add(new JIntellitypeDevice());
+        
         Application application = new VoorbeeldApplication();
         add(application);
 
