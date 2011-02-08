@@ -60,13 +60,13 @@ LPDWORD temp;
 void initWinampHandle() {
      hwnd_winamp = NULL; 
      if (hwnd_winamp == NULL) {
-        hwnd_winamp = FindWindow("Winamp v1.x", NULL);
+        hwnd_winamp = FindWindow((LPCWSTR) "Winamp v1.x", NULL);
      }
      if (hwnd_winamp == NULL) {
-        hwnd_winamp = FindWindow("Winamp v2.x", NULL);
+        hwnd_winamp = FindWindow((LPCWSTR) "Winamp v2.x", NULL);
      }
      if (hwnd_winamp == NULL) {
-        hwnd_winamp = FindWindow("Winamp v3.x", NULL);
+        hwnd_winamp = FindWindow((LPCWSTR) "Winamp v3.x", NULL);
      }
 }
 
@@ -81,7 +81,7 @@ jboolean runWinamp(unsigned char* pathWinamp) {
 
     
         // Start the child process. 
-        if(!CreateProcess(pathWinamp, 
+        if(!CreateProcess((LPCWSTR) pathWinamp, 
                           NULL, 
                           0, 
                           0, 
@@ -145,7 +145,7 @@ JNIEXPORT jboolean JNICALL Java_com_qotsa_jni_controller_JNIWinamp_run
              	HKEY  key;
                 DWORD tipo;
         
-                if (!RegOpenKey(HKEY_LOCAL_MACHINE,"Software\\Clients\\Media\\Winamp\\shell\\open\\command",&key)==ERROR_SUCCESS) 
+                if (!RegOpenKey(HKEY_LOCAL_MACHINE,(LPCWSTR) "Software\\Clients\\Media\\Winamp\\shell\\open\\command",&key)==ERROR_SUCCESS) 
                 {
                 
                    printf("0");
@@ -153,7 +153,7 @@ JNIEXPORT jboolean JNICALL Java_com_qotsa_jni_controller_JNIWinamp_run
                                                                                            
                 }
                    
-             	if (!(RegQueryValueEx(key,"",NULL,&tipo,path,&size))==ERROR_SUCCESS)
+             	if (!(RegQueryValueEx(key,(LPCWSTR) "",NULL,&tipo,path,&size))==ERROR_SUCCESS)
              	{
 
                    RegCloseKey(key);
