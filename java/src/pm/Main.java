@@ -12,50 +12,47 @@ import pm.exception.ActionException;
 import pm.exception.action.NotImplementedActionException;
 import pm.exception.action.UnknownTargetException;
 import pm.listener.ActionListener;
+import pm.util.ArrayCycle;
 
 public class Main {
     protected static final int SLEEP = 100;
 
-    ArrayList<Application> applicationList;
+    ArrayCycle<Application> applicationCycle;
     ArrayList<Device> deviceList;
     Queue<Action> actionQueue;
 
     boolean run;
-    Application currentApplication;
 
     public Main() {
-        applicationList = new ArrayList<Application>();
-        //applicationList.iterator();
+        applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
         actionQueue = new ConcurrentLinkedQueue<Action>();
-
         ActionListener.initialise(actionQueue);
     }
 
-    public void addApplication(Application application) {
-        applicationList.add(application);
+    public void add(Application application) {
+        applicationCycle.add(application);
     }
 
-    public boolean removeApplication(Application application) {
-        return applicationList.remove(application);
+    public boolean remove(Application application) {
+        return applicationCycle.remove(application);
     }
 
-    public void addDevice(Device device) {
+    public void add(Device device) {
         deviceList.add(device);
     }
 
-    public boolean removeDevie(Device device) {
+    public boolean remove(Device device) {
         return deviceList.remove(device);
     }
 
     public void start() throws Exception {
         //addDevice(new ExampleDevice());
         //addDevice(new RumblepadDevice());
-        addDevice(new Extreme3DDevice());
+        add(new Extreme3DDevice());
 
         Application application = new VoorbeeldApplication();
-        addApplication(application);
-        currentApplication = application;
+        add(application);
 
         for (Device device : deviceList) {
             device.start();
@@ -67,7 +64,6 @@ public class Main {
     public void run() throws ActionException {
         run = true;
         while (run) {
-            //System.out.println("Print!");
             if (actionQueue.isEmpty()) {
                 try {
                     Thread.sleep(SLEEP);
@@ -80,7 +76,7 @@ public class Main {
                         object = this;
                         break;
                     case APPLICATION:
-                        object = currentApplication;
+                        object = applicationCycle.current();
                         break;
                     default:
                         throw new UnknownTargetException();
@@ -99,7 +95,6 @@ public class Main {
         for (Device device : deviceList) {
             device.exit();
         }
-        System.out.println("Als ie nu niet uit gaat, dan hebben we een verstekeling! Dat is vervelend ende naar!");
     }
 
     public static void main(String[] args) {
