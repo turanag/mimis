@@ -11,8 +11,11 @@ import pm.exception.action.TargetNotSetException;
 public enum Action {
     START ("start"),
     TEST ("test"),
-    EXIT ("exit");
-
+    EXIT ("exit"),
+    PLAY ("play"),
+    PAUSE ("pause"),
+    RESUME ("resume");
+    
     protected String action;
     protected Target target;
 
