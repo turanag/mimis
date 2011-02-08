@@ -1,27 +1,19 @@
 package pm.device;
 
-import java.util.Queue;
+import pm.Action;
+import pm.Macro;
+import pm.listener.ActionListener;
+import pm.listener.MacroListener;
 
-import pm.action.Actions;
-import pm.action.Targets;
-import pm.macro.MacroListener;
-
-public abstract class Device {
-    protected static Queue<Actions> actionQueue;
+public abstract class Device extends ActionListener {
     protected MacroListener macroListener;
 
     public Device() {
         macroListener = new MacroListener();
-        macroListener.start();
     }
 
-    public void addAction(Actions action, Targets target) {
-        action.setTarget(target);
-        actionQueue.add(action);
-    }
-
-    public static void initialise(Queue<Actions> actionQueue) {
-        Device.actionQueue = actionQueue;        
+    public void add(Macro macro, Action action) {
+        macroListener.add(macro, action);
     }
 
     public void start() {}

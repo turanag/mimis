@@ -1,29 +1,25 @@
-package pm.macro;
+package pm.listener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Queue;
 
+import pm.Action;
 import pm.Macro;
+import pm.macro.Active;
+import pm.macro.Event;
 
-import pm.action.Actions;
-import pm.action.Targets;
-
-public class MacroListener extends Thread {
-    protected static Queue<Actions> actionQueue;
-
+public class MacroListener extends ActionListener {
     public ArrayList<Macro> macroList;
-    public HashMap<Macro, Actions> actionMap;
+    public HashMap<Macro, Action> actionMap;
     public ArrayList<Active> activeList;
-    
+
     public MacroListener() {
         macroList = new ArrayList<Macro>();
-        actionMap = new HashMap<Macro, Actions>();
+        actionMap = new HashMap<Macro, Action>();
         activeList = new ArrayList<Active>();
     }
 
-    public void add(Macro macro, Actions action, Targets target) {
-        action.setTarget(target); // Todo: target en action duidelijker integreren / hernoemen.
+    public void add(Macro macro, Action action) {
         macroList.add(macro);
         actionMap.put(macro, action);
     }
@@ -36,7 +32,7 @@ public class MacroListener extends Thread {
         for (Active active : activeList) {
             if (active.next(event)) {
                 if (active.last()) {
-                    actionQueue.add(actionMap.get(active.getMacro())); // Todo: dit indirect doen?
+                    add(actionMap.get(active.getMacro()));
                     removeList.add(active);
                 }
             } else {
@@ -46,9 +42,5 @@ public class MacroListener extends Thread {
         for (Active active : removeList) {
             activeList.remove(active);
         }
-    }
-
-    public static void initialise(Queue<Actions> actionQueue) {
-        MacroListener.actionQueue = actionQueue;        
     }
 }

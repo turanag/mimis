@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import pm.action.Actions;
 import pm.application.Application;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
@@ -12,14 +11,14 @@ import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.exception.ActionException;
 import pm.exception.action.NotImplementedActionException;
 import pm.exception.action.UnknownTargetException;
-import pm.macro.MacroListener;
+import pm.listener.ActionListener;
 
-public class Main extends Target {
+public class Main {
     protected static final int SLEEP = 100;
 
     ArrayList<Application> applicationList;
     ArrayList<Device> deviceList;
-    Queue<Actions> actionQueue;
+    Queue<Action> actionQueue;
 
     boolean run;
     Application currentApplication;
@@ -28,10 +27,9 @@ public class Main extends Target {
         applicationList = new ArrayList<Application>();
         //applicationList.iterator();
         deviceList = new ArrayList<Device>();
-        actionQueue = new ConcurrentLinkedQueue<Actions>();
-        //JavaInputService.initialize();
-        Device.initialise(actionQueue);
-        MacroListener.initialise(actionQueue);
+        actionQueue = new ConcurrentLinkedQueue<Action>();
+
+        ActionListener.initialise(actionQueue);
     }
 
     public void addApplication(Application application) {
@@ -62,7 +60,7 @@ public class Main extends Target {
         for (Device device : deviceList) {
             device.start();
         }
-        
+
         run();
     }
 
@@ -75,20 +73,20 @@ public class Main extends Target {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException e) {}
             } else {
-                Actions action = actionQueue.poll();
-                Target target;
+                Action action = actionQueue.poll();
+                Object object;
                 switch (action.getTarget()) {
                     case MAIN:
-                        target = this;
+                        object = this;
                         break;
                     case APPLICATION:
-                        target = currentApplication;
+                        object = currentApplication;
                         break;
                     default:
                         throw new UnknownTargetException();
                 }
                 try {
-                    target.invoke(action);
+                    action.invoke(object);
                 } catch (NotImplementedActionException e) {
                     // Todo: log.write(...)
                 }

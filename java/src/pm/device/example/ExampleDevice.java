@@ -1,7 +1,7 @@
 package pm.device.example;
 
-import pm.action.Actions;
-import pm.action.Targets;
+import pm.Action;
+import pm.Target;
 import pm.device.Device;
 
 public class ExampleDevice extends Device {
