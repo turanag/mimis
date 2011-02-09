@@ -14,10 +14,6 @@ public abstract class Event {
     }
 
     public boolean equals(Event event) {
-        System.out.println(getClass() + " " + event.getClass());
-        System.out.println(getButton() + " " + event.getButton());
-        System.out.println(getButton().getClass() + " " + event.getButton().getClass());
-        System.out.println(event.getButton().equals(button));
         return event.getClass().equals(getClass()) && event.getButton().equals(button);
     }
 }

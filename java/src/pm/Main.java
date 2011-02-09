@@ -52,7 +52,7 @@ public class Main {
 
     public void start() throws Exception {
         //add(new ExampleDevice());
-        //add(new RumblepadDevice());
+        add(new RumblepadDevice());
         //add(new Extreme3DDevice());
         add(new JIntellitypeDevice());
         //add(new WiimoteDevice());

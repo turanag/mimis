@@ -2,7 +2,6 @@ package pm.device.javainput.rumblepad;
 
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import pm.Button;
-import pm.device.javainput.extreme3d.Extreme3DButton;
 import pm.exception.event.UnknownButtonException;
 
 public enum RumblepadButton implements Button {

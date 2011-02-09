@@ -30,7 +30,6 @@ public class MacroListener extends ActionListener {
     }
 
     public void add(Event event) {
-        System.out.println("]] binnen " + event);
         for (Macro macro : macroList) {
             activeList.add(new Active(macro));
         }
