@@ -1,10 +1,10 @@
-package pm.device.javainput.extreme3d;
+package pm.device.javainput;
 
-import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import pm.Button;
 import pm.exception.event.UnknownDirectionException;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
-public enum Extreme3DDirection implements Button {
+public enum EightfoldDirection implements Button {
     NORTH     (0),
     NORTHEAST (45),
     EAST      (90),
@@ -16,7 +16,7 @@ public enum Extreme3DDirection implements Button {
 
     protected int code;
 
-    private Extreme3DDirection(int code) {
+    private EightfoldDirection(int code) {
         this.code = code;
     }
 
@@ -24,8 +24,8 @@ public enum Extreme3DDirection implements Button {
         return code;
     }
 
-    public static Extreme3DDirection create(int angle) throws UnknownDirectionException  {
-        for (Extreme3DDirection button : Extreme3DDirection.values()) {
+    public static EightfoldDirection create(int angle) throws UnknownDirectionException  {
+        for (EightfoldDirection button : EightfoldDirection.values()) {
             if (button.getCode() == angle) {
                 return button;
             }
@@ -33,7 +33,7 @@ public enum Extreme3DDirection implements Button {
         throw new UnknownDirectionException();
     }
 
-    public static Extreme3DDirection create(JXInputDirectionalEvent event) throws UnknownDirectionException {
+    public static EightfoldDirection create(JXInputDirectionalEvent event) throws UnknownDirectionException {
         return create(event.getDirectional().getDirection() / 100);      
     }
 }

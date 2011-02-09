@@ -1,17 +1,18 @@
 package pm.device.javainput.rumblepad;
 
-import de.hardcode.jxinput.event.JXInputButtonEvent;
-import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import pm.Action;
 import pm.Button;
 import pm.Macro;
 import pm.Target;
+import pm.device.javainput.EightfoldDirection;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
 import pm.exception.event.UnknownButtonException;
 import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Press;
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public class RumblepadDevice extends JavaInputDevice {
 
@@ -48,7 +49,6 @@ public class RumblepadDevice extends JavaInputDevice {
     }
 
     protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
-        return RumblepadDirection.create(event);
+        return EightfoldDirection.create(event);
     }
-    
 }
