@@ -53,7 +53,9 @@ public abstract class JavaInputDevice extends Device {
             add(new Press(button));
         } else {
             System.out.println("Release: " + button);
+            System.out.println(">" + new Release(button));
             add(new Release(button));
+            System.out.println("erna");
         }
     }
 

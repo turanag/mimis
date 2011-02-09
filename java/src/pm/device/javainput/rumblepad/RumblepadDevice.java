@@ -5,6 +5,7 @@ import pm.Button;
 import pm.Macro;
 import pm.Target;
 import pm.device.javainput.EightfoldDirection;
+import pm.device.javainput.JavaInputButton;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
@@ -35,9 +36,7 @@ public class RumblepadDevice extends JavaInputDevice {
                 new Press(RumblepadButton.THREE),
                 Action.RESUME.setTarget(Target.APPLICATION));
             add(
-                new Macro(
-                    new Press(RumblepadButton.NINE)
-                ),
+                new Press(new JavaInputButton(9)),
                 Action.EXIT.setTarget(Target.MAIN));
         } catch (MacroException e) {
             e.printStackTrace();
