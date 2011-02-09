@@ -2,49 +2,41 @@ package pm.device.javainput.rumblepad;
 
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import pm.Button;
-import pm.device.javainput.JavaInputButton;
+import pm.device.javainput.extreme3d.Extreme3DButton;
 import pm.exception.event.UnknownButtonException;
 
 public enum RumblepadButton implements Button {
-    ONE    (0),
-    TWO    (1),
-    THREE  (2),
-    FOUR   (3),
-    FIVE   (4),
-    SIX    (5),
-    SEVEN  (6),
-    EIGHT  (7),
-    NINE   (8),
-    TEN    (9);
+    ONE    ("Button 0"),
+    TWO    ("Button 1"),
+    THREE  ("Button 2"),
+    FOUR   ("Button 3"),
+    FIVE   ("Button 4"),
+    SIX    ("Button 5"),
+    SEVEN  ("Button 6"),
+    EIGHT  ("Button 7"),
+    NINE   ("Button 8"),
+    TEN    ("Button 9");
 
-    protected int code;
+    protected String code;
 
-    private RumblepadButton(int code) {
+    private RumblepadButton(String code) {
         this.code = code;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public static JavaInputButton create(int code) throws UnknownButtonException {
+    public static RumblepadButton create(String code) throws UnknownButtonException {
         for (RumblepadButton button : RumblepadButton.values()) {
-            if (button.getCode() == code) {
-                return new JavaInputButton(code + 1);
+            if (button.getCode().equals(code)) {
+                return button;
             }
         }
         throw new UnknownButtonException();
     }
 
-    public static JavaInputButton create(JXInputButtonEvent event) throws UnknownButtonException {
-        String name = event.getButton().getName();
-        String button = name.replaceFirst("Button ", "");
-        int code = Integer.valueOf(button);
-        //System.out.println(name + " " + button + " " + code);
-        return create(code);
-    }
-
-    public String toString() {
-        return String.valueOf(getCode());
+    public static RumblepadButton create(JXInputButtonEvent event) throws UnknownButtonException {
+        return create(event.getButton().getName());      
     }
 }
