@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.application.Application;
-import pm.application.iTunes.iTunesApplicatie;
+import pm.application.iTunes.iTunesApplication;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
@@ -56,15 +56,16 @@ public class Main {
         //add(new Extreme3DDevice());
         add(new JIntellitypeDevice());
         //add(new WiimoteDevice());
-        
-        Application application = new VoorbeeldApplication();
-        application = new iTunesApplicatie();
-        add(application);
-
         for (Device device : deviceList) {
             device.start();
         }
-
+    
+        add(new VoorbeeldApplication());
+        add(new iTunesApplication());
+        applicationCycle.next();
+        for (Application application : applicationCycle) {
+            application.start();
+        }
         run();
     }
 
@@ -78,12 +79,14 @@ public class Main {
             } else {
                 Action action = actionQueue.poll();
                 Object object;
+                System.out.println("Action: " + action + " Target: " + action.getTarget());
                 switch (action.getTarget()) {
                     case MAIN:
                         object = this;
                         break;
                     case APPLICATION:
                         object = applicationCycle.current();
+                        System.out.println("Current application: " + object.getClass());
                         break;
                     default:
                         throw new UnknownTargetException();
@@ -91,6 +94,7 @@ public class Main {
                 try {
                     action.invoke(object);
                 } catch (NotImplementedActionException e) {
+                    e.printStackTrace();
                     // Todo: log.write(...)
                 }
             }
@@ -102,6 +106,10 @@ public class Main {
         for (Device device : deviceList) {
             device.exit();
         }
+        for (Application application : applicationCycle) {
+            application.exit();
+        }
+        System.out.println("Main exit...");
     }
 
     public static void main(String[] args) {

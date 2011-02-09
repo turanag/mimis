@@ -48,8 +48,12 @@ public enum Action {
             getMethod(object).invoke(object);
             return;
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {}
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }        
         throw new InvokeActionException();
         // Todo: informatie doorgeven over wat er precies is foutgegaan
     }

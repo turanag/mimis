@@ -1,8 +1,8 @@
 package com.dt.iTunesController;
+
 import com.jacob.activeX.*;
 import com.jacob.com.Dispatch;
 import com.jacob.com.DispatchEvents;
-import com.jacob.com.Variant;
 
 /**
  * Defines the top-level iTunes application object.
@@ -14,15 +14,15 @@ import com.jacob.com.Variant;
  * @version 0.2
  */
 public class iTunes {
-
     ActiveXComponent iTunes;
     iTunesEvents iTunesEvents;
     DispatchEvents dispatchEvents;
 
     /**
      * Initiate iTunes Controller.
+     * @return 
      */
-    public iTunes() {
+    public void connect() {
         iTunes = new ActiveXComponent("iTunes.Application");
     }
     
@@ -33,7 +33,7 @@ public class iTunes {
     public void addEventHandler(iTunesEventsInterface itef) {
         iTunesEvents = new iTunesEvents(itef);
         dispatchEvents = new DispatchEvents(iTunes, iTunesEvents);
-        System.out.println("New event handler added.");
+        //System.out.println("New event handler added.");
     }
     
     /**
@@ -69,7 +69,7 @@ public class iTunes {
      * Play the currently targeted track.
      */
     public void play() {
-        Variant s = iTunes.invoke("ASDSDPlay");
+        iTunes.invoke("ASDSDPlay");
     }
     
     /**

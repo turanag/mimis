@@ -35,7 +35,7 @@ public class RumblepadDevice extends JavaInputDevice {
                 Action.RESUME.setTarget(Target.APPLICATION));
             add(
                 new Macro(
-                    new Press(RumblepadButton.ONE)
+                    new Press(RumblepadButton.NINE)
                 ),
                 Action.EXIT.setTarget(Target.MAIN));
         } catch (MacroException e) {

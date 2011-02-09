@@ -7,7 +7,6 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import pm.Action;
-import pm.Macro;
 import pm.Target;
 import pm.device.Device;
 import pm.exception.EventException;
