@@ -14,6 +14,6 @@ public abstract class Event {
     }
 
     public boolean equals(Event event) {
-        return event.getClass().equals(getClass()) && event.getButton().equals(button); // Todo: controleren of equals goed werkt bij buttons van verschillende typen
+        return event.getClass().equals(getClass()) && event.getButton().equals(button);
     }
 }

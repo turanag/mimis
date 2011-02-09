@@ -5,9 +5,11 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.application.Application;
+import pm.application.iTunes.iTunesApplicatie;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
+import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.exception.ActionException;
@@ -50,12 +52,13 @@ public class Main {
 
     public void start() throws Exception {
         //add(new ExampleDevice());
-        //add(new RumblepadDevice());
-        add(new Extreme3DDevice());
+        add(new RumblepadDevice());
+        //add(new Extreme3DDevice());
         add(new JIntellitypeDevice());
-        add(new WiimoteDevice());
+        //add(new WiimoteDevice());
         
         Application application = new VoorbeeldApplication();
+        application = new iTunesApplicatie();
         add(application);
 
         for (Device device : deviceList) {

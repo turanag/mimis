@@ -1,10 +1,16 @@
 package pm.device.javainput.rumblepad;
 
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import pm.Action;
+import pm.Button;
+import pm.Macro;
 import pm.Target;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
+import pm.exception.event.UnknownButtonException;
+import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Press;
 
 public class RumblepadDevice extends JavaInputDevice {
@@ -18,7 +24,7 @@ public class RumblepadDevice extends JavaInputDevice {
     public void start() {
         super.start();
         try {
-            /*add(
+            add(
                 new Press(RumblepadButton.ONE),
                 Action.PLAY.setTarget(Target.APPLICATION));
             add(
@@ -26,12 +32,23 @@ public class RumblepadDevice extends JavaInputDevice {
                 Action.PAUSE.setTarget(Target.APPLICATION));
             add(
                 new Press(RumblepadButton.THREE),
-                Action.RESUME.setTarget(Target.APPLICATION));*/
+                Action.RESUME.setTarget(Target.APPLICATION));
             add(
-                new Press(RumblepadButton.FOUR),
+                new Macro(
+                    new Press(RumblepadButton.ONE)
+                ),
                 Action.EXIT.setTarget(Target.MAIN));
         } catch (MacroException e) {
             e.printStackTrace();
         }
-    }  
+    }
+
+    protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {
+        return RumblepadButton.create(event);
+    }
+
+    protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
+        return RumblepadDirection.create(event);
+    }
+    
 }

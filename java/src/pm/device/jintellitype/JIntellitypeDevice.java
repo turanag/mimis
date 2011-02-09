@@ -31,10 +31,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.addIntellitypeListener(this);
         try {
             add(
-                new Macro(
-                    new Hotkey('r'),
-                    new Hotkey('i'),
-                    new Hotkey('k')),
+                new Hotkey(HotkeyButton.CTRL, 'x'),
                 Action.EXIT.setTarget(Target.MAIN));
             add(
                 new Press(CommandButton.VOLUME_UP),

@@ -6,11 +6,11 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 
-public class iTunes extends Application{
+public class iTunesApplicatie extends Application{
     
     Dispatch iTunesController;
     
-    public iTunes() {
+    public iTunesApplicatie() {
         connect();
     }
     
@@ -44,7 +44,7 @@ public class iTunes extends Application{
     }
 
     public static void main(String argv[]) throws Exception {
-        new iTunes();
+        new iTunesApplicatie();
     }
 
 }

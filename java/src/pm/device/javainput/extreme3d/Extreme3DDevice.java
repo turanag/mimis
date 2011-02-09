@@ -1,11 +1,16 @@
 package pm.device.javainput.extreme3d;
 
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import pm.Action;
+import pm.Button;
 import pm.Macro;
 import pm.Target;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
+import pm.exception.event.UnknownButtonException;
+import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
@@ -33,5 +38,13 @@ public class Extreme3DDevice extends JavaInputDevice {
         } catch (MacroException e) {
             e.printStackTrace();
         }
+    }
+
+    protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {
+        return Extreme3DButton.create(event);
+    }
+
+    protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
+        return Extreme3DDirection.create(event);
     }
 }
