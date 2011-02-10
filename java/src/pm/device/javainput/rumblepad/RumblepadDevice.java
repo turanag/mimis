@@ -4,7 +4,7 @@ import pm.Action;
 import pm.Button;
 import pm.Macro;
 import pm.Target;
-import pm.device.javainput.EightfoldDirection;
+import pm.device.javainput.DirectionalSwitch;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
@@ -35,10 +35,23 @@ public class RumblepadDevice extends JavaInputDevice {
                 new Press(RumblepadButton.THREE),
                 Action.RESUME.setTarget(Target.APPLICATION));
             add(
-                new Macro(
-                    new Press(RumblepadButton.NINE)
-                ),
-                Action.EXIT.setTarget(Target.MAIN));
+                new Press(RumblepadButton.SIX),
+                Action.NEXT.setTarget(Target.APPLICATION));
+            add(
+                new Press(RumblepadButton.EIGHT),
+                Action.PREVIOUS.setTarget(Target.APPLICATION));
+            add(
+                new Press(RumblepadButton.FIVE),
+                Action.FORWARD.setTarget(Target.APPLICATION));
+            add(
+                new Press(RumblepadButton.SEVEN),
+                Action.REWIND.setTarget(Target.APPLICATION));
+            add(
+                new Press(RumblepadButton.NINE),
+                Action.VULUME_DOWN.setTarget(Target.APPLICATION));
+            add(
+                new Press(RumblepadButton.TEN),
+                Action.VOLUME_UP.setTarget(Target.APPLICATION));
         } catch (MacroException e) {
             e.printStackTrace();
         }
@@ -49,6 +62,6 @@ public class RumblepadDevice extends JavaInputDevice {
     }
 
     protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
-        return EightfoldDirection.create(event);
+        return DirectionalSwitch.create(event);
     }
 }

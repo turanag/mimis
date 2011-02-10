@@ -6,7 +6,7 @@ import pm.Action;
 import pm.Button;
 import pm.Macro;
 import pm.Target;
-import pm.device.javainput.EightfoldDirection;
+import pm.device.javainput.DirectionalSwitch;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.DeviceException;
 import pm.exception.MacroException;
@@ -46,6 +46,6 @@ public class Extreme3DDevice extends JavaInputDevice {
     }
 
     protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
-        return EightfoldDirection.create(event);
+        return DirectionalSwitch.create(event);
     }
 }

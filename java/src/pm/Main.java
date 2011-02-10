@@ -54,7 +54,7 @@ public class Main {
         //add(new ExampleDevice());
         add(new RumblepadDevice());
         //add(new Extreme3DDevice());
-        add(new JIntellitypeDevice());
+        //add(new JIntellitypeDevice());
         //add(new WiimoteDevice());
         for (Device device : deviceList) {
             device.start();

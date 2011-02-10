@@ -14,7 +14,15 @@ public enum Action {
     EXIT ("exit"),
     PLAY ("play"),
     PAUSE ("pause"),
-    RESUME ("resume");
+    RESUME ("resume"),
+    NEXT ("next"),
+    PREVIOUS ("previous"),
+    FORWARD ("forward"),
+    REWIND ("rewind"),
+    MUTE ("mute"),
+    VOLUME_UP ("volumeUp"),
+    VULUME_DOWN ("volumeDown");
+    
     
     protected String action;
     protected Target target;
