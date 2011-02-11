@@ -9,7 +9,7 @@ import pm.exception.MacroException;
 import pm.macro.Active;
 import pm.macro.Event;
 
-public class MacroListener extends ActionProvider {
+public class MacroListener {
     public ArrayList<Macro> macroList;
     public HashMap<Macro, Action> actionMap;
     public ArrayList<Active> activeList;
@@ -37,7 +37,7 @@ public class MacroListener extends ActionProvider {
         for (Active active : activeList) {
             if (active.next(event)) {
                 if (active.last()) {
-                    add(actionMap.get(active.getMacro()));
+                    ActionProvider.add(actionMap.get(active.getMacro()));
                     removeList.add(active);
                 }
             } else {

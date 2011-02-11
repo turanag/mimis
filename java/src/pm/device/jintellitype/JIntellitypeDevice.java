@@ -11,6 +11,7 @@ import pm.Target;
 import pm.device.Device;
 import pm.exception.EventException;
 import pm.exception.MacroException;
+import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
 
@@ -24,13 +25,12 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         Hotkey.initialise(hotkeyList, jit);
     }
 
-    public void start() {
-        super.start();
+    public void initialise() throws DeviceInitialiseException {
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         try {
             add(
-                new Hotkey(HotkeyButton.CTRL, 'x'),
+                new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
                 Action.EXIT.setTarget(Target.MAIN));
             add(
                 new Press(CommandButton.VOLUME_UP),

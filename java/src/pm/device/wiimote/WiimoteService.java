@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import pm.exception.DeviceException;
-import pm.exception.device.JavaInputDeviceNotFoundException;
+import pm.exception.device.javainput.JavaInputDeviceSpecificException;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.GenericEvent;
@@ -54,7 +54,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
                 return wiimote;
             }
         }
-        throw new JavaInputDeviceNotFoundException();
+        throw new JavaInputDeviceSpecificException();
     }
 
     public Wiimote getWiimote(GenericEvent event) {

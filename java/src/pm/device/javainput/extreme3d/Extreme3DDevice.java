@@ -1,30 +1,26 @@
 package pm.device.javainput.extreme3d;
 
-import de.hardcode.jxinput.event.JXInputButtonEvent;
-import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import pm.Action;
 import pm.Button;
 import pm.Macro;
 import pm.Target;
-import pm.device.javainput.DirectionalSwitch;
+import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
-import pm.exception.DeviceException;
 import pm.exception.MacroException;
+import pm.exception.device.DeviceInitialiseException;
 import pm.exception.event.UnknownButtonException;
 import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public class Extreme3DDevice extends JavaInputDevice {
     protected static final String NAME = "Logitech Extreme 3D";
 
-    public Extreme3DDevice() throws DeviceException {
-        super(NAME);
-    }
-
-    public void start() {
-        super.start();
+    public void initialise() throws DeviceInitialiseException {
+        super.initialise(NAME);
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),
@@ -46,6 +42,6 @@ public class Extreme3DDevice extends JavaInputDevice {
     }
 
     protected Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException {
-        return DirectionalSwitch.create(event);
+        return DirectionButton.create(event);
     }
 }

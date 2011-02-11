@@ -2,8 +2,8 @@ package pm.application.Winamp;
 
 import pm.Action;
 import pm.Application;
-import pm.exception.ApplicationException;
-import pm.exception.application.ApplicationStartException;
+import pm.exception.application.ApplicationExitException;
+import pm.exception.application.ApplicationInitialiseException;
 
 import com.qotsa.exception.InvalidHandle;
 import com.qotsa.exception.InvalidParameter;
@@ -13,20 +13,24 @@ public class WinampApplication extends Application {
     protected boolean muted;
     protected int volume;
 
-    public void start() throws ApplicationException {
+    public void initialise() throws ApplicationInitialiseException {
         try {
             WinampController.run();
-            volume = WinampController.getVolume();
+            volume = 0; // UnsatisfiedLinkError: com.qotsa.jni.controller.JNIWinamp.getVolume()I
             muted = volume == 0;
         } catch (Exception e) {
-            throw new ApplicationStartException();
+            throw new ApplicationInitialiseException();
         }
     }
 
-    public void exit() {
+    public void exit() throws ApplicationExitException {
+        System.out.println("Exit WinampApplication");
+        super.exit();
         try {
-            WinampController.exit();
-        } catch (InvalidHandle e) {}
+            WinampController.exit(); // Todo: wachten totdat ook daadwerkelijk gestart? Anders crashed Winamp.
+        } catch (InvalidHandle e) {
+            throw new ApplicationExitException();
+        }
     }
 
     protected void action(Action action) {

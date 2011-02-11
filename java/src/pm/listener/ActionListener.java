@@ -13,22 +13,25 @@ public abstract class ActionListener implements Runnable {
 
     public ActionListener() {
         actionQueue = new ConcurrentLinkedQueue<Action>();
+        run = true;
     }
 
-    public void start() throws Exception {
+    public void start() {
         new Thread(this).start();
     }
 
     public void run() {
-        run = true;
         while (run) {
             if (actionQueue.isEmpty()) {
                 sleep(SLEEP);
             } else {
-                Action action = actionQueue.poll();
-                action(action);
+                action(actionQueue.poll());
             }
         }
+    }
+
+    public void stop() {
+        run = false;
     }
 
     public void add(Action action) {

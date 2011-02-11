@@ -4,7 +4,7 @@ import pm.Button;
 import pm.exception.event.UnknownDirectionException;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
-public enum DirectionalSwitch implements Button {
+public enum DirectionButton implements Button {
     NORTH     (0),
     NORTHEAST (45),
     EAST      (90),
@@ -16,7 +16,7 @@ public enum DirectionalSwitch implements Button {
 
     protected int code;
 
-    private DirectionalSwitch(int code) {
+    private DirectionButton(int code) {
         this.code = code;
     }
 
@@ -24,8 +24,8 @@ public enum DirectionalSwitch implements Button {
         return code;
     }
 
-    public static DirectionalSwitch create(int angle) throws UnknownDirectionException  {
-        for (DirectionalSwitch button : DirectionalSwitch.values()) {
+    public static DirectionButton create(int angle) throws UnknownDirectionException  {
+        for (DirectionButton button : DirectionButton.values()) {
             if (button.getCode() == angle) {
                 return button;
             }
@@ -33,7 +33,7 @@ public enum DirectionalSwitch implements Button {
         throw new UnknownDirectionException();
     }
 
-    public static DirectionalSwitch create(JXInputDirectionalEvent event) throws UnknownDirectionException {
+    public static DirectionButton create(JXInputDirectionalEvent event) throws UnknownDirectionException {
         return create(event.getDirectional().getDirection() / 100);      
     }
 }

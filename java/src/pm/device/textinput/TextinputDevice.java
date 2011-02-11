@@ -15,7 +15,7 @@ public class TextinputDevice extends Device {
         run = true;
     }
     
-    public void start() {
+    public void initialise() {
         while(run) {
             String textinput = textinputScanner.next();
             if(textinput != null) {

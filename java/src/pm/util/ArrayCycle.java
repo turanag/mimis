@@ -22,7 +22,7 @@ public class ArrayCycle<E> extends ArrayList<E> {
         if (++index >= size()) {
             index = 0;
         }
-        return get(index);
+        return size() == 0 ? null : get(index);
     }
 
     public E reset() {

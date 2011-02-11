@@ -8,9 +8,9 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 import pm.Button;
 import pm.device.Device;
-import pm.exception.DeviceException;
 import pm.exception.EventException;
-import pm.exception.device.JavaInputDeviceNotFoundException;
+import pm.exception.device.DeviceInitialiseException;
+import pm.exception.device.DeviceNotFoundException;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
 
@@ -18,28 +18,17 @@ public abstract class JavaInputDevice extends Device {
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 
-    protected JavaInputDevice(String name) throws DeviceException {
-        super();
-        javaInputListener = new JavaInputListener(this, getDevice(name));
-   }
-
-    public void start() {
-        javaInputListener.start();
+    public void initialise(String name) throws DeviceInitialiseException {
+        try {
+            javaInputListener = new JavaInputListener(this, getDevice(name));
+            javaInputListener.start();
+        } catch (DeviceNotFoundException e) {
+            throw new DeviceInitialiseException();
+        }        
     }
 
     public void exit() {
         javaInputListener.exit();
-    }
-
-    public static JXInputDevice getDevice(String name) throws DeviceException {
-        int numberOfDevices = JXInputManager.getNumberOfDevices();
-        for (int i = 0; i < numberOfDevices; ++i) {
-            JXInputDevice device = JXInputManager.getJXInputDevice(i);
-            if (device.getName().startsWith(name)) {
-                return device;
-            }
-        }
-        throw new JavaInputDeviceNotFoundException();
     }
 
     public void processEvent(JXInputAxisEvent event) {
@@ -73,4 +62,15 @@ public abstract class JavaInputDevice extends Device {
 
     protected abstract Button getButton(JXInputButtonEvent event) throws EventException;
     protected abstract Button getButton(JXInputDirectionalEvent event) throws EventException;
+
+    public static JXInputDevice getDevice(String name) throws DeviceNotFoundException {
+        int numberOfDevices = JXInputManager.getNumberOfDevices();
+        for (int i = 0; i < numberOfDevices; ++i) {
+            JXInputDevice device = JXInputManager.getJXInputDevice(i);
+            if (device.getName().startsWith(name)) {
+                return device;
+            }
+        }
+        throw new DeviceNotFoundException();
+    }
 }

@@ -2,6 +2,7 @@ package pm.application.iTunes;
 
 import pm.Action;
 import pm.Application;
+import pm.exception.application.ApplicationExitException;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;
@@ -20,14 +21,19 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         iTunes = new iTunes();
     }
 
-    public void start() throws Exception {
+    public void initialise() {
         iTunes.connect();
         iTunes.addEventHandler(this);
-        super.start();
     }
 
-    public void exit() {
-        iTunes.quit();
+    public void exit() throws ApplicationExitException {
+        System.out.println("Exit iTunesApplication");
+        super.exit();
+        try {
+            iTunes.quit(); // Todo: wachten totdat ook daadwerkelijk gestart? Anders wordt iTunes niet afgesloten.
+        } catch (Exception e) {
+            throw new ApplicationExitException();
+        }
     }
  
     protected void action(Action action) {

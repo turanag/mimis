@@ -11,8 +11,7 @@ public class ActionProvider {
         ActionProvider.actionQueue = actionQueue;        
     }
 
-    public void add(Action action) {
-        System.out.println(action);
+    public static void add(Action action) {
         actionQueue.add(action);
     }
 }

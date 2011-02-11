@@ -24,8 +24,8 @@ public class WiimoteDevice extends Device {
         wiimote = wiimoteService.getDevice(this);
     }
 
-    public void start() {
-        super.start();
+    public void initialise() {
+        super.initialise();
         try {
             add(
                 new Press(WiimoteButton.A),

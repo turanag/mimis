@@ -18,7 +18,7 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEventListener;
 import de.hardcode.jxinput.event.JXInputEventManager;
 
-public class JavaInputListener extends Thread implements JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
+public class JavaInputListener implements Runnable, JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
     protected static final int SLEEP = 100;
 
     protected boolean run;
@@ -68,6 +68,10 @@ public class JavaInputListener extends Thread implements JXInputAxisEventListene
 
     public void changed(JXInputDirectionalEvent event) {
         directionalEventQueue.add(event);        
+    }
+
+    public void start() {
+        new Thread(this).start();
     }
 
     public void run() {
