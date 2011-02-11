@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.application.Application;
+import pm.application.Winamp.WinampApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
@@ -62,6 +63,7 @@ public class Main {
     
         add(new VoorbeeldApplication());
         add(new iTunesApplication());
+        add(new WinampApplication());
         applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();

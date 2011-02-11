@@ -69,7 +69,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         if (connected) {
             iTunes.fastForward();
             //sleep(SEEK_TIME);
-            //resume();
+            resume();
         }
     }
     
@@ -77,7 +77,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         if (connected) {
             iTunes.rewind();
             //sleep(SEEK_TIME);
-            //resume();
+            resume();
         }
     }
     
