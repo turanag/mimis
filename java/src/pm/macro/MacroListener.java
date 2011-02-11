@@ -1,13 +1,12 @@
-package pm.listener;
+package pm.macro;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import pm.Action;
 import pm.Macro;
+import pm.action.ActionProvider;
 import pm.exception.MacroException;
-import pm.macro.Active;
-import pm.macro.Event;
 
 public class MacroListener {
     public ArrayList<Macro> macroList;

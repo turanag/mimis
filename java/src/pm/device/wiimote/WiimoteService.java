@@ -3,8 +3,7 @@ package pm.device.wiimote;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import pm.exception.DeviceException;
-import pm.exception.device.javainput.JavaInputDeviceSpecificException;
+import pm.exception.device.DeviceNotFoundException;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.GenericEvent;
@@ -43,7 +42,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
         definitiveShutdown();
     }
 
-    public Wiimote getDevice(WiimoteDevice wiimoteDevice) throws DeviceException {
+    public Wiimote getDevice(WiimoteDevice wiimoteDevice) throws DeviceNotFoundException {
         Wiimote[] wiimoteArray = getWiimotes(1, false);
         for (Wiimote wiimote : wiimoteArray) {
             int id = wiimote.getId();
@@ -54,7 +53,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
                 return wiimote;
             }
         }
-        throw new JavaInputDeviceSpecificException();
+        throw new DeviceNotFoundException();
     }
 
     public Wiimote getWiimote(GenericEvent event) {

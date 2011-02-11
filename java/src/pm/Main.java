@@ -2,6 +2,8 @@ package pm;
 
 import java.util.ArrayList;
 
+import pm.action.ActionListener;
+import pm.action.ActionProvider;
 import pm.application.Winamp.WinampApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.device.Device;
@@ -11,8 +13,6 @@ import pm.exception.action.TargetNotSetException;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.listener.ActionListener;
-import pm.listener.ActionProvider;
 import pm.util.ArrayCycle;
 
 public class Main extends ActionListener {

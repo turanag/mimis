@@ -3,8 +3,8 @@ package pm.device.wiimote;
 import pm.Action;
 import pm.Target;
 import pm.device.Device;
-import pm.exception.DeviceException;
 import pm.exception.MacroException;
+import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Press;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
@@ -16,16 +16,12 @@ public class WiimoteDevice extends Device {
 
     protected Wiimote wiimote;
 
-    {
+    public WiimoteDevice() {
         WiimoteDevice.wiimoteService = new WiimoteService();
     }
 
-    public WiimoteDevice() throws DeviceException {
+    public void initialise() throws DeviceInitialiseException {
         wiimote = wiimoteService.getDevice(this);
-    }
-
-    public void initialise() {
-        super.initialise();
         try {
             add(
                 new Press(WiimoteButton.A),
