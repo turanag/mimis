@@ -48,7 +48,7 @@ public class RumblepadDevice extends JavaInputDevice {
                 Action.REWIND.setTarget(Target.APPLICATION));
             add(
                 new Press(RumblepadButton.NINE),
-                Action.VULUME_DOWN.setTarget(Target.APPLICATION));
+                Action.VOLUME_DOWN.setTarget(Target.APPLICATION));
             add(
                 new Press(RumblepadButton.TEN),
                 Action.VOLUME_UP.setTarget(Target.APPLICATION));

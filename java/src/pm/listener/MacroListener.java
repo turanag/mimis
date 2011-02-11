@@ -9,7 +9,7 @@ import pm.exception.MacroException;
 import pm.macro.Active;
 import pm.macro.Event;
 
-public class MacroListener extends ActionListener {
+public class MacroListener extends ActionProvider {
     public ArrayList<Macro> macroList;
     public HashMap<Macro, Action> actionMap;
     public ArrayList<Active> activeList;

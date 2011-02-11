@@ -1,6 +1,7 @@
 package pm.application.iTunes;
 
-import pm.application.Application;
+import pm.Action;
+import pm.Application;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;
@@ -8,168 +9,68 @@ import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
-    
-    protected final int VOLUME_CHANGE_RATE = 5;
-    protected final int SEEK_TIME = 1000;
-    
+    protected static final int POSTION_CHANGE_RATE = 5;
+    protected static final int VOLUME_CHANGE_RATE = 5;
+    protected static final int SEEK_TIME = 1000;
+
     protected iTunes iTunes;
-    protected boolean connected;
 
     public iTunesApplication() {
+        super();
         iTunes = new iTunes();
-        connected = false;
     }
-    
-    public void start() {
-        if (!connected) {
-            iTunes.connect();
-            iTunes.addEventHandler(this);
-            connected = true;
-        }
+
+    public void start() throws Exception {
+        iTunes.connect();
+        iTunes.addEventHandler(this);
+        super.start();
     }
 
     public void exit() {
-        if (connected) {
-            iTunes.quit();
-        }
+        iTunes.quit();
+    }
+ 
+    protected void action(Action action) {
+        System.out.println("iTunesApplication: " + action);
+        switch (action) {
+            case PLAY:
+                iTunes.playPause();
+            case NEXT:
+                iTunes.nextTrack();
+                break;
+            case PREVIOUS:
+                iTunes.previousTrack();
+                break;
+            case FORWARD:
+                iTunes.setPlayerPosition(iTunes.getPlayerPosition() + POSTION_CHANGE_RATE);
+                break;
+            case REWIND:
+                iTunes.setPlayerPosition(iTunes.getPlayerPosition() - POSTION_CHANGE_RATE);
+                break;
+            case MUTE:
+                iTunes.toggleMute();
+                break;
+            case VOLUME_UP:
+                iTunes.setSoundVolume(getVolume() + VOLUME_CHANGE_RATE);
+                break;
+            case VOLUME_DOWN:
+                iTunes.setSoundVolume(getVolume() - VOLUME_CHANGE_RATE);
+                break;
+        }        
     }
 
-    /* Actions */
-    public void play() {
-        if (connected) {
-            iTunes.playPause();
-        }
+    protected int getVolume() {
+        return iTunes.getSoundVolume();
     }
 
-    public void pause() {
-        if (connected) {
-            iTunes.playPause();
-        }
-    }
-
-    public void resume() {
-        if (connected) {
-            iTunes.resume();
-        }
-    }
-
-    public void next() {
-        if (connected) {
-            iTunes.nextTrack();
-        }
-    }
-    
-    public void previous() {
-        if (connected) {
-            iTunes.previousTrack();
-        }
-    }
-    
-    public void forward() {
-        if (connected) {
-            iTunes.fastForward();
-            //sleep(SEEK_TIME);
-            resume();
-        }
-    }
-    
-    public void rewind() {
-        if (connected) {
-            iTunes.rewind();
-            //sleep(SEEK_TIME);
-            resume();
-        }
-    }
-    
-    protected void sleep(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void mute() {
-        if (connected) {
-            iTunes.setMute(iTunes.getMute());
-        }
-    }
-    
-    protected int volume() {
-        if (connected) {
-            return iTunes.getSoundVolume();
-        } else {
-            return 0;
-        }
-    }
-    
-    public void volumeUp() {
-        if (connected) {
-            iTunes.setSoundVolume(volume() + VOLUME_CHANGE_RATE);
-        }
-    }
-    
-    public void volumeDown() {
-        if (connected) {
-            iTunes.setSoundVolume(volume() - VOLUME_CHANGE_RATE);
-        }
-    }
-
-    
-    
     /* iTunesEventInterface => naar eigen class? */
-    @Override
-    public void onDatabaseChangedEvent(int[][] deletedObjectIDs,
-            int[][] changedObjectIDs) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onPlayerPlayEvent(ITTrack iTrack) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onPlayerStopEvent(ITTrack iTrack) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onCOMCallsDisabledEvent(ITCOMDisabledReason reason) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onCOMCallsEnabledEvent() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onQuittingEvent() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onAboutToPromptUserToQuitEvent() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void onSoundVolumeChangedEvent(int newVolume) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
+    public void onPlayerPlayEvent(ITTrack iTrack) {}
+    public void onPlayerStopEvent(ITTrack iTrack) {}
+    public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {}
+    public void onCOMCallsDisabledEvent(ITCOMDisabledReason reason) {}
+    public void onCOMCallsEnabledEvent() {}
+    public void onQuittingEvent() {}
+    public void onAboutToPromptUserToQuitEvent() {}
+    public void onSoundVolumeChangedEvent(int newVolume) {}
 }

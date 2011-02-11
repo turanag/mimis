@@ -1,54 +1,26 @@
 package pm;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import pm.application.Application;
-import pm.application.Winamp.WinampApplication;
+import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
-import pm.application.voorbeeld.VoorbeeldApplication;
 import pm.device.Device;
-import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
-import pm.device.jintellitype.JIntellitypeDevice;
-import pm.device.wiimote.WiimoteDevice;
-import pm.exception.ActionException;
-import pm.exception.action.NotImplementedActionException;
-import pm.exception.action.UnknownTargetException;
+import pm.exception.action.TargetNotSetException;
 import pm.listener.ActionListener;
+import pm.listener.ActionProvider;
 import pm.util.ArrayCycle;
 
-public class Main {
-    protected static final int SLEEP = 100;
-
+public class Main extends ActionListener {
     ArrayCycle<Application> applicationCycle;
     ArrayList<Device> deviceList;
-    Queue<Action> actionQueue;
 
     boolean run;
 
     public Main() {
+        super();
         applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
-        actionQueue = new ConcurrentLinkedQueue<Action>();
-        ActionListener.initialise(actionQueue);
-    }
-
-    public void add(Application application) {
-        applicationCycle.add(application);
-    }
-
-    public boolean remove(Application application) {
-        return applicationCycle.remove(application);
-    }
-
-    public void add(Device device) {
-        deviceList.add(device);
-    }
-
-    public boolean remove(Device device) {
-        return deviceList.remove(device);
+        ActionProvider.initialise(actionQueue);
     }
 
     public void start() throws Exception {
@@ -60,47 +32,15 @@ public class Main {
         for (Device device : deviceList) {
             device.start();
         }
-    
-        add(new VoorbeeldApplication());
+
+        add(new ExampleApplication());
         add(new iTunesApplication());
-        add(new WinampApplication());
+        //add(new WinampApplication());
         applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();
         }
         run();
-    }
-
-    public void run() throws ActionException {
-        run = true;
-        while (run) {
-            if (actionQueue.isEmpty()) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException e) {}
-            } else {
-                Action action = actionQueue.poll();
-                Object object;
-                System.out.println("Action: " + action + " Target: " + action.getTarget());
-                switch (action.getTarget()) {
-                    case MAIN:
-                        object = this;
-                        break;
-                    case APPLICATION:
-                        object = applicationCycle.current();
-                        System.out.println("Current application: " + object.getClass());
-                        break;
-                    default:
-                        throw new UnknownTargetException();
-                }
-                try {
-                    action.invoke(object);
-                } catch (NotImplementedActionException e) {
-                    e.printStackTrace();
-                    // Todo: log.write(...)
-                }
-            }
-        }
     }
 
     public void exit() {
@@ -112,6 +52,45 @@ public class Main {
             application.exit();
         }
         System.out.println("Main exit...");
+    }
+
+    protected void action(Action action) {
+        try {
+            System.out.println("Action: " + action + " Target: " + action.getTarget());
+            switch (action.getTarget()) {
+                case MAIN:
+                    switch (action) {
+                        case EXIT:
+                            exit();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case APPLICATION:
+                    applicationCycle.current().add(action);
+                    break;
+                default:
+                    //throw new UnknownTargetException();
+            }
+        } catch (TargetNotSetException e) {}
+    }
+
+    /* Add / remove methods */
+    protected void add(Application application) {
+        applicationCycle.add(application);
+    }
+
+    protected boolean remove(Application application) {
+        return applicationCycle.remove(application);
+    }
+
+    protected void add(Device device) {
+        deviceList.add(device);
+    }
+
+    protected boolean remove(Device device) {
+        return deviceList.remove(device);
     }
 
     public static void main(String[] args) {

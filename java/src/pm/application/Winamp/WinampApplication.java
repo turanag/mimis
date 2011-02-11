@@ -1,102 +1,69 @@
 package pm.application.Winamp;
 
-import pm.application.Application;
+import pm.Action;
+import pm.Application;
+import pm.exception.ApplicationException;
+import pm.exception.application.ApplicationStartException;
 
 import com.qotsa.exception.InvalidHandle;
 import com.qotsa.exception.InvalidParameter;
 import com.qotsa.jni.controller.WinampController;
 
 public class WinampApplication extends Application {
-
-    protected boolean connected;
-    
     protected boolean muted;
     protected int volume;
 
-    public WinampApplication() {
-        connected = false;
-    }
-    
-    public void start() throws Exception {
-        if (!connected) {
+    public void start() throws ApplicationException {
+        try {
             WinampController.run();
-            connected = true;
+            volume = WinampController.getVolume();
+            muted = volume == 0;
+        } catch (Exception e) {
+            throw new ApplicationStartException();
         }
     }
 
-    public void exit() throws InvalidHandle {
-        if (connected) {
+    public void exit() {
+        try {
             WinampController.exit();
-            connected = false;
-        }
+        } catch (InvalidHandle e) {}
     }
 
-    /* Actions */
-    public void play() throws InvalidHandle {
-        if (connected) {
-            WinampController.play();
-        }
-    }
-
-    public void pause() throws InvalidHandle {
-        if (connected) {
-            WinampController.pause();
-        }
-    }
-
-    public void resume() throws InvalidHandle {
-        if (connected) {
-            WinampController.resume();
-        }
-    }
-
-    public void next() throws InvalidHandle {
-        if (connected) {
-            WinampController.nextTrack();
-        }
-    }
-    
-    public void previous() throws InvalidHandle {
-        if (connected) {
-            WinampController.previousTrack();
-        }
-    }
-    
-    public void forward() throws InvalidHandle {
-        if (connected) {
-            WinampController.fwd5Secs();
-        }
-    }
-    
-    public void rewind() throws InvalidHandle {
-        if (connected) {
-            WinampController.rew5Secs();
-        }
-    }
-    
-    
-    public void mute() throws InvalidHandle, InvalidParameter {
-        if (connected) {
-            if(muted) {
-                WinampController.setVolume(volume);
-                muted = false;
-            } else {
-                volume = WinampController.getVolume();
-                WinampController.setVolume(0);
-                muted = true;
+    protected void action(Action action) {
+        System.out.println("WinampApplication: " + action);
+        try {
+            switch (action) {
+                case PLAY:
+                    WinampController.play();
+                case NEXT:
+                    WinampController.nextTrack();
+                    break;
+                case PREVIOUS:
+                    WinampController.previousTrack();
+                    break;
+                case FORWARD:
+                    WinampController.fwd5Secs();
+                    break;
+                case REWIND:
+                    WinampController.rew5Secs();
+                    break;
+                case MUTE:
+                    if(muted) {
+                        WinampController.setVolume(volume);
+                    } else {
+                        volume = WinampController.getVolume();
+                        WinampController.setVolume(0);
+                    }
+                    muted = !muted;
+                    break;
+                case VOLUME_UP:
+                    WinampController.increaseVolume();
+                    break;
+                case VOLUME_DOWN:
+                    WinampController.decreaseVolume();
+                    break;
             }
-        }
-    }
-    
-    public void volumeUp() throws InvalidHandle {
-        if (connected) {
-            WinampController.increaseVolume();
-        }
-    }
-    
-    public void volumeDown() throws InvalidHandle {
-        if (connected) {
-            WinampController.decreaseVolume();
-        }
+        } catch (InvalidHandle e) {
+        } catch (InvalidParameter e) {}
     }
 }

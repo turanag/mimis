@@ -334,7 +334,14 @@ public class iTunes {
     public boolean getMute() {
         return iTunes.getPropertyAsBoolean("Mute");
     }
-    
+
+    /**
+     * Toggle the mute state.
+     */
+    public void toggleMute() {
+        setMute(!getMute());
+    }
+
     /**
      * Returns the current player state.
      * @return Returns the current player state.
