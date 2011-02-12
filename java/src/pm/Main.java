@@ -6,6 +6,7 @@ import pm.application.Winamp.WinampApplication;
 import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.device.gui.GUIDevice;
+import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
@@ -33,7 +34,7 @@ public class Main extends TaskListener {
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
-        //add(new RumblepadDevice());
+        add(new RumblepadDevice());
         //add(new GUIDevice());
         for (Device device : deviceList) {
             device.initialise();
@@ -41,8 +42,8 @@ public class Main extends TaskListener {
 
         add(new ExampleApplication());
         //add(new WinampApplication());
-        //add(new iTunesApplication());
-        //applicationCycle.next();
+        add(new iTunesApplication());
+        applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();
         }
