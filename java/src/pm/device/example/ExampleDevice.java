@@ -1,8 +1,8 @@
 package pm.device.example;
 
 import pm.Action;
+import pm.Device;
 import pm.Target;
-import pm.device.Device;
 
 public class ExampleDevice extends Device {
     public void initialise() {

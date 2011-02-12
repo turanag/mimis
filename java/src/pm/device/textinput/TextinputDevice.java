@@ -2,7 +2,7 @@ package pm.device.textinput;
 
 import java.util.Scanner;
 
-import pm.device.Device;
+import pm.Device;
 
 public class TextinputDevice extends Device {
     static final int SLEEP = 50;

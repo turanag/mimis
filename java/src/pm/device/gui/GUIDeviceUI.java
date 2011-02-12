@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import pm.Action;
 import pm.Target;
-import pm.action.ActionProvider;
+import pm.task.ActionProvider;
 
 import layout.TableLayout;
 import layout.TableLayoutConstraints;

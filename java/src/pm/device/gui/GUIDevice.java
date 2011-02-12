@@ -1,6 +1,6 @@
 package pm.device.gui;
 
-import pm.device.Device;
+import pm.Device;
 
 public class GUIDevice extends Device {
     

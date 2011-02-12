@@ -2,20 +2,19 @@ package pm;
 
 import java.util.ArrayList;
 
-import pm.action.ActionListener;
-import pm.action.ActionProvider;
 import pm.application.Winamp.WinampApplication;
+import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
-import pm.device.Device;
 import pm.device.gui.GUIDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
 import pm.exception.action.TargetNotSetException;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.task.TaskListener;
 import pm.util.ArrayCycle;
 
-public class Main extends ActionListener {
+public class Main extends TaskListener {
     //protected String[] deviceClassArray;
     protected ArrayCycle<Application> applicationCycle;
     protected ArrayList<Device> deviceList;
@@ -29,20 +28,19 @@ public class Main extends ActionListener {
             "pm.device.wiimote.WiimoteDevice"};*/
         applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
-        ActionProvider.initialise(actionQueue);
     }
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
         //add(new RumblepadDevice());
-        add(new GUIDevice());
+        //add(new GUIDevice());
         for (Device device : deviceList) {
             device.initialise();
         }
-        //add(new ExampleApplication());
+
+        add(new ExampleApplication());
         //add(new WinampApplication());
-        add(new iTunesApplication());
-        
+        //add(new iTunesApplication());
         //applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();
@@ -66,25 +64,29 @@ public class Main extends ActionListener {
     }
 
     protected void action(Action action) {
-        try {
-            System.out.println("Action: " + action + " Target: " + action.getTarget());
-            switch (action.getTarget()) {
-                case MAIN:
-                    switch (action) {
-                        case EXIT:
-                            exit();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case APPLICATION:
-                    applicationCycle.current().add(action);
-                    break;
-                default:
-                    //throw new UnknownTargetException();
-            }
-        } catch (TargetNotSetException e) {}
+        System.out.println("Main: " + action);
+        switch (action) {
+            case EXIT:
+                exit();
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected void task(Task task) {
+        Action action = task.getAction();
+        Target target = task.getTarget();
+        System.out.println("Action: " + action + " Target: " + target);
+        switch (target) {
+            case MAIN:
+                action(action);
+                break;
+            case APPLICATION:
+                applicationCycle.current().add(task);
+                break;
+        }
+
     }
 
     /*protected void addDevices() throws DeviceInitialiseException {

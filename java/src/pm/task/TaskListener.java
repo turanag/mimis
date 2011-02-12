@@ -1,18 +1,19 @@
-package pm.action;
+package pm.task;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import pm.Action;
+import pm.Task;
 
-public abstract class ActionListener implements Runnable {
+public abstract class TaskListener implements Runnable {
     protected static final int SLEEP = 100;
 
-    protected Queue<Action> actionQueue;
+    protected Queue<Task> taskQueue;
     protected boolean run;
 
-    public ActionListener() {
-        actionQueue = new ConcurrentLinkedQueue<Action>();
+    public TaskListener() {
+        taskQueue = new ConcurrentLinkedQueue<Task>();
+        TaskProvider.initialise(taskQueue);
         run = true;
     }
 
@@ -22,10 +23,10 @@ public abstract class ActionListener implements Runnable {
 
     public void run() {
         while (run) {
-            if (actionQueue.isEmpty()) {
+            if (taskQueue.isEmpty()) {
                 sleep(SLEEP);
             } else {
-                action(actionQueue.poll());
+                task(taskQueue.poll());
             }
         }
     }
@@ -34,8 +35,8 @@ public abstract class ActionListener implements Runnable {
         run = false;
     }
 
-    public void add(Action action) {
-        actionQueue.add(action);
+    public void add(Task task) {
+        taskQueue.add(task);
     }
 
     protected void sleep(int time) {
@@ -44,5 +45,5 @@ public abstract class ActionListener implements Runnable {
         } catch (InterruptedException e) {}
     }
 
-    abstract protected void action(Action action);
+    abstract protected void task(Task task);
 }

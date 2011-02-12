@@ -1,8 +1,8 @@
 package pm.device.wiimote;
 
 import pm.Action;
+import pm.Device;
 import pm.Target;
-import pm.device.Device;
 import pm.exception.MacroException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Press;

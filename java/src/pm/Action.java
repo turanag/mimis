@@ -1,7 +1,5 @@
 package pm;
 
-import pm.exception.action.TargetNotSetException;
-
 public enum Action {
     START ("start"),
     TEST ("test"),
@@ -15,25 +13,11 @@ public enum Action {
     REWIND ("rewind"),
     MUTE ("mute"),
     VOLUME_UP ("volumeUp"),
-    VOLUME_DOWN ("volumeDown");
-    
-    
+    VOLUME_DOWN ("volumeDown");    
+
     protected String action;
-    protected Target target;
 
-    Action(String action) {
+    private Action(String action) {
         this.action = action;
-    }
-
-    public Action setTarget(Target target) {
-        this.target = target;
-        return this;
-    }
-
-    public Target getTarget() throws TargetNotSetException {
-        if (target == null) {
-            throw new TargetNotSetException();
-        }
-        return target;
     }
 }

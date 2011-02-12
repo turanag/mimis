@@ -7,8 +7,9 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import pm.Action;
+import pm.Device;
 import pm.Target;
-import pm.device.Device;
+import pm.Task;
 import pm.exception.EventException;
 import pm.exception.MacroException;
 import pm.exception.device.DeviceInitialiseException;
@@ -31,10 +32,10 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         try {
             add(
                 new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
-                Action.EXIT.setTarget(Target.MAIN));
+                new Task(Action.EXIT, Target.MAIN));
             add(
-                new Press(CommandButton.VOLUME_UP),
-                Action.EXIT.setTarget(Target.MAIN));
+                new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 't'),
+                new Task(Action.TEST, Target.MAIN));
         } catch (MacroException e) {
             e.printStackTrace();
         }

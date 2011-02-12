@@ -7,7 +7,7 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 import pm.Button;
-import pm.device.Device;
+import pm.Device;
 import pm.exception.EventException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.exception.device.DeviceNotFoundException;
