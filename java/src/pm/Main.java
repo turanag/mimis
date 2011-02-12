@@ -7,7 +7,7 @@ import pm.action.ActionProvider;
 import pm.application.Winamp.WinampApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.device.Device;
-import pm.device.javainput.rumblepad.RumblepadDevice;
+import pm.device.gui.GUIDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
 import pm.exception.action.TargetNotSetException;
 import pm.exception.application.ApplicationExitException;
@@ -34,12 +34,13 @@ public class Main extends ActionListener {
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
-        add(new RumblepadDevice());
+        //add(new RumblepadDevice());
+        add(new GUIDevice());
         for (Device device : deviceList) {
             device.initialise();
         }
         //add(new ExampleApplication());
-        add(new WinampApplication());
+        //add(new WinampApplication());
         add(new iTunesApplication());
         
         //applicationCycle.next();

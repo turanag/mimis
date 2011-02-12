@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jxinput.jar"/>
 	<classpathentry kind="lib" path="lib/jacob-1.15-M3.jar"/>
+	<classpathentry kind="lib" path="lib/TableLayout.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
