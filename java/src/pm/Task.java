@@ -1,8 +1,8 @@
 package pm;
 
 public class Task {
-    Action action;
-    Target target;
+    protected Action action;
+    protected Target target;
 
     public Task(Action action, Target target) {
         this.action = action;

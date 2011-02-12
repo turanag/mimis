@@ -12,6 +12,10 @@ import pm.macro.event.Release;
 public class Macro {
     protected Event[] eventArray;
 
+    public Macro(Event event) {
+        eventArray = new Event[]{event};
+    }
+
     public Macro(Event... eventArray) throws MacroException {
         ArrayList<Button> holdList = new ArrayList<Button>();
         ArrayList<Event> eventList = new ArrayList<Event>();

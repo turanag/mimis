@@ -13,8 +13,7 @@ public abstract class TaskListener implements Runnable {
 
     public TaskListener() {
         taskQueue = new ConcurrentLinkedQueue<Task>();
-        TaskProvider.initialise(taskQueue);
-        run = true;
+        run = false;
     }
 
     public void start() {
@@ -22,6 +21,7 @@ public abstract class TaskListener implements Runnable {
     }
 
     public void run() {
+        run = true;
         while (run) {
             if (taskQueue.isEmpty()) {
                 sleep(SLEEP);

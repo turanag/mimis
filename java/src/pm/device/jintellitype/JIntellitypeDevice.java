@@ -11,10 +11,10 @@ import pm.Device;
 import pm.Target;
 import pm.Task;
 import pm.exception.EventException;
-import pm.exception.MacroException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
+import pm.task.Continuous;
 
 public class JIntellitypeDevice extends Device implements HotkeyListener, IntellitypeListener {
     protected ArrayList<Hotkey> hotkeyList;
@@ -29,16 +29,16 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
     public void initialise() throws DeviceInitialiseException {
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
-        try {
-            add(
-                new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
-                new Task(Action.EXIT, Target.MAIN));
-            add(
-                new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 't'),
-                new Task(Action.TEST, Target.MAIN));
-        } catch (MacroException e) {
-            e.printStackTrace();
-        }
+        add(
+            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
+            new Task(Action.EXIT, Target.MAIN));
+        add(
+            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 't'),
+            new Task(Action.TEST, Target.MAIN));
+        add(
+            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'r'),
+            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 's'),
+            new Continuous(Action.REPEAT, Target.APPLICATION, 500));
     }
 
     public void onIntellitype(int command) {

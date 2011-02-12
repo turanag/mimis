@@ -5,8 +5,7 @@ import java.util.HashMap;
 
 import pm.Macro;
 import pm.Task;
-import pm.exception.MacroException;
-import pm.task.TaskProvider;
+import pm.task.TaskGatherer;
 
 public class MacroListener {
     public ArrayList<Macro> macroList;
@@ -24,10 +23,6 @@ public class MacroListener {
         taskMap.put(macro, task);
     }
 
-    public void add(Event event, Task task) throws MacroException {
-        add(new Macro(event), task);
-    }
-
     public void add(Event event) {
         for (Macro macro : macroList) {
             activeList.add(new Active(macro));
@@ -36,7 +31,8 @@ public class MacroListener {
         for (Active active : activeList) {
             if (active.next(event)) {
                 if (active.last()) {
-                    TaskProvider.add(taskMap.get(active.getMacro()));
+                    Task task = taskMap.get(active.getMacro());
+                    TaskGatherer.add(task);
                     removeList.add(active);
                 }
             } else {

@@ -7,10 +7,10 @@ import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
-import pm.exception.action.TargetNotSetException;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.task.TaskGatherer;
 import pm.task.TaskListener;
 import pm.util.ArrayCycle;
 
@@ -28,6 +28,7 @@ public class Main extends TaskListener {
             "pm.device.wiimote.WiimoteDevice"};*/
         applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
+        TaskGatherer.initialise(taskQueue);
     }
 
     public void initialise() throws DeviceInitialiseException {
@@ -66,10 +67,14 @@ public class Main extends TaskListener {
     protected void action(Action action) {
         System.out.println("Main: " + action);
         switch (action) {
+            case NEXT:
+                applicationCycle.next();
+                break;
+            case PREVIOUS:
+                applicationCycle.previous();
+                break;
             case EXIT:
                 exit();
-                break;
-            default:
                 break;
         }
     }
