@@ -1,37 +1,38 @@
-package pm.macro;
+package pm.macro.event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import pm.Macro;
 import pm.Task;
+import pm.macro.Active;
+import pm.macro.Event;
 import pm.task.TaskGatherer;
 
-public class MacroListener {
-    public ArrayList<Macro> macroList;
-    public HashMap<Macro, Task> taskMap;
+public class SequenceListener {
+    public ArrayList<Sequence> sequenceList;
+    public HashMap<Sequence, Task> taskMap;
     public ArrayList<Active> activeList;
 
-    public MacroListener() {
-        macroList = new ArrayList<Macro>();
-        taskMap = new HashMap<Macro, Task>();
+    public SequenceListener() {
+        sequenceList = new ArrayList<Sequence>();
+        taskMap = new HashMap<Sequence, Task>();
         activeList = new ArrayList<Active>();
     }
 
-    public void add(Macro macro, Task task) {
-        macroList.add(macro);
-        taskMap.put(macro, task);
+    public void add(Sequence sequence, Task task) {
+        sequenceList.add(sequence);
+        taskMap.put(sequence, task);
     }
 
     public void add(Event event) {
-        for (Macro macro : macroList) {
-            activeList.add(new Active(macro));
+        for (Sequence sequence : sequenceList) {
+            activeList.add(new Active(sequence));
         }
         ArrayList<Active> removeList = new ArrayList<Active>();
         for (Active active : activeList) {
             if (active.next(event)) {
                 if (active.last()) {
-                    Task task = taskMap.get(active.getMacro());
+                    Task task = taskMap.get(active.getSequence());
                     TaskGatherer.add(task);
                     removeList.add(active);
                 }

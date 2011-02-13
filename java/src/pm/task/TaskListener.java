@@ -41,7 +41,9 @@ public abstract class TaskListener implements Runnable {
 
     protected void sleep(int time) {
         try {
-            Thread.sleep(time);
+            if (time > 0) {
+                Thread.sleep(time);
+            }
         } catch (InterruptedException e) {}
     }
 

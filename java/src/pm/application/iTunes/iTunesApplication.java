@@ -10,7 +10,7 @@ import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
-    protected static final int POSTION_CHANGE_RATE = 5;
+    protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 5;
     protected static final int SEEK_TIME = 1000;
 

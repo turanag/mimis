@@ -1,26 +1,26 @@
 package pm.macro;
 
-import pm.Macro;
+import pm.macro.event.Sequence;
 
 public class Active {
-    protected Macro macro;
+    protected Sequence sequence;
     protected int step;
 
-    public Active(Macro macro) {
-        this.macro = macro;
+    public Active(Sequence sequence) {
+        this.sequence = sequence;
         step = -1;
     }
 
-    public Macro getMacro() {
-        return macro;
+    public Sequence getSequence() {
+        return sequence;
     }
 
     public boolean next(Event event) {
-        Event next = macro.get(++step);
+        Event next = sequence.get(++step);
         return next == null ? false : event.equals(next);
     }
 
     public boolean last() {
-        return step == macro.count() - 1;
+        return step == sequence.count() - 1;
     }
 }

@@ -3,37 +3,47 @@ package pm;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Event;
-import pm.macro.MacroListener;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
+import pm.macro.event.Sequence;
+import pm.macro.event.SequenceListener;
 import pm.task.Continuous;
 import pm.task.Stopper;
 
 public abstract class Device {
-    protected MacroListener macroListener;
+    protected SequenceListener sequenceListener;
 
     public Device() {
-        macroListener = new MacroListener();
+        sequenceListener = new SequenceListener();
     }
 
     /* Register macro's */
-    protected void add(Macro macro, Task task) {
-        macroListener.add(macro, task);
+    protected void add(Sequence sequence, Task task) {
+        sequenceListener.add(sequence, task);
+    }
+
+    protected void add(Press press, Task task) {
+        add(new Macro(press), task);
     }
 
     protected void add(Event event, Task task) {
-        add(new Macro(event), task);
+        add(new Sequence(event), task);
     }
 
-    protected void add(Macro startMacro, Macro stopMacro, Continuous continuous) {
-        add(startMacro, continuous);
-        add(stopMacro, new Stopper(continuous));        
+    protected void add(Sequence startSequence, Sequence stopSequence, Continuous continuous) {
+        add(startSequence, continuous);
+        add(stopSequence, new Stopper(continuous));        
     }
 
     protected void add(Event startEvent, Event stopEvent, Continuous continuous) {
         add(startEvent, continuous);
         add(stopEvent, new Stopper(continuous));        
+    }
+
+    protected void add(Press startPress, Press stopPress, Continuous continuous) {
+        add(new Macro(startPress), continuous);
+        add(new Macro(stopPress), new Stopper(continuous));        
     }
 
     protected void add(Hold hold, Continuous continuous) {
@@ -43,7 +53,7 @@ public abstract class Device {
 
     /* Recognize events */
     protected void add(Event event) {
-        macroListener.add(event);
+        sequenceListener.add(event);
     }
 
     /* Device default methods */

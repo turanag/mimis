@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import pm.exception.MacroException;
 import pm.exception.macro.MacroEventOrderException;
 import pm.macro.Event;
+import pm.macro.event.Sequence;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
 
-public class Macro {
-    protected Event[] eventArray;
-
-    public Macro(Event event) {
-        eventArray = new Event[]{event};
+public class Macro extends Sequence {
+    public Macro(Press press) {
+        Button button = press.getButton();
+        this.eventArray = new Event[] {press, new Release(button)};
     }
 
     public Macro(Event... eventArray) throws MacroException {
@@ -44,14 +44,6 @@ public class Macro {
         if (!holdList.isEmpty()) {
             throw new MacroEventOrderException("One or more buttons are not released.");
         }
-        this.eventArray = (Event[]) eventList.toArray(new Event[0]);
-    }
-
-    public int count() {
-        return eventArray.length;
-    }
-
-    public Event get(int i) {
-        return eventArray[i];
+        eventArray = (Event[]) eventList.toArray(new Event[0]);
     }
 }

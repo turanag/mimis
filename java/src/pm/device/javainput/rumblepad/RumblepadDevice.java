@@ -37,10 +37,12 @@ public class RumblepadDevice extends JavaInputDevice {
             new Task(Action.PREVIOUS, Target.APPLICATION));
         add(
             new Hold(RumblepadButton.FIVE),
-            new Continuous(Action.FORWARD, Target.APPLICATION, 300));
+            new Continuous(Action.FORWARD, Target.APPLICATION, 200){
+                public int getSleep() {return sleep - 30 * iteration;}});
         add(
             new Hold(RumblepadButton.SEVEN),
-            new Continuous(Action.REWIND, Target.APPLICATION, 300));
+            new Continuous(Action.REWIND, Target.APPLICATION, 200){
+                public int getSleep() {return sleep - 30 * iteration;}});
         add(
             new Hold(RumblepadButton.NINE),
             new Continuous(Action.VOLUME_DOWN, Target.APPLICATION, 100));

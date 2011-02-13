@@ -11,7 +11,7 @@ public abstract class Application extends TaskListener {
             initialise();
             super.run();
         } catch (ApplicationInitialiseException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Todo: dit "over" de thread heengooien / loggen?
         }
     }
 
@@ -25,10 +25,10 @@ public abstract class Application extends TaskListener {
         Action action = task.getAction();
         if (task instanceof Continuous) {
             Continuous continuous = (Continuous) task;
-            int sleep = continuous.getSleep();
             do {
                 action(action);
-                sleep(sleep);
+                continuous.nextIteration();
+                sleep(continuous.getSleep());
             } while (run && !continuous.getStop());
             continuous.reset();
         } else {
