@@ -52,13 +52,7 @@ public class WinampApplication extends Application {
                     WinampController.rew5Secs();
                     break;
                 case MUTE:
-                    if(muted) {
-                        WinampController.setVolume(volume);
-                    } else {
-                        volume = WinampController.getVolume();
-                        WinampController.setVolume(0);
-                    }
-                    muted = !muted;
+                    toggleMute();
                     break;
                 case VOLUME_UP:
                     WinampController.increaseVolume();
@@ -67,7 +61,16 @@ public class WinampApplication extends Application {
                     WinampController.decreaseVolume();
                     break;
             }
-        } catch (InvalidHandle e) {
+        } catch (InvalidHandle e) {}
+    }
+
+    protected void toggleMute() throws InvalidHandle {
+        if (!muted) {
+            volume = WinampController.getVolume();
+        }
+        try {
+            WinampController.setVolume(muted ? volume : 0);
         } catch (InvalidParameter e) {}
+        muted = !muted;        
     }
 }

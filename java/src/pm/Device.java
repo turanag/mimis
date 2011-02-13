@@ -33,17 +33,17 @@ public abstract class Device {
 
     protected void add(Sequence startSequence, Sequence stopSequence, Continuous continuous) {
         add(startSequence, continuous);
-        add(stopSequence, new Stopper(continuous));        
+        add(stopSequence, new Stopper(continuous));
     }
 
     protected void add(Event startEvent, Event stopEvent, Continuous continuous) {
         add(startEvent, continuous);
-        add(stopEvent, new Stopper(continuous));        
+        add(stopEvent, new Stopper(continuous));
     }
 
     protected void add(Press startPress, Press stopPress, Continuous continuous) {
         add(new Macro(startPress), continuous);
-        add(new Macro(stopPress), new Stopper(continuous));        
+        add(new Macro(stopPress), new Stopper(continuous));
     }
 
     protected void add(Hold hold, Continuous continuous) {

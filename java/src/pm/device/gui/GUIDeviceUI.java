@@ -7,27 +7,28 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import pm.Action;
 import pm.Target;
-import pm.task.ActionProvider;
+import pm.Task;
+import pm.task.TaskGatherer;
 
 import layout.TableLayout;
 import layout.TableLayoutConstraints;
 
 public class GUIDeviceUI extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    protected static final long serialVersionUID = 1L;
     
-    private JButton play;
-    private JButton pause;
-    private JButton resume;
-    private JButton next;
-    private JButton previous;
-    private JButton forward;
-    private JButton rewind;
-    private JButton mute;
-    private JButton volumeUp;
-    private JButton volumeDown;
+    protected JButton play;
+    protected JButton pause;
+    protected JButton resume;
+    protected JButton next;
+    protected JButton previous;
+    protected JButton forward;
+    protected JButton rewind;
+    protected JButton mute;
+    protected JButton volumeUp;
+    protected JButton volumeDown;
 
-    //ActionProvider.add
+    //TaskGatherer.add
     public GUIDeviceUI() {
         initComponents();
         setSize(30, 300);
@@ -155,43 +156,43 @@ public class GUIDeviceUI extends JFrame {
         add(volumeDown, new TableLayoutConstraints(0, 9, 0, 9, TableLayoutConstraints.FULL, TableLayoutConstraints.FULL));
     }
     
-    private void playAction(ActionEvent e) {
-        ActionProvider.add(Action.PLAY.setTarget(Target.APPLICATION));
+    protected void playAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.PLAY, Target.APPLICATION));
     }
 
-    private void pauseAction(ActionEvent e) {
-        ActionProvider.add(Action.PAUSE.setTarget(Target.APPLICATION));
+    protected void pauseAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.PAUSE, Target.APPLICATION));
     }
 
-    private void resumeAction(ActionEvent e) {
-        ActionProvider.add(Action.RESUME.setTarget(Target.APPLICATION));
+    protected void resumeAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.RESUME, Target.APPLICATION));
     }
 
-    private void nextAction(ActionEvent e) {
-        ActionProvider.add(Action.NEXT.setTarget(Target.APPLICATION));
+    protected void nextAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.NEXT, Target.APPLICATION));
     }
 
-    private void previousAction(ActionEvent e) {
-        ActionProvider.add(Action.PREVIOUS.setTarget(Target.APPLICATION));
+    protected void previousAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.PREVIOUS, Target.APPLICATION));
     }
 
-    private void forwardAction(ActionEvent e) {
-        ActionProvider.add(Action.FORWARD.setTarget(Target.APPLICATION));
+    protected void forwardAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.FORWARD, Target.APPLICATION));
     }
 
-    private void rewindAction(ActionEvent e) {
-        ActionProvider.add(Action.REWIND.setTarget(Target.APPLICATION));
+    protected void rewindAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.REWIND, Target.APPLICATION));
     }
 
-    private void muteAction(ActionEvent e) {
-        ActionProvider.add(Action.MUTE.setTarget(Target.APPLICATION));
+    protected void muteAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.MUTE, Target.APPLICATION));
     }
 
-    private void volumeUpAction(ActionEvent e) {
-        ActionProvider.add(Action.VOLUME_UP.setTarget(Target.APPLICATION));
+    protected void volumeUpAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.VOLUME_UP, Target.APPLICATION));
     }
 
-    private void volumeDownAction(ActionEvent e) {
-        ActionProvider.add(Action.VOLUME_DOWN.setTarget(Target.APPLICATION));
+    protected void volumeDownAction(ActionEvent e) {
+        TaskGatherer.add(new Task(Action.VOLUME_DOWN, Target.APPLICATION));
     }
 }

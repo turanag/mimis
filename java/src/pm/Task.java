@@ -8,6 +8,10 @@ public class Task {
         this.action = action;
         this.target = target;
     }
+    
+    public Task(Action action) {
+        this(action, Target.MAIN);
+    }
 
     public Action getAction() {
         return action;

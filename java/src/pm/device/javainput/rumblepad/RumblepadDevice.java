@@ -12,6 +12,7 @@ import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.task.Continuous;
+import pm.task.Dynamic;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
@@ -37,12 +38,10 @@ public class RumblepadDevice extends JavaInputDevice {
             new Task(Action.PREVIOUS, Target.APPLICATION));
         add(
             new Hold(RumblepadButton.FIVE),
-            new Continuous(Action.FORWARD, Target.APPLICATION, 200){
-                public int getSleep() {return sleep - 30 * iteration;}});
+            new Dynamic(Action.FORWARD, Target.APPLICATION, 200, -30));
         add(
             new Hold(RumblepadButton.SEVEN),
-            new Continuous(Action.REWIND, Target.APPLICATION, 200){
-                public int getSleep() {return sleep - 30 * iteration;}});
+            new Dynamic(Action.REWIND, Target.APPLICATION, 200, -30));
         add(
             new Hold(RumblepadButton.NINE),
             new Continuous(Action.VOLUME_DOWN, Target.APPLICATION, 100));

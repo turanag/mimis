@@ -56,7 +56,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
     public void onHotKey(int id) {
         Hotkey hotkey = hotkeyList.get(id);
         add(hotkeyList.get(id));
-        add(new Release(hotkey.getButton()));        
+        add(new Release(hotkey.getButton()));
     }
 
     public void exit() {

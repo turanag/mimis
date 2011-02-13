@@ -5,6 +5,8 @@ import pm.Target;
 import pm.Task;
 
 public class Continuous extends Task {
+    protected static final int SLEEP = 0;
+    
     protected int sleep;
     protected int iteration;
     protected boolean stop;
@@ -16,7 +18,7 @@ public class Continuous extends Task {
     }
 
     public Continuous(Action action, Target target) {
-        this(action, target, 0);
+        this(action, target, SLEEP);
     }
 
     public void nextIteration() {
