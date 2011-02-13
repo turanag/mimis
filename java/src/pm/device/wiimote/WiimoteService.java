@@ -22,6 +22,8 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
+    protected final boolean RUMBLE = false;
+
     protected ArrayList<Integer> wiimoteList;
     protected Wiimote[] wiimoteArray;
     protected HashMap<Integer, WiimoteDevice> wiimoteDeviceMap;
@@ -32,8 +34,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
        wiimoteDeviceMap = new HashMap<Integer, WiimoteDevice>();
     }
 
-    public void finish() {
-        // Todo: methode bedenken om deze methode aangeroepen te krijgen, zonder de service in de main te hoeven registreren.
+    public void exit() {
         if (wiimoteArray != null) {
             for (Wiimote wiimote : wiimoteArray) {
                 wiimote.disconnect();
@@ -43,7 +44,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public Wiimote getDevice(WiimoteDevice wiimoteDevice) throws DeviceNotFoundException {
-        Wiimote[] wiimoteArray = getWiimotes(1, false);
+        Wiimote[] wiimoteArray = getWiimotes(1, RUMBLE);
         for (Wiimote wiimote : wiimoteArray) {
             int id = wiimote.getId();
             if (!wiimoteList.contains(id)) {
@@ -65,7 +66,11 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onButtonsEvent(WiimoteButtonsEvent event) {
-        
+        getWiimoteDevice(event).onButtonsEvent(event);
+    }
+
+    public void onMotionSensingEvent(MotionSensingEvent event) {
+        getWiimoteDevice(event).onMotionSensingEvent(event);
     }
 
     public void onStatusEvent(StatusEvent event) {
@@ -75,7 +80,6 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onIrEvent(IREvent e) {}
-    public void onMotionSensingEvent(MotionSensingEvent event) {}
     public void onExpansionEvent(ExpansionEvent event) {}
     public void onDisconnectionEvent(DisconnectionEvent event) {}
     public void onNunchukInsertedEvent(NunchukInsertedEvent event) {}

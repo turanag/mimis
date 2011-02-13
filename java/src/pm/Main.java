@@ -8,6 +8,7 @@ import pm.application.iTunes.iTunesApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
@@ -34,7 +35,8 @@ public class Main extends TaskListener {
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
-        add(new RumblepadDevice());
+        //add(new RumblepadDevice());
+        add(new WiimoteDevice());
         //add(new GUIDevice());
         for (Device device : deviceList) {
             device.initialise();
@@ -42,7 +44,7 @@ public class Main extends TaskListener {
 
         add(new ExampleApplication());
         //add(new WinampApplication());
-        add(new iTunesApplication());
+        //add(new iTunesApplication());
         applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();

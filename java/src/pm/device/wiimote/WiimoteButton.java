@@ -1,6 +1,7 @@
 package pm.device.wiimote;
 
 import pm.Button;
+import pm.exception.event.UnknownButtonException;
 
 public enum WiimoteButton implements Button {
     TWO   (0x0001),
@@ -24,5 +25,14 @@ public enum WiimoteButton implements Button {
 
     public int getCode() {
         return code;
+    }
+
+    public static WiimoteButton create(int code) throws UnknownButtonException {
+        for (WiimoteButton button : WiimoteButton.values()) {
+            if (button.getCode() == code) {
+                return button;
+            }
+        }
+        throw new UnknownButtonException();
     }
 }
