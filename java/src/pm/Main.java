@@ -39,7 +39,11 @@ public class Main extends TaskListener {
         add(new WiimoteDevice());
         //add(new GUIDevice());
         for (Device device : deviceList) {
-            device.initialise();
+            try {
+                device.initialise();
+            } catch (DeviceInitialiseException e) {
+                e.printStackTrace();
+            }
         }
 
         add(new ExampleApplication());
@@ -52,17 +56,22 @@ public class Main extends TaskListener {
     }
 
     public void exit() {
-        try {
-            System.out.println("Exit devices...");
-            for (Device device : deviceList) {
-                device.exit();    
+        System.out.println("Exit devices...");
+        for (Device device : deviceList) {
+            try {
+                device.exit();
+            } catch (DeviceExitException e) {
+                e.printStackTrace();
             }
-            System.out.println("Exit applications...");
-            for (Application application : applicationCycle) {
+        }
+        System.out.println("Exit applications...");
+        for (Application application : applicationCycle) {
+            try {
                 application.exit();
+            } catch (ApplicationExitException e) {
+                e.printStackTrace();
             }
-        } catch (DeviceExitException e) {
-        } catch (ApplicationExitException e) {}
+        }        
         System.out.println("Exit main...");
         stop();
     }
@@ -86,13 +95,23 @@ public class Main extends TaskListener {
         Action action = task.getAction();
         Target target = task.getTarget();
         System.out.println("Action: " + action + " Target: " + target);
-        switch (target) {
-            case MAIN:
-                action(action);
-                break;
-            case APPLICATION:
-                applicationCycle.current().add(task);
-                break;
+        try {
+            switch (target) {
+                case MAIN:
+                    action(action);
+                    break;
+                case DEVICE:
+                    for (Device device : deviceList) {
+                        device.action(action);
+                    }
+                    break;
+                case APPLICATION:
+                    applicationCycle.current().add(task);
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Action exception:");
+            e.printStackTrace();
         }
 
     }

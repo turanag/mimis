@@ -23,12 +23,26 @@ public abstract class Device {
         sequenceListener.add(sequence, task);
     }
 
-    protected void add(Press press, Task task) {
-        add(new Macro(press), task);
-    }
-
     protected void add(Event event, Task task) {
         add(new Sequence(event), task);
+    }
+
+    protected void add(Press press, Task task, boolean macro) {
+        if (macro) {
+            add(new Macro(press), task);
+        } else {
+            add((Event) press, task);
+        }
+    }
+
+    protected void add(Press press, Task task) {
+        add(press, task, true);
+    }
+
+    protected void add(Hold hold, Task pressTask, Task releaseTask) {
+        Button button = hold.getButton();
+        add(new Press(button), pressTask, false);
+        add(new Release(button), releaseTask);
     }
 
     protected void add(Sequence startSequence, Sequence stopSequence, Continuous continuous) {
@@ -59,4 +73,5 @@ public abstract class Device {
     /* Device default methods */
     public void initialise() throws DeviceInitialiseException {}
     public void exit() throws DeviceExitException {}
+    public void action(Action action) {}
 }

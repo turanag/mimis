@@ -14,5 +14,6 @@ public enum Action {
     START,
     TEST,
     VOLUME_DOWN,
-    VOLUME_UP;
+    VOLUME_UP,
+    TRAIN, STOP, SAVE, RECOGNIZE, LOAD;
 }

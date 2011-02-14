@@ -3,6 +3,7 @@ package pm.macro.event;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pm.Device;
 import pm.Task;
 import pm.macro.Active;
 import pm.macro.Event;

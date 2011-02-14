@@ -2,6 +2,7 @@ package pm.task;
 
 import java.util.Queue;
 
+import pm.Device;
 import pm.Task;
 
 public class TaskGatherer {

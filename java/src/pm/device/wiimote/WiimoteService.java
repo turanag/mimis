@@ -22,7 +22,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
-    protected final boolean RUMBLE = false;
+    protected final boolean RUMBLE = true;
 
     protected ArrayList<Integer> wiimoteList;
     protected Wiimote[] wiimoteArray;
