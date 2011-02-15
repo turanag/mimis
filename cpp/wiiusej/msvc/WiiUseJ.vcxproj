@@ -92,6 +92,7 @@
     <ClInclude Include="..\wiiusej_WiiUseApi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\wiiusej_Calibration.c" />
     <ClCompile Include="..\wiiusej_Speaker.c" />
     <ClCompile Include="..\wiiusej_WiiUseApi.c" />
   </ItemGroup>

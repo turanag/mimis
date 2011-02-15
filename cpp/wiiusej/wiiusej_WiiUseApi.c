@@ -339,7 +339,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_getStatus
  */
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setTimeout
 (JNIEnv *env, jobject obj, jint id, jshort normalTimeout, jshort expansionTimeout) {
-	wiiuse_set_timeout(wiimotes, nbMaxWiimotes, normalTimeout, expansionTimeout);
+	wiiuse_set_timeout(wiimotes, nbMaxWiimotes, (byte) normalTimeout, (byte) expansionTimeout);
 }
 
 /**

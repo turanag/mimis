@@ -39,7 +39,7 @@
 
 #define WIIMOTE_PI			3.14159265f
 
-//#define WITH_WIIUSE_DEBUG
+#define WITH_WIIUSE_DEBUG
 
 /* Error output macros */
 #define WIIUSE_ERROR(fmt, ...)		fprintf(stderr, "[ERROR] " fmt "\n", ##__VA_ARGS__)

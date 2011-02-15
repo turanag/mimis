@@ -273,43 +273,11 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 
 /*
  * Class:     wiiusej_WiiUseApi
- * Method:    activateSpeaker
- * Signature: (I)V
+ * Method:    getCalibration
+ * Signature: (I)[S
  */
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_activateSpeaker
+JNIEXPORT jshortArray JNICALL Java_wiiusej_WiiUseApi_getCalibration
   (JNIEnv *, jobject, jint);
-
-/*
- * Class:     wiiusej_WiiUseApi
- * Method:    deactivateSpeaker
- * Signature: (I)V
- */
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_deactivateSpeaker
-  (JNIEnv *, jobject, jint);
-
-/*
- * Class:     wiiusej_WiiUseApi
- * Method:    setSpeakerVolume
- * Signature: (IS)V
- */
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume
-  (JNIEnv *, jobject, jint, jshort);
-
-/*
- * Class:     wiiusej_WiiUseApi
- * Method:    setSpeakerFrequency
- * Signature: (II)V
- */
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFrequency
-  (JNIEnv *, jobject, jint, jint);
-
-/*
- * Class:     wiiusej_WiiUseApi
- * Method:    streamSpeakerData
- * Signature: (I[S)V
- */
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData
-  (JNIEnv *, jobject, jint, jshortArray);
 
 #ifdef __cplusplus
 }

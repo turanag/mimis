@@ -29,5 +29,8 @@
     <ClCompile Include="..\wiiusej_Speaker.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\wiiusej_Calibration.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
