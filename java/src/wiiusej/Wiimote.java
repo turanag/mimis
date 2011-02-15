@@ -18,6 +18,7 @@ package wiiusej;
 
 import javax.swing.event.EventListenerList;
 
+import wiiusej.values.Calibration;
 import wiiusej.wiiusejevents.utils.WiiUseApiListener;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
@@ -492,4 +493,7 @@ public class Wiimote implements WiiUseApiListener {
 		return "Wiimote with ID : " + id;
 	}
 
+	public Calibration getCalibration() {
+	    return manager.getCalibration(id);
+	}
 }

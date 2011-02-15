@@ -17,6 +17,8 @@ import pm.macro.event.Press;
 import pm.macro.event.Release;
 
 import wiiusej.Wiimote;
+import wiiusej.values.Acceleration;
+import wiiusej.values.Calibration;
 import wiiusej.values.RawAcceleration;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
@@ -27,8 +29,8 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected static WiimoteService wiimoteService;
 
     protected Wiimote wiimote;
+    protected Calibration calibration;
     protected GestureDevice gestureDevice;
-
     protected int gestureId = 0;
 
     static {
@@ -109,13 +111,13 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
+        if (calibration == null) {
+            calibration = wiimote.getCalibration();
+        }
         RawAcceleration rawAcceleration = event.getRawAcceleration();
-        System.out.println(event);
-        double[] vector = new double[] {
-                rawAcceleration.getX(),
-                rawAcceleration.getY(),
-                rawAcceleration.getZ()};
-        gestureDevice.add(vector);
+        Acceleration acceleration = calibration.getAcceleration(rawAcceleration);
+        //System.out.println(event);
+        gestureDevice.add(acceleration.toArray());
     }
 
     public void gestureReceived(GestureEvent event) {

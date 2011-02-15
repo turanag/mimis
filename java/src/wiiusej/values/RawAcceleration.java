@@ -75,7 +75,7 @@ public class RawAcceleration {
 
 	@Override
 	public String toString() {
-		return "Raw acceleration : (" + x + ", " + y + "," + z + ")";
+		return "Raw acceleration : (" + x + ", " + y + ", " + z + ")";
 	}
 
 }

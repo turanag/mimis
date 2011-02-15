@@ -28,6 +28,7 @@ public class GestureDevice extends Device /*implements AccelerationListener */{
     }
 
     public void add(double[] vector) {
+        //System.out.printf("%f %f %f\n", vector[0], vector[1], vector[2]);
         fireAccelerationEvent(vector);
     }
 

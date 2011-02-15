@@ -348,4 +348,5 @@ public class WiiUseApi {
 	 */
 	native void specialPoll(EventsGatherer gath);
 
+    native short[] getCalibration(int id);
 }
