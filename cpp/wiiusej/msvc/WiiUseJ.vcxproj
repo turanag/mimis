@@ -88,12 +88,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\wiiusej_Speaker.h" />
     <ClInclude Include="..\wiiusej_WiiUseApi.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\wiiusej_Calibration.c" />
-    <ClCompile Include="..\wiiusej_Speaker.c" />
     <ClCompile Include="..\wiiusej_WiiUseApi.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

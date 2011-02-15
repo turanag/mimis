@@ -39,16 +39,16 @@
 
 #define WIIMOTE_PI			3.14159265f
 
-#define WITH_WIIUSE_DEBUG
+//#define WITH_WIIUSE_DEBUG
 
 /* Error output macros */
-#define WIIUSE_ERROR(fmt, ...)		fprintf(stderr, "[ERROR] " fmt "\n", ##__VA_ARGS__)
+#define WIIUSE_ERROR(fmt, ...)		//fprintf(stderr, "[ERROR] " fmt "\n", ##__VA_ARGS__)
 
 /* Warning output macros */
-#define WIIUSE_WARNING(fmt, ...)	fprintf(stderr, "[WARNING] " fmt "\n",	##__VA_ARGS__)
+#define WIIUSE_WARNING(fmt, ...)	//fprintf(stderr, "[WARNING] " fmt "\n",	##__VA_ARGS__)
 
 /* Information output macros */
-#define WIIUSE_INFO(fmt, ...)		fprintf(stderr, "[INFO] " fmt "\n", ##__VA_ARGS__)
+#define WIIUSE_INFO(fmt, ...)		//fprintf(stderr, "[INFO] " fmt "\n", ##__VA_ARGS__)
 
 #ifdef WITH_WIIUSE_DEBUG
 	#ifdef WIN32

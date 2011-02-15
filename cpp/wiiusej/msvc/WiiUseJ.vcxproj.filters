@@ -18,18 +18,9 @@
     <ClInclude Include="..\wiiusej_WiiUseApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\wiiusej_Speaker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\wiiusej_WiiUseApi.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\wiiusej_Speaker.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\wiiusej_Calibration.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
