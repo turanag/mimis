@@ -9,31 +9,25 @@ import pm.Task;
 import pm.task.TaskGatherer;
 
 public class TextDevice extends Device implements Runnable {
-    static final int SLEEP = 50;
-   
+    static final int SLEEP = 100;
+
     protected boolean run;
     protected Scanner input;
-    
-    public TextDevice() {
-        initialise();
-        run = true;
-        new Thread(this).start();
-    }
-    
+
     public void initialise() {
         input = new Scanner(System.in);
+        new Thread(this).start();
     }
-    
+
     public void run() {
-        System.out.println("TextDevice activated");
-        while(run) {
+        run = true;
+        while (run) {
             String textinput = input.next().toUpperCase();
             if(textinput != null) {
-                System.out.println(textinput);
                 try {
                     TaskGatherer.add(
-                            new Task(Action.valueOf(textinput), Target.APPLICATION));
-                } catch(IllegalArgumentException e) { }
+                        new Task(Action.valueOf(textinput), Target.APPLICATION));
+                } catch(IllegalArgumentException e) {}
             }
             try {
                 Thread.sleep(SLEEP);

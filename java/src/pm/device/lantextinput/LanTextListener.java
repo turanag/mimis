@@ -9,8 +9,8 @@ import pm.Target;
 import pm.Task;
 import pm.task.TaskGatherer;
 
-public class LanTextListener implements Runnable{
-    static final int SLEEP = 50;
+public class LanTextListener implements Runnable {
+    static final int SLEEP = 100;
     
     protected boolean run;
     protected Socket socket;
@@ -19,7 +19,7 @@ public class LanTextListener implements Runnable{
     public LanTextListener(Socket socket){
         this.socket = socket;
         try {
-            this.input = new Scanner(socket.getInputStream());
+            input = new Scanner(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,13 +28,13 @@ public class LanTextListener implements Runnable{
     }
        
     public void run() {
-        while(run  && socket.isConnected() && input.hasNext()) {
+        while (run && socket.isConnected() && input.hasNext()) {
             String textinput = input.next().toUpperCase();
             if(textinput != null) {
                 try {
                     TaskGatherer.add(
-                            new Task(Action.valueOf(textinput), Target.APPLICATION));
-                } catch(IllegalArgumentException e) { }
+                        new Task(Action.valueOf(textinput), Target.APPLICATION));
+                } catch (IllegalArgumentException e) {}
             }
             try {
                 Thread.sleep(SLEEP);
