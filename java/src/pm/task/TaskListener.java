@@ -3,6 +3,7 @@ package pm.task;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import pm.Action;
 import pm.Task;
 
 public abstract class TaskListener implements Runnable {
@@ -47,5 +48,20 @@ public abstract class TaskListener implements Runnable {
         } catch (InterruptedException e) {}
     }
 
-    abstract protected void task(Task task);
+    protected void task(Task task) {
+        Action action = task.getAction();
+        if (task instanceof Continuous) {
+            Continuous continuous = (Continuous) task;
+            do {
+                action(action);
+                continuous.nextIteration();
+                sleep(continuous.getSleep());
+            } while (run && !continuous.getStop());
+            continuous.reset();
+        } else {
+            action(action);
+        }        
+    }
+
+    protected void action(Action action) {}
 }

@@ -1,5 +1,5 @@
 package pm;
 
 public enum Target {
-    MAIN, DEVICE, APPLICATION;
+    ALL, MAIN, DEVICES, APPLICATIONS, APPLICATION;
 }

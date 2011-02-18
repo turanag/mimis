@@ -2,10 +2,16 @@ package pm;
 
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
-import pm.task.Continuous;
+import pm.task.TaskGatherer;
 import pm.task.TaskListener;
 
 public abstract class Application extends TaskListener {  
+    
+    public Application() {
+        super();
+        TaskGatherer.add(this);
+    }
+    
     public void run() {
         try {
             initialise();
@@ -20,21 +26,4 @@ public abstract class Application extends TaskListener {
     public void exit() throws ApplicationExitException {
         stop();
     }
-
-    protected void task(Task task) {
-        Action action = task.getAction();
-        if (task instanceof Continuous) {
-            Continuous continuous = (Continuous) task;
-            do {
-                action(action);
-                continuous.nextIteration();
-                sleep(continuous.getSleep());
-            } while (run && !continuous.getStop());
-            continuous.reset();
-        } else {
-            action(action);
-        }        
-    }
-
-    protected abstract void action(Action action);
 }

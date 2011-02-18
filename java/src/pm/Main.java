@@ -2,12 +2,15 @@ package pm;
 
 import java.util.ArrayList;
 
+import pm.application.ApplicationCycle;
 import pm.application.Winamp.WinampApplication;
 import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.lantextinput.LanTextDevice;
+import pm.device.textinput.TextDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
@@ -18,9 +21,9 @@ import pm.util.ArrayCycle;
 
 public class Main extends TaskListener {
     //protected String[] deviceClassArray;
-    protected ArrayCycle<Application> applicationCycle;
+    protected ApplicationCycle applicationCycle;
     protected ArrayList<Device> deviceList;
-
+   
     public Main() {
         super();
         /*deviceClassArray = new String[] {
@@ -28,16 +31,19 @@ public class Main extends TaskListener {
             "pm.device.javainput.rumblepad.RumblepadDevice",
             "pm.device.javainput.extreme3d.Extreme3DDevice",
             "pm.device.wiimote.WiimoteDevice"};*/
-        applicationCycle = new ArrayCycle<Application>();
+        applicationCycle = new ApplicationCycle();
         deviceList = new ArrayList<Device>();
-        TaskGatherer.initialise(taskQueue);
+        TaskGatherer.initialise(applicationCycle);
+        TaskGatherer.add(this);
     }
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
         //add(new RumblepadDevice());
-        add(new WiimoteDevice());
+        //add(new WiimoteDevice());
         //add(new GUIDevice());
+        //add(new TextDevice());
+        //add(new LanTextDevice());
         for (Device device : deviceList) {
             try {
                 device.initialise();
@@ -90,32 +96,6 @@ public class Main extends TaskListener {
                 break;
         }
     }
-
-    protected void task(Task task) {
-        Action action = task.getAction();
-        Target target = task.getTarget();
-        System.out.println("Action: " + action + " Target: " + target);
-        try {
-            switch (target) {
-                case MAIN:
-                    action(action);
-                    break;
-                case DEVICE:
-                    for (Device device : deviceList) {
-                        device.action(action);
-                    }
-                    break;
-                case APPLICATION:
-                    applicationCycle.current().add(task);
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("Action exception:");
-            e.printStackTrace();
-        }
-
-    }
-
     /*protected void addDevices() throws DeviceInitialiseException {
         for (String deviceClass : deviceClassArray) {
             try {

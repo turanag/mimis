@@ -4,6 +4,7 @@ import pm.Action;
 import pm.Button;
 import pm.Macro;
 import pm.Target;
+import pm.Task;
 import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
 import pm.exception.MacroException;
@@ -24,14 +25,14 @@ public class Extreme3DDevice extends JavaInputDevice {
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),
-                Action.TEST.setTarget(Target.APPLICATION));
+                new Task(Action.TEST, Target.APPLICATION));
             add(
                 new Macro(
                     new Hold(Extreme3DButton.ONE),
                     new Press(Extreme3DButton.TWO),
                     new Press(Extreme3DButton.ELEVEN),
                     new Release(Extreme3DButton.ONE)),
-                Action.EXIT.setTarget(Target.MAIN));
+                new Task(Action.EXIT, Target.MAIN));
         } catch (MacroException e) {
             e.printStackTrace();
         }

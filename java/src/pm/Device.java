@@ -1,5 +1,6 @@
 package pm;
 
+import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Event;
@@ -10,12 +11,16 @@ import pm.macro.event.Sequence;
 import pm.macro.event.SequenceListener;
 import pm.task.Continuous;
 import pm.task.Stopper;
+import pm.task.TaskGatherer;
+import pm.task.TaskListener;
 
-public abstract class Device {
+public abstract class Device extends TaskListener {
     protected SequenceListener sequenceListener;
 
     public Device() {
+        super();
         sequenceListener = new SequenceListener();
+        TaskGatherer.add(this);
     }
 
     /* Register macro's */
@@ -72,6 +77,8 @@ public abstract class Device {
 
     /* Device default methods */
     public void initialise() throws DeviceInitialiseException {}
-    public void exit() throws DeviceExitException {}
-    public void action(Action action) {}
+    
+    public void exit() throws DeviceExitException {
+        stop();
+    }
 }
