@@ -144,7 +144,7 @@ JNIEXPORT jboolean JNICALL Java_com_eaio_nativecall_NativeCall_initHandles
  
 #ifdef _WINDOWS
  
- HMODULE mod = LoadLibrary(moduleName);
+ HMODULE mod = LoadLibrary((LPCWSTR) moduleName);
  
  if (mod == NULL) {
   /* no such module or DllMain returned FALSE */
@@ -194,7 +194,7 @@ JNIEXPORT jstring JNICALL Java_com_eaio_nativecall_NativeCall_getLastError
  LPVOID msgBufPtr = NULL;
  FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
   FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, 0,
-  (LPSTR) &msgBufPtr, 0, NULL);
+  (LPWSTR) &msgBufPtr, 0, NULL);
  
  out = env->NewStringUTF((char*) msgBufPtr);
  

@@ -228,7 +228,7 @@ JNIEXPORT jint JNICALL Java_com_eaio_nativecall_IntCall_executeCall0
  }
  
  delete [] arrays;
- 
+
  env->SetIntField(obj, fieldLastErrorCode, GetLastError());
  
  return outVal;

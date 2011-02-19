@@ -10,8 +10,8 @@ Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=copy.mak
-Compiler=_@@_
-CppCompiler=_@@_
+Compiler=-DBUILDING_DLL=1_@@_
+CppCompiler=-DBUILDING_DLL=1_@@_
 Linker=--no-export-all-symbols --add-stdcall-alias_@@_
 IsCpp=0
 Icon=
