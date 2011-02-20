@@ -18,9 +18,7 @@ abstract public class WindowsApplication extends Application {
     protected final static int START_SLEEP = 500;
 
     protected final static int WM_APPCOMMAND = 0x0319;
-    protected final static int WM_KEYDOWN    = 0x0100;
 
-    protected String path;
     protected String program;
     protected String name;
     protected String target;
@@ -29,6 +27,7 @@ abstract public class WindowsApplication extends Application {
     protected int handle;
     protected IntCall sendMessage;
     protected IntCall postMessage;
+    protected IntCall mapVirtualKey;
 
     static {
         try {
@@ -38,11 +37,10 @@ abstract public class WindowsApplication extends Application {
         }
     }
 
-    public WindowsApplication(String path, String program, String name) {
-        this.path = path;
+    public WindowsApplication(String program, String name, String target) {
         this.program = program;
         this.name = name;
-        target = path + program;
+        this.target = target;
         handle = -1;
     }
 
@@ -71,6 +69,7 @@ abstract public class WindowsApplication extends Application {
         }
         sendMessage = new IntCall("user32", "SendMessageA");
         postMessage = new IntCall("user32", "PostMessageA");
+        mapVirtualKey = new IntCall("user32", "MapVirtualKeyA");
     }
 
     public void exit() throws ApplicationExitException {
@@ -88,19 +87,20 @@ abstract public class WindowsApplication extends Application {
         }
     }
 
-    protected void key(int key) throws SendKeyException {
-        int result = postMessage.executeCall(new Object[] {
-            handle, WM_KEYDOWN, key});
+    protected void key(Type key, int code) throws SendKeyException {
+        int scanCode = mapVirtualKey.executeCall(new Object[] {code, 0});
+          int result = postMessage.executeCall(new Object[] {
+            handle, key.getCode(), code, (scanCode << 16)});
         if (result < 1 || postMessage.getLastError() != null) {
             throw new SendKeyException();
         }
     }
 
-    protected void key(char key) throws SendKeyException {
-        key((int) Character.toUpperCase(key));
+    protected void key(Type key, char character) throws SendKeyException {
+        key(key, (int) Character.toUpperCase(character));
     }
 
-    protected void key(VirtualKey virtualKey) throws SendKeyException {
-        key(virtualKey.getCode());
+    protected void key(Type key, Key virtualKey) throws SendKeyException {
+        key(key, virtualKey.getCode());
     }
 }

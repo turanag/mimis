@@ -59,7 +59,7 @@ public class Main extends TaskListener {
         //add(new WMPApplication());
         add(new GomPlayerApplication());
         //add(new WinampApplication());
-        //add(new iTunesApplication());
+        add(new iTunesApplication());
         for (Application application : applicationCycle) {
             application.start();
         }

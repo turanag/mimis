@@ -1,31 +1,23 @@
 package pm.application.windows.gomplayer;
 
+import java.io.IOException;
+
 import pm.Action;
 import pm.application.windows.Command;
-import pm.application.windows.VirtualKey;
+import pm.application.windows.Type;
+import pm.application.windows.Key;
 import pm.application.windows.WindowsApplication;
-import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
+import pm.util.Native;
 
 public class GomPlayerApplication extends WindowsApplication {
-    protected final static String PATH = "C:\\Program Files (x86)\\GRETECH\\GomPlayer\\";
+    protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Clients\\Media\\GomPlayer\\shell\\open\\command";
     protected final static String PROGRAM = "GOM.exe";
     protected final static String NAME = "GOM Player";
 
-    protected boolean playing;
-
     public GomPlayerApplication() {
-        super(PATH, PROGRAM, NAME);
-        playing = false;
-    }
-
-    public void initialise() {
-        try {
-            super.initialise();
-        } catch (ApplicationInitialiseException e) {
-            e.printStackTrace();
-        }
+        super(PROGRAM, NAME, Native.getValue(REGISTRY));
     }
 
     public void action(Action action) {
@@ -34,7 +26,7 @@ public class GomPlayerApplication extends WindowsApplication {
         try {
             switch (action) {
                 case PLAY:
-                    key(VirtualKey.SPACE);
+                    key(Type.DOWN, Key.SPACE);
                     break;
                case NEXT:
                     command(Command.MEDIA_NEXTTRACK);
@@ -49,13 +41,13 @@ public class GomPlayerApplication extends WindowsApplication {
                     command(Command.MEDIA_REWIND);
                     break;
                 case MUTE:
-                    key('m');
+                    key(Type.DOWN, 'm');
                     break;
                 case VOLUME_UP:
-                    key(VirtualKey.UP);
+                    key(Type.DOWN, Key.UP);
                     break;
                 case VOLUME_DOWN:
-                    key(VirtualKey.DOWN);
+                    key(Type.DOWN, Key.DOWN);
                     break;
                 case SHUFFLE:
                     //

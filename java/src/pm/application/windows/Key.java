@@ -1,6 +1,6 @@
 package pm.application.windows;
 
-public enum VirtualKey {
+public enum Key {
     /*
      * VK_0 - VK_9 are the same as ASCII '0' - '9' (0x30 - 0x39)
      * 0x40 : unassigned
@@ -170,7 +170,7 @@ public enum VirtualKey {
     
     protected int code;
 
-    private VirtualKey(int code) {
+    private Key(int code) {
         this.code = code;
     }
 
