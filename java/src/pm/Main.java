@@ -41,9 +41,9 @@ public class Main extends TaskListener {
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
-        //add(new PlayerDevice());
+        add(new PlayerDevice());
         //add(new RumblepadDevice());
-        add(new WiimoteDevice());
+        //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
         //add(new LanTextDevice());
@@ -55,11 +55,11 @@ public class Main extends TaskListener {
             }
         }
 
-        //add(new ExampleApplication());
+        add(new ExampleApplication());
         //add(new WMPApplication());
-        add(new GomPlayerApplication());
+        //add(new GomPlayerApplication());
         //add(new WinampApplication());
-        add(new iTunesApplication());
+        //add(new iTunesApplication());
         for (Application application : applicationCycle) {
             application.start();
         }

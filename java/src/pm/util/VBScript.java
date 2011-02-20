@@ -19,7 +19,7 @@ public class VBScript {
             + "Set processes = service.ExecQuery _\n"
             + " (\"select * from Win32_Process where name='%s'\")\n"
             + "For Each process in processes\n"
-            + "wscript.echo process.Name \n"
+            + "wscript.echo process.Name\n"
             + "Next\n"
             + "Set WSHShell = Nothing\n", program));
         fileWriter.close();
@@ -43,7 +43,7 @@ public class VBScript {
             + "Set processes = service.ExecQuery _\n"
             + " (\"select * from Win32_Process where name='%s'\")\n"
             + "For Each process in processes\n"
-            + "process.Terminate() \n"
+            + "process.Terminate()\n"
             + "Next\n"
             + "Set WSHShell = Nothing\n", program));
         fileWriter.close();

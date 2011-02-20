@@ -166,7 +166,6 @@ public enum Key {
     NONAME (0xFC),
     PA1 (0xFD),
     OEM_CLEAR (0xFE);
-
     
     protected int code;
 

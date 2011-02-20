@@ -89,8 +89,8 @@ abstract public class WindowsApplication extends Application {
 
     protected void key(Type key, int code) throws SendKeyException {
         int scanCode = mapVirtualKey.executeCall(new Object[] {code, 0});
-          int result = postMessage.executeCall(new Object[] {
-            handle, key.getCode(), code, (scanCode << 16)});
+        int result = postMessage.executeCall(new Object[] {
+            handle, key.getCode(), code, scanCode << 16});
         if (result < 1 || postMessage.getLastError() != null) {
             throw new SendKeyException();
         }

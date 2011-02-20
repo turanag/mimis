@@ -43,7 +43,7 @@ public enum Command {
     FORWARD_MAIL           (40),
     SEND_MAIL              (41),
     SPELL_CHECK            (42),
-    DICTATE_OR_COMMAND_CONTROL_TOGGLE    (43),
+    DICTATE_OR_COMMAND_CONTROL_TOGGLE (43),
     MIC_ON_OFF_TOGGLE      (44),
     CORRECTION_LIST        (45),
     MEDIA_PLAY             (46),

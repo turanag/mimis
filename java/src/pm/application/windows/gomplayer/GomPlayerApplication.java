@@ -1,7 +1,5 @@
 package pm.application.windows.gomplayer;
 
-import java.io.IOException;
-
 import pm.Action;
 import pm.application.windows.Command;
 import pm.application.windows.Type;
@@ -9,7 +7,6 @@ import pm.application.windows.Key;
 import pm.application.windows.WindowsApplication;
 import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
-import pm.util.Native;
 
 public class GomPlayerApplication extends WindowsApplication {
     protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Clients\\Media\\GomPlayer\\shell\\open\\command";
@@ -17,7 +14,7 @@ public class GomPlayerApplication extends WindowsApplication {
     protected final static String NAME = "GOM Player";
 
     public GomPlayerApplication() {
-        super(PROGRAM, NAME, Native.getValue(REGISTRY));
+        super(PROGRAM, NAME, "C:\\Program Files (x86)\\GomPlayer\\GOM.exe");
     }
 
     public void action(Action action) {
@@ -48,9 +45,6 @@ public class GomPlayerApplication extends WindowsApplication {
                     break;
                 case VOLUME_DOWN:
                     key(Type.DOWN, Key.DOWN);
-                    break;
-                case SHUFFLE:
-                    //
                     break;
             }
         } catch (SendCommandException e) {} catch (SendKeyException e) {}

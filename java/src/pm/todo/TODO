@@ -1,0 +1,21 @@
+log bijhouden
+
+mappings lezen vanuit config bestand
+
+exeptions en foutmeldingen nakijken/afhandelen/loggen
+
+initialises en exits controleren op succes. tussendoor afgesloten apps en devs herkennen en restarten? op runtime nieuwe applicaties of devices toevoegen of sluiten.
+
+feedback systeem implementeren, rumble voor zowel wiimote als rumblepad
+
+nummerinfo weergeven, waar? via feedback?
+
+javadoc maken, class diagram opstellen enz.....
+
+naamgeving en indeling classes/packages controleren
+
+meer applicaties implementeren, zoals VLC, WMP, Youtube? (interface naar flash?)
+
+logo ontwerpen
+
+exporteren naar uitvoerbare jar file
