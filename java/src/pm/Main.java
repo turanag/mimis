@@ -40,13 +40,13 @@ public class Main extends TaskListener {
     }
 
     public void initialise() throws DeviceInitialiseException {
-        add(new JIntellitypeDevice());
-        add(new PlayerDevice());
+        //add(new JIntellitypeDevice());
+        //add(new PlayerDevice());
         //add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        //add(new LanTextDevice());
+        add(new LanTextDevice());
         for (Device device : deviceList) {
             try {
                 device.initialise();

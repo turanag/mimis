@@ -19,3 +19,7 @@ meer applicaties implementeren, zoals VLC, WMP, Youtube? (interface naar flash?)
 logo ontwerpen
 
 exporteren naar uitvoerbare jar file
+
+lantextdevice generiek maken met normale textdevice
+
+client maken die remote devices kan beheren en lokaal acties kan uitvoeren
