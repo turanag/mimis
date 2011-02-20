@@ -16,6 +16,6 @@ BOOL CALLBACK EnumProc(HWND hWnd, LPARAM lParam) {
 	TCHAR title[500];
 	ZeroMemory(title, sizeof(title));
 	GetWindowText(hWnd, title, sizeof(title) / sizeof(title[0]));
-	printf("%d\n%s\n", hWnd, title);
+	cout << hWnd << endl << title << endl;
 	return TRUE;
 }
