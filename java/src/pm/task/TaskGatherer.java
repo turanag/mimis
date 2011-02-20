@@ -12,48 +12,45 @@ import pm.application.ApplicationCycle;
 public class TaskGatherer {
     protected static ArrayList<TaskListener> taskListenerList;
     protected static ApplicationCycle applicationCycle;
-    
+
     public static void initialise(ApplicationCycle applicationCycle) {
         taskListenerList = new ArrayList<TaskListener>();
         TaskGatherer.applicationCycle = applicationCycle;
     }
 
-    public static void add(Application application) {
-        add(application);
-        applicationCycle.add(application);
+    public static void add(TaskListener taskListener) {
+        taskListenerList.add(taskListener);
     }
-    
-    public static void add(TaskListener taskListner) {
-        taskListenerList.add(taskListner);
-    }
-    
+
     public static void add(Task task) {
         if (task instanceof Stopper) {
             Stopper stopper = (Stopper) task;
             stopper.stop();
         } else {
             Target target = task.getTarget();
-            for (TaskListener taskListener : taskListenerList) {
-                switch (target) {
-                    case ALL:
-                        taskListener.add(task);
-                    case MAIN:
-                        if (taskListener instanceof Main) {
+            if (target.equals(Target.APPLICATION)) {
+                applicationCycle.current().add(task);
+            } else {
+                for (TaskListener taskListener : taskListenerList) {
+                    switch (target) {
+                        case ALL:
                             taskListener.add(task);
-                        } 
-                        break;
-                    case DEVICES:
-                        if (taskListener instanceof Device) {
-                            taskListener.add(task);
-                        } 
-                        break;
-                    case APPLICATIONS:
-                        if (taskListener instanceof Application) {
-                            taskListener.add(task);
-                        } 
-                        break;
-                    case APPLICATION:
-                        applicationCycle.current().add(task);
+                        case MAIN:
+                            if (taskListener instanceof Main) {
+                                taskListener.add(task);
+                            } 
+                            break;
+                        case DEVICES:
+                            if (taskListener instanceof Device) {
+                                taskListener.add(task);
+                            } 
+                            break;
+                        case APPLICATIONS:
+                            if (taskListener instanceof Application) {
+                                taskListener.add(task);
+                            } 
+                            break;
+                    }
                 }
             }
         }

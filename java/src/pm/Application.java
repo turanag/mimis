@@ -6,12 +6,11 @@ import pm.task.TaskGatherer;
 import pm.task.TaskListener;
 
 public abstract class Application extends TaskListener {  
-    
     public Application() {
         super();
         TaskGatherer.add(this);
     }
-    
+
     public void run() {
         try {
             initialise();

@@ -150,5 +150,19 @@ public class ITPlaylist extends ITObject {
         Dispatch tracks = Dispatch.get(object, "Tracks").toDispatch();
         return new ITTrackCollection(tracks);
     }
-        
+
+    /**
+     * Returns the shuffle state.
+     * @return true if current state is shuffle.
+     */
+    public boolean getShuffle() {
+        return Dispatch.get(object, "Shuffle").getBoolean();
+    }
+    
+    /**
+     * Toggle the shuffle state.
+     */
+    public void toggleShuffle() {
+        setShuffle(!getShuffle());
+    }
 }

@@ -6,10 +6,13 @@ import pm.application.ApplicationCycle;
 import pm.application.Winamp.WinampApplication;
 import pm.application.example.ExampleApplication;
 import pm.application.iTunes.iTunesApplication;
+import pm.application.windows.gomplayer.GomPlayerApplication;
+import pm.application.windows.wmp.WMPApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
 import pm.device.lantextinput.LanTextDevice;
+import pm.device.player.PlayerDevice;
 import pm.device.textinput.TextDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
@@ -17,7 +20,6 @@ import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.task.TaskGatherer;
 import pm.task.TaskListener;
-import pm.util.ArrayCycle;
 
 public class Main extends TaskListener {
     //protected String[] deviceClassArray;
@@ -39,8 +41,9 @@ public class Main extends TaskListener {
 
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
+        //add(new PlayerDevice());
         //add(new RumblepadDevice());
-        //add(new WiimoteDevice());
+        add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
         //add(new LanTextDevice());
@@ -52,10 +55,11 @@ public class Main extends TaskListener {
             }
         }
 
-        add(new ExampleApplication());
+        //add(new ExampleApplication());
+        //add(new WMPApplication());
+        add(new GomPlayerApplication());
         //add(new WinampApplication());
         //add(new iTunesApplication());
-        applicationCycle.next();
         for (Application application : applicationCycle) {
             application.start();
         }
@@ -87,6 +91,7 @@ public class Main extends TaskListener {
         switch (action) {
             case NEXT:
                 applicationCycle.next();
+                System.out.println(applicationCycle.current());
                 break;
             case PREVIOUS:
                 applicationCycle.previous();

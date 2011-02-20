@@ -40,7 +40,7 @@ import javax.swing.JSlider;
 import javazoom.jlgui.player.amp.PlayerActionEvent;
 import javazoom.jlgui.player.amp.equalizer.ui.SplinePanel;
 import javazoom.jlgui.player.amp.util.Config;
-import javazoom.jlgui.player.amp.visual.ui.SpectrumTimeAnalyzer;
+//import javazoom.jlgui.player.amp.visual.ui.SpectrumTimeAnalyzer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -196,7 +196,7 @@ public class Skin
     private String viscolor = null;
     private int[] visualLocation = { 24, 44 };
     private int[] visualSize = { 76, 15 };
-    private SpectrumTimeAnalyzer analyzer = null;
+    //private SpectrumTimeAnalyzer analyzer = null;
     /*-- EqualizerUI --*/
     private Image imFullEqualizer = null;
     private Image imEqualizer = null;
@@ -473,7 +473,7 @@ public class Skin
         acTimeIcon.setIcons(timeIcons);
         acTimeIcon.setConstraints(new AbsoluteConstraints(iconsLocation[2], iconsLocation[3]));
         /*-- DSP --*/
-        setAnalyzerPanel();
+        //setAnalyzerPanel();
         /*-- Pos Bar --*/
         readPanel(releasedPosIm, releasedPosPanel, pressedPosIm, pressedPosPanel, imPosBar);
         setPosBarPanel();
@@ -724,7 +724,7 @@ public class Skin
         {
             log.info("DSP disabled");
         }
-        else
+        /*else
         {
             if (analyzer == null) analyzer = new SpectrumTimeAnalyzer();
             String visualMode = config.getVisualMode();
@@ -745,7 +745,7 @@ public class Skin
             analyzer.setPeakDelay((int) (fps * SpectrumTimeAnalyzer.DEFAULT_SPECTRUM_ANALYSER_PEAK_DELAY_FPS_RATIO));
             analyzer.setConstraints(new AbsoluteConstraints(visualLocation[0], visualLocation[1], visualSize[0], visualSize[1]));
             analyzer.setToolTipText(getResource("panel.analyzer"));
-        }
+        }*/
     }
 
     /**
@@ -1343,10 +1343,10 @@ public class Skin
         return acSecondL;
     }
 
-    public SpectrumTimeAnalyzer getAcAnalyzer()
+    /*public SpectrumTimeAnalyzer getAcAnalyzer()
     {
         return analyzer;
-    }
+    }*/
 
     public ActiveJButton getAcEqPresets()
     {

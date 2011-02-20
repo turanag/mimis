@@ -41,6 +41,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         switch (action) {
             case PLAY:
                 iTunes.playPause();
+                break;
             case NEXT:
                 iTunes.nextTrack();
                 break;
@@ -62,7 +63,10 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             case VOLUME_DOWN:
                 iTunes.setSoundVolume(getVolume() - VOLUME_CHANGE_RATE);
                 break;
-        }        
+            case SHUFFLE:
+                iTunes.toggleShuffle();
+                break;
+        }
     }
 
     protected int getVolume() {

@@ -25,7 +25,7 @@ public abstract class TaskListener implements Runnable {
         run = true;
         while (run) {
             if (taskQueue.isEmpty()) {
-                sleep(SLEEP);
+                sleep();
             } else {
                 task(taskQueue.poll());
             }
@@ -48,7 +48,12 @@ public abstract class TaskListener implements Runnable {
         } catch (InterruptedException e) {}
     }
 
+    protected void sleep() {
+        sleep(SLEEP);
+    }
+
     protected void task(Task task) {
+        System.out.println(this);
         Action action = task.getAction();
         if (task instanceof Continuous) {
             Continuous continuous = (Continuous) task;

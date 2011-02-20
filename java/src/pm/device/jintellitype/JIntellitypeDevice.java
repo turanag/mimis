@@ -30,6 +30,9 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         add(
+            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'q'),
+            new Task(Action.PLAY, Target.APPLICATIONS));
+        add(
             new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));
         add(
@@ -38,7 +41,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         add(
             new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'r'),
             new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 's'),
-            new Continuous(Action.REPEAT, Target.APPLICATION, 500));
+            new Continuous(Action.REPEAT, Target.APPLICATIONS, 500));
     }
 
     public void onIntellitype(int command) {

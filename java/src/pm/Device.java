@@ -1,6 +1,5 @@
 package pm;
 
-import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Event;

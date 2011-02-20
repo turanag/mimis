@@ -6,8 +6,9 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Project Multimedia/native"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jxinput.jar"/>
 	<classpathentry kind="lib" path="lib/jacob-1.15-M3.jar"/>
 	<classpathentry kind="lib" path="lib/TableLayout.jar"/>
+	<classpathentry kind="lib" path="lib/nativecall-0.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/nativeloader-200505172341.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

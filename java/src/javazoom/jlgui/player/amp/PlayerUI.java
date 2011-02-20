@@ -332,10 +332,10 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         ui.getAcExit().removeActionListener(this);
         ui.getAcExit().addActionListener(this);
         // DSP
-        if (ui.getAcAnalyzer() != null)
+        /*if (ui.getAcAnalyzer() != null)
         {
             add(ui.getAcAnalyzer(), ui.getAcAnalyzer().getConstraints());
-        }
+        }*/
         // Popup menu
         mainpopup = new JPopupMenu(ui.getResource("popup.title"));
         JMenuItem mi = new JMenuItem(Skin.TITLETEXT + "- JavaZOOM");
@@ -1173,14 +1173,14 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         {
             lastScrollTime = System.currentTimeMillis();
             posValueJump = false;
-            if (audioInfo.containsKey("basicplayer.sourcedataline"))
+            /*if (audioInfo.containsKey("basicplayer.sourcedataline"))
             {
                 if (ui.getAcAnalyzer() != null)
                 {
                     ui.getAcAnalyzer().setupDSP((SourceDataLine) audioInfo.get("basicplayer.sourcedataline"));
                     ui.getAcAnalyzer().startDSP((SourceDataLine) audioInfo.get("basicplayer.sourcedataline"));
                 }
-            }
+            }*/
         }
         else if (state == BasicPlayerEvent.SEEKING)
         {
@@ -1207,11 +1207,11 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         }
         else if (state == BasicPlayerEvent.STOPPED)
         {
-            if (ui.getAcAnalyzer() != null)
+            /*if (ui.getAcAnalyzer() != null)
             {
                 ui.getAcAnalyzer().stopDSP();
                 ui.getAcAnalyzer().repaint();
-            }
+            }*/
         }
     }
 
@@ -1236,7 +1236,7 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         if (audioInfo.containsKey("basicplayer.sourcedataline"))
         {
             // Spectrum/time analyzer
-            if (ui.getAcAnalyzer() != null) ui.getAcAnalyzer().writeDSP(pcmdata);
+            //if (ui.getAcAnalyzer() != null) ui.getAcAnalyzer().writeDSP(pcmdata);
         }
         if (audioInfo.containsKey("audio.length.bytes"))
         {
@@ -1699,12 +1699,12 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         {
             config.setAudioDevice(((BasicPlayer) theSoundPlayer).getMixerName());
         }
-        if (ui.getAcAnalyzer() != null)
+        /*if (ui.getAcAnalyzer() != null)
         {
             if (ui.getAcAnalyzer().getDisplayMode() == SpectrumTimeAnalyzer.DISPLAY_MODE_OFF) config.setVisualMode("off");
             else if (ui.getAcAnalyzer().getDisplayMode() == SpectrumTimeAnalyzer.DISPLAY_MODE_SCOPE) config.setVisualMode("oscillo");
             else config.setVisualMode("spectrum");
-        }
+        }*/
         if (playlist != null)
         {
             playlist.save("default.m3u");

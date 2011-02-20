@@ -343,6 +343,13 @@ public class iTunes {
     }
 
     /**
+     * Toggle the shuffle state.
+     */
+    public void toggleShuffle() {
+        getCurrentPlaylist().toggleShuffle();
+    }
+
+    /**
      * Returns the current player state.
      * @return Returns the current player state.
      */
