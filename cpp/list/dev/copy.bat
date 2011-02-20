@@ -1,0 +1,1 @@
+copy list.exe ..\..\..\java\native\
