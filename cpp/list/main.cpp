@@ -1,5 +1,4 @@
 #include <windows.h>
-#include <tchar.h>
 #include <iostream>
 
 using namespace std;
@@ -8,7 +7,6 @@ BOOL CALLBACK EnumProc(HWND hWnd, LPARAM lParam);
 
 int main() {
     EnumWindows(EnumProc, 0);
-    int a;
     return 0;
 }
 
