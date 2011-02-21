@@ -14,7 +14,7 @@ public class GomPlayerApplication extends WindowsApplication {
     protected final static String NAME = "GOM Player";
 
     public GomPlayerApplication() {
-        super(PROGRAM, NAME, "C:\\Program Files (x86)\\GomPlayer\\GOM.exe");
+        super(PROGRAM, NAME, "C:\\Program Files (x86)\\GRETECH\\GomPlayer\\GOM.exe");
     }
 
     public void action(Action action) {
@@ -23,7 +23,8 @@ public class GomPlayerApplication extends WindowsApplication {
         try {
             switch (action) {
                 case PLAY:
-                    key(Type.DOWN, Key.SPACE);
+                    System.out.println("spacie " + handle);
+                    command(0x800C);
                     break;
                case NEXT:
                     command(Command.MEDIA_NEXTTRACK);

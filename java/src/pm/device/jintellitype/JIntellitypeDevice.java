@@ -10,6 +10,7 @@ import pm.Action;
 import pm.Device;
 import pm.Target;
 import pm.Task;
+import pm.application.windows.Key;
 import pm.exception.EventException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Press;
@@ -30,17 +31,23 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         add(
-            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'q'),
+            new Hotkey(Key.PRIOR),
+            new Task(Action.PREVIOUS, Target.MAIN));
+        add(
+            new Hotkey(Key.NEXT),
+            new Task(Action.NEXT, Target.MAIN));
+        add(
+            new Hotkey(Modifier.CTRL | Modifier.WIN, 'q'),
             new Task(Action.PLAY, Target.APPLICATIONS));
         add(
-            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'x'),
+            new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));
         add(
-            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 't'),
+            new Hotkey(Modifier.CTRL | Modifier.WIN, 't'),
             new Task(Action.TEST, Target.MAIN));
         add(
-            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 'r'),
-            new Hotkey(HotkeyButton.CTRL | HotkeyButton.WIN, 's'),
+            new Hotkey(Modifier.CTRL | Modifier.WIN, 'r'),
+            new Hotkey(Modifier.CTRL | Modifier.WIN, 's'),
             new Continuous(Action.REPEAT, Target.APPLICATIONS, 500));
     }
 

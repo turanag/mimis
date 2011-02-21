@@ -40,13 +40,13 @@ public class Main extends TaskListener {
     }
 
     public void initialise() throws DeviceInitialiseException {
-        //add(new JIntellitypeDevice());
+        add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         //add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        add(new LanTextDevice());
+        //add(new LanTextDevice());
         for (Device device : deviceList) {
             try {
                 device.initialise();
@@ -57,7 +57,7 @@ public class Main extends TaskListener {
 
         add(new ExampleApplication());
         //add(new WMPApplication());
-        //add(new GomPlayerApplication());
+        add(new GomPlayerApplication());
         //add(new WinampApplication());
         //add(new iTunesApplication());
         for (Application application : applicationCycle) {
@@ -95,6 +95,7 @@ public class Main extends TaskListener {
                 break;
             case PREVIOUS:
                 applicationCycle.previous();
+                System.out.println(applicationCycle.current());
                 break;
             case EXIT:
                 exit();

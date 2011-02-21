@@ -17,6 +17,7 @@ abstract public class WindowsApplication extends Application {
     protected final static int TERMINATE_SLEEP = 500;
     protected final static int START_SLEEP = 500;
 
+    protected final static int WM_COMMAND = 0x0111;
     protected final static int WM_APPCOMMAND = 0x0319;
 
     protected String program;
@@ -25,6 +26,7 @@ abstract public class WindowsApplication extends Application {
 
     protected Process process;
     protected int handle;
+
     protected IntCall sendMessage;
     protected IntCall postMessage;
     protected IntCall mapVirtualKey;
@@ -87,10 +89,18 @@ abstract public class WindowsApplication extends Application {
         }
     }
 
+    protected void command(int command) throws SendCommandException {
+        int result = sendMessage.executeCall(new Object[] {
+                handle, WM_COMMAND, command});
+            if (result < 1 || sendMessage.getLastError() != null) {
+                throw new SendCommandException();
+            }
+    }
+
     protected void key(Type key, int code) throws SendKeyException {
         int scanCode = mapVirtualKey.executeCall(new Object[] {code, 0});
         int result = postMessage.executeCall(new Object[] {
-            handle, key.getCode(), code, scanCode << 16});
+            handle, key.getCode(), code, 1 | (scanCode << 16)});
         if (result < 1 || postMessage.getLastError() != null) {
             throw new SendKeyException();
         }
