@@ -1,4 +1,4 @@
-package pm.application.Winamp;
+package pm.application.wiinamp;
 
 import pm.Action;
 import pm.Application;

@@ -3,9 +3,9 @@ package pm;
 import java.util.ArrayList;
 
 import pm.application.ApplicationCycle;
-import pm.application.Winamp.WinampApplication;
 import pm.application.example.ExampleApplication;
-import pm.application.iTunes.iTunesApplication;
+import pm.application.iitunes.iTunesApplication;
+import pm.application.winamp.WinampApplication;
 import pm.application.windows.gomplayer.GomPlayerApplication;
 import pm.application.windows.wmp.WMPApplication;
 import pm.device.gui.GUIDevice;
