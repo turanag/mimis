@@ -10,7 +10,7 @@ import pm.macro.event.Sequence;
 import pm.macro.event.SequenceListener;
 import pm.task.Continuous;
 import pm.task.Stopper;
-import pm.task.TaskGatherer;
+import pm.task.TaskManager;
 import pm.task.TaskListener;
 
 public abstract class Device extends TaskListener {
@@ -19,7 +19,7 @@ public abstract class Device extends TaskListener {
     public Device() {
         super();
         sequenceListener = new SequenceListener();
-        TaskGatherer.add(this);
+        TaskManager.add(this);
     }
 
     /* Register macro's */

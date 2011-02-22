@@ -6,7 +6,7 @@ import pm.Action;
 import pm.Device;
 import pm.Target;
 import pm.Task;
-import pm.task.TaskGatherer;
+import pm.task.TaskManager;
 
 public class TextDevice extends Device implements Runnable {
     static final int SLEEP = 100;
@@ -21,11 +21,11 @@ public class TextDevice extends Device implements Runnable {
 
     public void run() {
         run = true;
-        while (run) {
+        while (running()) {
             String textinput = input.next().toUpperCase();
             if(textinput != null) {
                 try {
-                    TaskGatherer.add(
+                    TaskManager.add(
                         new Task(Action.valueOf(textinput), Target.APPLICATION));
                 } catch(IllegalArgumentException e) {}
             }
@@ -35,5 +35,9 @@ public class TextDevice extends Device implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+    
+    protected boolean running() {
+        return run && input.hasNext();
     }
 }

@@ -24,7 +24,7 @@ public class LanTextDevice extends Device implements Runnable {
                 new LanTextListener(socket.accept());
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } 
         }
     }
 

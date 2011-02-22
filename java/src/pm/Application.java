@@ -2,13 +2,13 @@ package pm;
 
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
-import pm.task.TaskGatherer;
+import pm.task.TaskManager;
 import pm.task.TaskListener;
 
 public abstract class Application extends TaskListener {  
     public Application() {
         super();
-        TaskGatherer.add(this);
+        TaskManager.add(this);
     }
 
     public void run() {

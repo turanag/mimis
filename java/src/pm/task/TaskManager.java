@@ -9,13 +9,13 @@ import pm.Target;
 import pm.Task;
 import pm.application.ApplicationCycle;
 
-public class TaskGatherer {
+public class TaskManager {
     protected static ArrayList<TaskListener> taskListenerList;
     protected static ApplicationCycle applicationCycle;
 
     public static void initialise(ApplicationCycle applicationCycle) {
         taskListenerList = new ArrayList<TaskListener>();
-        TaskGatherer.applicationCycle = applicationCycle;
+        TaskManager.applicationCycle = applicationCycle;
     }
 
     public static void add(TaskListener taskListener) {

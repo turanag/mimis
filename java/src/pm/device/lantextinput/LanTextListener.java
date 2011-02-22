@@ -4,20 +4,17 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-import pm.Action;
-import pm.Target;
-import pm.Task;
-import pm.task.TaskGatherer;
+import pm.device.textinput.TextDevice;
 
-public class LanTextListener implements Runnable {
-    static final int SLEEP = 100;
-    
-    protected boolean run;
+public class LanTextListener extends TextDevice {
     protected Socket socket;
-    protected Scanner input;
     
-    public LanTextListener(Socket socket){
+    public LanTextListener(Socket socket) {
         this.socket = socket;
+        initialise();
+    }
+    
+    public void initialise() {
         try {
             input = new Scanner(socket.getInputStream());
         } catch (IOException e) {
@@ -27,25 +24,11 @@ public class LanTextListener implements Runnable {
         new Thread(this).start();
     }
        
-    public void run() {
-        while (run && socket.isConnected() && input.hasNext()) {
-            String textinput = input.next().toUpperCase();
-            if(textinput != null) {
-                try {
-                    TaskGatherer.add(
-                        new Task(Action.valueOf(textinput), Target.APPLICATION));
-                } catch (IllegalArgumentException e) {}
-            }
-            try {
-                Thread.sleep(SLEEP);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        exit();
+    protected boolean running() {
+        return run && socket.isConnected() && input.hasNext();
     }
     
-    protected void exit() {
+    public void exit() {
         run = false;
         try {
             socket.close();

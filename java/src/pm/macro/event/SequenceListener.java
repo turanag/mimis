@@ -7,7 +7,7 @@ import pm.Device;
 import pm.Task;
 import pm.macro.Active;
 import pm.macro.Event;
-import pm.task.TaskGatherer;
+import pm.task.TaskManager;
 
 public class SequenceListener {
     public ArrayList<Sequence> sequenceList;
@@ -34,7 +34,7 @@ public class SequenceListener {
             if (active.next(event)) {
                 if (active.last()) {
                     Task task = taskMap.get(active.getSequence());
-                    TaskGatherer.add(task);
+                    TaskManager.add(task);
                     removeList.add(active);
                 }
             } else {

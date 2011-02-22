@@ -1,3 +1,6 @@
+TODO
+------------
+
 log bijhouden
 
 mappings lezen vanuit config bestand
@@ -12,16 +15,23 @@ nummerinfo weergeven, waar? via feedback?
 
 javadoc maken, class diagram opstellen enz.....
 
-naamgeving en indeling classes/packages controleren
-
 meer applicaties implementeren, zoals VLC, WMP, Youtube? (interface naar flash?)
 
 logo ontwerpen
 
-exporteren naar uitvoerbare jar file
-
-lantextdevice generiek maken met normale textdevice
-
 client maken die remote devices kan beheren en lokaal acties kan uitvoeren
 
 mogelijkheid tot webstart onderzoeken
+
+
+IN PROGRESS
+-------------
+naamgeving en indeling classes/packages controleren
++TaskGatherererer hernoemt naar TaskManager
+
+exporteren naar uitvoerbare jar file
++Eclipse kan exporteren, maar bij uitvoeren gebeurd er niets. Moet er een status scherm komen? (Een swing console bijvoorbeeld)
+
+DONE
+-------------
+lantextdevice generiek maken met normale textdevice

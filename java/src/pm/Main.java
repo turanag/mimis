@@ -18,7 +18,7 @@ import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.task.TaskGatherer;
+import pm.task.TaskManager;
 import pm.task.TaskListener;
 
 public class Main extends TaskListener {
@@ -35,18 +35,18 @@ public class Main extends TaskListener {
             "pm.device.wiimote.WiimoteDevice"};*/
         applicationCycle = new ApplicationCycle();
         deviceList = new ArrayList<Device>();
-        TaskGatherer.initialise(applicationCycle);
-        TaskGatherer.add(this);
+        TaskManager.initialise(applicationCycle);
+        TaskManager.add(this);
     }
 
     public void initialise() throws DeviceInitialiseException {
-        add(new JIntellitypeDevice());
+        //add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         //add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        //add(new LanTextDevice());
+        add(new LanTextDevice());
         for (Device device : deviceList) {
             try {
                 device.initialise();
@@ -57,9 +57,9 @@ public class Main extends TaskListener {
 
         add(new ExampleApplication());
         //add(new WMPApplication());
-        add(new GomPlayerApplication());
+        //add(new GomPlayerApplication());
         //add(new WinampApplication());
-        //add(new iTunesApplication());
+        add(new iTunesApplication());
         for (Application application : applicationCycle) {
             application.start();
         }
