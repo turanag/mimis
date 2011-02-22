@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pm.application.ApplicationCycle;
 import pm.application.example.ExampleApplication;
-import pm.application.iitunes.iTunesApplication;
+import pm.application.itunes.iTunesApplication;
 import pm.application.winamp.WinampApplication;
 import pm.application.windows.gomplayer.GomPlayerApplication;
 import pm.application.windows.wmp.WMPApplication;

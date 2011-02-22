@@ -1,4 +1,4 @@
-package pm.application.iitunes;
+package pm.application.itunes;
 
 import pm.Action;
 import pm.Application;
