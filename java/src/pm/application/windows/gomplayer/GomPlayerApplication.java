@@ -1,12 +1,12 @@
 package pm.application.windows.gomplayer;
 
-import pm.Action;
 import pm.application.windows.Command;
-import pm.application.windows.Type;
-import pm.application.windows.Key;
 import pm.application.windows.WindowsApplication;
 import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
+import pm.value.Action;
+import pm.value.Key;
+import pm.value.Type;
 
 public class GomPlayerApplication extends WindowsApplication {
     protected final static String PROGRAM = "GOM.exe";

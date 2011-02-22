@@ -1,7 +1,7 @@
 package pm.task;
 
-import pm.Action;
-import pm.Target;
+import pm.value.Action;
+import pm.value.Target;
 
 public class Dynamic extends Continuous {
     protected static final int RATE = 10;

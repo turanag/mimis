@@ -1,5 +1,8 @@
 package pm;
 
+import pm.value.Action;
+import pm.value.Target;
+
 public class Task {
     protected Action action;
     protected Target target;

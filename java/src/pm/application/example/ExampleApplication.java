@@ -1,7 +1,7 @@
 package pm.application.example;
 
-import pm.Action;
 import pm.Application;
+import pm.value.Action;
 
 public class ExampleApplication extends Application {
     protected void action(Action action) {

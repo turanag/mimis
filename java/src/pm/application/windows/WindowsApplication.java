@@ -9,6 +9,8 @@ import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
 import pm.util.Native;
 import pm.util.Windows;
+import pm.value.Key;
+import pm.value.Type;
 
 import com.eaio.nativecall.IntCall;
 import com.eaio.nativecall.NativeCall;

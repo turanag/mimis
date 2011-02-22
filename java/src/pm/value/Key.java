@@ -1,4 +1,4 @@
-package pm.application.windows;
+package pm.value;
 
 public enum Key {
     /*

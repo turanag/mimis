@@ -1,4 +1,4 @@
-package pm;
+package pm.value;
 
 public enum Action {
     EXIT,

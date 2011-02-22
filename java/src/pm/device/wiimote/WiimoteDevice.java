@@ -4,10 +4,8 @@ import org.wiigee.event.GestureEvent;
 import org.wiigee.event.GestureListener;
 import org.wiigee.util.Log;
 
-import pm.Action;
 import pm.Button;
 import pm.Device;
-import pm.Target;
 import pm.Task;
 import pm.device.javainput.rumblepad.RumblepadButton;
 import pm.device.wiimote.gesture.GestureDevice;
@@ -18,6 +16,8 @@ import pm.macro.event.Press;
 import pm.macro.event.Release;
 import pm.task.Continuous;
 import pm.task.Dynamic;
+import pm.value.Action;
+import pm.value.Target;
 
 import wiiusej.Wiimote;
 import wiiusej.values.Acceleration;

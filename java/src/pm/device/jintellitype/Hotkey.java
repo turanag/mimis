@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.melloware.jintellitype.JIntellitype;
 
-import pm.application.windows.Key;
 import pm.macro.event.Press;
+import pm.value.Key;
 
 public class Hotkey extends Press {
     protected static ArrayList<Hotkey> hotkeyList;

@@ -1,8 +1,8 @@
 package pm.task;
 
-import pm.Action;
-import pm.Target;
 import pm.Task;
+import pm.value.Action;
+import pm.value.Target;
 
 public class Continuous extends Task {
     protected static final int SLEEP = 0;

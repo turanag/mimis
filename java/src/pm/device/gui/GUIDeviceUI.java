@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import pm.Action;
-import pm.Target;
 import pm.Task;
 import pm.task.TaskManager;
+import pm.value.Action;
+import pm.value.Target;
 
 import layout.TableLayout;
 import layout.TableLayoutConstraints;

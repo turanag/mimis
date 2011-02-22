@@ -9,28 +9,34 @@ exeptions en foutmeldingen nakijken/afhandelen/loggen
 
 initialises en exits controleren op succes. tussendoor afgesloten apps en devs herkennen en restarten? op runtime nieuwe applicaties of devices toevoegen of sluiten.
 
-feedback systeem implementeren, rumble voor zowel wiimote als rumblepad
-
 nummerinfo weergeven, waar? via feedback?
 
 javadoc maken, class diagram opstellen enz.....
 
 meer applicaties implementeren, zoals VLC, WMP, Youtube? (interface naar flash?)
 
-logo ontwerpen
-
 client maken die remote devices kan beheren en lokaal acties kan uitvoeren
 
 mogelijkheid tot webstart onderzoeken
 
+alle listeners in gezamelijk pakket plaatsen?
+
+algemene listener parent class / interface maken? die zou standaard thread functies implementeren / vereisen: start, run, stop
 
 IN PROGRESS
 -------------
 naamgeving en indeling classes/packages controleren
 +TaskGatherererer hernoemt naar TaskManager
++value package waar algemene (gedeelde) enums in komen
 
 exporteren naar uitvoerbare jar file
 +Eclipse kan exporteren, maar bij uitvoeren gebeurd er niets. Moet er een status scherm komen? (Een swing console bijvoorbeeld)
+
+logo ontwerpen
++logo is af, favicon maken?
+
+feedback systeem implementeren, rumble voor zowel wiimote als rumblepad
++feedback voor rumblepad komt er niet, te veel werk en gebruikte api lijkt niet eenvoudig aanpasbaar
 
 DONE
 -------------

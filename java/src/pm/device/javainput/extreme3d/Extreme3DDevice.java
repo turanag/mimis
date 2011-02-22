@@ -1,9 +1,7 @@
 package pm.device.javainput.extreme3d;
 
-import pm.Action;
 import pm.Button;
 import pm.Macro;
-import pm.Target;
 import pm.Task;
 import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
@@ -14,6 +12,8 @@ import pm.exception.event.UnknownDirectionException;
 import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
+import pm.value.Action;
+import pm.value.Target;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 

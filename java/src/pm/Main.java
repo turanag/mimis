@@ -11,15 +11,16 @@ import pm.application.windows.wmp.WMPApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
-import pm.device.lantextinput.LanTextDevice;
 import pm.device.player.PlayerDevice;
-import pm.device.textinput.TextDevice;
+import pm.device.text.TextDevice;
+import pm.device.text.lan.LanTextDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.task.TaskManager;
 import pm.task.TaskListener;
+import pm.value.Action;
 
 public class Main extends TaskListener {
     //protected String[] deviceClassArray;
@@ -45,7 +46,7 @@ public class Main extends TaskListener {
         //add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
-        //add(new TextDevice());
+        add(new TextDevice());
         add(new LanTextDevice());
         for (Device device : deviceList) {
             try {

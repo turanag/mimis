@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import pm.Application;
 import pm.Device;
 import pm.Main;
-import pm.Target;
 import pm.Task;
 import pm.application.ApplicationCycle;
+import pm.value.Target;
 
 public class TaskManager {
     protected static ArrayList<TaskListener> taskListenerList;

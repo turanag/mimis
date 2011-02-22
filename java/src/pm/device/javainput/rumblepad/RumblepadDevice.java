@@ -1,8 +1,6 @@
 package pm.device.javainput.rumblepad;
 
-import pm.Action;
 import pm.Button;
-import pm.Target;
 import pm.Task;
 import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
@@ -13,6 +11,8 @@ import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.task.Continuous;
 import pm.task.Dynamic;
+import pm.value.Action;
+import pm.value.Target;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 

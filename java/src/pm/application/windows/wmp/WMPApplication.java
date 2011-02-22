@@ -1,10 +1,10 @@
 package pm.application.windows.wmp;
 
-import pm.Action;
 import pm.application.windows.Command;
 import pm.application.windows.WindowsApplication;
 import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.application.windows.SendCommandException;
+import pm.value.Action;
 
 public class WMPApplication extends WindowsApplication {
     protected final static String PROGRAM = "wmplayer.exe";

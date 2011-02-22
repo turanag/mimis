@@ -1,9 +1,9 @@
 package pm.application.winamp;
 
-import pm.Action;
 import pm.Application;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
+import pm.value.Action;
 
 import com.qotsa.exception.InvalidHandle;
 import com.qotsa.exception.InvalidParameter;
