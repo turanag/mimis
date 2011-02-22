@@ -9,21 +9,20 @@ import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
 
 public class GomPlayerApplication extends WindowsApplication {
-    protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Clients\\Media\\GomPlayer\\shell\\open\\command";
     protected final static String PROGRAM = "GOM.exe";
-    protected final static String NAME = "GOM Player";
+    protected final static String TITLE = "GOM Player";
+    protected final static String NAME = "GomPlayer1.x";
 
     public GomPlayerApplication() {
-        super(PROGRAM, NAME, "C:\\Program Files (x86)\\GRETECH\\GomPlayer\\GOM.exe");
+        super(PROGRAM, TITLE, NAME);
     }
 
     public void action(Action action) {
+        System.out.println(handle);
         System.out.println("GomPlayerApplication: " + action);
-        //http://www.keyxl.com/aaa0602/267/GOM-Player-keyboard-shortcuts.htm
         try {
             switch (action) {
                 case PLAY:
-                    System.out.println("spacie " + handle);
                     command(0x800C);
                     break;
                case NEXT:

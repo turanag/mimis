@@ -2,25 +2,28 @@ package pm.application.windows;
 
 import java.io.IOException;
 
-import com.eaio.nativecall.IntCall;
-import com.eaio.nativecall.NativeCall;
-
 import pm.Application;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.application.windows.SendCommandException;
 import pm.exception.application.windows.SendKeyException;
 import pm.util.Native;
-import pm.util.VBScript;
+import pm.util.Windows;
+
+import com.eaio.nativecall.IntCall;
+import com.eaio.nativecall.NativeCall;
 
 abstract public class WindowsApplication extends Application {
     protected final static int TERMINATE_SLEEP = 500;
     protected final static int START_SLEEP = 500;
 
+    protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
+
     protected final static int WM_COMMAND = 0x0111;
     protected final static int WM_APPCOMMAND = 0x0319;
 
     protected String program;
+    protected String title;
     protected String name;
     protected String target;
 
@@ -39,39 +42,32 @@ abstract public class WindowsApplication extends Application {
         }
     }
 
-    public WindowsApplication(String program, String name, String target) {
+    public WindowsApplication(String program, String title, String name) {
         this.program = program;
+        this.title = title;
         this.name = name;
-        this.target = target;
         handle = -1;
     }
 
     public void initialise() throws ApplicationInitialiseException {
-        try {
-            if (VBScript.isRunning(program)) {
-                handle = Native.getHandle(name);
-                if (handle < 0) {
-                    while (VBScript.isRunning(program)) {
-                        VBScript.terminate(program);
-                        sleep(TERMINATE_SLEEP);
-                    }
-                }
-            }
-            if (handle < 0) {
-                process = Runtime.getRuntime().exec(target);
-                while (!VBScript.isRunning(program)) {
-                    sleep(START_SLEEP);
-                }
-                IntCall findWindow = new IntCall("user32", "FindWindowA");
-                handle = findWindow.executeCall(new Object[] {null, name});
-            }
-        } catch (IOException e) {}
-        if (handle < 1) {
-            throw new ApplicationInitialiseException();
-        }
         sendMessage = new IntCall("user32", "SendMessageA");
         postMessage = new IntCall("user32", "PostMessageA");
         mapVirtualKey = new IntCall("user32", "MapVirtualKeyA");
+
+        handle = Windows.findWindow(name, null);
+        if (handle < 1) {
+            String key = String.format("%s\\%s", REGISTRY, program);
+            String path = Native.getValue(key);
+            try {
+                String command = String.format("\"%s\"", path);
+                process = Runtime.getRuntime().exec(command);
+                sleep(START_SLEEP);
+                handle = Windows.findWindow(name, null);
+            } catch (IOException e) {}
+        }
+        if (handle < 1) {
+            throw new ApplicationInitialiseException();
+        }
     }
 
     public void exit() throws ApplicationExitException {

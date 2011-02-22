@@ -37,7 +37,8 @@ public class Native {
     }
     
     public static String getValue(String key, String name) throws IOException {
-        Process process = Runtime.getRuntime().exec("reg query " + key);
+        String command = String.format("reg query \"%s\"", key);
+        Process process = Runtime.getRuntime().exec(command);
         Scanner processScanner = new Scanner(process.getInputStream());
         try {
             processScanner.nextLine();
