@@ -8,13 +8,13 @@ import pm.exception.device.DeviceInitialiseException;
 public class LanTextDevice extends Device {
     static final int PORT = 1234;
 
-    protected ServerSocket socket;
+    protected ServerSocket server;
     protected SocketListener socketListener;
 
     public void initialise() throws DeviceInitialiseException {
         try {
-            socket = new ServerSocket(PORT);
-            socketListener = new SocketListener(socket);
+            server = new ServerSocket(PORT);
+            socketListener = new SocketListener(server);
             socketListener.start();
         } catch (IOException e) {
             throw new DeviceInitialiseException();

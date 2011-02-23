@@ -55,4 +55,8 @@ public class TaskManager {
             }
         }
     }
+    
+    public static void remove(TaskListener taskListener) {
+        taskListenerList.remove(taskListener);
+    }
 }

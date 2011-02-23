@@ -2,7 +2,7 @@ package pm.device.text;
 
 import pm.Device;
 
-public class TextDevice extends Device implements Runnable {
+public class TextDevice extends Device {
     InputListener inputListener;
 
     public TextDevice() {

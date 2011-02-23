@@ -1,6 +1,5 @@
 TODO
 ------------
-
 log bijhouden
 
 mappings lezen vanuit config bestand
@@ -21,7 +20,6 @@ mogelijkheid tot webstart onderzoeken
 
 alle listeners in gezamelijk pakket plaatsen?
 
-algemene listener parent class / interface maken? die zou standaard thread functies implementeren / vereisen: start, run, stop
 
 IN PROGRESS
 -------------
@@ -37,6 +35,9 @@ logo ontwerpen
 
 feedback systeem implementeren, rumble voor zowel wiimote als rumblepad
 +feedback voor rumblepad komt er niet, te veel werk en gebruikte api lijkt niet eenvoudig aanpasbaar
+
+algemene listener parent class / interface maken? die zou standaard thread functies implementeren / vereisen: start, run, stop
++hier zijn al enkele aanpassingen aan gemaakt, de main stuurt nu direct de TaskManager aan in plaats van dat het vannuit een Device of Application gebeurd
 
 DONE
 -------------

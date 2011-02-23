@@ -19,7 +19,6 @@ public abstract class Device extends TaskListener {
     public Device() {
         super();
         sequenceListener = new SequenceListener();
-        TaskManager.add(this);
     }
 
     /* Register macro's */

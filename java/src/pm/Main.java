@@ -16,6 +16,7 @@ import pm.device.text.TextDevice;
 import pm.device.text.lan.LanTextDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.exception.application.ApplicationExitException;
+import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.task.TaskManager;
@@ -51,7 +52,9 @@ public class Main extends TaskListener {
         for (Device device : deviceList) {
             try {
                 device.initialise();
+                device.start();
             } catch (DeviceInitialiseException e) {
+                remove(device);
                 e.printStackTrace();
             }
         }
@@ -62,7 +65,13 @@ public class Main extends TaskListener {
         //add(new WinampApplication());
         add(new iTunesApplication());
         for (Application application : applicationCycle) {
-            application.start();
+            try {
+                application.initialise();
+                application.start();
+            } catch (ApplicationInitialiseException e) {
+                remove(application);
+                e.printStackTrace();
+            }
         }
     }
 
@@ -126,19 +135,23 @@ public class Main extends TaskListener {
 
     /* Add / remove methods */
     protected void add(Application application) {
+        TaskManager.add(application);
         applicationCycle.add(application);
     }
 
-    protected boolean remove(Application application) {
-        return applicationCycle.remove(application);
+    protected void remove(Application application) {
+        TaskManager.remove(application);
+        applicationCycle.remove(application);
     }
 
     protected void add(Device device) {
+        TaskManager.add(device);
         deviceList.add(device);
     }
 
-    protected boolean remove(Device device) {
-        return deviceList.remove(device);
+    protected void remove(Device device) {
+        TaskManager.remove(device);
+        deviceList.remove(device);
     }
 
     public static void main(String[] args) {
