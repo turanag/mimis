@@ -1,6 +1,4 @@
-package pm.application.windows;
-
-import pm.Button;
+package pm.value;
 
 public enum Command {
     BROWSER_BACKWARD       (1),

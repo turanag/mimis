@@ -8,7 +8,6 @@ import com.melloware.jintellitype.JIntellitype;
 
 import pm.Device;
 import pm.Task;
-import pm.application.windows.Command;
 import pm.exception.EventException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.event.Hold;
@@ -16,6 +15,7 @@ import pm.macro.event.Press;
 import pm.macro.event.Release;
 import pm.task.Continuous;
 import pm.value.Action;
+import pm.value.Command;
 import pm.value.Key;
 import pm.value.Target;
 
