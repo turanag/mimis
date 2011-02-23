@@ -7,7 +7,6 @@ import org.wiigee.util.Log;
 import pm.Button;
 import pm.Device;
 import pm.Task;
-import pm.device.javainput.rumblepad.RumblepadButton;
 import pm.device.wiimote.gesture.GestureDevice;
 import pm.exception.device.DeviceInitialiseException;
 import pm.exception.event.UnknownButtonException;

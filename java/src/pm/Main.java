@@ -42,20 +42,19 @@ public class Main extends TaskListener {
     }
 
     public void initialise() throws DeviceInitialiseException {
-        //add(new JIntellitypeDevice());
+        add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         //add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
-        add(new TextDevice());
-        add(new LanTextDevice());
+        //add(new TextDevice());
+        //add(new LanTextDevice());
         for (Device device : deviceList) {
             try {
                 device.initialise();
                 device.start();
             } catch (DeviceInitialiseException e) {
                 remove(device);
-                e.printStackTrace();
             }
         }
 
@@ -70,7 +69,6 @@ public class Main extends TaskListener {
                 application.start();
             } catch (ApplicationInitialiseException e) {
                 remove(application);
-                e.printStackTrace();
             }
         }
     }

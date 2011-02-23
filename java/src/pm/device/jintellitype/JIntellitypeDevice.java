@@ -8,8 +8,10 @@ import com.melloware.jintellitype.JIntellitype;
 
 import pm.Device;
 import pm.Task;
+import pm.application.windows.Command;
 import pm.exception.EventException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.macro.event.Hold;
 import pm.macro.event.Press;
 import pm.macro.event.Release;
 import pm.task.Continuous;
@@ -37,8 +39,11 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             new Hotkey(Key.NEXT),
             new Task(Action.NEXT, Target.MAIN));
         add(
-            new Hotkey(Modifier.CTRL | Modifier.WIN, 'q'),
-            new Task(Action.PLAY, Target.APPLICATIONS));
+            new Press(CommandButton.VOLUME_DOWN),
+            new Task(Action.VOLUME_DOWN, Target.APPLICATIONS));
+        add(
+            new Press(CommandButton.VOLUME_UP),
+            new Task(Action.VOLUME_UP, Target.APPLICATIONS));
         add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));

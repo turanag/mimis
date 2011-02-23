@@ -3,26 +3,18 @@ package pm.task;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import pm.Listener;
 import pm.Task;
 import pm.value.Action;
 
-public abstract class TaskListener implements Runnable {
-    protected static final int SLEEP = 100;
-
+public abstract class TaskListener extends Listener implements Runnable {
     protected Queue<Task> taskQueue;
-    protected boolean run;
 
     public TaskListener() {
         taskQueue = new ConcurrentLinkedQueue<Task>();
-        run = false;
-    }
-
-    public void start() {
-        new Thread(this).start();
     }
 
     public final void run() {
-        run = true;
         while (run) {
             if (taskQueue.isEmpty()) {
                 sleep();
@@ -32,24 +24,8 @@ public abstract class TaskListener implements Runnable {
         }
     }
 
-    public void stop() {
-        run = false;
-    }
-
     public void add(Task task) {
         taskQueue.add(task);
-    }
-
-    protected void sleep(int time) {
-        try {
-            if (time > 0) {
-                Thread.sleep(time);
-            }
-        } catch (InterruptedException e) {}
-    }
-
-    protected void sleep() {
-        sleep(SLEEP);
     }
 
     protected void task(Task task) {

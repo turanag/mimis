@@ -6,11 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import pm.Listener;
 import pm.device.text.InputListener;
 
-public class SocketListener implements Runnable {
-    protected boolean run;
-
+public class SocketListener extends Listener {
     protected ServerSocket server;
     protected ArrayList<InputListener> inputListenerList;
 
@@ -19,12 +18,7 @@ public class SocketListener implements Runnable {
         inputListenerList = new ArrayList<InputListener>();
     }
 
-    public void start() {
-        new Thread(this).start();
-    }
-
     public void run() {
-        run = true;
         while (run) {
             try {
                 Socket socket = server.accept();

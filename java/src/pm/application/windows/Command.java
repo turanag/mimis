@@ -1,5 +1,7 @@
 package pm.application.windows;
 
+import pm.Button;
+
 public enum Command {
     BROWSER_BACKWARD       (1),
     BROWSER_FORWARD        (2),
