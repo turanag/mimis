@@ -1,7 +1,5 @@
 package pm.macro;
 
-
-
 public class Sequence {
     protected State[] eventArray;
 

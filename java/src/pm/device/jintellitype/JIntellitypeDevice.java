@@ -59,9 +59,8 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
     }
 
     public void onIntellitype(int command) {
-        CommandButton commandButton;
         try {
-            commandButton = CommandButton.create(command);
+            CommandButton commandButton = CommandButton.create(command);
             add(new Press(commandButton));
             add(new Release(commandButton));
         } catch (UnknownButtonException e) {
