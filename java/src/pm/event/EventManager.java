@@ -22,6 +22,12 @@ public class EventManager {
         taskListenerList.add(eventListener);
     }
 
+    public static void add(Feedback feedback) {
+        for (EventListener eventListener : taskListenerList) {
+            eventListener.add(feedback);
+        }
+    }
+
     public static void add(EventListener self, Task task) {
         if (task instanceof Stopper) {
             Stopper stopper = (Stopper) task;

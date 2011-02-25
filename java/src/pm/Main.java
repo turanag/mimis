@@ -2,6 +2,9 @@ package pm;
 
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import pm.application.ApplicationCycle;
 import pm.application.example.ExampleApplication;
 import pm.application.itunes.iTunesApplication;
@@ -24,6 +27,8 @@ import pm.exception.device.DeviceInitialiseException;
 import pm.value.Action;
 
 public class Main extends EventListener {
+    protected Log log = LogFactory.getLog(Main.class);
+
     //protected String[] deviceClassArray;
     protected ApplicationCycle applicationCycle;
     protected ArrayList<Device> deviceList;
@@ -53,6 +58,7 @@ public class Main extends EventListener {
             try {
                 device.initialise();
                 device.start();
+                log.info("Device started: " + device);
             } catch (DeviceInitialiseException e) {
                 remove(device);
             }

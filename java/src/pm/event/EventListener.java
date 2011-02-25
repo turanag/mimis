@@ -3,32 +3,43 @@ package pm.event;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import pm.Event;
 import pm.Listener;
 import pm.event.task.Continuous;
 import pm.value.Action;
 
 public abstract class EventListener extends Listener implements Runnable {
-    protected Queue<Task> taskQueue;
+    protected Queue<Event> eventQueue;
 
     public EventListener() {
-        taskQueue = new ConcurrentLinkedQueue<Task>();
+        eventQueue = new ConcurrentLinkedQueue<Event>();
     }
 
     public final void run() {
         while (run) {
-            if (taskQueue.isEmpty()) {
+            if (eventQueue.isEmpty()) {
                 sleep();
             } else {
-                task(taskQueue.poll());
+                event(eventQueue.poll());
             }
         }
     }
 
-    public void add(Task task) {
-        taskQueue.add(task);
+    public void add(Event event) {
+        eventQueue.add(event);
     }
 
-    protected void task(Task task) {
+    protected void event(Event event) {
+        if (event instanceof Feedback) {
+            event((Feedback) event);
+        } else if (event instanceof Task) {
+            event((Task) event);
+        }
+    }
+
+    protected void event(Feedback feedback) {}
+
+    protected void event(Task task) {
         Action action = task.getAction();
         if (task instanceof Continuous) {
             Continuous continuous = (Continuous) task;

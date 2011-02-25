@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/TableLayout.jar"/>
 	<classpathentry kind="lib" path="lib/nativecall-0.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/nativeloader-200505172341.jar"/>
+	<classpathentry kind="lib" path="cfg"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
