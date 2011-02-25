@@ -7,8 +7,9 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import pm.Device;
-import pm.Task;
+import pm.event.Task;
 import pm.exception.StateException;
+import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
@@ -63,9 +64,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             System.out.println(commandButton);
             add(new Press(commandButton));
             add(new Release(commandButton));
-        } catch (StateException e) {
-            e.printStackTrace(); // Todo: deze exception verder omhoog gooien
-        }        
+        } catch (UnknownButtonException e) {}        
     }
 
     public void onHotKey(int id) {

@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import pm.Task;
+
+import pm.event.Task;
 import pm.task.TaskManager;
 import pm.value.Action;
 import pm.value.Target;

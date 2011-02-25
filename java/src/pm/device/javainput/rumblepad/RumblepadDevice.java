@@ -1,9 +1,9 @@
 package pm.device.javainput.rumblepad;
 
 import pm.Button;
-import pm.Task;
 import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
+import pm.event.Task;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.button.UnknownDirectionException;
 import pm.exception.device.DeviceInitialiseException;

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import pm.Listener;
-import pm.Task;
+import pm.event.Task;
 import pm.exception.task.TaskNotSupportedException;
 import pm.task.TaskManager;
 import pm.value.Action;
@@ -23,10 +23,8 @@ public class InputListener extends Listener {
             String string = input.next().toUpperCase();
             if(string != null) {
                 try {
-                    try {
-                        TaskManager.add(
-                            new Task(Action.valueOf(string), Target.APPLICATION));
-                    } catch (TaskNotSupportedException e) {}
+                    TaskManager.add(
+                        new Task(Action.valueOf(string), Target.APPLICATION));
                 } catch(IllegalArgumentException e) {}
             }
             try {

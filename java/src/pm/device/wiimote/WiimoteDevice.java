@@ -6,8 +6,8 @@ import org.wiigee.util.Log;
 
 import pm.Button;
 import pm.Device;
-import pm.Task;
 import pm.device.wiimote.gesture.GestureDevice;
+import pm.event.Task;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;

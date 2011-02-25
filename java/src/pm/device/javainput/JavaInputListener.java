@@ -3,6 +3,7 @@ package pm.device.javainput;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import pm.exception.ButtonException;
 import pm.exception.StateException;
 
 import de.hardcode.jxinput.Axis;
@@ -86,13 +87,13 @@ public class JavaInputListener implements Runnable, JXInputAxisEventListener, JX
             if (!buttonEventQueue.isEmpty()) {
                 try {
                     javaInputDevice.processEvent(buttonEventQueue.poll());
-                } catch (StateException e) {}
+                } catch (ButtonException e) {}
                 sleep = false;
             }
             if (!directionalEventQueue.isEmpty()) {
                 try {
                     javaInputDevice.processEvent(directionalEventQueue.poll());
-                } catch (StateException e) {e.printStackTrace();}
+                } catch (ButtonException e) {}
                 sleep = false;
             }
             if (sleep) {

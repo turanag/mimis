@@ -1,6 +1,6 @@
 package pm.task;
 
-import pm.Task;
+import pm.event.Task;
 
 public class Stopper extends Task {
     protected Continuous continuous;

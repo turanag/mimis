@@ -1,9 +1,10 @@
-package pm;
+package pm.event;
 
+import pm.Event;
 import pm.value.Action;
 import pm.value.Target;
 
-public class Task {
+public class Task implements Event {
     protected Action action;
     protected Target target;
 
@@ -11,7 +12,7 @@ public class Task {
         this.action = action;
         this.target = target;
     }
-    
+
     public Task(Action action) {
         this(action, Target.SELF);
     }

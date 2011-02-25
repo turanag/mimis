@@ -1,7 +1,7 @@
 package pm.exception.button;
 
-import pm.exception.StateException;
+import pm.exception.ButtonException;
 
-public class UnknownButtonException extends StateException {
+public class UnknownButtonException extends ButtonException {
     protected static final long serialVersionUID = 1L;
 }

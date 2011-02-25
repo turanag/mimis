@@ -2,9 +2,9 @@ package pm.device.javainput.extreme3d;
 
 import pm.Button;
 import pm.Macro;
-import pm.Task;
 import pm.device.javainput.DirectionButton;
 import pm.device.javainput.JavaInputDevice;
+import pm.event.Task;
 import pm.exception.MacroException;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.button.UnknownDirectionException;

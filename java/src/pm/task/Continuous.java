@@ -1,6 +1,6 @@
 package pm.task;
 
-import pm.Task;
+import pm.event.Task;
 import pm.value.Action;
 import pm.value.Target;
 

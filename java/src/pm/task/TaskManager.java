@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import pm.Application;
 import pm.Device;
 import pm.Main;
-import pm.Task;
 import pm.application.ApplicationCycle;
+import pm.event.Task;
 import pm.exception.task.TaskNotSupportedException;
 import pm.value.Target;
 
@@ -63,12 +63,10 @@ public class TaskManager {
         }
     }
 
-    public static void add(Task task) throws TaskNotSupportedException {
-        Target target = task.getTarget();
-        if (target.equals(Target.SELF)) {
-            throw new TaskNotSupportedException();
+    public static void add(Task task) {
+        if (!task.getTarget().equals(Target.SELF)) {
+            add(null, task);
         }
-        add(null, task);
     }
 
     public static void remove(TaskListener taskListener) {

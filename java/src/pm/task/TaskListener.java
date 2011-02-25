@@ -4,7 +4,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.Listener;
-import pm.Task;
+import pm.event.Task;
 import pm.value.Action;
 
 public abstract class TaskListener extends Listener implements Runnable {

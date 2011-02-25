@@ -8,7 +8,9 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 import pm.Button;
 import pm.Device;
-import pm.exception.StateException;
+import pm.exception.ButtonException;
+import pm.exception.button.UnknownButtonException;
+import pm.exception.button.UnknownDirectionException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.exception.device.DeviceNotFoundException;
 import pm.macro.state.Press;
@@ -35,7 +37,7 @@ public abstract class JavaInputDevice extends Device {
         //System.out.println(event);
     }
 
-    public void processEvent(JXInputButtonEvent event) throws StateException {
+    public void processEvent(JXInputButtonEvent event) throws ButtonException {
         Button button = getButton(event);
         if (event.getButton().getState()) {
             System.out.println("Press: " + button);
@@ -46,7 +48,7 @@ public abstract class JavaInputDevice extends Device {
         }
     }
 
-    public void processEvent(JXInputDirectionalEvent event) throws StateException {
+    public void processEvent(JXInputDirectionalEvent event) throws UnknownDirectionException {
         Button button = getButton(event);
         if (event.getDirectional().isCentered()) {
             if (previousDirectionalButton != null) {
@@ -60,8 +62,8 @@ public abstract class JavaInputDevice extends Device {
         }
     }
 
-    protected abstract Button getButton(JXInputButtonEvent event) throws StateException;
-    protected abstract Button getButton(JXInputDirectionalEvent event) throws StateException;
+    protected abstract Button getButton(JXInputButtonEvent event) throws UnknownButtonException;
+    protected abstract Button getButton(JXInputDirectionalEvent event) throws UnknownDirectionException;
 
     public static JXInputDevice getDevice(String name) throws DeviceNotFoundException {
         int numberOfDevices = JXInputManager.getNumberOfDevices();

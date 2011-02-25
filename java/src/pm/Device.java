@@ -1,5 +1,6 @@
 package pm;
 
+import pm.event.Task;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Sequence;

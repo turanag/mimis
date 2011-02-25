@@ -3,7 +3,7 @@ package pm.macro;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import pm.Task;
+import pm.event.Task;
 import pm.task.TaskListener;
 import pm.task.TaskManager;
 
