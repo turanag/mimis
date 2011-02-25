@@ -44,7 +44,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Java\jdk1.6.0_23\include;C:\Program Files (x86)\Java\jdk1.6.0_23\include\win32;$(IncludePath)</IncludePath>
+    <IncludePath>..\include;..\include\win32;$(IncludePath)</IncludePath>
     <OutDir>.\Release\</OutDir>
     <ExtensionsToDeleteOnClean>$(ExtensionsToDeleteOnClean)</ExtensionsToDeleteOnClean>
     <LibraryPath>..\lib;$(LibraryPath)</LibraryPath>
