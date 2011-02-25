@@ -13,7 +13,7 @@ public class Task {
     }
     
     public Task(Action action) {
-        this(action, Target.MAIN);
+        this(action, Target.SELF);
     }
 
     public Action getAction() {

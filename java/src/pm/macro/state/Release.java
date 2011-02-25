@@ -1,9 +1,9 @@
-package pm.macro.event;
+package pm.macro.state;
 
 import pm.Button;
-import pm.macro.Event;
+import pm.macro.State;
 
-public class Release extends Event {   
+public class Release extends State {   
     public Release(Button button) {
         super(button);
     }

@@ -240,7 +240,7 @@ public class StandalonePlayer extends JFrame implements Loader
         }
         config = Config.getInstance();
         config.load(initConfig);
-        config.setTopParent(this);
+        //config.setTopParent(this);
         if (showPlaylist != null)
         {
             if (showPlaylist.equalsIgnoreCase("true"))
@@ -288,14 +288,14 @@ public class StandalonePlayer extends JFrame implements Loader
         mp.loadUI(this);
         setContentPane(mp);
         setSize(new Dimension(mp.getSkin().getMainWidth(), mp.getSkin().getMainHeight()));
-        eqWin = new JWindow(this);
+        /*eqWin = new JWindow(this);
         eqWin.setContentPane(mp.getEqualizerUI());
         eqWin.setSize(new Dimension(mp.getSkin().getMainWidth(), mp.getSkin().getMainHeight()));
         eqWin.setVisible(false);
         plWin = new JWindow(this);
         plWin.setContentPane(mp.getPlaylistUI());
         plWin.setSize(new Dimension(mp.getSkin().getMainWidth(), mp.getSkin().getMainHeight()));
-        plWin.setVisible(false);
+        plWin.setVisible(false);*/
         // Window listener
         addWindowListener(new WindowAdapter()
         {
@@ -306,18 +306,18 @@ public class StandalonePlayer extends JFrame implements Loader
             }
         });
         // Keyboard shortcut
-        setKeyBoardShortcut();
+        //setKeyBoardShortcut();
         // Display front-end
         setLocation(config.getXLocation(), config.getYLocation());
         setVisible(true);
-        if (config.isPlaylistEnabled()) plWin.setVisible(true);
-        if (config.isEqualizerEnabled()) eqWin.setVisible(true);
+        //if (config.isPlaylistEnabled()) plWin.setVisible(true);
+        //if (config.isEqualizerEnabled()) eqWin.setVisible(true);
     }
 
     /**
      * Install keyboard shortcuts.
      */
-    public void setKeyBoardShortcut()
+    /*public void setKeyBoardShortcut()
     {
         KeyStroke jKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false);
         KeyStroke ctrlPKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_MASK, false);
@@ -359,7 +359,7 @@ public class StandalonePlayer extends JFrame implements Loader
         setKeyboardAction(preferenceID, ctrlPKeyStroke, preferencesAction);
         setKeyboardAction(skinbrowserID, altSKeyStroke, skinbrowserAction);
         setKeyboardAction(stopplayerID, vKeyStroke, stopplayerAction);
-    }
+    }*/
 
     /**
      * Set keyboard key shortcut for the whole player.
@@ -367,7 +367,7 @@ public class StandalonePlayer extends JFrame implements Loader
      * @param key
      * @param action
      */
-    public void setKeyboardAction(String id, KeyStroke key, Action action)
+    /*public void setKeyboardAction(String id, KeyStroke key, Action action)
     {
         mp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, id);
         mp.getActionMap().put(id, action);
@@ -375,13 +375,13 @@ public class StandalonePlayer extends JFrame implements Loader
         mp.getPlaylistUI().getActionMap().put(id, action);
         mp.getEqualizerUI().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(key, id);
         mp.getEqualizerUI().getActionMap().put(id, action);
-    }
+    }*/
 
     public void loaded()
     {
-        DragAdapter dragAdapter = new DragAdapter(this);
+        /*DragAdapter dragAdapter = new DragAdapter(this);
         mp.getSkin().getAcTitleBar().addMouseListener(dragAdapter);
-        mp.getSkin().getAcTitleBar().addMouseMotionListener(dragAdapter);
+        mp.getSkin().getAcTitleBar().addMouseMotionListener(dragAdapter);*/
     }
 
     public void close()
@@ -396,7 +396,7 @@ public class StandalonePlayer extends JFrame implements Loader
     /* (non-Javadoc)
      * @see javazoom.jlgui.player.amp.skin.Loader#togglePlaylist(boolean)
      */
-    public void togglePlaylist(boolean enabled)
+    /*public void togglePlaylist(boolean enabled)
     {
         if (plWin != null)
         {
@@ -419,7 +419,7 @@ public class StandalonePlayer extends JFrame implements Loader
                 }
             }
         }
-    }
+    }*/
 
     public void toggleEqualizer(boolean enabled)
     {

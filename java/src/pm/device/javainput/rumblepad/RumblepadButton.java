@@ -2,7 +2,7 @@ package pm.device.javainput.rumblepad;
 
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import pm.Button;
-import pm.exception.event.UnknownButtonException;
+import pm.exception.button.UnknownButtonException;
 
 public enum RumblepadButton implements Button {
     ONE    ("Button 0"),

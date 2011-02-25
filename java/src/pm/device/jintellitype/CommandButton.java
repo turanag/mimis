@@ -3,7 +3,7 @@ package pm.device.jintellitype;
 import com.melloware.jintellitype.JIntellitype;
 
 import pm.Button;
-import pm.exception.event.UnknownButtonException;
+import pm.exception.button.UnknownButtonException;
 
 public enum CommandButton implements Button {  
     BROWSER_BACKWARD       (JIntellitype.APPCOMMAND_BROWSER_BACKWARD),

@@ -8,11 +8,11 @@ import com.melloware.jintellitype.JIntellitype;
 
 import pm.Device;
 import pm.Task;
-import pm.exception.EventException;
+import pm.exception.StateException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.macro.event.Hold;
-import pm.macro.event.Press;
-import pm.macro.event.Release;
+import pm.macro.state.Hold;
+import pm.macro.state.Press;
+import pm.macro.state.Release;
 import pm.task.Continuous;
 import pm.value.Action;
 import pm.value.Command;
@@ -63,7 +63,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             System.out.println(commandButton);
             add(new Press(commandButton));
             add(new Release(commandButton));
-        } catch (EventException e) {
+        } catch (StateException e) {
             e.printStackTrace(); // Todo: deze exception verder omhoog gooien
         }        
     }

@@ -8,11 +8,11 @@ import pm.Button;
 import pm.Device;
 import pm.Task;
 import pm.device.wiimote.gesture.GestureDevice;
+import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.exception.event.UnknownButtonException;
-import pm.macro.event.Hold;
-import pm.macro.event.Press;
-import pm.macro.event.Release;
+import pm.macro.state.Hold;
+import pm.macro.state.Press;
+import pm.macro.state.Release;
 import pm.task.Continuous;
 import pm.task.Dynamic;
 import pm.value.Action;
@@ -48,20 +48,20 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void initialise() throws DeviceInitialiseException {
         wiimote = wiimoteService.getDevice(this);
         wiimote.activateMotionSensing();
-        /*add(
+        add(
             new Hold(WiimoteButton.A),
-            new Task(Action.TRAIN, Target.DEVICE),
-            new Task(Action.STOP, Target.DEVICE));
+            new Task(Action.TRAIN),
+            new Task(Action.STOP));
         add(
             new Press(WiimoteButton.B),
-            new Task(Action.SAVE, Target.DEVICE));
+            new Task(Action.SAVE));
         add(
             new Press(WiimoteButton.DOWN),
-            new Task(Action.LOAD, Target.DEVICE));
+            new Task(Action.LOAD));
         add(
             new Hold(WiimoteButton.HOME),
-            new Task(Action.RECOGNIZE, Target.DEVICE),
-            new Task(Action.STOP, Target.DEVICE));*/
+            new Task(Action.RECOGNIZE),
+            new Task(Action.STOP));
         add(
             new Press(WiimoteButton.A),
             new Task(Action.PLAY, Target.APPLICATION));

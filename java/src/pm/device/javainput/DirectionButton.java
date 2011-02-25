@@ -1,7 +1,7 @@
 package pm.device.javainput;
 
 import pm.Button;
-import pm.exception.event.UnknownDirectionException;
+import pm.exception.button.UnknownDirectionException;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public enum DirectionButton implements Button {

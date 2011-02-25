@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.melloware.jintellitype.JIntellitype;
 
-import pm.macro.event.Press;
+import pm.macro.state.Press;
 import pm.value.Key;
 
 public class Hotkey extends Press {

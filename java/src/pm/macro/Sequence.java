@@ -1,12 +1,11 @@
-package pm.macro.event;
+package pm.macro;
 
-import pm.macro.Event;
 
 
 public class Sequence {
-    protected Event[] eventArray;
+    protected State[] eventArray;
 
-    public Sequence(Event... eventArray) {
+    public Sequence(State... eventArray) {
         this.eventArray = eventArray;
     }
 
@@ -14,7 +13,7 @@ public class Sequence {
         return eventArray.length;
     }
 
-    public Event get(int i) {
+    public State get(int i) {
         return eventArray.length > 0 ? eventArray[i] : null;
     }
 }

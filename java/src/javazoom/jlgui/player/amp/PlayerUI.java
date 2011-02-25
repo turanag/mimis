@@ -208,21 +208,21 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         setLayout(new AbsoluteLayout());
         config = Config.getInstance();
         ui.setConfig(config);
-        playlistUI = new PlaylistUI();
+        /*playlistUI = new PlaylistUI();
         playlistUI.setSkin(ui);
         playlistUI.setPlayer(this);
         equalizerUI = new EqualizerUI();
-        equalizerUI.setSkin(ui);
+        equalizerUI.setSkin(ui);*/
         loadSkin();
         // DnD support.
-        DropTargetAdapter dnd = new DropTargetAdapter()
+        /*DropTargetAdapter dnd = new DropTargetAdapter()
         {
             public void processDrop(Object data)
             {
                 processDnD(data);
             }
         };
-        DropTarget dt = new DropTarget(this, DnDConstants.ACTION_COPY, dnd, true);
+        DropTarget dt = new DropTarget(this, DnDConstants.ACTION_COPY, dnd, true);*/
     }
 
     public void loadSkin()
@@ -278,9 +278,9 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         ui.getAcEqualizer().removeActionListener(this);
         ui.getAcEqualizer().addActionListener(this);
         // Playlist toggle
-        add(ui.getAcPlaylist(), ui.getAcPlaylist().getConstraints());
+        /*add(ui.getAcPlaylist(), ui.getAcPlaylist().getConstraints());
         ui.getAcPlaylist().removeActionListener(this);
-        ui.getAcPlaylist().addActionListener(this);
+        ui.getAcPlaylist().addActionListener(this);*/
         // Shuffle toggle
         add(ui.getAcShuffle(), ui.getAcShuffle().getConstraints());
         ui.getAcShuffle().removeActionListener(this);
@@ -294,9 +294,9 @@ public class PlayerUI extends JPanel implements ActionListener, ChangeListener, 
         ui.getAcVolume().removeChangeListener(this);
         ui.getAcVolume().addChangeListener(this);
         // Balance
-        add(ui.getAcBalance(), ui.getAcBalance().getConstraints());
+        /*add(ui.getAcBalance(), ui.getAcBalance().getConstraints());
         ui.getAcBalance().removeChangeListener(this);
-        ui.getAcBalance().addChangeListener(this);
+        ui.getAcBalance().addChangeListener(this);*/
         // Seek bar
         add(ui.getAcPosBar(), ui.getAcPosBar().getConstraints());
         ui.getAcPosBar().removeChangeListener(this);

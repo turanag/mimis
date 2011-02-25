@@ -1,7 +1,7 @@
 package pm.device.wiimote;
 
 import pm.Button;
-import pm.exception.event.UnknownButtonException;
+import pm.exception.button.UnknownButtonException;
 
 public enum WiimoteButton implements Button {
     TWO   (0x0001),

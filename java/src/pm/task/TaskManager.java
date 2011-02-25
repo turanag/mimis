@@ -7,6 +7,7 @@ import pm.Device;
 import pm.Main;
 import pm.Task;
 import pm.application.ApplicationCycle;
+import pm.exception.task.TaskNotSupportedException;
 import pm.value.Target;
 
 public class TaskManager {
@@ -22,40 +23,54 @@ public class TaskManager {
         taskListenerList.add(taskListener);
     }
 
-    public static void add(Task task) {
+    public static void add(TaskListener self, Task task) {
         if (task instanceof Stopper) {
             Stopper stopper = (Stopper) task;
-            stopper.stop();
+            stopper.stop();           
         } else {
             Target target = task.getTarget();
-            if (target.equals(Target.APPLICATION)) {
-                applicationCycle.current().add(task);
-            } else {
-                for (TaskListener taskListener : taskListenerList) {
-                    switch (target) {
-                        case ALL:
-                            taskListener.add(task);
-                        case MAIN:
-                            if (taskListener instanceof Main) {
+            switch (target) {
+                case SELF:
+                    self.add(task);
+                    break;
+                case APPLICATION:
+                    applicationCycle.current().add(task);
+                    break;
+                default:
+                    for (TaskListener taskListener : taskListenerList) {
+                        switch (target) {
+                            case ALL:
                                 taskListener.add(task);
-                            } 
-                            break;
-                        case DEVICES:
-                            if (taskListener instanceof Device) {
-                                taskListener.add(task);
-                            } 
-                            break;
-                        case APPLICATIONS:
-                            if (taskListener instanceof Application) {
-                                taskListener.add(task);
-                            } 
-                            break;
+                            case MAIN:
+                                if (taskListener instanceof Main) {
+                                    taskListener.add(task);
+                                } 
+                                break;
+                            case DEVICES:
+                                if (taskListener instanceof Device) {
+                                    taskListener.add(task);
+                                } 
+                                break;
+                            case APPLICATIONS:
+                                if (taskListener instanceof Application) {
+                                    taskListener.add(task);
+                                } 
+                                break;
+                        }
+                        break;
                     }
-                }
             }
         }
     }
-    
+
+    public static void add(Task task) throws TaskNotSupportedException {
+        Target target = task.getTarget();
+        if (target.equals(Target.SELF)) {
+            throw new TaskNotSupportedException();
+        }
+        add(null, task);
+    }
+
     public static void remove(TaskListener taskListener) {
         taskListenerList.remove(taskListener);
     }

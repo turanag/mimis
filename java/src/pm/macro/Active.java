@@ -1,6 +1,5 @@
 package pm.macro;
 
-import pm.macro.event.Sequence;
 
 public class Active {
     protected Sequence sequence;
@@ -15,9 +14,9 @@ public class Active {
         return sequence;
     }
 
-    public boolean next(Event event) {
-        Event next = sequence.get(++step);
-        return next == null ? false : event.equals(next);
+    public boolean next(State state) {
+        State next = sequence.get(++step);
+        return next == null ? false : state.equals(next);
     }
 
     public boolean last() {

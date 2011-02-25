@@ -2,15 +2,14 @@ package pm;
 
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.macro.Event;
-import pm.macro.event.Hold;
-import pm.macro.event.Press;
-import pm.macro.event.Release;
-import pm.macro.event.Sequence;
-import pm.macro.event.SequenceListener;
+import pm.macro.Sequence;
+import pm.macro.SequenceListener;
+import pm.macro.State;
+import pm.macro.state.Hold;
+import pm.macro.state.Press;
+import pm.macro.state.Release;
 import pm.task.Continuous;
 import pm.task.Stopper;
-import pm.task.TaskManager;
 import pm.task.TaskListener;
 
 public abstract class Device extends TaskListener {
@@ -18,7 +17,7 @@ public abstract class Device extends TaskListener {
 
     public Device() {
         super();
-        sequenceListener = new SequenceListener();
+        sequenceListener = new SequenceListener(this);
     }
 
     /* Register macro's */
@@ -26,15 +25,15 @@ public abstract class Device extends TaskListener {
         sequenceListener.add(sequence, task);
     }
 
-    protected void add(Event event, Task task) {
-        add(new Sequence(event), task);
+    protected void add(State state, Task task) {
+        add(new Sequence(state), task);
     }
 
     protected void add(Press press, Task task, boolean macro) {
         if (macro) {
             add(new Macro(press), task);
         } else {
-            add((Event) press, task);
+            add((State) press, task);
         }
     }
 
@@ -53,7 +52,7 @@ public abstract class Device extends TaskListener {
         add(stopSequence, new Stopper(continuous));
     }
 
-    protected void add(Event startEvent, Event stopEvent, Continuous continuous) {
+    protected void add(State startEvent, State stopEvent, Continuous continuous) {
         add(startEvent, continuous);
         add(stopEvent, new Stopper(continuous));
     }
@@ -69,13 +68,13 @@ public abstract class Device extends TaskListener {
     }
 
     /* Recognize events */
-    protected void add(Event event) {
-        sequenceListener.add(event);
+    protected void add(State state) {
+        sequenceListener.add(state);
     }
 
     /* Device default methods */
     public void initialise() throws DeviceInitialiseException {}
-    
+
     public void exit() throws DeviceExitException {
         stop();
     }

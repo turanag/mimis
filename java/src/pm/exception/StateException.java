@@ -1,5 +1,5 @@
 package pm.exception;
 
-public class EventException extends Exception {
+public class StateException extends Exception {
     protected static final long serialVersionUID = 1L;
 }
