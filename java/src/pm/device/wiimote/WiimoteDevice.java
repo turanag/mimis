@@ -8,13 +8,13 @@ import pm.Button;
 import pm.Device;
 import pm.device.wiimote.gesture.GestureDevice;
 import pm.event.Task;
+import pm.event.task.Continuous;
+import pm.event.task.Dynamic;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
-import pm.task.Continuous;
-import pm.task.Dynamic;
 import pm.value.Action;
 import pm.value.Target;
 

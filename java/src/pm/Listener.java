@@ -1,13 +1,22 @@
 package pm;
 
 public abstract class Listener implements Runnable {
+    protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
 
     protected boolean run;
 
-    public void start() {
+    public void start(boolean thread) {
         run = true;
-        new Thread(this).start();
+        if (thread) {
+            new Thread(this).start();
+        } else {
+            run();
+        }
+    }
+
+    public void start() {
+        start(THREAD);
     }
 
     public void stop() {

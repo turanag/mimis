@@ -1,6 +1,9 @@
 package pm;
 
 import pm.event.Task;
+import pm.event.EventListener;
+import pm.event.task.Continuous;
+import pm.event.task.Stopper;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Sequence;
@@ -9,11 +12,8 @@ import pm.macro.State;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
-import pm.task.Continuous;
-import pm.task.Stopper;
-import pm.task.TaskListener;
 
-public abstract class Device extends TaskListener {
+public abstract class Device extends EventListener {
     protected SequenceListener sequenceListener;
 
     public Device() {

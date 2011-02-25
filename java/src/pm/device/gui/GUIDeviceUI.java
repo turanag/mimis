@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import pm.event.Task;
-import pm.task.TaskManager;
+import pm.event.EventManager;
 import pm.value.Action;
 import pm.value.Target;
 
@@ -158,42 +158,42 @@ public class GUIDeviceUI extends JFrame {
     }
     
     protected void playAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.PLAY, Target.APPLICATION));
+        EventManager.add(new Task(Action.PLAY, Target.APPLICATION));
     }
 
     protected void pauseAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.PAUSE, Target.APPLICATION));
+        EventManager.add(new Task(Action.PAUSE, Target.APPLICATION));
     }
 
     protected void resumeAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.RESUME, Target.APPLICATION));
+        EventManager.add(new Task(Action.RESUME, Target.APPLICATION));
     }
 
     protected void nextAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.NEXT, Target.APPLICATION));
+        EventManager.add(new Task(Action.NEXT, Target.APPLICATION));
     }
 
     protected void previousAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.PREVIOUS, Target.APPLICATION));
+        EventManager.add(new Task(Action.PREVIOUS, Target.APPLICATION));
     }
 
     protected void forwardAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.FORWARD, Target.APPLICATION));
+        EventManager.add(new Task(Action.FORWARD, Target.APPLICATION));
     }
 
     protected void rewindAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.REWIND, Target.APPLICATION));
+        EventManager.add(new Task(Action.REWIND, Target.APPLICATION));
     }
 
     protected void muteAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.MUTE, Target.APPLICATION));
+        EventManager.add(new Task(Action.MUTE, Target.APPLICATION));
     }
 
     protected void volumeUpAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.VOLUME_UP, Target.APPLICATION));
+        EventManager.add(new Task(Action.VOLUME_UP, Target.APPLICATION));
     }
 
     protected void volumeDownAction(ActionEvent e) {
-        TaskManager.add(new Task(Action.VOLUME_DOWN, Target.APPLICATION));
+        EventManager.add(new Task(Action.VOLUME_DOWN, Target.APPLICATION));
     }
 }

@@ -4,17 +4,15 @@ import java.util.ArrayList;
 
 import com.melloware.jintellitype.JIntellitype;
 
-import pm.macro.state.Press;
+import pm.Button;
 import pm.value.Key;
 
-public class Hotkey extends Press {
+public class Hotkey implements Button {
     protected static ArrayList<Hotkey> hotkeyList;
     protected static JIntellitype jit;
 
     public Hotkey(int modifier, int keycode) {
-        super(null); // Todo: nettere oplossing zoeken / controleren op null
         int id = hotkeyList.size();
-        button = new Modifier(id);
         jit.registerHotKey(id, modifier, keycode);
         hotkeyList.add(this);
     }

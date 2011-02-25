@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import pm.exception.ButtonException;
-import pm.exception.StateException;
 
 import de.hardcode.jxinput.Axis;
 import de.hardcode.jxinput.Button;

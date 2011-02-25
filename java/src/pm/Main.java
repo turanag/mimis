@@ -15,15 +15,15 @@ import pm.device.player.PlayerDevice;
 import pm.device.text.TextDevice;
 import pm.device.text.lan.LanTextDevice;
 import pm.device.wiimote.WiimoteDevice;
+import pm.event.EventListener;
+import pm.event.EventManager;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.task.TaskManager;
-import pm.task.TaskListener;
 import pm.value.Action;
 
-public class Main extends TaskListener {
+public class Main extends EventListener {
     //protected String[] deviceClassArray;
     protected ApplicationCycle applicationCycle;
     protected ArrayList<Device> deviceList;
@@ -37,8 +37,8 @@ public class Main extends TaskListener {
             "pm.device.wiimote.WiimoteDevice"};*/
         applicationCycle = new ApplicationCycle();
         deviceList = new ArrayList<Device>();
-        TaskManager.initialise(applicationCycle);
-        TaskManager.add(this);
+        EventManager.initialise(applicationCycle);
+        EventManager.add(this);
     }
 
     public void initialise() throws DeviceInitialiseException {
@@ -133,22 +133,22 @@ public class Main extends TaskListener {
 
     /* Add / remove methods */
     protected void add(Application application) {
-        TaskManager.add(application);
+        EventManager.add(application);
         applicationCycle.add(application);
     }
 
     protected void remove(Application application) {
-        TaskManager.remove(application);
+        EventManager.remove(application);
         applicationCycle.remove(application);
     }
 
     protected void add(Device device) {
-        TaskManager.add(device);
+        EventManager.add(device);
         deviceList.add(device);
     }
 
     protected void remove(Device device) {
-        TaskManager.remove(device);
+        EventManager.remove(device);
         deviceList.remove(device);
     }
 
@@ -156,7 +156,7 @@ public class Main extends TaskListener {
         try {
             Main main = new Main();
             main.initialise();
-            main.run();
+            main.start(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

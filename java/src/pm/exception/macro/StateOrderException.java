@@ -1,4 +1,4 @@
-package pm.exception.state;
+package pm.exception.macro;
 
 import pm.exception.MacroException;
 

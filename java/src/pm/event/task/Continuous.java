@@ -1,4 +1,4 @@
-package pm.task;
+package pm.event.task;
 
 import pm.event.Task;
 import pm.value.Action;

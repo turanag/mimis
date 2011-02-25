@@ -1,16 +1,16 @@
-package pm.task;
+package pm.event;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import pm.Listener;
-import pm.event.Task;
+import pm.event.task.Continuous;
 import pm.value.Action;
 
-public abstract class TaskListener extends Listener implements Runnable {
+public abstract class EventListener extends Listener implements Runnable {
     protected Queue<Task> taskQueue;
 
-    public TaskListener() {
+    public EventListener() {
         taskQueue = new ConcurrentLinkedQueue<Task>();
     }
 
@@ -29,7 +29,6 @@ public abstract class TaskListener extends Listener implements Runnable {
     }
 
     protected void task(Task task) {
-        System.out.println(this);
         Action action = task.getAction();
         if (task instanceof Continuous) {
             Continuous continuous = (Continuous) task;

@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import pm.event.Task;
-import pm.task.TaskListener;
-import pm.task.TaskManager;
+import pm.event.EventListener;
+import pm.event.EventManager;
 
 public class SequenceListener {
-    protected TaskListener taskListener;
+    protected EventListener eventListener;
     protected ArrayList<Sequence> sequenceList;
     protected HashMap<Sequence, Task> taskMap;
     protected ArrayList<Active> activeList;
 
-    public SequenceListener(TaskListener taskListener) {
-        this.taskListener = taskListener;
+    public SequenceListener(EventListener eventListener) {
+        this.eventListener = eventListener;
         sequenceList = new ArrayList<Sequence>();
         taskMap = new HashMap<Sequence, Task>();
         activeList = new ArrayList<Active>();
@@ -36,7 +36,7 @@ public class SequenceListener {
             if (active.next(state)) {
                 if (active.last()) {
                     Task task = taskMap.get(active.getSequence());
-                    TaskManager.add(taskListener, task);
+                    EventManager.add(eventListener, task);
                     removeList.add(active);
                 }
             } else {

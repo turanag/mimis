@@ -8,15 +8,12 @@ import com.melloware.jintellitype.JIntellitype;
 
 import pm.Device;
 import pm.event.Task;
-import pm.exception.StateException;
 import pm.exception.button.UnknownButtonException;
+import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
-import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
-import pm.task.Continuous;
 import pm.value.Action;
-import pm.value.Command;
 import pm.value.Key;
 import pm.value.Target;
 
@@ -48,32 +45,38 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));
-        add(
+        /*add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 't'),
             new Task(Action.TEST, Target.MAIN));
         add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'r'),
             new Hotkey(Modifier.CTRL | Modifier.WIN, 's'),
-            new Continuous(Action.REPEAT, Target.APPLICATIONS, 500));
+            new Continuous(Action.REPEAT, Target.APPLICATIONS, 500));*/
+    }
+
+    protected void add(Hotkey hotkey, Task task) {
+        add(new Press(hotkey), task);        
     }
 
     public void onIntellitype(int command) {
         CommandButton commandButton;
         try {
             commandButton = CommandButton.create(command);
-            System.out.println(commandButton);
             add(new Press(commandButton));
             add(new Release(commandButton));
-        } catch (UnknownButtonException e) {}        
+        } catch (UnknownButtonException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onHotKey(int id) {
         Hotkey hotkey = hotkeyList.get(id);
-        add(hotkeyList.get(id));
-        add(new Release(hotkey.getButton()));
+        add(new Press(hotkey));
+        add(new Release(hotkey));
     }
 
-    public void exit() {
+    public void exit() throws DeviceExitException {
+        super.exit();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);
         jit.cleanUp();

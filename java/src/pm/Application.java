@@ -1,11 +1,11 @@
 package pm;
 
+import pm.event.EventListener;
+import pm.event.EventManager;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
-import pm.task.TaskManager;
-import pm.task.TaskListener;
 
-public abstract class Application extends TaskListener {  
+public abstract class Application extends EventListener {  
     public Application() {
         super();
     }

@@ -1,4 +1,4 @@
-package pm.task;
+package pm.event;
 
 import java.util.ArrayList;
 
@@ -6,24 +6,23 @@ import pm.Application;
 import pm.Device;
 import pm.Main;
 import pm.application.ApplicationCycle;
-import pm.event.Task;
-import pm.exception.task.TaskNotSupportedException;
+import pm.event.task.Stopper;
 import pm.value.Target;
 
-public class TaskManager {
-    protected static ArrayList<TaskListener> taskListenerList;
+public class EventManager {
+    protected static ArrayList<EventListener> taskListenerList;
     protected static ApplicationCycle applicationCycle;
 
     public static void initialise(ApplicationCycle applicationCycle) {
-        taskListenerList = new ArrayList<TaskListener>();
-        TaskManager.applicationCycle = applicationCycle;
+        taskListenerList = new ArrayList<EventListener>();
+        EventManager.applicationCycle = applicationCycle;
     }
 
-    public static void add(TaskListener taskListener) {
-        taskListenerList.add(taskListener);
+    public static void add(EventListener eventListener) {
+        taskListenerList.add(eventListener);
     }
 
-    public static void add(TaskListener self, Task task) {
+    public static void add(EventListener self, Task task) {
         if (task instanceof Stopper) {
             Stopper stopper = (Stopper) task;
             stopper.stop();           
@@ -37,23 +36,24 @@ public class TaskManager {
                     applicationCycle.current().add(task);
                     break;
                 default:
-                    for (TaskListener taskListener : taskListenerList) {
+                    for (EventListener eventListener : taskListenerList) {
                         switch (target) {
                             case ALL:
-                                taskListener.add(task);
+                                eventListener.add(task);
+                                break;
                             case MAIN:
-                                if (taskListener instanceof Main) {
-                                    taskListener.add(task);
+                                if (eventListener instanceof Main) {
+                                    eventListener.add(task);
                                 } 
                                 break;
                             case DEVICES:
-                                if (taskListener instanceof Device) {
-                                    taskListener.add(task);
+                                if (eventListener instanceof Device) {
+                                    eventListener.add(task);
                                 } 
                                 break;
                             case APPLICATIONS:
-                                if (taskListener instanceof Application) {
-                                    taskListener.add(task);
+                                if (eventListener instanceof Application) {
+                                    eventListener.add(task);
                                 } 
                                 break;
                         }
@@ -69,7 +69,7 @@ public class TaskManager {
         }
     }
 
-    public static void remove(TaskListener taskListener) {
-        taskListenerList.remove(taskListener);
+    public static void remove(EventListener eventListener) {
+        taskListenerList.remove(eventListener);
     }
 }

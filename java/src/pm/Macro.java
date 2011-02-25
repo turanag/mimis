@@ -2,8 +2,7 @@ package pm;
 
 import java.util.ArrayList;
 
-import pm.exception.MacroException;
-import pm.exception.state.StateOrderException;
+import pm.exception.macro.StateOrderException;
 import pm.macro.Sequence;
 import pm.macro.State;
 import pm.macro.state.Hold;
