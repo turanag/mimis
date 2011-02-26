@@ -88,7 +88,7 @@ public class Main extends EventListener {
                 device.start();
                 log.info("Device started: " + device);
             } catch (DeviceInitialiseException e) {
-                remove(device);
+                removeList.add(device);
             }
         }
         for (Device device : removeList) {
