@@ -499,4 +499,8 @@ public class iTunes {
         Dispatch window = iTunes.getProperty("BrowserWindow").toDispatch();
     	return new ITBrowserWindow(window);
     }
+    
+    public void cycleSongRepeat() {
+        getCurrentPlaylist().cycleSongRepeat();
+    }
 }

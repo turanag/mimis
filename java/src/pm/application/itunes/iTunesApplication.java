@@ -5,6 +5,7 @@ import pm.exception.application.ApplicationExitException;
 import pm.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
+import com.dt.iTunesController.ITPlaylistRepeatMode;
 import com.dt.iTunesController.ITTrack;
 import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
@@ -65,6 +66,11 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 break;
             case SHUFFLE:
                 iTunes.toggleShuffle();
+                //iTunes.fastForward();
+                break;
+            case REPEAT:
+                iTunes.cycleSongRepeat();
+                //iTunes.resume();
                 break;
         }
     }

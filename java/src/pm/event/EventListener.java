@@ -16,6 +16,7 @@ public abstract class EventListener extends Listener implements Runnable {
     }
 
     public final void run() {
+        System.out.println(this);
         while (run) {
             if (eventQueue.isEmpty()) {
                 sleep();

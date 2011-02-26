@@ -118,6 +118,14 @@ public class ITPlaylist extends ITObject {
     }
     
     /**
+     * Cycle repeat modes.
+     */
+    public void cycleSongRepeat() {
+        int repeat = Dispatch.get(object, "SongRepeat").getInt();
+        Dispatch.put(object, "SongRepeat", (repeat + 1) % 3);
+    }
+    
+    /**
      * Returns the playback repeat mode.
      * @return Returns the playback repeat mode.
      */

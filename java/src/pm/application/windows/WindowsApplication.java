@@ -1,20 +1,16 @@
 package pm.application.windows;
 
 import java.io.IOException;
+import java.util.Map;
 
 import pm.Application;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
-import pm.exception.application.windows.SendCommandException;
-import pm.exception.application.windows.SendKeyException;
 import pm.util.Native;
 import pm.util.Windows;
 import pm.value.Command;
 import pm.value.Key;
 import pm.value.Type;
-
-import com.eaio.nativecall.IntCall;
-import com.eaio.nativecall.NativeCall;
 
 abstract public class WindowsApplication extends Application {
     protected final static int TERMINATE_SLEEP = 500;
@@ -22,28 +18,12 @@ abstract public class WindowsApplication extends Application {
 
     protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
 
-    protected final static int WM_COMMAND = 0x0111;
-    protected final static int WM_APPCOMMAND = 0x0319;
-
     protected String program;
     protected String title;
     protected String name;
-    protected String target;
 
     protected Process process;
     protected int handle;
-
-    protected IntCall sendMessage;
-    protected IntCall postMessage;
-    protected IntCall mapVirtualKey;
-
-    static {
-        try {
-            NativeCall.init();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public WindowsApplication(String program, String title, String name) {
         this.program = program;
@@ -53,20 +33,18 @@ abstract public class WindowsApplication extends Application {
     }
 
     public void initialise() throws ApplicationInitialiseException {
-        sendMessage = new IntCall("user32", "SendMessageA");
-        postMessage = new IntCall("user32", "PostMessageA");
-        mapVirtualKey = new IntCall("user32", "MapVirtualKeyA");
-
         handle = Windows.findWindow(name, null);
         if (handle < 1) {
             String key = String.format("%s\\%s", REGISTRY, program);
             String path = Native.getValue(key);
             try {
                 String command = String.format("\"%s\"", path);
+                command = Native.replaceVariables(command);
                 process = Runtime.getRuntime().exec(command);
                 sleep(START_SLEEP);
                 handle = Windows.findWindow(name, null);
-            } catch (IOException e) {}
+                System.out.println(handle);
+            } catch (IOException e) {e.printStackTrace();}
         }
         if (handle < 1) {
             throw new ApplicationInitialiseException();
@@ -80,36 +58,28 @@ abstract public class WindowsApplication extends Application {
         super.exit();
     }
 
-    protected void command(Command command) throws SendCommandException {
-        int result = sendMessage.executeCall(new Object[] {
-            handle, WM_APPCOMMAND, handle, command.getCode() << 16});
-        if (result < 1 || sendMessage.getLastError() != null) {
-            throw new SendCommandException();
-        }
+    protected void command(Command command) {
+        Windows.sendMessage(handle, Windows.WM_APPCOMMAND, handle, command.getCode() << 16);
     }
 
-    protected void command(int command) throws SendCommandException {
-        int result = sendMessage.executeCall(new Object[] {
-                handle, WM_COMMAND, command});
-            if (result < 1 || sendMessage.getLastError() != null) {
-                throw new SendCommandException();
-            }
+    protected void command(int command) {
+        Windows.sendMessage(handle, Windows.WM_COMMAND, command, 0);
     }
 
-    protected void key(Type key, int code) throws SendKeyException {
-        int scanCode = mapVirtualKey.executeCall(new Object[] {code, 0});
-        int result = postMessage.executeCall(new Object[] {
-            handle, key.getCode(), code, 1 | (scanCode << 16)});
-        if (result < 1 || postMessage.getLastError() != null) {
-            throw new SendKeyException();
-        }
+    protected void user(int code) {
+        Windows.sendMessage(handle, Windows.WM_USER + code, 0, 0);
     }
 
-    protected void key(Type key, char character) throws SendKeyException {
+    protected void key(Type key, int code) {
+        int scanCode = Windows.mapVirtualKey(code, Windows.MAPVK_VK_TO_VSC);
+        Windows.postMessage(handle, key.getCode(), code, 1 | (scanCode << 16));
+    }
+
+    protected void key(Type key, char character) {
         key(key, (int) Character.toUpperCase(character));
     }
 
-    protected void key(Type key, Key virtualKey) throws SendKeyException {
+    protected void key(Type key, Key virtualKey) {
         key(key, virtualKey.getCode());
     }
 }

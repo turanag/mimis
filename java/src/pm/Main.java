@@ -24,6 +24,7 @@ import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.macro.Active;
 import pm.value.Action;
 
 public class Main extends EventListener {
@@ -50,10 +51,37 @@ public class Main extends EventListener {
         add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         //add(new RumblepadDevice());
-        //add(new WiimoteDevice());
+        add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
         //add(new LanTextDevice());
+        startDevices();
+
+        //add(new ExampleApplication());
+        //add(new WMPApplication());
+        //add(new GomPlayerApplication());
+        //add(new WinampApplication());
+        add(new iTunesApplication());
+        startApplications();
+    }
+
+    protected void startApplications() {
+        ArrayList<Application> removeList = new ArrayList<Application>();
+        for (Application application : applicationCycle) {
+            try {
+                application.initialise();
+                application.start();
+            } catch (ApplicationInitialiseException e) {
+                removeList.add(application);
+            }
+        }
+        for (Application application : removeList) {
+            remove(application);
+        }        
+    }
+
+    protected void startDevices() {
+        ArrayList<Device> removeList = new ArrayList<Device>();
         for (Device device : deviceList) {
             try {
                 device.initialise();
@@ -63,20 +91,9 @@ public class Main extends EventListener {
                 remove(device);
             }
         }
-
-        add(new ExampleApplication());
-        //add(new WMPApplication());
-        //add(new GomPlayerApplication());
-        //add(new WinampApplication());
-        //add(new iTunesApplication());
-        for (Application application : applicationCycle) {
-            try {
-                application.initialise();
-                application.start();
-            } catch (ApplicationInitialiseException e) {
-                remove(application);
-            }
-        }
+        for (Device device : removeList) {
+            remove(device);
+        }        
     }
 
     public void exit() {

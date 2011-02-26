@@ -39,7 +39,9 @@ public class EventManager {
                     self.add(task);
                     break;
                 case APPLICATION:
-                    applicationCycle.current().add(task);
+                    if (applicationCycle.size() > 0) {
+                        applicationCycle.current().add(task);
+                    }
                     break;
                 default:
                     for (EventListener eventListener : taskListenerList) {

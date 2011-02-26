@@ -11,6 +11,7 @@ import pm.event.Task;
 import pm.event.task.Continuous;
 import pm.event.task.Dynamic;
 import pm.exception.button.UnknownButtonException;
+import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
@@ -48,7 +49,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void initialise() throws DeviceInitialiseException {
         wiimote = wiimoteService.getDevice(this);
         wiimote.activateMotionSensing();
-        add(
+        /*add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
             new Task(Action.STOP));
@@ -61,7 +62,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         add(
             new Hold(WiimoteButton.HOME),
             new Task(Action.RECOGNIZE),
-            new Task(Action.STOP));
+            new Task(Action.STOP));*/
         add(
             new Press(WiimoteButton.A),
             new Task(Action.PLAY, Target.APPLICATION));
@@ -73,7 +74,7 @@ public class WiimoteDevice extends Device implements GestureListener {
             new Task(Action.SHUFFLE, Target.APPLICATION));
         add(
             new Press(WiimoteButton.TWO),
-            new Task(Action.NEXT, Target.MAIN));
+            new Task(Action.REPEAT, Target.APPLICATION));
         add(
             new Press(WiimoteButton.UP),
             new Task(Action.NEXT, Target.APPLICATION));
@@ -92,9 +93,13 @@ public class WiimoteDevice extends Device implements GestureListener {
         add(
             new Hold(WiimoteButton.PLUS),
             new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
+        add(
+            new Press(WiimoteButton.HOME),
+            new Task(Action.NEXT, Target.MAIN));
     }
 
-    public void exit() {
+    public void exit() throws DeviceExitException {
+        super.exit();
         wiimote.deactivateMotionSensing();
         wiimoteService.exit();
     }

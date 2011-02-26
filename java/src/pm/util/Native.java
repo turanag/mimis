@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -62,5 +63,13 @@ public class Native {
             return getValue(key, "(Default");
         } catch (IOException e) {}
         return null;
+    }
+
+    public static String replaceVariables(String string) {
+        Map<String, String> env = System.getenv();
+        for (String key : env.keySet()) {
+            string = string.replace(String.format("%%%s%%", key), env.get(key));
+        }
+        return string;
     }
 }
