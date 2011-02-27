@@ -1,5 +1,6 @@
 package pm.application.vlc;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
@@ -11,11 +12,13 @@ import pm.value.Action;
 public class VLCApplication extends CMDApplication {
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
+    
+    protected static final int POSTION_CHANGE_RATE = 1;
+    protected static final int VOLUME_CHANGE_RATE = 20;
 
-    protected static final String HOST = "127.0.0.1"; // localhost
+    protected static final String HOST = "192.168.1.105"; // localhost
     protected static final int PORT = 8080;
     protected Socket socket;
-    Scanner input;
     PrintStream output;
     Scanner feedback;
     
@@ -26,63 +29,74 @@ public class VLCApplication extends CMDApplication {
     public void initialise() throws ApplicationInitialiseException {
         super.initialise();
         connect();
-        test();
     }
 
     public void connect() {
         System.out.println("Connecting to VLC");
         try {
             socket = new Socket(HOST, PORT);
-            input = new Scanner(System.in);
             output = new PrintStream(socket.getOutputStream());
-            feedback = new Scanner(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("Connection established");
     }
     
-    public void test() {
-        output.println("GET /requests/status.xml?command=volume&val=-20 HTTP/1.1\r\n");
-        while (feedback.hasNext()) {
-            String message = feedback.next();
-            System.out.printf("%s", message);
-        }
+    public void command(String command) {
+        String request = "GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n\n";
+        output.println(request);
+        /*System.out.println(request);
+        try {
+            Scanner feedback = new Scanner(socket.getInputStream());
+            while(feedback.hasNext()) {
+                System.out.printf("!!!%s!!!", feedback.nextLine());
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }*/
+        
+        //System.out.println("GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n");
+        // Voorbeeld
+        // GET /requests/status.xml?command=volume&val=+20 HTTP/1.1
     }
-
+    
     public void action(Action action) {
-        System.out.println("VLCApplication: " + action);/*
+        System.out.println("VLCApplication: " + action);
         switch (action) {
             case PLAY:
-                command(18808);
+                command("pl_pause");
                 break;
             case NEXT:
-                command(18811);
+                command("pl_next");
                 break;
             case PREVIOUS:
-                command(18810);
+                command("pl_previous");
                 break;
             case FORWARD:
-                command(18813);
+                command("command=seek&val=+" + POSTION_CHANGE_RATE);
                 break;
             case REWIND:
-                command(18814);
+                command("command=seek&val=-" + POSTION_CHANGE_RATE);
                 break;
             case MUTE:
-                command(18817);
+                /*
+                 * Nog implementeren
+                 * command=volume&val=
+                 */
                 break;
             case VOLUME_UP:
-                command(18815);
+                command("volume&val=+" + VOLUME_CHANGE_RATE);
                 break;
             case VOLUME_DOWN:
-                command(18816);
+                command("volume&val=-" + VOLUME_CHANGE_RATE);
                 break;
             case SHUFFLE:
-                command(18842);
+                command("command=pl_random");
                 break;
             case REPEAT:
-                command(18843);
+                command("command=pl_repeat");
                 break;
-        }*/
+        }
     }
 }
