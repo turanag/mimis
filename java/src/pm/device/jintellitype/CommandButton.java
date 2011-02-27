@@ -5,7 +5,7 @@ import com.melloware.jintellitype.JIntellitype;
 import pm.Button;
 import pm.exception.button.UnknownButtonException;
 
-public enum CommandButton implements Button {  
+public enum CommandButton implements Button {
     BROWSER_BACKWARD       (JIntellitype.APPCOMMAND_BROWSER_BACKWARD),
     BROWSER_FORWARD        (JIntellitype.APPCOMMAND_BROWSER_FORWARD),
     BROWSER_REFRESH        (JIntellitype.APPCOMMAND_BROWSER_REFRESH),

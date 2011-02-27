@@ -1,6 +1,6 @@
-package pm.application.windows.wmp;
+package pm.application.cmd.windows.wmp;
 
-import pm.application.windows.WindowsApplication;
+import pm.application.cmd.windows.WindowsApplication;
 import pm.value.Action;
 import pm.value.Command;
 

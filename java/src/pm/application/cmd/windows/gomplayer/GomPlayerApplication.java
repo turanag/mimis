@@ -1,6 +1,6 @@
-package pm.application.windows.gomplayer;
+package pm.application.cmd.windows.gomplayer;
 
-import pm.application.windows.WindowsApplication;
+import pm.application.cmd.windows.WindowsApplication;
 import pm.value.Action;
 
 public class GomPlayerApplication extends WindowsApplication {

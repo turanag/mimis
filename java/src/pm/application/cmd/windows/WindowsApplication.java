@@ -1,33 +1,24 @@
-package pm.application.windows;
+package pm.application.cmd.windows;
 
-import java.io.IOException;
-import java.util.Map;
-
-import pm.Application;
+import pm.application.cmd.CMDApplication;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
-import pm.util.Native;
 import pm.util.Windows;
 import pm.value.Command;
 import pm.value.Key;
 import pm.value.Type;
 
-abstract public class WindowsApplication extends Application {
+abstract public class WindowsApplication extends CMDApplication {
     protected final static int TERMINATE_SLEEP = 500;
     protected final static int START_SLEEP = 500;
 
-    protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
-
-    protected String program;
-    protected String title;
     protected String name;
 
     protected Process process;
     protected int handle;
 
     public WindowsApplication(String program, String title, String name) {
-        this.program = program;
-        this.title = title;
+        super(program, title);
         this.name = name;
         handle = -1;
     }
@@ -35,32 +26,15 @@ abstract public class WindowsApplication extends Application {
     public void initialise() throws ApplicationInitialiseException {
         handle = Windows.findWindow(name, null);
         if (handle < 1) {
-            String key = String.format("%s\\%s", REGISTRY, program);
-            String path = Native.getValue(key);
-            System.out.println("PATH=" + path);
-            try {
-                String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
-                System.out.println("COMMAND=" + command);
-                command = Native.replaceVariables(command);
-                System.out.println("COMMAND=" + command);
-                process = Runtime.getRuntime().exec(command);
-                sleep(START_SLEEP);
-                handle = Windows.findWindow(name, null);
-                System.out.println(handle);
-            } catch (IOException e) {e.printStackTrace();}
+            super.initialise();
+            sleep(START_SLEEP);
+            handle = Windows.findWindow(name, null);
         }
         if (handle < 1) {
             throw new ApplicationInitialiseException();
         }
     }
-
-    public void exit() throws ApplicationExitException {
-        if (process != null) {
-            process.destroy();
-        }
-        super.exit();
-    }
-
+    
     protected void command(Command command) {
         Windows.sendMessage(handle, Windows.WM_APPCOMMAND, handle, command.getCode() << 16);
     }

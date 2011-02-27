@@ -1,6 +1,6 @@
 package pm.application.mpc;
 
-import pm.application.windows.WindowsApplication;
+import pm.application.cmd.windows.WindowsApplication;
 import pm.value.Action;
 
 public class MPCApplication extends WindowsApplication {

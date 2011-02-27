@@ -6,13 +6,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import pm.application.ApplicationCycle;
+import pm.application.cmd.windows.gomplayer.GomPlayerApplication;
+import pm.application.cmd.windows.wmp.WMPApplication;
 import pm.application.example.ExampleApplication;
 import pm.application.itunes.iTunesApplication;
 import pm.application.mpc.MPCApplication;
 import pm.application.vlc.VLCApplication;
 import pm.application.winamp.WinampApplication;
-import pm.application.windows.gomplayer.GomPlayerApplication;
-import pm.application.windows.wmp.WMPApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
@@ -58,15 +58,15 @@ public class Main extends EventListener {
         //add(new GUIDevice());
         //add(new TextDevice());
         //add(new LanTextDevice());
-        add(new Extreme3DDevice());
+        //add(new Extreme3DDevice());
         startDevices();
 
         //add(new ExampleApplication());
-        add(new WMPApplication());
-        //add(new GomPlayerApplication());
+        //add(new WMPApplication());
+        add(new GomPlayerApplication());
         //add(new WinampApplication());
         //add(new iTunesApplication());
-        //add(new VLCApplication());
+        add(new VLCApplication());
         //add(new MPCApplication());
         startApplications();
     }
