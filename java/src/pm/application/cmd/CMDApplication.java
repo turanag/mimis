@@ -21,6 +21,7 @@ public class CMDApplication extends Application {
 
     public void initialise() throws ApplicationInitialiseException {
         String key = String.format("%s\\%s", REGISTRY, program);
+        // Check of naam is gevonden in register
         String path = Native.getValue(key);
         try {
             String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
