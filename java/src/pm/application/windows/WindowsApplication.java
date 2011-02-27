@@ -37,9 +37,12 @@ abstract public class WindowsApplication extends Application {
         if (handle < 1) {
             String key = String.format("%s\\%s", REGISTRY, program);
             String path = Native.getValue(key);
+            System.out.println("PATH=" + path);
             try {
-                String command = String.format("\"%s\"", path);
+                String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
+                System.out.println("COMMAND=" + command);
                 command = Native.replaceVariables(command);
+                System.out.println("COMMAND=" + command);
                 process = Runtime.getRuntime().exec(command);
                 sleep(START_SLEEP);
                 handle = Windows.findWindow(name, null);

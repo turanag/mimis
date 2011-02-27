@@ -15,5 +15,6 @@ public enum Action {
     TEST,
     VOLUME_DOWN,
     VOLUME_UP,
+    FULLSCREEN,
     TRAIN, STOP, SAVE, RECOGNIZE, LOAD, SHUFFLE;
 }

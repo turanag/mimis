@@ -30,7 +30,7 @@ public class WMPApplication extends WindowsApplication {
                 command(18813);
                 break;
             case REWIND:
-                command(18814);
+                command(18812);
                 break;
             case MUTE:
                 command(18817);

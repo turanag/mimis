@@ -6,6 +6,8 @@ import pm.event.task.Continuous;
 import pm.event.task.Stopper;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.interrupt.InterruptListener;
+import pm.interrupt.Interruptible;
 import pm.macro.Sequence;
 import pm.macro.SequenceListener;
 import pm.macro.State;
@@ -15,10 +17,12 @@ import pm.macro.state.Release;
 
 public abstract class Device extends EventListener {
     protected SequenceListener sequenceListener;
+    protected InterruptListener interruptListener;
 
     public Device() {
         super();
         sequenceListener = new SequenceListener(this);
+        interruptListener = new InterruptListener(this);
     }
 
     /* Register macro's */
@@ -66,6 +70,11 @@ public abstract class Device extends EventListener {
     protected void add(Hold hold, Continuous continuous) {
         Button button = hold.getButton();
         add(new Press(button), new Release(button), continuous);
+    }
+    
+    /* Register interruptibles */
+    protected void add(Interruptible interruptible) {
+        interruptListener.add(interruptible);
     }
 
     /* Recognize events */
