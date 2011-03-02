@@ -45,6 +45,7 @@ public class VLCApplication extends CMDApplication {
     public void command(String command) {
         String request = "GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n\n";
         output.println(request);
+        //System.out.printf("Kijk eens VLC: %s\n", request);
         /*System.out.println(request);
         try {
             Scanner feedback = new Scanner(socket.getInputStream());

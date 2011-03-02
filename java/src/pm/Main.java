@@ -54,11 +54,11 @@ public class Main extends EventListener {
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
         //add(new PlayerDevice());
-        //add(new RumblepadDevice());
+        add(new RumblepadDevice());
         //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        add(new PanelDevice());
+        //add(new PanelDevice());
         //add(new LanTextDevice());
         //add(new Extreme3DDevice());
         startDevices();
@@ -67,8 +67,8 @@ public class Main extends EventListener {
         //add(new WMPApplication());
         //add(new GomPlayerApplication());
         //add(new WinampApplication());
-        add(new iTunesApplication());
-        //add(new VLCApplication());
+        //add(new iTunesApplication());
+        add(new VLCApplication());
         //add(new MPCApplication());
         startApplications();
     }
