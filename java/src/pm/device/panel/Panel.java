@@ -1,26 +1,16 @@
 package pm.device.panel;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import pm.Device;
-import pm.macro.state.Press;
 
 public class Panel extends JFrame implements ChangeListener, HoldButtonListener {
 	protected static final long serialVersionUID = 1L;
@@ -28,13 +18,6 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 
     protected PanelButtonListener panelButtonListener;
 	protected ClassLoader classLoader;
-
-	protected JLabel timeLabel;
-	protected JLabel chapterLabel;
-
-	protected JProgressBar positionProgressBar;	
-	protected JSlider positionSlider;
-	protected JSlider volumeSlider;
 
 	protected JButton previousButton;
 	protected JButton rewindButton;
@@ -75,20 +58,6 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 	}
 
 	protected void createControls() {
-		timeLabel = new JLabel("hh:mm:ss");
-		chapterLabel = new JLabel("00/00");
-
-		positionProgressBar = new JProgressBar();
-		positionProgressBar.setToolTipText("Time");
-
-		positionSlider = new JSlider();
-		positionSlider.setToolTipText("Position");
-
-		volumeSlider = new JSlider();
-		volumeSlider.setOrientation(JSlider.HORIZONTAL);
-		volumeSlider.setPreferredSize(new Dimension(100, 40));
-		volumeSlider.setToolTipText("Change volume");
-
 		previousButton = getButton("icons/previous.png", "Go to previous track");
 		rewindButton = getButton("icons/rewind.png", "Skip backward");
 		stopButton = getButton("icons/stop.png", "Stop");
@@ -102,44 +71,64 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 	}
 
 	protected void layoutControls() {
-		setLayout(new BorderLayout());
+		//setLayout(new BorderLayout());
+	    
 	
-		JPanel positionPanel = new JPanel();
-		positionPanel.setLayout(new GridLayout(1, 1)); // was 2, 1
-		//positionPanel.add(positionProgressBar);
-		//positionPanel.add(positionSlider);
+		//JPanel positionPanel = new JPanel();
+	    
+	    /* Feedback panel */
+	    JPanel feedbackPanel = new JPanel();
+	    JTextField feedbackField = new JTextField("Hier komt allerlei feedback te staan!", 64);
+	    feedbackField.setEditable(false);
+	    feedbackPanel.add(feedbackField);
+	    
+	    add(feedbackPanel, BorderLayout.NORTH);
+	    
+	    /* Control panel */
+		JPanel controlPanel = new JPanel();
 
-		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new BorderLayout(8, 0));
+		controlPanel.add(previousButton);
+		controlPanel.add(rewindButton);
+		controlPanel.add(stopButton);
+		controlPanel.add(pauseButton);
+		controlPanel.add(playButton);
+		controlPanel.add(forwardButton);
+		controlPanel.add(nextButton);
+		controlPanel.add(volumeDownButton);
+		controlPanel.add(muteButton);
+		controlPanel.add(volumeUpButton);
 
-		topPanel.add(timeLabel, BorderLayout.WEST);
-		topPanel.add(positionPanel, BorderLayout.CENTER);
-		topPanel.add(chapterLabel, BorderLayout.EAST);
-		add(topPanel, BorderLayout.NORTH);
+		add(controlPanel, BorderLayout.CENTER);
+		/* TODO: zorg dat de knoppen 4x3 of 3x4 staan, voeg shuffle en repeat toe
+        JPanel controlPanel = new JPanel();
+        
+        JPanel seekPanel = new JPanel();            
+        seekPanel.add(previousButton);
+        seekPanel.add(rewindButton);
+        seekPanel.add(forwardButton);
+        seekPanel.add(nextButton);
+        
+        JPanel modePanel = new JPanel();
+        controlPanel.add(stopButton);
+        controlPanel.add(pauseButton);
+        controlPanel.add(playButton);
+        
+        JPanel volumePanel = new JPanel();
+        controlPanel.add(volumeDownButton);
+        controlPanel.add(muteButton);
+        controlPanel.add(volumeUpButton);
 
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new FlowLayout());
-
-		bottomPanel.add(previousButton);
-		bottomPanel.add(rewindButton);
-		bottomPanel.add(stopButton);
-		bottomPanel.add(pauseButton);
-		bottomPanel.add(playButton);
-		bottomPanel.add(forwardButton);
-		bottomPanel.add(nextButton);
-		bottomPanel.add(volumeDownButton);
-		bottomPanel.add(muteButton);
-		bottomPanel.add(volumeUpButton);
-        //bottomPanel.add(volumeSlider);
-
-		add(bottomPanel, BorderLayout.SOUTH);
-
-		//positionSlider.addChangeListener(this);
-		//volumeSlider.addChangeListener(this);
+        controlPanel.add(seekPanel);
+        controlPanel.add(modePanel);
+        controlPanel.add(volumePanel);
+        
+        add(controlPanel, BorderLayout.CENTER);
+        */
 	}
 
 	/* Listeners */
 	public void stateChanged(ChangeEvent event) {
+		/* Wordt niet meer gebruikt 
 		Object source = event.getSource();
 		if (positionSlider.equals(source)) {
 			if (!setPositionValue) {
@@ -148,7 +137,8 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 			}
 		} else if (volumeSlider.equals(source)) {
 			
-		}		
+		}
+		*/
 	}
 
 	public void buttonPressed(HoldButton button) {
@@ -199,7 +189,7 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
         }
 	}
 
-	/* Update */
+	/* Update, is niet meer nodig? Alle informatie wordt in het TextField geprint
 	public void updateTime(long millis) {
 		String s = String.format(
 			"%02d:%02d:%02d",
@@ -227,4 +217,5 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 	public void updateVolume(int value) {
 		volumeSlider.setValue(value);
 	}
+	*/
 }
