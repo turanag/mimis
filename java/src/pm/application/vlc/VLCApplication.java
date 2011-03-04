@@ -16,7 +16,7 @@ public class VLCApplication extends CMDApplication {
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 20;
 
-    protected static final String HOST = "192.168.1.105"; // localhost
+    protected static final String HOST = "127.0.0.1"; // localhost
     protected static final int PORT = 8080;
     protected Socket socket;
     PrintStream output;
@@ -43,9 +43,9 @@ public class VLCApplication extends CMDApplication {
     }
     
     public void command(String command) {
-        String request = "GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n\n";
+        //String request = "GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n\n";
         output.println(request);
-        //System.out.printf("Kijk eens VLC: %s\n", request);
+        //System.out.printf("%s", request);
         /*System.out.println(request);
         try {
             Scanner feedback = new Scanner(socket.getInputStream());
@@ -66,6 +66,9 @@ public class VLCApplication extends CMDApplication {
         System.out.println("VLCApplication: " + action);
         switch (action) {
             case PLAY:
+                command("pl_pause");
+                break;
+            case PAUSE:
                 command("pl_pause");
                 break;
             case NEXT:

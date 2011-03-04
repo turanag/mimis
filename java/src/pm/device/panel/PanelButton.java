@@ -3,12 +3,14 @@ package pm.device.panel;
 import pm.Button;
 
 public enum PanelButton implements Button {
-    PREVIOUS_CHAPTER,
+    PREVIOUS,
     REWIND,
     STOP,
     PAUSE,
     PLAY,
-    FAST_FORWARD,
-    NEXT_CHAPTER,
-    TOGGLE_MUTE;
+    FORWARD,
+    NEXT,
+    VOLUME_DOWN,
+    MUTE,
+    VOLUME_UP;
 }

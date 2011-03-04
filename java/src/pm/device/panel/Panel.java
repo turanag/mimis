@@ -36,14 +36,16 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 	protected JSlider positionSlider;
 	protected JSlider volumeSlider;
 
-	protected JButton previousChapterButton;
+	protected JButton previousButton;
 	protected JButton rewindButton;
 	protected JButton stopButton;
 	protected JButton pauseButton;
 	protected JButton playButton;
-	protected JButton fastForwardButton;
-	protected JButton nextChapterButton;
-	protected JButton toggleMuteButton;
+	protected JButton forwardButton;
+	protected JButton nextButton;
+	protected JButton volumeDownButton;
+	protected JButton muteButton;
+	protected JButton volumeUpButton;
 	protected boolean setPositionValue;
 
 	Panel(PanelButtonListener panelButtonListener) {
@@ -87,23 +89,25 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 		volumeSlider.setPreferredSize(new Dimension(100, 40));
 		volumeSlider.setToolTipText("Change volume");
 
-		previousChapterButton = getButton("icons/control_start_blue.png", "Go to previous chapter");
-		rewindButton = getButton("icons/control_rewind_blue.png", "Skip back");
-		stopButton = getButton("icons/control_stop_blue.png", "Stop");
-		pauseButton = getButton("icons/control_pause_blue.png", "Play/pause");
-		playButton = getButton("icons/control_play_blue.png", "Play");
-		fastForwardButton = getButton("icons/control_fastforward_blue.png", "Skip forward");
-		nextChapterButton = getButton("icons/control_end_blue.png", "Go to next chapter");
-		toggleMuteButton = getButton("icons/sound_mute.png", "Toggle Mute");
+		previousButton = getButton("icons/previous.png", "Go to previous track");
+		rewindButton = getButton("icons/rewind.png", "Skip backward");
+		stopButton = getButton("icons/stop.png", "Stop");
+		pauseButton = getButton("icons/pause.png", "Play/pause");
+		playButton = getButton("icons/play.png", "Play/pause");
+		forwardButton = getButton("icons/forward.png", "Skip forward");
+		nextButton = getButton("icons/next.png", "Go to next track");
+        volumeDownButton = getButton("icons/volumeDown.png", "Decrease volume");
+		muteButton = getButton("icons/mute.png", "Toggle Mute");
+	    volumeUpButton = getButton("icons/volumeUp.png", "Increase volume");
 	}
 
 	protected void layoutControls() {
 		setLayout(new BorderLayout());
 	
 		JPanel positionPanel = new JPanel();
-		positionPanel.setLayout(new GridLayout(2, 1));
-		positionPanel.add(positionProgressBar);
-		positionPanel.add(positionSlider);
+		positionPanel.setLayout(new GridLayout(1, 1)); // was 2, 1
+		//positionPanel.add(positionProgressBar);
+		//positionPanel.add(positionSlider);
 
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout(8, 0));
@@ -116,20 +120,22 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout());
 
-		bottomPanel.add(previousChapterButton);
+		bottomPanel.add(previousButton);
 		bottomPanel.add(rewindButton);
 		bottomPanel.add(stopButton);
 		bottomPanel.add(pauseButton);
 		bottomPanel.add(playButton);
-		bottomPanel.add(fastForwardButton);
-		bottomPanel.add(nextChapterButton);
-		bottomPanel.add(volumeSlider);
-		bottomPanel.add(toggleMuteButton);
+		bottomPanel.add(forwardButton);
+		bottomPanel.add(nextButton);
+		bottomPanel.add(volumeDownButton);
+		bottomPanel.add(muteButton);
+		bottomPanel.add(volumeUpButton);
+        //bottomPanel.add(volumeSlider);
 
 		add(bottomPanel, BorderLayout.SOUTH);
 
-		positionSlider.addChangeListener(this);
-		volumeSlider.addChangeListener(this);
+		//positionSlider.addChangeListener(this);
+		//volumeSlider.addChangeListener(this);
 	}
 
 	/* Listeners */
@@ -146,8 +152,8 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
 	}
 
 	public void buttonPressed(HoldButton button) {
-		if (button.equals(previousChapterButton)) {
-		    panelButtonListener.buttonPressed(PanelButton.PREVIOUS_CHAPTER);
+		if (button.equals(previousButton)) {
+		    panelButtonListener.buttonPressed(PanelButton.PREVIOUS);
 		} else if (button.equals(rewindButton)) {
 		    panelButtonListener.buttonPressed(PanelButton.REWIND);
         } else if (button.equals(stopButton)) {
@@ -156,18 +162,22 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
             panelButtonListener.buttonPressed(PanelButton.PAUSE);
         } else if (button.equals(playButton)) {
             panelButtonListener.buttonPressed(PanelButton.PLAY);
-        } else if (button.equals(fastForwardButton)) {
-            panelButtonListener.buttonPressed(PanelButton.FAST_FORWARD);
-        } else if (button.equals(nextChapterButton)) {
-            panelButtonListener.buttonPressed(PanelButton.NEXT_CHAPTER);
-        } else if (button.equals(toggleMuteButton)) {
-            panelButtonListener.buttonPressed(PanelButton.TOGGLE_MUTE);
+        } else if (button.equals(forwardButton)) {
+            panelButtonListener.buttonPressed(PanelButton.FORWARD);
+        } else if (button.equals(nextButton)) {
+            panelButtonListener.buttonPressed(PanelButton.NEXT);
+        } else if (button.equals(volumeDownButton)) {
+            panelButtonListener.buttonPressed(PanelButton.VOLUME_DOWN);
+        } else if (button.equals(muteButton)) {
+            panelButtonListener.buttonPressed(PanelButton.MUTE);
+        } else if (button.equals(volumeUpButton)) {
+            panelButtonListener.buttonPressed(PanelButton.VOLUME_UP);
         }
 	}
 
 	public void buttonReleased(HoldButton button) {
-      if (button.equals(previousChapterButton)) {
-            panelButtonListener.buttonReleased(PanelButton.PREVIOUS_CHAPTER);
+      if (button.equals(previousButton)) {
+            panelButtonListener.buttonReleased(PanelButton.PREVIOUS);
         } else if (button.equals(rewindButton)) {
             panelButtonListener.buttonReleased(PanelButton.REWIND);
         } else if (button.equals(stopButton)) {
@@ -176,12 +186,16 @@ public class Panel extends JFrame implements ChangeListener, HoldButtonListener 
             panelButtonListener.buttonReleased(PanelButton.PAUSE);
         } else if (button.equals(playButton)) {
             panelButtonListener.buttonReleased(PanelButton.PLAY);
-        } else if (button.equals(fastForwardButton)) {
-            panelButtonListener.buttonReleased(PanelButton.FAST_FORWARD);
-        } else if (button.equals(nextChapterButton)) {
-            panelButtonListener.buttonReleased(PanelButton.NEXT_CHAPTER);
-        } else if (button.equals(toggleMuteButton)) {
-            panelButtonListener.buttonReleased(PanelButton.TOGGLE_MUTE);
+        } else if (button.equals(forwardButton)) {
+            panelButtonListener.buttonReleased(PanelButton.FORWARD);
+        } else if (button.equals(nextButton)) {
+            panelButtonListener.buttonReleased(PanelButton.NEXT);
+        } else if  (button.equals(volumeDownButton)) {
+            panelButtonListener.buttonReleased(PanelButton.VOLUME_DOWN);
+        } else if (button.equals(muteButton)) {
+            panelButtonListener.buttonReleased(PanelButton.MUTE);
+        } else if (button.equals(volumeUpButton)) {
+            panelButtonListener.buttonReleased(PanelButton.VOLUME_UP);
         }
 	}
 
