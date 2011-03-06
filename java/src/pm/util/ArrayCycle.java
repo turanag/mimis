@@ -7,6 +7,12 @@ public class ArrayCycle<E> extends ArrayList<E> {
 
     protected int index = 0;
 
+    public ArrayCycle(E... elementArary) {
+        for (E element : elementArary) {
+            add(element);
+        }
+    }
+
     public E current() {
         return this.get(index);
     }

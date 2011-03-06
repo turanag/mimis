@@ -1,4 +1,4 @@
-package pm.device.panel;
+package pm.util.swing;
 
 public interface HoldButtonListener {
     public void buttonPressed(HoldButton button);    

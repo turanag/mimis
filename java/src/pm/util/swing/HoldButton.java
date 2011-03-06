@@ -1,4 +1,4 @@
-package pm.device.panel;
+package pm.util.swing;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

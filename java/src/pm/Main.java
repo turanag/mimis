@@ -52,7 +52,7 @@ public class Main extends EventListener {
     }
 
     public void initialise() throws DeviceInitialiseException {
-        //add(new JIntellitypeDevice());
+        add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         add(new RumblepadDevice());
         //add(new WiimoteDevice());
