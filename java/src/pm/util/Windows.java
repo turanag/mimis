@@ -30,12 +30,12 @@ public class Windows {
         return findWindow.executeCall(new Object[] {className, windowName});
     }
 
-    public static boolean postMessage(int handle, int message, int wParam, int lParam) {
-        return postMessage.executeBooleanCall(new Object[] {handle, message, wParam, lParam});
+    public static int postMessage(int handle, int message, int wParam, int lParam) {
+        return postMessage.executeCall(new Object[] {handle, message, wParam, lParam});
     }
 
-    public static boolean sendMessage(int handle, int message, int wParam, int lParam) {
-        return sendMessage.executeBooleanCall(new Object[] {handle, message, wParam, lParam});
+    public static int sendMessage(int handle, int message, int wParam, int lParam) {
+        return sendMessage.executeCall(new Object[] {handle, message, wParam, lParam});
     }
 
     public static int mapVirtualKey(int code, int mapType) {

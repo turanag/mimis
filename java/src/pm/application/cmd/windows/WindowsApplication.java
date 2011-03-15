@@ -43,8 +43,9 @@ abstract public class WindowsApplication extends CMDApplication {
         Windows.sendMessage(handle, Windows.WM_COMMAND, command, 0);
     }
 
-    protected void user(int code) {
-        Windows.sendMessage(handle, Windows.WM_USER + code, 0, 0);
+    protected int user(int wParam, int lParam) {
+        return Windows.sendMessage(handle, Windows.WM_USER, wParam, lParam);
+        //return Windows.sendMessage(handle, Windows.WM_USER + wParam, 0, 0);
     }
 
     protected void key(Type key, int code) {

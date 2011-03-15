@@ -12,7 +12,7 @@ import pm.application.example.ExampleApplication;
 import pm.application.itunes.iTunesApplication;
 import pm.application.mpc.MPCApplication;
 import pm.application.vlc.VLCApplication;
-import pm.application.winamp.WinampApplication;
+import pm.application.windows.winamp.WinampApplication;
 import pm.device.gui.GUIDevice;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
@@ -54,19 +54,19 @@ public class Main extends EventListener {
     public void initialise() throws DeviceInitialiseException {
         add(new JIntellitypeDevice());
         //add(new PlayerDevice());
-        add(new RumblepadDevice());
-        //add(new WiimoteDevice());
+        //add(new RumblepadDevice());
+        add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        add(new PanelDevice());
+        //add(new PanelDevice());
         //add(new LanTextDevice());
         //add(new Extreme3DDevice());
         startDevices();
 
-        add(new ExampleApplication());
+        //add(new ExampleApplication());
         //add(new WMPApplication());
         //add(new GomPlayerApplication());
-        //add(new WinampApplication());
+        add(new WinampApplication());
         //add(new iTunesApplication());
         //add(new VLCApplication());
         //add(new MPCApplication());
