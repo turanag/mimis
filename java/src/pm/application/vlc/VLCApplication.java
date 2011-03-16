@@ -1,9 +1,8 @@
 package pm.application.vlc;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.util.Scanner;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import pm.application.cmd.CMDApplication;
 import pm.exception.application.ApplicationInitialiseException;
@@ -18,9 +17,6 @@ public class VLCApplication extends CMDApplication {
 
     protected static final String HOST = "127.0.0.1"; // localhost
     protected static final int PORT = 8080;
-    protected Socket socket;
-    PrintStream output;
-    Scanner feedback;
     
     public VLCApplication() {
         super(PROGRAM, TITLE);
@@ -28,38 +24,20 @@ public class VLCApplication extends CMDApplication {
 
     public void initialise() throws ApplicationInitialiseException {
         super.initialise();
-        connect();
     }
 
-    public void connect() {
-        System.out.println("Connecting to VLC");
-        try {
-            socket = new Socket(HOST, PORT);
-            output = new PrintStream(socket.getOutputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Connection established");
-    }
     
     public void command(String command) {
-        //String request = "GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n\n";
-        output.println(request);
-        //System.out.printf("%s", request);
-        /*System.out.println(request);
+        String url = "http://" + HOST + ":" + PORT;
+        String request = "/requests/status.xml?command=" + command;
+        System.out.println(url + request);
         try {
-            Scanner feedback = new Scanner(socket.getInputStream());
-            while(feedback.hasNext()) {
-                System.out.printf("!!!%s!!!", feedback.nextLine());
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+            new URL(url + request + "\r\n\n").openConnection();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-        }*/
-        
-        //System.out.println("GET /requests/status.xml?command=" + command + " /HTTP/1.1\r\n");
-        // Voorbeeld
-        // GET /requests/status.xml?command=volume&val=+20 HTTP/1.1
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public void action(Action action) {
