@@ -1,6 +1,7 @@
 package pm.application.vlc;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -11,13 +12,16 @@ import pm.value.Action;
 public class VLCApplication extends CMDApplication {
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
-    
+
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 20;
 
     protected static final String HOST = "127.0.0.1"; // localhost
     protected static final int PORT = 8080;
-    
+
+    protected int volume = 255;
+    protected boolean muted = false;
+
     public VLCApplication() {
         super(PROGRAM, TITLE);
     }
@@ -26,20 +30,19 @@ public class VLCApplication extends CMDApplication {
         super.initialise();
     }
 
-    
+
     public void command(String command) {
-        String url = "http://" + HOST + ":" + PORT;
-        String request = "/requests/status.xml?command=" + command;
-        System.out.println(url + request);
-        try {
-            new URL(url + request + "\r\n\n").openConnection();
+        String request = "http://" + HOST + ":" + PORT + "/requests/status.xml?command=" + command;
+        try {           
+            int response = ((HttpURLConnection)(new URL(request)).openConnection()).getResponseCode();
+            //System.out.printf("Response: %d\n", response);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void action(Action action) {
         System.out.println("VLCApplication: " + action);
         switch (action) {
@@ -62,16 +65,13 @@ public class VLCApplication extends CMDApplication {
                 command("command=seek&val=-" + POSTION_CHANGE_RATE);
                 break;
             case MUTE:
-                /*
-                 * Nog implementeren
-                 * command=volume&val=
-                 */
+                command("volume&val=" + toggleMute());
                 break;
             case VOLUME_UP:
-                command("volume&val=+" + VOLUME_CHANGE_RATE);
+                volumeUp();
                 break;
             case VOLUME_DOWN:
-                command("volume&val=-" + VOLUME_CHANGE_RATE);
+                volumeDown();
                 break;
             case SHUFFLE:
                 command("command=pl_random");
@@ -80,5 +80,24 @@ public class VLCApplication extends CMDApplication {
                 command("command=pl_repeat");
                 break;
         }
+    }
+    
+    protected void volumeUp() {
+        if (!muted) {
+            volume += VOLUME_CHANGE_RATE;
+            command("volume&val=+" + VOLUME_CHANGE_RATE);
+        }
+    }
+    
+    protected void volumeDown() {
+        if (!muted) {
+            volume -= VOLUME_CHANGE_RATE;
+            command("volume&val=-" + VOLUME_CHANGE_RATE);
+        }
+    }
+
+    protected int toggleMute() {
+        muted =! muted;
+        return muted ? 0 : volume;
     }
 }
