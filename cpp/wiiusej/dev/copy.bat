@@ -1,0 +1,1 @@
+copy WiiUseJ.dll ..\..\..\java\native\
