@@ -6,6 +6,7 @@ import org.wiigee.util.Log;
 
 import pm.Button;
 import pm.Device;
+import pm.Macro;
 import pm.device.wiimote.gesture.GestureDevice;
 import pm.event.Task;
 import pm.event.task.Continuous;
@@ -13,6 +14,7 @@ import pm.event.task.Dynamic;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.exception.macro.StateOrderException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
@@ -96,6 +98,20 @@ public class WiimoteDevice extends Device implements GestureListener {
         add(
             new Press(WiimoteButton.HOME),
             new Task(Action.NEXT, Target.MAIN));
+        try {
+            add(
+                new Macro(
+                    new Hold(WiimoteButton.TWO),
+                    new Press(WiimoteButton.PLUS),
+                    new Release(WiimoteButton.TWO)),
+                new Task(Action.LIKE, Target.APPLICATION));
+            add(
+                new Macro(
+                    new Hold(WiimoteButton.TWO),
+                    new Press(WiimoteButton.MINUS),
+                    new Release(WiimoteButton.TWO)),
+                new Task(Action.DISLIKE, Target.APPLICATION));
+        } catch (StateOrderException e) {}
     }
 
     public void exit() throws DeviceExitException {

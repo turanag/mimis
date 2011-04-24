@@ -66,8 +66,8 @@ public class Main extends EventListener {
         //add(new ExampleApplication());
         //add(new WMPApplication());
         //add(new GomPlayerApplication());
-        add(new WinampApplication());
-        //add(new iTunesApplication());
+        //add(new WinampApplication());
+        add(new iTunesApplication());
         //add(new VLCApplication());
         //add(new MPCApplication());
         startApplications();

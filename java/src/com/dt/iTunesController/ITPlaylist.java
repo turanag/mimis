@@ -173,4 +173,8 @@ public class ITPlaylist extends ITObject {
     public void toggleShuffle() {
         setShuffle(!getShuffle());
     }
+    
+    public boolean containsTrack(ITTrack track) {
+        return getTracks().containsTrack(track);
+    }
 }

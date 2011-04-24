@@ -5,7 +5,6 @@ import pm.exception.application.ApplicationExitException;
 import pm.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
-import com.dt.iTunesController.ITPlaylistRepeatMode;
 import com.dt.iTunesController.ITTrack;
 import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
@@ -13,6 +12,8 @@ import com.dt.iTunesController.iTunesEventsInterface;
 public class iTunesApplication extends Application implements iTunesEventsInterface {
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 5;
+    protected static final String PLAYLIST_LIKE = "Like";
+    protected static final String PLAYLIST_DISLIKE = "Dislike";
 
     protected iTunes iTunes;
 
@@ -70,6 +71,12 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             case REPEAT:
                 iTunes.cycleSongRepeat();
                 //iTunes.resume();
+                break;
+            case LIKE:
+                iTunes.playlistAddCurrentTrack(PLAYLIST_LIKE);
+                break;
+            case DISLIKE:
+                iTunes.playlistAddCurrentTrack(PLAYLIST_DISLIKE);
                 break;
         }
     }

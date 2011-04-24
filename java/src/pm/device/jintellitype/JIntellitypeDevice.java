@@ -45,6 +45,12 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));
+        add(
+            new Hotkey(Modifier.CTRL | Modifier.SHIFT | Modifier.WIN, 'n'),
+            new Task(Action.NEXT, Target.APPLICATION));
+        add(
+            new Hotkey(Modifier.CTRL | Modifier.SHIFT | Modifier.WIN, 'p'),
+            new Task(Action.PREVIOUS, Target.APPLICATION));
         /*add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 't'),
             new Task(Action.TEST, Target.MAIN));

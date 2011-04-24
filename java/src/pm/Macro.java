@@ -42,7 +42,7 @@ public class Macro extends Sequence {
         }
         if (!holdList.isEmpty()) {
             throw new StateOrderException("One or more buttons are not released.");
-        }
-        eventArray = (State[]) eventList.toArray(new State[0]);
+        }        
+        this.eventArray = (State[]) eventList.toArray(new State[0]);
     }
 }

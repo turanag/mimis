@@ -499,8 +499,36 @@ public class iTunes {
         Dispatch window = iTunes.getProperty("BrowserWindow").toDispatch();
     	return new ITBrowserWindow(window);
     }
-    
+
     public void cycleSongRepeat() {
         getCurrentPlaylist().cycleSongRepeat();
+    }
+
+    public ITPlaylist getPlaylist(String name) {
+        ITPlaylistCollection playlistCollection = getLibrarySource().getPlaylists();
+        ITPlaylist playlist = playlistCollection.ItemByName(name);
+        try {
+            playlist.getName();
+        } catch (IllegalStateException e) {
+            playlist = createPlaylist(name);
+        }
+        return playlist;
+    }
+
+    public ITUserPlaylist getUserPlaylist(String name) {
+        ITPlaylist playlist = getPlaylist(name);
+        ITUserPlaylist userPlaylist = new ITUserPlaylist(playlist.fetchDispatch());
+        return userPlaylist;
+    }
+
+    public void playlistAddTrack(String name, ITTrack track) {
+        ITUserPlaylist userPlaylist = getUserPlaylist(name);
+        if (!userPlaylist.containsTrack(track)) {
+            userPlaylist.addTrack(track);
+        }
+    }
+
+    public void playlistAddCurrentTrack(String name) {
+        playlistAddTrack(name, getCurrentTrack());
     }
 }
