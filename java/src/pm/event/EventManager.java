@@ -10,20 +10,20 @@ import pm.event.task.Stopper;
 import pm.value.Target;
 
 public class EventManager {
-    protected static ArrayList<EventListener> taskListenerList;
+    protected static ArrayList<EventListener> eventListenerList;
     protected static ApplicationCycle applicationCycle;
 
     public static void initialise(ApplicationCycle applicationCycle) {
-        taskListenerList = new ArrayList<EventListener>();
+        eventListenerList = new ArrayList<EventListener>();
         EventManager.applicationCycle = applicationCycle;
     }
 
     public static void add(EventListener eventListener) {
-        taskListenerList.add(eventListener);
+        eventListenerList.add(eventListener);
     }
 
     public static void add(Feedback feedback) {
-        for (EventListener eventListener : taskListenerList) {
+        for (EventListener eventListener : eventListenerList) {
             eventListener.add(feedback);
         }
     }
@@ -44,7 +44,7 @@ public class EventManager {
                     }
                     break;
                 default:
-                    for (EventListener eventListener : taskListenerList) {
+                    for (EventListener eventListener : eventListenerList) {
                         switch (target) {
                             case ALL:
                                 eventListener.add(task);
@@ -65,7 +65,6 @@ public class EventManager {
                                 } 
                                 break;
                         }
-                        break;
                     }
             }
         }
@@ -78,6 +77,6 @@ public class EventManager {
     }
 
     public static void remove(EventListener eventListener) {
-        taskListenerList.remove(eventListener);
+        eventListenerList.remove(eventListener);
     }
 }

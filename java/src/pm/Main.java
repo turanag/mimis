@@ -117,9 +117,7 @@ public class Main extends EventListener {
         for (Application application : applicationCycle) {
             try {
                 application.exit();
-            } catch (ApplicationExitException e) {
-                e.printStackTrace();
-            }
+            } catch (ApplicationExitException e) {}
         }        
         System.out.println("Exit main...");
         stop();

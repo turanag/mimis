@@ -85,6 +85,5 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);
         jit.cleanUp();
-        System.out.println("klaar" + run);
     }
 }

@@ -17,12 +17,12 @@ import pm.macro.state.Release;
 
 public abstract class Device extends EventListener {
     protected SequenceListener sequenceListener;
-    protected InterruptListener interruptListener;
+    //protected InterruptListener interruptListener;
 
     public Device() {
         super();
         sequenceListener = new SequenceListener(this);
-        interruptListener = new InterruptListener(this);
+        //interruptListener = new InterruptListener(this);
     }
 
     /* Register macro's */
@@ -72,10 +72,10 @@ public abstract class Device extends EventListener {
         add(new Press(button), new Release(button), continuous);
     }
     
-    /* Register interruptibles */
+    /* Register interruptibles *
     protected void add(Interruptible interruptible) {
         interruptListener.add(interruptible);
-    }
+    }*/
 
     /* Recognize events */
     protected void add(State state) {
