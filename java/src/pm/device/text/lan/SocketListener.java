@@ -7,15 +7,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import pm.Listener;
-import pm.device.text.InputListener;
+import pm.device.text.TextDevice;
 
 public class SocketListener extends Listener {
     protected ServerSocket server;
-    protected ArrayList<InputListener> inputListenerList;
+    protected ArrayList<TextDevice.InputListener> inputListenerList;
 
     public SocketListener(ServerSocket server) {
         this.server = server;
-        inputListenerList = new ArrayList<InputListener>();
+        inputListenerList = new ArrayList<TextDevice.InputListener>();
     }
 
     public void run() {
@@ -23,7 +23,7 @@ public class SocketListener extends Listener {
             try {
                 Socket socket = server.accept();
                 InputStream inputStream = socket.getInputStream();
-                InputListener inputListener = new InputListener(inputStream);
+                TextDevice.InputListener inputListener = new TextDevice().new InputListener(inputStream);
                 inputListenerList.add(inputListener);
                 inputListener.start();
             } catch (IOException e) {
@@ -34,7 +34,7 @@ public class SocketListener extends Listener {
 
     public void stop() {
         run = false;
-        for (InputListener inputListener : inputListenerList) {
+        for (TextDevice.InputListener inputListener : inputListenerList) {
             inputListener.stop();
         }
     }

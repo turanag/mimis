@@ -71,7 +71,7 @@ public abstract class Device extends EventListener {
         Button button = hold.getButton();
         add(new Press(button), new Release(button), continuous);
     }
-    
+       
     /* Register interruptibles *
     protected void add(Interruptible interruptible) {
         interruptListener.add(interruptible);

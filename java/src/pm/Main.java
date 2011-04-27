@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pm.application.ApplicationCycle;
 import pm.application.cmd.windows.gomplayer.GomPlayerApplication;
 import pm.application.cmd.windows.wmp.WMPApplication;
 import pm.application.example.ExampleApplication;
@@ -29,13 +28,14 @@ import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Active;
+import pm.util.ArrayCycle;
 import pm.value.Action;
 
 public class Main extends EventListener {
     protected Log log = LogFactory.getLog(Main.class);
 
     //protected String[] deviceClassArray;
-    protected ApplicationCycle applicationCycle;
+    protected ArrayCycle<Application> applicationCycle;
     protected ArrayList<Device> deviceList;
    
     public Main() {
@@ -45,7 +45,7 @@ public class Main extends EventListener {
             "pm.device.javainput.rumblepad.RumblepadDevice",
             "pm.device.javainput.extreme3d.Extreme3DDevice",
             "pm.device.wiimote.WiimoteDevice"};*/
-        applicationCycle = new ApplicationCycle();
+        applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
         EventManager.initialise(applicationCycle);
         EventManager.add(this);
