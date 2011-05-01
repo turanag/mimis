@@ -70,7 +70,7 @@ public class EventManager {
         }
     }
     
-    public static void add(Task task) {
+/*    public static void add(Task task) {
         add(null, task);
     }
 
@@ -79,7 +79,7 @@ public class EventManager {
             add(null, task);
         }
     }
-
+*/
     public static void remove(EventListener eventListener) {
         eventListenerList.remove(eventListener);
     }

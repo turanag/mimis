@@ -28,6 +28,7 @@ import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Active;
+import pm.network.NetworkServer;
 import pm.util.ArrayCycle;
 import pm.value.Action;
 
@@ -52,22 +53,23 @@ public class Main extends EventListener {
     }
 
     public void initialise() throws DeviceInitialiseException {
-        add(new JIntellitypeDevice());
+        //add(new JIntellitypeDevice());
         //add(new PlayerDevice());
         //add(new RumblepadDevice());
-        add(new WiimoteDevice());
+        //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
         //add(new PanelDevice());
         //add(new LanTextDevice());
         //add(new Extreme3DDevice());
+        add(new NetworkServer());
         startDevices();
 
         //add(new ExampleApplication());
         //add(new WMPApplication());
         //add(new GomPlayerApplication());
-        //add(new WinampApplication());
-        add(new iTunesApplication());
+        add(new WinampApplication());
+        //add(new iTunesApplication());
         //add(new VLCApplication());
         //add(new MPCApplication());
         startApplications();
@@ -124,7 +126,7 @@ public class Main extends EventListener {
     }
 
     protected void action(Action action) {
-        System.out.println("Main: " + action);
+        System.out.println("NetworkClient: " + action);
         switch (action) {
             case NEXT:
                 applicationCycle.next();
