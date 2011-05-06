@@ -1,15 +1,10 @@
 package pm;
 
 import pm.event.EventListener;
-import pm.event.EventManager;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
 
 public abstract class Application extends EventListener {  
-    public Application() {
-        super();
-    }
-
     public void initialise() throws ApplicationInitialiseException {}
 
     public void exit() throws ApplicationExitException {

@@ -1,34 +1,78 @@
 package pm.event;
 
-import java.util.ArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import pm.Application;
-import pm.Device;
-import pm.Main;
-import pm.event.task.Stopper;
+import pm.Event;
 import pm.util.ArrayCycle;
 import pm.value.Target;
 
 public class EventManager {
-    protected static ArrayList<EventListener> eventListenerList;
-    protected static ArrayCycle<Application> applicationCycle;
+    protected Queue<Event> eventQueue;
+    protected Lock lock;
+    protected Condition available;
 
-    public static void initialise(ArrayCycle<Application> applicationCycle) {
-        eventListenerList = new ArrayList<EventListener>();
-        EventManager.applicationCycle = applicationCycle;
+    public EventManager(ArrayCycle<Application> applicationCycle) {
+        eventQueue = new ConcurrentLinkedQueue<Event>();
+        lock = new ReentrantLock();
+        available = lock.newCondition();
     }
 
-    public static void add(EventListener eventListener) {
-        eventListenerList.add(eventListener);
-    }
-
-    public static void add(Feedback feedback) {
-        for (EventListener eventListener : eventListenerList) {
-            eventListener.add(feedback);
+    public void add(Event event) {
+        eventQueue.add(event);
+        synchronized (available) {
+            lock.notifyAll();
         }
     }
 
-    public static void add(EventListener self, Task task) {
+    public Event get(Target target) {
+        while (eventQueue.isEmpty()) {
+            synchronized (available) {
+                try {
+                    available.await();
+                } catch (InterruptedException e) {}
+            }
+        }
+        Event event = eventQueue.peek();
+        if (event instanceof Task) {
+            Task task = (Task) event;
+            if (task.getTarget() == target) {
+                return eventQueue.poll();
+            } else {
+                return null;
+            }
+        } else {
+            return eventQueue.poll();
+        }
+    }
+
+    public Event gett(Target target) {
+        while (true) {
+            Event event = eventQueue.peek();
+            if (event instanceof Task) {
+                Task task = (Task) event;
+                if (task.getTarget() == target) {
+                    return get();
+                }
+            }
+        }
+    }
+
+    public Event get() {
+        return get(Target.ALL);
+    }
+
+    /*public static void add(Feedback feedback) {
+        for (EventListener eventListener : eventListenerList) {
+            eventListener.add(feedback);
+        }
+    }*/
+
+    /*public static void add(EventListener self, Task task) {
         if (task instanceof Stopper) {
             ((Stopper) task).stop();
         } else {
@@ -68,19 +112,5 @@ public class EventManager {
                 }
             }
         }
-    }
-    
-/*    public static void add(Task task) {
-        add(null, task);
-    }
-
-    private static void add(Task task) {
-        if (!task.getTarget().equals(Target.SELF)) {
-            add(null, task);
-        }
-    }
-*/
-    public static void remove(EventListener eventListener) {
-        eventListenerList.remove(eventListener);
-    }
+    }*/
 }

@@ -20,7 +20,7 @@ import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 
 /**
- * Main Class to launch WiiuseJ GUI Test.
+ * NetworkClient Class to launch WiiuseJ GUI Test.
  * 
  * @author guiguito
  */

@@ -1,32 +1,21 @@
 package pm.event;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import pm.Event;
 import pm.Listener;
 import pm.event.task.Continuous;
 import pm.value.Action;
 
 public abstract class EventListener extends Listener implements Runnable {
-    protected Queue<Event> eventQueue;
+    protected static EventManager eventManager;
 
-    public EventListener() {
-        eventQueue = new ConcurrentLinkedQueue<Event>();
+    public static void initialise(EventManager eventManager) {
+        EventListener.eventManager = eventManager;
     }
-
+    
     public final void run() {
         while (run) {
-            if (eventQueue.isEmpty()) {
-                sleep();
-            } else {
-                event(eventQueue.poll());
-            }
+             event(eventManager.get());
         }
-    }
-
-    public void add(Event event) {
-        eventQueue.add(event);
     }
 
     protected void event(Event event) {

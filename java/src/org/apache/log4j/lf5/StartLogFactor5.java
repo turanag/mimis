@@ -49,7 +49,7 @@ public class StartLogFactor5 {
   //--------------------------------------------------------------------------
 
   /**
-   * Main - starts a an instance of the LogFactor5 console and configures
+   * NetworkClient - starts a an instance of the LogFactor5 console and configures
    * the console settings.
    */
   public final static void main(String[] args) {

@@ -588,7 +588,7 @@ public class BasicPlayer implements BasicController, Runnable
     }
 
     /**
-     * Main loop.
+     * NetworkClient loop.
      *
      * Player Status == STOPPED || SEEKING => End of Thread + Freeing Audio Ressources.<br>
      * Player Status == PLAYING => Audio stream data sent to Audio line.<br>
@@ -602,7 +602,7 @@ public class BasicPlayer implements BasicController, Runnable
         // Lock stream while playing.
         synchronized (m_audioInputStream)
         {
-            // Main play/pause loop.
+            // NetworkClient play/pause loop.
             while ((nBytesRead != -1) && (m_status != STOPPED) && (m_status != SEEKING) && (m_status != UNKNOWN))
             {
                 if (m_status == PLAYING)

@@ -38,18 +38,15 @@ public class Main extends EventListener {
     //protected String[] deviceClassArray;
     protected ArrayCycle<Application> applicationCycle;
     protected ArrayList<Device> deviceList;
+    
+    protected EventManager eventManager;
    
     public Main() {
         super();
-        /*deviceClassArray = new String[] {
-            "pm.device.jintellitype.JIntellitypeDevice",
-            "pm.device.javainput.rumblepad.RumblepadDevice",
-            "pm.device.javainput.extreme3d.Extreme3DDevice",
-            "pm.device.wiimote.WiimoteDevice"};*/
         applicationCycle = new ArrayCycle<Application>();
         deviceList = new ArrayList<Device>();
-        EventManager.initialise(applicationCycle);
-        EventManager.add(this);
+        eventManager = new EventManager(applicationCycle);
+        EventListener.initialise(eventManager);
     }
 
     public void initialise() throws DeviceInitialiseException {
@@ -59,10 +56,10 @@ public class Main extends EventListener {
         //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        //add(new PanelDevice());
+        add(new PanelDevice());
         //add(new LanTextDevice());
         //add(new Extreme3DDevice());
-        add(new NetworkServer());
+        //add(new NetworkServer());
         startDevices();
 
         //add(new ExampleApplication());
@@ -164,22 +161,22 @@ public class Main extends EventListener {
 
     /* Add / remove methods */
     protected void add(Application application) {
-        EventManager.add(application);
+        //EventManager.add(application);
         applicationCycle.add(application);
     }
 
     protected void remove(Application application) {
-        EventManager.remove(application);
+        //EventManager.remove(application);
         applicationCycle.remove(application);
     }
 
     protected void add(Device device) {
-        EventManager.add(device);
+        //EventManager.add(device);
         deviceList.add(device);
     }
 
     protected void remove(Device device) {
-        EventManager.remove(device);
+        //EventManager.remove(device);
         deviceList.remove(device);
     }
 

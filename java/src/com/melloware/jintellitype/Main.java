@@ -24,7 +24,7 @@ package com.melloware.jintellitype;
 import java.util.Properties;
 
 /**
- * Simple executable class that is used as the Main-Class in the JIntellitype 
+ * Simple executable class that is used as the NetworkClient-Class in the JIntellitype 
  * jar. Outputs version information and other information about the environment 
  * on which the jar is being executed.
  * <p>
@@ -44,7 +44,7 @@ public final class Main {
         // private constructor to make singleton.
     }
 
-    /** Main method that does what the class level javadoc states. */
+    /** NetworkClient method that does what the class level javadoc states. */
     public static void main(String[] argv) {
         System.out.println("JIntellitype version \"" + getProjectVersion() + "\"");
         System.out.println(" ");
