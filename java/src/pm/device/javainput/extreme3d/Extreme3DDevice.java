@@ -25,14 +25,14 @@ public class Extreme3DDevice extends JavaInputDevice {
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),
-                new Task(Action.TEST, Target.APPLICATION));
+                new Task(Target.APPLICATION, Action.TEST));
             add(
                 new Macro(
                     new Hold(Extreme3DButton.ONE),
                     new Press(Extreme3DButton.TWO),
                     new Press(Extreme3DButton.ELEVEN),
                     new Release(Extreme3DButton.ONE)),
-                new Task(Action.EXIT, Target.MANAGER));
+                new Task(Target.MANAGER, Action.EXIT));
         } catch (MacroException e) {
             e.printStackTrace();
         }

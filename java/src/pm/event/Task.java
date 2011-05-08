@@ -7,13 +7,13 @@ import pm.value.Target;
 public class Task extends Event {
     protected Action action;
 
-    public Task(Action action, Target target) {
+    public Task(Target target, Action action) {
         super(target);
         this.action = action;
     }
 
     public Task(Action action) {
-        this(action, Target.SELF);
+        this(Target.SELF, action);
     }
 
     public Action getAction() {

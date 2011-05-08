@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.network.NetworkDevice;
+import pm.device.panel.PanelDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.event.EventHandler;
 import pm.event.EventSpreader;
@@ -26,11 +28,11 @@ public abstract class Manager extends EventHandler {
     public void initialise() throws DeviceInitialiseException {
         //add(new JIntellitypeDevice());
         //add(new PlayerDevice());
-        //add(new RumblepadDevice());
-        add(new WiimoteDevice());
+        add(new RumblepadDevice());
+        //add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
-        //add(new PanelDevice());
+        add(new PanelDevice());
         //add(new LanTextDevice());
         //add(new Extreme3DDevice());
         //add(new NetworkDevice());

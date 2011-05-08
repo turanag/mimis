@@ -12,7 +12,7 @@ public class Continuous extends Task {
     protected boolean stop;
 
     public Continuous(Action action, Target target, int sleep) {
-        super(action, target);
+        super(target, action);
         this.sleep = sleep;
         reset();
     }

@@ -67,22 +67,22 @@ public class WiimoteDevice extends Device implements GestureListener {
             new Task(Action.STOP));*/
         add(
             new Press(WiimoteButton.A),
-            new Task(Action.PLAY, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.PLAY));
         add(
             new Press(WiimoteButton.B),
-            new Task(Action.MUTE, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.MUTE));
         add(
             new Press(WiimoteButton.ONE),
-            new Task(Action.SHUFFLE, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.SHUFFLE));
         add(
             new Press(WiimoteButton.TWO),
-            new Task(Action.REPEAT, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.REPEAT));
         add(
             new Press(WiimoteButton.UP),
-            new Task(Action.NEXT, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.NEXT));
         add(
             new Press(WiimoteButton.DOWN),
-            new Task(Action.PREVIOUS, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.PREVIOUS));
         add(
             new Hold(WiimoteButton.RIGHT),
             new Dynamic(Action.FORWARD, Target.APPLICATION, 200, -30));
@@ -97,20 +97,20 @@ public class WiimoteDevice extends Device implements GestureListener {
             new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
         add(
             new Press(WiimoteButton.HOME),
-            new Task(Action.NEXT, Target.MANAGER));
+            new Task(Target.MANAGER, Action.NEXT));
         try {
             add(
                 new Macro(
                     new Hold(WiimoteButton.TWO),
                     new Press(WiimoteButton.PLUS),
                     new Release(WiimoteButton.TWO)),
-                new Task(Action.LIKE, Target.APPLICATION));
+                new Task(Target.APPLICATION, Action.LIKE));
             add(
                 new Macro(
                     new Hold(WiimoteButton.TWO),
                     new Press(WiimoteButton.MINUS),
                     new Release(WiimoteButton.TWO)),
-                new Task(Action.DISLIKE, Target.APPLICATION));
+                new Task(Target.APPLICATION, Action.DISLIKE));
         } catch (StateOrderException e) {}
     }
 

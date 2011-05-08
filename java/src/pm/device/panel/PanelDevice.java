@@ -15,16 +15,16 @@ public class PanelDevice extends Device implements PanelButtonListener {
         panel = new Panel(this);
         //panel.updateTime(12342398);
         //panel.updatePosition(43);
-        add(new Press(PanelButton.PREVIOUS), new Task(Action.PREVIOUS, Target.APPLICATION));
-        add(new Press(PanelButton.REWIND), new Task(Action.REWIND, Target.APPLICATION));
-        add(new Press(PanelButton.STOP), new Task(Action.STOP, Target.APPLICATION));
-        add(new Press(PanelButton.PAUSE), new Task(Action.PAUSE, Target.APPLICATION));
-        add(new Press(PanelButton.PLAY), new Task(Action.PLAY, Target.APPLICATION));
-        add(new Press(PanelButton.FORWARD), new Task(Action.FORWARD, Target.APPLICATION));
-        add(new Press(PanelButton.NEXT), new Task(Action.NEXT, Target.APPLICATION));
-        add(new Press(PanelButton.VOLUME_DOWN), new Task(Action.VOLUME_DOWN, Target.APPLICATION));
-        add(new Press(PanelButton.MUTE), new Task(Action.MUTE, Target.APPLICATION));
-        add(new Press(PanelButton.VOLUME_UP), new Task(Action.VOLUME_UP, Target.APPLICATION));
+        add(new Press(PanelButton.PREVIOUS), new Task(Target.APPLICATION, Action.PREVIOUS));
+        add(new Press(PanelButton.REWIND), new Task(Target.APPLICATION, Action.REWIND));
+        add(new Press(PanelButton.STOP), new Task(Target.APPLICATION, Action.STOP));
+        add(new Press(PanelButton.PAUSE), new Task(Target.APPLICATION, Action.PAUSE));
+        add(new Press(PanelButton.PLAY), new Task(Target.APPLICATION, Action.PLAY));
+        add(new Press(PanelButton.FORWARD), new Task(Target.APPLICATION, Action.FORWARD));
+        add(new Press(PanelButton.NEXT), new Task(Target.APPLICATION, Action.NEXT));
+        add(new Press(PanelButton.VOLUME_DOWN), new Task(Target.APPLICATION, Action.VOLUME_DOWN));
+        add(new Press(PanelButton.MUTE), new Task(Target.APPLICATION, Action.MUTE));
+        add(new Press(PanelButton.VOLUME_UP), new Task(Target.APPLICATION, Action.VOLUME_UP));
     }
 
     public void exit() {

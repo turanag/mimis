@@ -5,7 +5,7 @@ import pm.exception.device.DeviceInitialiseException;
 import pm.exception.event.spreader.NetworkSpreaderException;
 
 public class Client extends Manager {
-    public static final String IP = "localhost";
+    public static final String IP = "192.168.1.100";
     public static final int PORT = 6789;
 
     public Client(String ip, int port) throws NetworkSpreaderException {

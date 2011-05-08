@@ -23,19 +23,19 @@ public class RumblepadDevice extends JavaInputDevice {
         super.initialise(NAME);
         add(
             new Press(RumblepadButton.ONE),
-            new Task(Action.PLAY, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.PLAY));
         add(
             new Press(RumblepadButton.TWO),
-            new Task(Action.PAUSE, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.PAUSE));
         add(
             new Press(RumblepadButton.THREE),
-            new Task(Action.RESUME, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.RESUME));
         add(
             new Press(RumblepadButton.SIX),
-            new Task(Action.NEXT, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.NEXT));
         add(
             new Press(RumblepadButton.EIGHT),
-            new Task(Action.PREVIOUS, Target.APPLICATION));
+            new Task(Target.APPLICATION, Action.PREVIOUS));
         add(
             new Hold(RumblepadButton.FIVE),
             new Dynamic(Action.FORWARD, Target.APPLICATION, 200, -30));
