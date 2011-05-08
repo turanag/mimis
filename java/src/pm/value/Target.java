@@ -1,5 +1,5 @@
 package pm.value;
 
 public enum Target {
-    ALL, MAIN, DEVICES, APPLICATIONS, APPLICATION, SELF;
+    ALL, MANAGER, DEVICES, APPLICATIONS, APPLICATION, SELF;
 }

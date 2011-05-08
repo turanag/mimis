@@ -1,6 +1,6 @@
 package pm;
 
-public abstract class Listener implements Runnable {
+public abstract class Worker implements Runnable {
     protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
 

@@ -1,5 +1,5 @@
 package pm.exception;
 
-public class DeviceException extends HandlerException {
+public class EventException extends Exception {
     protected static final long serialVersionUID = 1L;
 }

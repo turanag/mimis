@@ -3,34 +3,35 @@ package pm.macro;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pm.Event;
 import pm.event.Task;
+import pm.event.EventHandler;
 import pm.event.EventListener;
-import pm.event.EventManager;
 import pm.value.Target;
 
 public class SequenceListener {
-    protected EventListener eventListener;
+    protected EventHandler eventHandler;
     protected ArrayList<Sequence> sequenceList;
-    protected HashMap<Sequence, Task> taskMap;
+    protected HashMap<Sequence, Event> eventMap;
     protected ArrayList<Active> activeList;
     
-    protected static EventManager eventManager;
+    protected static EventListener eventListener;
 
-    public SequenceListener(EventListener eventListener) {
-        this.eventListener = eventListener;
+    public SequenceListener(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
         sequenceList = new ArrayList<Sequence>();
-        taskMap = new HashMap<Sequence, Task>();
+        eventMap = new HashMap<Sequence, Event>();
         activeList = new ArrayList<Active>();
     }
 
-    public static void initialise(EventManager eventManager) {
-        SequenceListener.eventManager = eventManager;
+    public static void initialise(EventListener eventListener) {
+        SequenceListener.eventListener = eventListener;
     }
     
     public int add(Sequence sequence, Task task) {
         int id = sequenceList.size();
         sequenceList.add(sequence);
-        taskMap.put(sequence, task);
+        eventMap.put(sequence, task);
         return id;
     }
 
@@ -42,12 +43,11 @@ public class SequenceListener {
         for (Active active : activeList) {
             if (active.next(state)) {
                 if (active.last()) {
-                    Task task = taskMap.get(active.getSequence());
-                    if (task.getTarget().equals(Target.SELF)) {
-                        //eventListener.event() protected in event listener
-                        //.add(eventListener, task);
+                    Event event = eventMap.get(active.getSequence());
+                    if (event.getTarget().equals(Target.SELF)) {
+                        eventHandler.event(event);
                     } else {
-                        eventManager.add(task);
+                        eventListener.add(event);
                     }
                     removeList.add(active);
                 }

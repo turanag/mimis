@@ -1,4 +1,4 @@
-package pm.network;
+package pm.device.network;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import pm.Device;
-import pm.exception.device.DeviceInitialiseException;
+import pm.exception.task.action.ActionDeserializeException;
 import pm.value.Action;
 
 public class NetworkServer extends Device {
@@ -43,15 +43,15 @@ public class NetworkServer extends Device {
                     Socket socket = server.accept();
                     final InputStream inputStream = socket.getInputStream();
                     new Thread() {
-                        public void run(){
+                        public void run() {
                             Scanner input = new Scanner(inputStream);
                             while (input.hasNext()) {
                                 String string = input.next().toUpperCase();
                                 if(string != null) {
                                     try {
-                                       Action action = Action.deserialize(string);
+                                       Action action = Action.deserialise(string);
                                        action(action);
-                                    } catch(IllegalArgumentException e) {}
+                                    } catch (ActionDeserializeException e) {}
                                 }
                                 try {
                                     Thread.sleep(SLEEP);

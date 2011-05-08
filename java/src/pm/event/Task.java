@@ -4,13 +4,12 @@ import pm.Event;
 import pm.value.Action;
 import pm.value.Target;
 
-public class Task implements Event {
+public class Task extends Event {
     protected Action action;
-    protected Target target;
 
     public Task(Action action, Target target) {
+        super(target);
         this.action = action;
-        this.target = target;
     }
 
     public Task(Action action) {
@@ -19,9 +18,5 @@ public class Task implements Event {
 
     public Action getAction() {
         return action;
-    }
-
-    public Target getTarget() {
-        return target;
     }
 }

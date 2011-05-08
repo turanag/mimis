@@ -1,5 +1,7 @@
 package pm.value;
 
+import pm.exception.task.action.ActionDeserializeException;
+
 public enum Action {
     EXIT,
     FORWARD,
@@ -21,15 +23,12 @@ public enum Action {
     public String serialze() {
         return name();
     }
-    
-    public static Action deserialize(String value) {  
-        if (value != null) {  
-            for (Action action : values()) {  
-                if (action.name().equals(value)) {  
-                    return action;  
-                }  
-            }  
+
+    public static Action deserialise(String value) throws ActionDeserializeException {
+        try {
+            return Action.valueOf(value);
+        } catch (NullPointerException e) {
+            throw new ActionDeserializeException();
         }
-        return null; 
     }
 }

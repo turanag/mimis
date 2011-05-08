@@ -97,7 +97,7 @@ public class WiimoteDevice extends Device implements GestureListener {
             new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
         add(
             new Press(WiimoteButton.HOME),
-            new Task(Action.NEXT, Target.MAIN));
+            new Task(Action.NEXT, Target.MANAGER));
         try {
             add(
                 new Macro(

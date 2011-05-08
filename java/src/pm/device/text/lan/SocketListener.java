@@ -6,10 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import pm.Listener;
+import pm.Worker;
 import pm.device.text.TextDevice;
 
-public class SocketListener extends Listener {
+public class SocketListener extends Worker {
     protected ServerSocket server;
     protected ArrayList<TextDevice.InputListener> inputListenerList;
 

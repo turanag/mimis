@@ -1,7 +1,7 @@
 package pm;
 
 import pm.event.Task;
-import pm.event.EventListener;
+import pm.event.EventHandler;
 import pm.event.task.Continuous;
 import pm.event.task.Stopper;
 import pm.exception.device.DeviceExitException;
@@ -13,11 +13,14 @@ import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
 
-public abstract class Device extends EventListener {
+public abstract class Device extends EventHandler {
     protected SequenceListener sequenceListener;
 
+    static {
+        SequenceListener.initialise(eventSpreader);
+    }
+
     public Device() {
-        super();
         sequenceListener = new SequenceListener(this);
     }
 
