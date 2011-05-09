@@ -11,6 +11,7 @@ import pm.device.panel.PanelDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.event.EventHandler;
 import pm.event.EventSpreader;
+import pm.exception.InitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 
@@ -28,8 +29,8 @@ public abstract class Manager extends EventHandler {
     public void initialise() throws DeviceInitialiseException {
         //add(new JIntellitypeDevice());
         //add(new PlayerDevice());
-        add(new RumblepadDevice());
-        //add(new WiimoteDevice());
+        //add(new RumblepadDevice());
+        add(new WiimoteDevice());
         //add(new GUIDevice());
         //add(new TextDevice());
         add(new PanelDevice());
@@ -51,7 +52,7 @@ public abstract class Manager extends EventHandler {
                 device.initialise();
                 device.start();
                 System.out.println("Device started: " + device);
-            } catch (DeviceInitialiseException e) {
+            } catch (InitialiseException e) {
                 removeList.add(device);
             }
         }

@@ -17,6 +17,7 @@ public abstract class EventHandler extends EventListener {
     }
 
     public void event(Event event) {
+        System.out.println(event);
         if (event instanceof Feedback) {
             feedback((Feedback) event);
         } else if (event instanceof Task) {

@@ -1,6 +1,7 @@
 package pm.application.itunes;
 
 import pm.Application;
+import pm.event.Feedback;
 import pm.exception.application.ApplicationExitException;
 import pm.value.Action;
 
@@ -87,8 +88,14 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
 
     /* iTunesEventInterface => naar eigen class? */
     public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
-    public void onPlayerPlayEvent(ITTrack iTrack) {}
-    public void onPlayerStopEvent(ITTrack iTrack) {}
+    public void onPlayerPlayEvent(ITTrack iTrack) {
+        System.out.println("iTunes play");
+        eventSpreader.add(new Feedback());
+    }
+    public void onPlayerStopEvent(ITTrack iTrack) {
+        System.out.println("iTunes stop");
+        eventSpreader.add(new Feedback());
+    }
     public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {}
     public void onCOMCallsDisabledEvent(ITCOMDisabledReason reason) {}
     public void onCOMCallsEnabledEvent() {}

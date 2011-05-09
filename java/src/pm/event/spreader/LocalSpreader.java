@@ -7,7 +7,7 @@ import pm.value.Target;
 
 public class LocalSpreader extends EventSpreader {
     public void event(Event event) {
-        System.out.println("localspread");
+        System.out.println("LocalSpreader krijgt event via evet()");
         System.out.println(application);
         Target target = event.getTarget();
         switch (target) {

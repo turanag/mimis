@@ -15,6 +15,10 @@ public abstract class EventListener extends Worker {
     }
 
     public void add(Event event) {
+        System.out.println("Eventlistener krijgt event via add()");
+        System.out.println(this);
+        System.out.println(event);
+        System.out.println(">>>");
         eventQueue.add(event);
         synchronized (available) {
             available.notifyAll();

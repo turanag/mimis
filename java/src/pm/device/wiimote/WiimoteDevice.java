@@ -8,12 +8,13 @@ import pm.Button;
 import pm.Device;
 import pm.Macro;
 import pm.device.wiimote.gesture.GestureDevice;
+import pm.event.Feedback;
 import pm.event.Task;
 import pm.event.task.Continuous;
 import pm.event.task.Dynamic;
+import pm.exception.InitialiseException;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.device.DeviceExitException;
-import pm.exception.device.DeviceInitialiseException;
 import pm.exception.macro.StateOrderException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
@@ -30,6 +31,7 @@ import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
 public class WiimoteDevice extends Device implements GestureListener {
     protected static final int CONNECT_MAX = 10;
+    protected static final int RUMBLE = 150;
 
     protected static WiimoteService wiimoteService;
 
@@ -48,7 +50,8 @@ public class WiimoteDevice extends Device implements GestureListener {
         gestureDevice.add(this);
     }
 
-    public void initialise() throws DeviceInitialiseException {
+    public void initialise() throws InitialiseException {
+        super.initialise();
         wiimote = wiimoteService.getDevice(this);
         wiimote.activateMotionSensing();
         /*add(
@@ -177,5 +180,10 @@ public class WiimoteDevice extends Device implements GestureListener {
         if (event.isValid()) {
             System.out.printf("id #%d, prob %.0f%%, valid %b\n", event.getId(), 100 * event.getProbability(), event.isValid());
         }
+    }
+    
+    public void feedback(Feedback feedback) {
+        System.out.println("Wiimote feedback");
+        wiimote.rumble(RUMBLE);
     }
 }

@@ -496,4 +496,14 @@ public class Wiimote implements WiiUseApiListener {
 	public Calibration getCalibration() {
 	    return manager.getCalibration(id);
 	}
+	
+	public void rumble(int milliseconds) {
+	    activateRumble();
+	    try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+        } finally {
+            deactivateRumble();
+        }
+	}
 }

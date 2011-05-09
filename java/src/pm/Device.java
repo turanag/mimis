@@ -4,6 +4,7 @@ import pm.event.Task;
 import pm.event.EventHandler;
 import pm.event.task.Continuous;
 import pm.event.task.Stopper;
+import pm.exception.InitialiseException;
 import pm.exception.device.DeviceExitException;
 import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Sequence;
@@ -21,6 +22,7 @@ public abstract class Device extends EventHandler {
     }
 
     public Device() {
+        super();
         sequenceListener = new SequenceListener(this);
     }
 
@@ -77,7 +79,9 @@ public abstract class Device extends EventHandler {
     }
 
     /* Device default methods */
-    public void initialise() throws DeviceInitialiseException {}
+    public void initialise() throws InitialiseException {
+        super.initialise();
+    }
 
     public void exit() throws DeviceExitException {
         stop();
