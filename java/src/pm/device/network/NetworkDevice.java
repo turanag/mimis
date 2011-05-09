@@ -3,7 +3,6 @@ package pm.device.network;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import pm.Event;
 import pm.Worker;
 import pm.event.Feedback;
 import pm.exception.device.DeviceInitialiseException;
-import pm.value.Action;
 
 public class NetworkDevice extends Device {
     public static final int PORT = 6789;
