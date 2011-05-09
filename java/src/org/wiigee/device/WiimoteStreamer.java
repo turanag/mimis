@@ -25,9 +25,7 @@ package org.wiigee.device;
 
 import java.io.IOException;
 import java.util.EventObject;
-
 import java.util.Vector;
-import javax.bluetooth.L2CAPConnection;
 
 import org.wiigee.util.Log;
 

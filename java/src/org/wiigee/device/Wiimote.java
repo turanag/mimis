@@ -26,8 +26,6 @@ package org.wiigee.device;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
-import javax.bluetooth.L2CAPConnection;
-import javax.microedition.io.Connector;
 import org.wiigee.event.*;
 import org.wiigee.filter.Filter;
 import org.wiigee.util.Log;

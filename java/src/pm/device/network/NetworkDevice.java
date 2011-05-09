@@ -1,20 +1,19 @@
 package pm.device.network;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import pm.Device;
 import pm.Event;
 import pm.Worker;
+import pm.event.Feedback;
 import pm.exception.device.DeviceInitialiseException;
 import pm.value.Action;
 
@@ -47,8 +46,14 @@ public class NetworkDevice extends Device {
         server.stop();
     }
 
-    protected void add(Action action) {
-
+    protected void feedback(Feedback feedback) {
+        for (Client client : clientList) {
+            try {
+                client.send(feedback);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected class Server extends Worker {
@@ -79,12 +84,12 @@ public class NetworkDevice extends Device {
     protected class Client extends Worker {
         protected Socket socket;
         protected ObjectInputStream objectInputStream;
-        protected OutputStream outputStream;
+        protected ObjectOutputStream objectOutputStream;
 
         public Client(Socket socket) throws IOException {
             this.socket = socket;
             objectInputStream = new ObjectInputStream(socket.getInputStream());
-            //outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             clientList.add(this);
         }
 
@@ -112,10 +117,14 @@ public class NetworkDevice extends Device {
                 clientList.remove(this);
             }
         }
+        
+        public void send(Object object) throws IOException {
+            objectOutputStream.writeObject(object);
+        }
 
         public void disconnect() throws IOException {
             objectInputStream.close();
-            outputStream.close();
+            objectOutputStream.close();
             socket.close();       
         }
     }

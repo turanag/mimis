@@ -5,7 +5,7 @@ import java.io.Serializable;
 import pm.event.EventListener;
 import pm.value.Target;
 
-public class Event implements Serializable {
+public class Event  {
     protected static final long serialVersionUID = 1L;
 
     protected Target target;
