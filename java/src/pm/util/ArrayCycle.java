@@ -6,14 +6,31 @@ public class ArrayCycle<E> extends ArrayList<E> {
     protected static final long serialVersionUID = 1L;
 
     protected int index = 0;
+    //protected Object nonEmpty;
 
     public ArrayCycle(E... elementArary) {
+        //nonEmpty = new Object();
         for (E element : elementArary) {
             add(element);
         }
     }
 
+    /*public boolean add(E element) {
+        boolean result = super.add(element);
+        synchronized (nonEmpty) {
+            nonEmpty.notifyAll();
+        }
+        return result;
+    }*/
+    
     public E current() {
+        /*while (index == 0) {
+            synchronized (nonEmpty) {
+                try {
+                    nonEmpty.wait();
+                } catch (InterruptedException e) {}
+            }
+        }*/
         return this.get(index);
     }
 

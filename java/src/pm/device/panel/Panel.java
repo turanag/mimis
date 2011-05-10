@@ -21,8 +21,8 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected PanelButtonListener panelButtonListener;
     protected ClassLoader classLoader;
 
-    protected JTextArea feedbackArea;
-    protected JScrollPane scrollPane;
+    //protected JTextArea feedbackArea;
+    //protected JScrollPane scrollPane;
 
     protected HoldButton previousButton;
     protected HoldButton rewindButton;
@@ -87,11 +87,11 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     protected void layoutControls() {
         setLayout(new BorderLayout());
-        layoutFeedbackPanel();
+        //layoutFeedbackPanel();
         layoutControlPanel();
     }
     
-    protected void layoutFeedbackPanel() {
+    /*protected void layoutFeedbackPanel() {
         JPanel feedbackPanel = new JPanel();
         feedbackArea = new JTextArea(10, 32);
         feedbackArea.setEditable(false);
@@ -126,7 +126,7 @@ public class Panel extends JFrame implements HoldButtonListener {
         
         JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
         scrollBar.setValue(scrollBar.getMaximum());
-    }
+    }*/
 
     protected void layoutControlPanel() {
         JPanel controlPanel = new JPanel();
@@ -203,7 +203,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     }
 
     /* Feedback */
-    public void addFeedback(String format, Object... args) {
+    /*public void addFeedback(String format, Object... args) {
         feedbackArea.append(String.format(format, args));
         JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
         scrollBar.setValue(scrollBar.getMaximum());
@@ -211,5 +211,5 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     public void clearFeedback() {
         feedbackArea.setText("");
-    }
+    }*/
 }

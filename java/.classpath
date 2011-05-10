@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/nativeloader-200505172341.jar"/>
 	<classpathentry kind="lib" path="cfg"/>
 	<classpathentry kind="lib" path="resource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

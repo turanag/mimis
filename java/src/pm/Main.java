@@ -2,7 +2,6 @@ package pm;
 
 import java.util.ArrayList;
 
-import pm.application.itunes.iTunesApplication;
 import pm.event.spreader.LocalSpreader;
 import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
@@ -12,10 +11,12 @@ import pm.value.Action;
 
 public class Main extends Manager {
     protected ArrayCycle<Application> applicationCycle;
-
+    protected ApplicationSelector applicationSelector;
+    
     public Main() {
         super(new LocalSpreader());
         applicationCycle = new ArrayCycle<Application>();
+        applicationSelector = new ApplicationSelector(applicationCycle);
     }
 
     protected void action(Action action) {
@@ -37,9 +38,9 @@ public class Main extends Manager {
 
     public void initialise() throws DeviceInitialiseException {
         super.initialise();
-        add(new iTunesApplication());
-        log.error("main init");
-        startApplications();
+        //add(new iTunesApplication());
+        //log.error("main init");
+        //startApplications();
     }
 
     public void exit() {
@@ -47,7 +48,7 @@ public class Main extends Manager {
         stop();
     }
 
-    protected void startApplications() {
+    /*protected void startApplications() {
         ArrayList<Application> removeList = new ArrayList<Application>();
         for (Application application : applicationCycle) {
             try {
@@ -62,9 +63,9 @@ public class Main extends Manager {
             remove(application);
         }
         eventSpreader.set(applicationCycle.current());        
-    }
+    }*/
 
-    protected void exitApplications() {
+    /*protected void exitApplications() {
         System.out.println("Exit applications...");
         for (Application application : applicationCycle) {
             try {
@@ -72,15 +73,15 @@ public class Main extends Manager {
             } catch (ApplicationExitException e) {}
         }        
         System.out.println("Exit main...");
-    }
+    }*/
 
-    protected void add(Application application) {
+    /*protected void add(Application application) {
         applicationCycle.add(application);
-    }
+    }*/
 
-    protected void remove(Application application) {
+    /*protected void remove(Application application) {
         applicationCycle.remove(application);
-    }
+    }*/
 
     public void start() {
         log.info("LocalManager!");
