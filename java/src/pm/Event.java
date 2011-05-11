@@ -1,7 +1,5 @@
 package pm;
 
-import java.io.Serializable;
-
 import pm.event.EventListener;
 import pm.value.Target;
 

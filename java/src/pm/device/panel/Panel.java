@@ -6,10 +6,6 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import pm.util.swing.HoldButton;
 import pm.util.swing.HoldButtonListener;
 import pm.util.swing.ToggleButton;
@@ -66,7 +62,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected ToggleButton getToggleButton(String firstName, String secondName, String text) {
         ImageIcon firstImageIcon = getImageIcon(firstName);
         ImageIcon secondImageIcon = getImageIcon(secondName);
-        ToggleButton button =  new ToggleButton(this, firstImageIcon, secondImageIcon);
+        ToggleButton button = new ToggleButton(this, firstImageIcon, secondImageIcon);
         button.setToolTipText(text);
         button.setFocusPainted(false);
         return button;
@@ -188,7 +184,7 @@ public class Panel extends JFrame implements HoldButtonListener {
             panelButtonListener.buttonReleased(PanelButton.FORWARD);
         } else if (button.equals(nextButton)) {
             panelButtonListener.buttonReleased(PanelButton.NEXT);
-        } else if  (button.equals(volumeDownButton)) {
+        } else if (button.equals(volumeDownButton)) {
             panelButtonListener.buttonReleased(PanelButton.VOLUME_DOWN);
         } else if (button.equals(muteToggleButton)) {
             panelButtonListener.buttonReleased(PanelButton.MUTE);

@@ -1,7 +1,6 @@
 package pm.util.swing;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import pm.util.ArrayCycle;
 

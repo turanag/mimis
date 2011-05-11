@@ -4,14 +4,14 @@ public class Calibration {
     protected RawAcceleration zeroAcceleration;
     protected RawAcceleration gAcceleration;
     protected RawAcceleration differenceAcceleration;
-    
+
     public Calibration(RawAcceleration zeroAcceleration, RawAcceleration gAcceleration) {
         this.zeroAcceleration = zeroAcceleration;
         this.gAcceleration = gAcceleration;
         differenceAcceleration = new RawAcceleration(
-            (short) (zeroAcceleration.getX() - gAcceleration.getX()),
-            (short) (zeroAcceleration.getY() - gAcceleration.getY()),
-            (short) (zeroAcceleration.getZ() - gAcceleration.getZ()));
+            (short) (gAcceleration.getX() - zeroAcceleration.getX()),
+            (short) (gAcceleration.getY() - zeroAcceleration.getY()),
+            (short) (gAcceleration.getZ() - zeroAcceleration.getZ()));
         System.out.println(zeroAcceleration);
         System.out.println(gAcceleration);
         System.out.println(differenceAcceleration);
@@ -29,8 +29,8 @@ public class Calibration {
 
     public Acceleration getAcceleration(RawAcceleration rawAcceleration) {
         return new Acceleration(
-            (rawAcceleration.getX() - zeroAcceleration.getX()),// / (double) gAcceleration.getX(),
-            (rawAcceleration.getY() - zeroAcceleration.getY()),// / (double) gAcceleration.getY(),
-            (rawAcceleration.getZ() - zeroAcceleration.getZ()));// / (double) gAcceleration.getZ());
+            (rawAcceleration.getX() - zeroAcceleration.getX()) / (double) differenceAcceleration.getX(),
+            (rawAcceleration.getY() - zeroAcceleration.getY()) / (double) differenceAcceleration.getY(),
+            (rawAcceleration.getZ() - zeroAcceleration.getZ()) / (double) differenceAcceleration.getZ());
     }
 }

@@ -347,6 +347,4 @@ public class WiiUseApi {
 	 *            the object where we store all the new events.
 	 */
 	native void specialPoll(EventsGatherer gath);
-
-    native short[] getCalibration(int id);
 }

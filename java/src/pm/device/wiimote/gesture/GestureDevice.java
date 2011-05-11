@@ -7,6 +7,7 @@ import org.wiigee.event.GestureListener;
 import pm.device.wiimote.gesture.event.Close;
 import pm.device.wiimote.gesture.event.Recognize;
 import pm.device.wiimote.gesture.event.Train;
+import wiiusej.values.GForce;
 
 public class GestureDevice extends Device /*implements AccelerationListener */{
     public static final boolean AUTOFILTERING = true;
@@ -25,6 +26,13 @@ public class GestureDevice extends Device /*implements AccelerationListener */{
 
     public void add(GestureListener gestureListener) {
         addGestureListener(gestureListener);
+    }
+
+    public void add(GForce gforce) {
+        add(new double[] {
+            gforce.getX(),
+            gforce.getY(),
+            gforce.getY()});        
     }
 
     public void add(double[] vector) {

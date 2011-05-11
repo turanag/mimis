@@ -54,7 +54,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         super.initialise();
         wiimote = wiimoteService.getDevice(this);
         wiimote.activateMotionSensing();
-        /*add(
+        add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
             new Task(Action.STOP));
@@ -67,7 +67,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         add(
             new Hold(WiimoteButton.HOME),
             new Task(Action.RECOGNIZE),
-            new Task(Action.STOP));*/
+            new Task(Action.STOP));/*
         add(
             new Press(WiimoteButton.A),
             new Task(Target.APPLICATION, Action.PLAY));
@@ -114,7 +114,7 @@ public class WiimoteDevice extends Device implements GestureListener {
                     new Press(WiimoteButton.MINUS),
                     new Release(WiimoteButton.TWO)),
                 new Task(Target.APPLICATION, Action.DISLIKE));
-        } catch (StateOrderException e) {}
+        } catch (StateOrderException e) {}*/
     }
 
     public void exit() throws DeviceExitException {
@@ -167,13 +167,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
-        if (calibration == null) {
-            calibration = wiimote.getCalibration();
-        }
-        RawAcceleration rawAcceleration = event.getRawAcceleration();
-        Acceleration acceleration = calibration.getAcceleration(rawAcceleration);
-        //System.out.println(event);
-        gestureDevice.add(acceleration.toArray());
+        gestureDevice.add(event.getGforce());
     }
 
     public void gestureReceived(GestureEvent event) {

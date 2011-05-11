@@ -662,12 +662,4 @@ public class WiiUseApiManager extends Thread {
 	protected void finalize() throws Throwable {
 		shutdown();
 	}
-
-    public Calibration getCalibration(int id) {
-        short[] data = wiiuse.getCalibration(id);
-        return new Calibration(
-            new RawAcceleration(data[0], data[1], data[2]),
-            new RawAcceleration(data[3], data[4], data[5]));
-    }
-
 }
