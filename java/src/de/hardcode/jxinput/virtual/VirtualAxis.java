@@ -101,7 +101,7 @@ public class VirtualAxis
 	public final void setIncreaseButton( Button b )
 	{
 		if ( null == b )
-			throw new InvalidParameterException( "Button may not be null!" );
+			throw new InvalidParameterException( "SelectButton may not be null!" );
 		
 		mButtonIncrease = b;
 	}

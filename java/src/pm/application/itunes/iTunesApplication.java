@@ -11,6 +11,8 @@ import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
+    protected static final String NAME = "iTunes";
+    
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 5;
     protected static final String PLAYLIST_LIKE = "Like";
@@ -102,4 +104,8 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     public void onQuittingEvent() {}
     public void onAboutToPromptUserToQuitEvent() {}
     public void onSoundVolumeChangedEvent(int newVolume) {}
+
+    public String title() {
+        return NAME;
+    }
 }

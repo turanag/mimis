@@ -7,7 +7,7 @@ import pm.exception.application.ApplicationExitException;
 import pm.exception.application.ApplicationInitialiseException;
 import pm.util.Native;
 
-public class CMDApplication extends Application {
+public abstract class CMDApplication extends Application {
     protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
 
     protected String program;
@@ -39,4 +39,6 @@ public class CMDApplication extends Application {
         }
         super.exit();
     }
+
+    abstract public String title();
 }

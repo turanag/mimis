@@ -49,4 +49,8 @@ public class WMPApplication extends WindowsApplication {
                 break;
         }
     }
+
+    public String title() {
+        return TITLE;
+    }
 }

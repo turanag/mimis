@@ -1,22 +1,29 @@
 package pm;
 
-import java.util.ArrayList;
-
+import pm.application.cmd.windows.gomplayer.GomPlayerApplication;
+import pm.application.cmd.windows.wmp.WMPApplication;
+import pm.application.itunes.iTunesApplication;
+import pm.application.mpc.MPCApplication;
+import pm.application.vlc.VLCApplication;
+import pm.application.winamp.WinampApplication;
 import pm.event.spreader.LocalSpreader;
-import pm.exception.application.ApplicationExitException;
-import pm.exception.application.ApplicationInitialiseException;
 import pm.exception.device.DeviceInitialiseException;
+import pm.selector.ApplicationSelector;
 import pm.util.ArrayCycle;
 import pm.value.Action;
 
 public class Main extends Manager {
+    public static final String TITLE = "Mimis Main";
+    
     protected ArrayCycle<Application> applicationCycle;
     protected ApplicationSelector applicationSelector;
     
     public Main() {
         super(new LocalSpreader());
         applicationCycle = new ArrayCycle<Application>();
+        addApplications();
         applicationSelector = new ApplicationSelector(applicationCycle);
+        eventSpreader.set(applicationCycle.current());
     }
 
     protected void action(Action action) {
@@ -48,6 +55,15 @@ public class Main extends Manager {
         stop();
     }
 
+    protected void addApplications() {
+        applicationCycle.add(new GomPlayerApplication());
+        applicationCycle.add(new WMPApplication());
+        applicationCycle.add(new iTunesApplication());
+        applicationCycle.add(new MPCApplication());
+        applicationCycle.add(new VLCApplication());
+        applicationCycle.add(new WinampApplication());
+    }
+    
     /*protected void startApplications() {
         ArrayList<Application> removeList = new ArrayList<Application>();
         for (Application application : applicationCycle) {
@@ -93,5 +109,9 @@ public class Main extends Manager {
 
     public static void main(String[] args) {
         new Main().start();
+    }
+
+    public String title() {
+        return TITLE;
     }
 }

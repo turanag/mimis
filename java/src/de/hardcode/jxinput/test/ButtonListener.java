@@ -32,7 +32,7 @@ public class ButtonListener implements JXInputButtonEventListener
 	
 	public void changed( JXInputButtonEvent ev )
 	{
-		System.out.println( "Button " + ev.getButton().getName() + " changed : state=" + ev.getButton().getState() );
+		System.out.println( "SelectButton " + ev.getButton().getName() + " changed : state=" + ev.getButton().getState() );
 	}
 	
 }

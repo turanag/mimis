@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 
 /**
- * Associates a keycode with a Button and handles the current state of that button.
+ * Associates a keycode with a SelectButton and handles the current state of that button.
  *
  * @author  Herkules
  */
@@ -48,7 +48,7 @@ class KeyButton
 	
 	//*********************************************************************************************
 	//
-	// Implement Button
+	// Implement SelectButton
 	//
 	//*********************************************************************************************
 	

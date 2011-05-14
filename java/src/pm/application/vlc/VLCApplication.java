@@ -100,4 +100,8 @@ public class VLCApplication extends CMDApplication {
         muted =! muted;
         return muted ? 0 : volume;
     }
+
+    public String title() {
+        return TITLE;
+    }
 }

@@ -17,7 +17,7 @@ package de.hardcode.jxinput;
  * provides a basis for other interfaces.
  *
  * @see Axis
- * @see Button
+ * @see SelectButton
  * @see Directional
  * 
  * @author Herkules

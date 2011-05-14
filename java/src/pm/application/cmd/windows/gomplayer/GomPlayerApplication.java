@@ -35,4 +35,8 @@ public class GomPlayerApplication extends WindowsApplication {
                 break;
         }
     }
+
+    public String title() {
+        return TITLE;
+    }
 }

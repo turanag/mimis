@@ -10,6 +10,8 @@ import com.qotsa.exception.InvalidParameter;
 import com.qotsa.jni.controller.WinampController;
 
 public class WinampApplication extends Application {
+    protected static final String TITLE = "Winamp";
+    
     protected boolean muted;
     protected int volume;
 
@@ -72,5 +74,9 @@ public class WinampApplication extends Application {
             WinampController.setVolume(muted ? volume : 0);
         } catch (InvalidParameter e) {}
         muted = !muted;        
+    }
+
+    public String title() {
+        return TITLE;
     }
 }

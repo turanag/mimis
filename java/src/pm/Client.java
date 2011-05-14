@@ -5,6 +5,8 @@ import pm.exception.device.DeviceInitialiseException;
 import pm.exception.event.spreader.NetworkSpreaderException;
 
 public class Client extends Manager {
+    public static final String TITLE = "Client";
+    
     public static final String IP = "192.168.1.100";
     public static final int PORT = 6789;
 
@@ -30,5 +32,9 @@ public class Client extends Manager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String title() {
+        return TITLE;
     }
 }

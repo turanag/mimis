@@ -55,7 +55,7 @@ public class ButtonPressedEvent extends ActionStartEvent {
 
 	/**
 	 * Create a WiimoteButtonPressedEvent with the Wiimote source whose
-	 * Button has been pressed and the integer representation of the button.
+	 * SelectButton has been pressed and the integer representation of the button.
 	 * 
 	 * @param source
 	 * @param button

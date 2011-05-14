@@ -44,7 +44,7 @@ public class NunchukButtonsEvent extends ButtonsEvent {
 		super(id, buttonsJustPressed, buttonsJustReleased, buttonsHeld);
 	}
 
-	/* Button Z */
+	/* SelectButton Z */
 
 	public boolean isButtonZJustPressed() {
 		return isButtonJustPressed(NUNCHUK_BUTTON_Z);
@@ -62,7 +62,7 @@ public class NunchukButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(NUNCHUK_BUTTON_Z);
 	}
 
-	/* Button Z */
+	/* SelectButton Z */
 
 	public boolean isButtonCJustPressed() {
 		return isButtonJustPressed(NUNCHUK_BUTTON_C);

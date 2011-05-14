@@ -101,7 +101,7 @@ public class Device {
     }
 
     /**
-     * Adds a ButtonListener to the Device. Everytime a Button has been
+     * Adds a ButtonListener to the Device. Everytime a SelectButton has been
      * pressed or released, the Listener would be notified about this via
      * the corresponding Events.
      *

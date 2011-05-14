@@ -46,4 +46,8 @@ public class MPCApplication extends WindowsApplication {
         }
     }
 
+    public String title() {
+        return TITLE;
+    }
+
 }

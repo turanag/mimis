@@ -3,9 +3,10 @@ package pm.event;
 import pm.Event;
 import pm.event.task.Continuous;
 import pm.exception.InitialiseException;
+import pm.selector.Selectable;
 import pm.value.Action;
 
-public abstract class EventHandler extends EventListener {
+public abstract class EventHandler extends EventListener implements Selectable {
     protected static EventSpreader eventSpreader;
 
     public static void initialise(EventSpreader eventSpreader) {
