@@ -20,8 +20,16 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 public class Extreme3DDevice extends JavaInputDevice {
     protected static final String NAME = "Logitech Extreme 3D";
 
-    public void initialise() throws DeviceInitialiseException {
-        super.initialise(NAME);
+    public Extreme3DDevice() {
+        super(NAME);
+    }
+
+    public void initialise() {
+        try {
+            super.initialise(NAME);
+        } catch (DeviceInitialiseException e) {
+            e.printStackTrace();
+        }
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),

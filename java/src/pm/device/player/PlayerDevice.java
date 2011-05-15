@@ -2,10 +2,15 @@ package pm.device.player;
 
 import javazoom.jlgui.player.amp.StandalonePlayer;
 import pm.Device;
-import pm.exception.device.DeviceExitException;
 
 public class PlayerDevice extends Device {
+    protected static final String TITLE = "Player";
+    
     StandalonePlayer standalonePlayer;
+    
+    public PlayerDevice() {
+        super(TITLE);
+    }
 
     public void initialise() {
         standalonePlayer = new StandalonePlayer();
@@ -14,9 +19,5 @@ public class PlayerDevice extends Device {
         //standalonePlayer.loadPlaylist();
         //standalonePlayer.
         System.out.println("niets!");
-    }
-
-    public void exit() throws DeviceExitException {
-        super.exit();
     }
 }

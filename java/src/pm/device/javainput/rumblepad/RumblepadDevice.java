@@ -19,8 +19,16 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 public class RumblepadDevice extends JavaInputDevice {
     protected static final String NAME = "Logitech RumblePad 2 USB";
 
-    public void initialise() throws DeviceInitialiseException {
-        super.initialise(NAME);
+    public RumblepadDevice() {
+        super(NAME);
+    }
+
+    public void initialise(){
+        try {
+            super.initialise(NAME);
+        } catch (DeviceInitialiseException e) {
+            e.printStackTrace();
+        }
         add(
             new Press(RumblepadButton.ONE),
             new Task(Target.APPLICATION, Action.PLAY));

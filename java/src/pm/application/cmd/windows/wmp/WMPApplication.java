@@ -2,7 +2,6 @@ package pm.application.cmd.windows.wmp;
 
 import pm.application.cmd.windows.WindowsApplication;
 import pm.value.Action;
-import pm.value.Command;
 
 public class WMPApplication extends WindowsApplication {
     protected final static String PROGRAM = "wmplayer.exe";
@@ -48,9 +47,5 @@ public class WMPApplication extends WindowsApplication {
                 command(18843);
                 break;
         }
-    }
-
-    public String title() {
-        return TITLE;
     }
 }

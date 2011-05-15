@@ -1,28 +1,29 @@
 package pm;
 
-import pm.event.Task;
 import pm.event.EventHandler;
+import pm.event.Task;
 import pm.event.task.Continuous;
 import pm.event.task.Stopper;
-import pm.exception.InitialiseException;
-import pm.exception.device.DeviceExitException;
-import pm.exception.device.DeviceInitialiseException;
 import pm.macro.Sequence;
 import pm.macro.SequenceListener;
 import pm.macro.State;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
+import pm.selector.Activatable;
 
-public abstract class Device extends EventHandler {
+public abstract class Device extends EventHandler implements Activatable {
+    protected String title;
+    protected boolean active;
     protected SequenceListener sequenceListener;
 
     static {
         SequenceListener.initialise(eventSpreader);
     }
 
-    public Device() {
-        super();
+    public Device(String title) {
+        this.title = title;
+        active = false;
         sequenceListener = new SequenceListener(this);
     }
 
@@ -78,12 +79,24 @@ public abstract class Device extends EventHandler {
         sequenceListener.add(state);
     }
 
-    /* Device default methods */
-    public void initialise() throws InitialiseException {
-        super.initialise();
+    public String title() {
+        return title;
+    }
+    
+    public boolean active() {
+        return active;
+    }
+    
+    public void activate() {
+        start();
     }
 
-    public void exit() throws DeviceExitException {
+    public void deactivate() {
+        stop();
+    }
+
+    public void exit() {
+        deactivate();
         stop();
     }
 }

@@ -3,8 +3,6 @@ package pm.application.cmd;
 import java.io.IOException;
 
 import pm.Application;
-import pm.exception.application.ApplicationExitException;
-import pm.exception.application.ApplicationInitialiseException;
 import pm.util.Native;
 
 public abstract class CMDApplication extends Application {
@@ -15,11 +13,12 @@ public abstract class CMDApplication extends Application {
     protected Process process;
 
     public CMDApplication(String program, String title) {
+        super(title);
         this.program = program;
         this.title = title;
     }
 
-    public void initialise() throws ApplicationInitialiseException {
+    public void initialise() {
         String key = String.format("%s\\%s", REGISTRY, program);
         // Check of naam is gevonden in register
         String path = Native.getValue(key);
@@ -29,16 +28,14 @@ public abstract class CMDApplication extends Application {
             process = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ApplicationInitialiseException();
+            //throw new ApplicationInitialiseException();
         }
     }
 
-    public void exit() throws ApplicationExitException {
+    public void exit() {
         if (process != null) {
             process.destroy();
         }
         super.exit();
     }
-
-    abstract public String title();
 }

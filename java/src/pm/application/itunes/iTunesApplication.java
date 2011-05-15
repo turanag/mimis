@@ -2,7 +2,6 @@ package pm.application.itunes;
 
 import pm.Application;
 import pm.event.Feedback;
-import pm.exception.application.ApplicationExitException;
 import pm.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
@@ -11,7 +10,7 @@ import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
-    protected static final String NAME = "iTunes";
+    protected static final String TITLE = "iTunes";
     
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 5;
@@ -21,22 +20,22 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     protected iTunes iTunes;
 
     public iTunesApplication() {
-        super();
+        super(TITLE);
         iTunes = new iTunes();
     }
 
-    public void initialise() {
+    public void activate() {
         iTunes.connect();
         iTunes.addEventHandler(this);
     }
 
-    public void exit() throws ApplicationExitException {
+    public void exit() {
         System.out.println("Exit iTunesApplication");
         super.exit();
         try {
             iTunes.quit(); // Todo: wachten totdat ook daadwerkelijk gestart? Anders wordt iTunes niet afgesloten.
         } catch (Exception e) {
-            throw new ApplicationExitException();
+            //throw new ApplicationExitException();
         }
     }
  
@@ -91,12 +90,16 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     /* iTunesEventInterface => naar eigen class? */
     public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
     public void onPlayerPlayEvent(ITTrack iTrack) {
-        System.out.println("iTunes play");
-        eventSpreader.add(new Feedback());
+        if (active) {
+            System.out.println("iTunes play");
+            eventSpreader.add(new Feedback());
+        }
     }
     public void onPlayerStopEvent(ITTrack iTrack) {
-        System.out.println("iTunes stop");
-        eventSpreader.add(new Feedback());
+        if (active) {
+            System.out.println("iTunes stop");
+            eventSpreader.add(new Feedback());
+        }
     }
     public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {}
     public void onCOMCallsDisabledEvent(ITCOMDisabledReason reason) {}
@@ -104,8 +107,4 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     public void onQuittingEvent() {}
     public void onAboutToPromptUserToQuitEvent() {}
     public void onSoundVolumeChangedEvent(int newVolume) {}
-
-    public String title() {
-        return NAME;
-    }
 }

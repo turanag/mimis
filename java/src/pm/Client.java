@@ -1,7 +1,6 @@
 package pm;
 
 import pm.event.spreader.NetworkSpreader;
-import pm.exception.device.DeviceInitialiseException;
 import pm.exception.event.spreader.NetworkSpreaderException;
 
 public class Client extends Manager {
@@ -19,10 +18,7 @@ public class Client extends Manager {
     }
 
     public void start() {
-        log.info("LocalManager!");
-        try {
-            initialise();
-        } catch (DeviceInitialiseException e) {}
+        initialise();
         super.start(false);
     }
 

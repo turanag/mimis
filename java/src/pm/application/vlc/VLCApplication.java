@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import pm.application.cmd.CMDApplication;
-import pm.exception.application.ApplicationInitialiseException;
 import pm.value.Action;
 
 public class VLCApplication extends CMDApplication {
@@ -26,16 +25,11 @@ public class VLCApplication extends CMDApplication {
         super(PROGRAM, TITLE);
     }
 
-    public void initialise() throws ApplicationInitialiseException {
-        super.initialise();
-    }
-
-
     public void command(String command) {
         String request = "http://" + HOST + ":" + PORT + "/requests/status.xml?command=" + command;
         try {           
             int response = ((HttpURLConnection)(new URL(request)).openConnection()).getResponseCode();
-            //System.out.printf("Response: %d\n", response);
+            System.out.printf("Response: %d\n", response);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

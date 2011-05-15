@@ -2,21 +2,15 @@ package pm.selector;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-
 import javax.swing.JToggleButton;
 
-import pm.event.EventHandler;
-import pm.exception.InitialiseException;
-
-public class SelectButton<T extends EventHandler> extends JToggleButton implements ItemListener {
-
+public class SelectButton<T extends Activatable> extends JToggleButton implements ItemListener {
     protected static final long serialVersionUID = 1L;
     
-    protected EventHandler eventHandler;
+    protected T activatable;
 
-    public SelectButton(EventHandler eventHandler) {
-        this.eventHandler = eventHandler;
+    public SelectButton(T activatable) {
+        this.activatable = activatable;
         addItemListener(this);
     }
 
@@ -24,15 +18,10 @@ public class SelectButton<T extends EventHandler> extends JToggleButton implemen
         int state = itemEvent.getStateChange();
         if (state == ItemEvent.SELECTED) {
             System.out.println("Selected");
-            try {
-                eventHandler.initialise();
-                eventHandler.start();
-            } catch (InitialiseException e) {
-                e.printStackTrace();
-            }
+            activatable.activate();
         } else {
              System.out.println("Deselected");
-             eventHandler.stop();
+             activatable.deactivate();
         }
         //System.out.println(itemEvent.getSource());        
     }

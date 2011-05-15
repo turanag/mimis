@@ -8,8 +8,12 @@ import pm.value.Action;
 import pm.value.Target;
 
 public class PanelDevice extends Device implements PanelButtonListener {
-
+    protected static final String TITLE = "Panel";
     protected Panel panel;
+
+    public PanelDevice() {
+        super(TITLE);
+    }
 
     public void initialise() {
         panel = new Panel(this);

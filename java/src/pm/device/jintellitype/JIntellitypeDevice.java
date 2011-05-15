@@ -9,8 +9,6 @@ import com.melloware.jintellitype.JIntellitype;
 import pm.Device;
 import pm.event.Task;
 import pm.exception.button.UnknownButtonException;
-import pm.exception.device.DeviceExitException;
-import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
 import pm.value.Action;
@@ -18,16 +16,19 @@ import pm.value.Key;
 import pm.value.Target;
 
 public class JIntellitypeDevice extends Device implements HotkeyListener, IntellitypeListener {
+    protected static final String TITLE = "JIntellitype";
+
     protected ArrayList<Hotkey> hotkeyList;
     protected JIntellitype jit;
 
     public JIntellitypeDevice() {
+        super(TITLE);
         hotkeyList = new ArrayList<Hotkey>();
         jit = JIntellitype.getInstance();
         Hotkey.initialise(hotkeyList, jit);
     }
 
-    public void initialise() throws DeviceInitialiseException {
+    public void initialise() {
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         add(
@@ -80,7 +81,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         add(new Release(hotkey));
     }
 
-    public void exit() throws DeviceExitException {
+    public void exit() {
         super.exit();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);

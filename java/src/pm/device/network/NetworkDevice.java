@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,9 +14,9 @@ import pm.Device;
 import pm.Event;
 import pm.Worker;
 import pm.event.Feedback;
-import pm.exception.device.DeviceInitialiseException;
 
 public class NetworkDevice extends Device {
+    protected static final String TITLE = "Network";
     public static final int PORT = 6789;
 
     protected Log log = LogFactory.getLog(NetworkDevice.class);
@@ -24,6 +25,7 @@ public class NetworkDevice extends Device {
     protected ArrayList<Client> clientList;
 
     public NetworkDevice(int port) {
+        super(TITLE);
         this.port = port;
     }
 
@@ -31,12 +33,12 @@ public class NetworkDevice extends Device {
         this(PORT);
     }
 
-    public void initialise() throws DeviceInitialiseException {
+    public void initialise() {
         try {
             server = new Server(port);
             server.start();
         } catch (IOException e) {
-            throw new DeviceInitialiseException();
+            //throw new DeviceInitialiseException();
         }
     }
 

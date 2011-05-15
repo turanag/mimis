@@ -6,30 +6,23 @@ import org.wiigee.util.Log;
 
 import pm.Button;
 import pm.Device;
-import pm.Macro;
 import pm.device.wiimote.gesture.GestureDevice;
 import pm.event.Feedback;
 import pm.event.Task;
-import pm.event.task.Continuous;
-import pm.event.task.Dynamic;
-import pm.exception.InitialiseException;
 import pm.exception.button.UnknownButtonException;
-import pm.exception.device.DeviceExitException;
-import pm.exception.macro.StateOrderException;
+import pm.exception.device.DeviceNotFoundException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
 import pm.value.Action;
-import pm.value.Target;
-
 import wiiusej.Wiimote;
-import wiiusej.values.Acceleration;
 import wiiusej.values.Calibration;
-import wiiusej.values.RawAcceleration;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
 public class WiimoteDevice extends Device implements GestureListener {
+    protected static final String TITLE = "Wiimote";
+
     protected static final int CONNECT_MAX = 10;
     protected static final int RUMBLE = 150;
 
@@ -46,14 +39,12 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public WiimoteDevice() {
+        super(TITLE);
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
     }
 
-    public void initialise() throws InitialiseException {
-        super.initialise();
-        wiimote = wiimoteService.getDevice(this);
-        wiimote.activateMotionSensing();
+    public void initialise() {
         add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
@@ -117,12 +108,6 @@ public class WiimoteDevice extends Device implements GestureListener {
         } catch (StateOrderException e) {}*/
     }
 
-    public void exit() throws DeviceExitException {
-        super.exit();
-        wiimote.deactivateMotionSensing();
-        wiimoteService.exit();
-    }
-
     public void action(Action action) {
         switch (action) {
             case TRAIN:
@@ -179,5 +164,24 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void feedback(Feedback feedback) {
         System.out.println("Wiimote feedback");
         wiimote.rumble(RUMBLE);
+    }
+
+    public void activate() {
+        try {
+            wiimote = wiimoteService.getDevice(this);
+        } catch (DeviceNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        wiimote.activateMotionSensing();        
+    }
+
+    public void deactivate() {
+        wiimote.deactivateMotionSensing();        
+    }
+    
+    public void exit() {
+        wiimoteService.exit();
+        super.exit();
     }
 }

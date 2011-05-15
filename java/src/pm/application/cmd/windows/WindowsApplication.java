@@ -1,14 +1,12 @@
 package pm.application.cmd.windows;
 
 import pm.application.cmd.CMDApplication;
-import pm.exception.application.ApplicationExitException;
-import pm.exception.application.ApplicationInitialiseException;
 import pm.util.Windows;
 import pm.value.Command;
 import pm.value.Key;
 import pm.value.Type;
 
-abstract public class WindowsApplication extends CMDApplication {
+public abstract class WindowsApplication extends CMDApplication {
     protected final static int TERMINATE_SLEEP = 500;
     protected final static int START_SLEEP = 500;
 
@@ -23,7 +21,7 @@ abstract public class WindowsApplication extends CMDApplication {
         handle = -1;
     }
 
-    public void initialise() throws ApplicationInitialiseException {
+    public void initialise() {
         handle = Windows.findWindow(name, null);
         if (handle < 1) {
             super.initialise();
@@ -31,7 +29,7 @@ abstract public class WindowsApplication extends CMDApplication {
             handle = Windows.findWindow(name, null);
         }
         if (handle < 1) {
-            throw new ApplicationInitialiseException();
+            //throw new ApplicationInitialiseException();
         }
     }
     

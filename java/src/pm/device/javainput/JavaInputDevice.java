@@ -17,6 +17,10 @@ import pm.macro.state.Press;
 import pm.macro.state.Release;
 
 public abstract class JavaInputDevice extends Device {
+    public JavaInputDevice(String title) {
+        super(title);
+    }
+
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 

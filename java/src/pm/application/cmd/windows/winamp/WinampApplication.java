@@ -1,4 +1,4 @@
-package pm.application.windows.winamp;
+package pm.application.cmd.windows.winamp;
 
 import pm.application.cmd.windows.WindowsApplication;
 import pm.value.Action;

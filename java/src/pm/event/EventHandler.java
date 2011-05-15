@@ -2,18 +2,16 @@ package pm.event;
 
 import pm.Event;
 import pm.event.task.Continuous;
-import pm.exception.InitialiseException;
-import pm.selector.Selectable;
 import pm.value.Action;
 
-public abstract class EventHandler extends EventListener implements Selectable {
+public abstract class EventHandler extends EventListener {
     protected static EventSpreader eventSpreader;
 
     public static void initialise(EventSpreader eventSpreader) {
         EventHandler.eventSpreader = eventSpreader;
     }
 
-    public void initialise() throws InitialiseException {
+    protected void initialise() {
         eventSpreader.add(this);
     }
 

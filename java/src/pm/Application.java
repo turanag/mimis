@@ -1,14 +1,35 @@
 package pm;
 
 import pm.event.EventHandler;
-import pm.exception.application.ApplicationExitException;
-import pm.exception.application.ApplicationInitialiseException;
-import pm.selector.Selectable;
+import pm.selector.Activatable;
 
-public abstract  class Application extends EventHandler implements Selectable {
-    public void initialise() throws ApplicationInitialiseException {}
+public abstract class Application extends EventHandler implements Activatable {
+    protected String title;
+    protected boolean active;
 
-    public void exit() throws ApplicationExitException {
+    public Application(String title) {
+        this.title = title;
+        active = false;
+    }
+
+    public String title() {
+        return title;
+    }
+
+    public boolean active() {
+        return active;
+    }
+
+    public void activate() {
+        start();
+    }
+
+    public void deactivate() {
+        stop();
+    }
+
+    public void exit() {
+        deactivate();
         stop();
     }
 }
