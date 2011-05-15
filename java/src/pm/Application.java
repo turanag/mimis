@@ -22,10 +22,12 @@ public abstract class Application extends EventHandler implements Activatable {
 
     public void activate() {
         start();
+        active = true;
     }
 
     public void deactivate() {
         stop();
+        active = false;
     }
 
     public void exit() {

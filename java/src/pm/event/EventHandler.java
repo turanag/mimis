@@ -5,14 +5,14 @@ import pm.event.task.Continuous;
 import pm.value.Action;
 
 public abstract class EventHandler extends EventListener {
-    protected static EventSpreader eventSpreader;
+    protected static EventRouter eventRouter;
 
-    public static void initialise(EventSpreader eventSpreader) {
-        EventHandler.eventSpreader = eventSpreader;
+    public static void initialise(EventRouter eventRouter) {
+        EventHandler.eventRouter = eventRouter;
     }
 
     protected void initialise() {
-        eventSpreader.add(this);
+        eventRouter.add(this);
     }
 
     public void event(Event event) {

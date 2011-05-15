@@ -92,13 +92,13 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     public void onPlayerPlayEvent(ITTrack iTrack) {
         if (active) {
             System.out.println("iTunes play");
-            eventSpreader.add(new Feedback());
+            eventRouter.add(new Feedback());
         }
     }
     public void onPlayerStopEvent(ITTrack iTrack) {
         if (active) {
             System.out.println("iTunes stop");
-            eventSpreader.add(new Feedback());
+            eventRouter.add(new Feedback());
         }
     }
     public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {}

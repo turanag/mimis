@@ -100,7 +100,7 @@ public class NetworkDevice extends Device {
                     object = objectInputStream.readObject();
                     if (object instanceof Event) {
                         log.debug("event binnen!");
-                        eventSpreader.add((Event) object);
+                        eventRouter.add((Event) object);
                     }
                     log.debug("iets te lezen!");                    
                 } while (object != null);

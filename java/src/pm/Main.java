@@ -10,7 +10,7 @@ import pm.application.cmd.windows.wmp.WMPApplication;
 import pm.application.itunes.iTunesApplication;
 import pm.application.mpc.MPCApplication;
 import pm.application.vlc.VLCApplication;
-import pm.event.spreader.LocalSpreader;
+import pm.event.router.LocalRouter;
 import pm.util.ArrayCycle;
 import pm.value.Action;
 
@@ -20,18 +20,18 @@ public class Main extends Manager {
     protected ApplicationSelector applicationSelector;
 
     public Main() {
-        super(new LocalSpreader());
+        super(new LocalRouter());
     }
 
     protected void action(Action action) {
         log.debug(String.format("action(%s)", action));
         switch (action) {
             case NEXT:
-                eventSpreader.set(applicationCycle.next());
+                eventRouter.set(applicationCycle.next());
                 System.out.println(applicationCycle.current());
                 break;
             case PREVIOUS:
-                eventSpreader.set(applicationCycle.previous());
+                eventRouter.set(applicationCycle.previous());
                 System.out.println(applicationCycle.current());
                 break;
             case EXIT:
@@ -51,7 +51,7 @@ public class Main extends Manager {
             new WinampApplication()};        
         applicationSelector = new ApplicationSelector(applicationArray);
         applicationCycle = new ArrayCycle<Application>(applicationArray);
-        eventSpreader.set(applicationCycle.current());
+        eventRouter.set(applicationCycle.current());
         super.start(false);
     }
 

@@ -18,7 +18,7 @@ public abstract class Device extends EventHandler implements Activatable {
     protected SequenceListener sequenceListener;
 
     static {
-        SequenceListener.initialise(eventSpreader);
+        SequenceListener.initialise(eventRouter);
     }
 
     public Device(String title) {
@@ -89,10 +89,12 @@ public abstract class Device extends EventHandler implements Activatable {
     
     public void activate() {
         start();
+        active = true;
     }
 
     public void deactivate() {
         stop();
+        active = false;
     }
 
     public void exit() {

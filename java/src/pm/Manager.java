@@ -14,7 +14,7 @@ import pm.device.panel.PanelDevice;
 import pm.device.player.PlayerDevice;
 import pm.device.wiimote.WiimoteDevice;
 import pm.event.EventHandler;
-import pm.event.EventSpreader;
+import pm.event.EventRouter;
 
 public abstract class Manager extends EventHandler {
     protected Log log = LogFactory.getLog(getClass());
@@ -22,9 +22,9 @@ public abstract class Manager extends EventHandler {
 
     protected ArrayList<Device> deviceList;
 
-    public Manager(EventSpreader eventSpreader) {
-        EventHandler.initialise(eventSpreader);
-        eventSpreader.start();
+    public Manager(EventRouter eventRouter) {
+        EventHandler.initialise(eventRouter);
+        eventRouter.start();
     }
 
     public void start() {

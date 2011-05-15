@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pm.Application;
 
-public abstract class EventSpreader extends EventListener {
+public abstract class EventRouter extends EventListener {
     protected ArrayList<EventListener> eventListenerList;
     protected Application application;
 
@@ -12,7 +12,7 @@ public abstract class EventSpreader extends EventListener {
         this.application = application;
     }
 
-    public EventSpreader() {
+    public EventRouter() {
         eventListenerList = new ArrayList<EventListener>();
     }
 

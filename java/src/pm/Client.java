@@ -1,6 +1,6 @@
 package pm;
 
-import pm.event.spreader.NetworkSpreader;
+import pm.event.router.GlobalRouter;
 import pm.exception.event.spreader.NetworkSpreaderException;
 
 public class Client extends Manager {
@@ -10,7 +10,7 @@ public class Client extends Manager {
     public static final int PORT = 6789;
 
     public Client(String ip, int port) throws NetworkSpreaderException {
-        super(new NetworkSpreader(ip, port));
+        super(new GlobalRouter(ip, port));
     }
 
     public Client() throws NetworkSpreaderException {
