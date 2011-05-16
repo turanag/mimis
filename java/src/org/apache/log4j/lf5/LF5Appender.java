@@ -158,7 +158,7 @@ public class LF5Appender extends AppenderSkeleton {
    * exits
    * the monitor. By default, the <code>LogBrokerMonitor</code> will hide
    * itself when the log window is exited, and the swing thread will
-   * continue to run in the background. If this property is
+   * continue to running in the background. If this property is
    * set to true, the <code>LogBrokerMonitor</code> will call System.exit(0)
    * and will shut down swing thread and the virtual machine.
    *

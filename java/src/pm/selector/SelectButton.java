@@ -4,9 +4,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JToggleButton;
 
-public class SelectButton<T extends Activatable> extends JToggleButton implements ItemListener {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import pm.Worker;
+
+public class SelectButton<T extends Worker & Selectable> extends JToggleButton implements ItemListener {
+    protected Log log = LogFactory.getLog(getClass());
+
     protected static final long serialVersionUID = 1L;
-    
     protected T activatable;
 
     public SelectButton(T activatable) {
@@ -20,9 +26,8 @@ public class SelectButton<T extends Activatable> extends JToggleButton implement
             System.out.println("Selected");
             activatable.activate();
         } else {
-             System.out.println("Deselected");
-             activatable.deactivate();
-        }
-        //System.out.println(itemEvent.getSource());        
+            System.out.println("Deselected");
+            activatable.deactivate();
+        }   
     }
 }

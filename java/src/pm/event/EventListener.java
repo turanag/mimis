@@ -21,18 +21,16 @@ public abstract class EventListener extends Worker {
         }
     }
 
-    public final void run() {
-        while (run) {
-            while (eventQueue.isEmpty()) {
-                synchronized (available) {
-                    try {
-                        available.wait();
-                    } catch (InterruptedException e) {}
-                }
+    public final void work() {
+        while (eventQueue.isEmpty()) {
+            synchronized (available) {
+                try {
+                    available.wait();
+                } catch (InterruptedException e) {}
             }
-            event(eventQueue.poll());
-       }
-    }
+        }
+        event(eventQueue.poll());
+   }
 
     public abstract void event(Event event);
 }

@@ -76,7 +76,7 @@ public class WinampController {
     public static void run() throws Exception{
         
         if (!JNIWinamp.run())
-            throw new Exception("Unable to run Winamp. Verify if it is properly installed");
+            throw new Exception("Unable to running Winamp. Verify if it is properly installed");
         
     }
 

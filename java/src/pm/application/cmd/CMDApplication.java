@@ -18,7 +18,7 @@ public abstract class CMDApplication extends Application {
         this.title = title;
     }
 
-    public void initialise() {
+    protected void initialise() {
         String key = String.format("%s\\%s", REGISTRY, program);
         // Check of naam is gevonden in register
         String path = Native.getValue(key);
@@ -32,10 +32,17 @@ public abstract class CMDApplication extends Application {
         }
     }
 
-    public void exit() {
+    public void activate() {
+        if (!active) {
+            initialise();
+        }
+        super.activate();
+    }
+
+    public void deactivate() {
         if (process != null) {
             process.destroy();
         }
-        super.exit();
+        super.deactivate();
     }
 }

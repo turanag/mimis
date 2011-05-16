@@ -1,9 +1,9 @@
 package pm;
 
 import pm.event.EventHandler;
-import pm.selector.Activatable;
+import pm.selector.Selectable;
 
-public abstract class Application extends EventHandler implements Activatable {
+public abstract class Application extends EventHandler implements Selectable {
     protected String title;
     protected boolean active;
 
@@ -16,22 +16,8 @@ public abstract class Application extends EventHandler implements Activatable {
         return title;
     }
 
-    public boolean active() {
-        return active;
-    }
-
-    public void activate() {
-        start();
-        active = true;
-    }
-
-    public void deactivate() {
-        stop();
-        active = false;
-    }
-
     public void exit() {
         deactivate();
         stop();
-    }
+    }    
 }

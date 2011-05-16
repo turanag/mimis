@@ -267,7 +267,7 @@ public class JXInputTestDialog extends javax.swing.JDialog
     }//GEN-LAST:event_closeDialog
 	
 	/**
-	 * Allow the dialog to run standalone.
+	 * Allow the dialog to running standalone.
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[])

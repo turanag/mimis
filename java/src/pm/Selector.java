@@ -1,7 +1,6 @@
 package pm;
 
 import java.awt.GridLayout;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,29 +8,29 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pm.selector.Activatable;
 import pm.selector.SelectButton;
+import pm.selector.Selectable;
 
-public class Selector<T extends Activatable> extends JFrame {
+public class Selector<T extends Worker & Selectable> extends JFrame {
     protected Log log = LogFactory.getLog(getClass());
     protected static final long serialVersionUID = 1L;
 
-    protected ArrayList<Activatable> activatableArray;
+    //protected ArrayList<T> activatableArray;
 
-    public Selector(Activatable[] activatableArray) {
+    public Selector(T[] activatableArray) {
         createPanel(activatableArray);
-        //setUndecorated(true);
+        setUndecorated(true);
         pack();
         setResizable(false);
         setVisible(true);
         log.debug("Selector constructed");
     }
 
-    protected void createPanel(Activatable[] activatableArray) {
+    protected void createPanel(T[] activatableArray) {
         JPanel panel = new JPanel(new GridLayout(0, 1));
-        for (Activatable activatable : activatableArray) {
-            String title = activatable.title();
-            SelectButton<Activatable> button = new SelectButton<Activatable>(activatable);
+        for (T selectable : activatableArray) {
+            String title = selectable.title();
+            SelectButton<T> button = new SelectButton<T>(selectable);
             button.setText(title);
             panel.add(button);
             log.debug(String.format("Item added: %s", title));

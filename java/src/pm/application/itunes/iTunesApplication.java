@@ -11,7 +11,7 @@ import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
-    
+
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 5;
     protected static final String PLAYLIST_LIKE = "Like";
@@ -20,23 +20,27 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     protected iTunes iTunes;
 
     public iTunesApplication() {
-        super(TITLE);
-        iTunes = new iTunes();
+        super(TITLE);        
+        iTunes = new iTunes();        
     }
 
     public void activate() {
-        iTunes.connect();
-        iTunes.addEventHandler(this);
+        synchronized (iTunes) {
+            iTunes.connect();
+            iTunes.addEventHandler(this);
+        }
+        super.activate();
     }
 
-    public void exit() {
-        System.out.println("Exit iTunesApplication");
-        super.exit();
+    public void deactivate() {
         try {
-            iTunes.quit(); // Todo: wachten totdat ook daadwerkelijk gestart? Anders wordt iTunes niet afgesloten.
+            synchronized (iTunes) {
+                iTunes.quit();
+            }
         } catch (Exception e) {
-            //throw new ApplicationExitException();
+            log.info("Unexpected deactivation exception", e);
         }
+        super.deactivate();
     }
  
     protected void action(Action action) {

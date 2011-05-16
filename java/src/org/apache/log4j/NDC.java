@@ -81,7 +81,7 @@ import org.apache.log4j.helpers.LogLog;
    request will have a different NDC tag.
 
    <p>Heavy duty systems should call the {@link #remove} method when
-   leaving the run method of a thread. This ensures that the memory
+   leaving the running method of a thread. This ensures that the memory
    used by the thread can be freed by the Java garbage
    collector. There is a mechanism to lazily remove references to dead
    threads. In practice, this means that you can be a little sloppy
@@ -367,7 +367,7 @@ public class NDC {
      practice, this means that you can be a little sloppy and
      occasionally forget to call {@link #remove} before exiting a
      thread. However, you must call <code>remove</code> sometime. If
-     you never call it, then your application is sure to run out of
+     you never call it, then your application is sure to running out of
      memory.
      
   */

@@ -66,7 +66,7 @@ public class NetworkDevice extends Device {
         }
 
         public void run() {
-            while (run) {
+            while (running) {
                 System.out.println("Server is waiting for clients");
                 try {
                     Socket socket = serverSocket.accept();

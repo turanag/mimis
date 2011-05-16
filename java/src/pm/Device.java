@@ -10,9 +10,9 @@ import pm.macro.State;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
-import pm.selector.Activatable;
+import pm.selector.Selectable;
 
-public abstract class Device extends EventHandler implements Activatable {
+public abstract class Device extends EventHandler implements Selectable {
     protected String title;
     protected boolean active;
     protected SequenceListener sequenceListener;
@@ -81,20 +81,6 @@ public abstract class Device extends EventHandler implements Activatable {
 
     public String title() {
         return title;
-    }
-    
-    public boolean active() {
-        return active;
-    }
-    
-    public void activate() {
-        start();
-        active = true;
-    }
-
-    public void deactivate() {
-        stop();
-        active = false;
     }
 
     public void exit() {

@@ -636,7 +636,7 @@ public class BasicPlayer implements BasicController, Runnable
                     }
                     catch (IOException e)
                     {
-                        log.error("Thread cannot run()", e);
+                        log.error("Thread cannot running()", e);
                         m_status = STOPPED;
                         notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
                     }

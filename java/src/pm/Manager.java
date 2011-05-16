@@ -29,15 +29,15 @@ public abstract class Manager extends EventHandler {
 
     public void start() {
         initialise();
-         Device[] deviceArray = new Device[] {
-                new WiimoteDevice(),
-                new PanelDevice(),
-                new JIntellitypeDevice(),
-                new PlayerDevice(),
-                new RumblepadDevice(),
-                new Extreme3DDevice(),
-                new NetworkDevice()};
-            deviceSelector = new DeviceSelector(deviceArray);
+        Device[] deviceArray = new Device[] {
+            new WiimoteDevice(),
+            new PanelDevice(),
+            new JIntellitypeDevice(),
+            new PlayerDevice(),
+            new RumblepadDevice(),
+            new Extreme3DDevice(),
+            new NetworkDevice()};
+        deviceSelector = new DeviceSelector(deviceArray);
     }
 
     public void exit() {

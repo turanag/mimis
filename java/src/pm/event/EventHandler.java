@@ -34,7 +34,7 @@ public abstract class EventHandler extends EventListener {
                 action(action);
                 continuous.nextIteration();
                 sleep(continuous.getSleep());
-            } while (run && !continuous.getStop());
+            } while (running && !continuous.getStop());
             continuous.reset();
         } else {
             action(action);
@@ -42,4 +42,9 @@ public abstract class EventHandler extends EventListener {
     }
 
     protected void action(Action action) {}
+    
+    public void activate() {
+        super.activate();
+        add(new Feedback());
+    }
 }

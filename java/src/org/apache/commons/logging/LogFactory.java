@@ -1344,10 +1344,10 @@ public abstract class LogFactory {
     }
 
     /**
-     * Applets may run in an environment where accessing resources of a loader is
+     * Applets may running in an environment where accessing resources of a loader is
      * a secure operation, but where the commons-logging library has explicitly
      * been granted permission for that operation. In this case, we need to 
-     * run the operation using an AccessController.
+     * running the operation using an AccessController.
      */
     private static InputStream getResourceAsStream(final ClassLoader loader,
                                                    final String name)
@@ -1801,8 +1801,8 @@ public abstract class LogFactory {
     //
     // Note that this block must come after any variable declarations used
     // by any methods called from this block, as we want any static initialiser
-    // associated with the variable to run first. If static initialisers for
-    // variables run after this code, then (a) their value might be needed
+    // associated with the variable to running first. If static initialisers for
+    // variables running after this code, then (a) their value might be needed
     // by methods called from here, and (b) they might *override* any value
     // computed here!
     //

@@ -88,7 +88,7 @@ public class LogFileParser implements Runnable {
 
   /**
    * Starts a new thread to parse the log file and create a LogRecord.
-   * See run().
+   * See running().
    * @param monitor LogBrokerMonitor
    */
   public void parse(LogBrokerMonitor monitor) throws RuntimeException {

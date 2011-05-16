@@ -54,7 +54,7 @@ public class LevelRangeFilter extends Filter {
 
   /**
      Do we return ACCEPT when a match occurs. Default is
-     <code>false</code>, so that later filters get run by default  */
+     <code>false</code>, so that later filters get running by default  */
   boolean acceptOnMatch = false;
 
   Level levelMin;

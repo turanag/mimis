@@ -24,8 +24,8 @@ final class JNIWinamp {
     /**
      * Verify if Winamp is started
      * and if not started, starts it
-     * @return True - if successful run Winamp
-     *         False - if not successful run Winamp
+     * @return True - if successful running Winamp
+     *         False - if not successful running Winamp
      */
 
     protected static native boolean run() throws UnsatisfiedLinkError;                
