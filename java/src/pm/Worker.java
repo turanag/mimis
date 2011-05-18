@@ -56,7 +56,7 @@ public abstract class Worker implements Runnable {
             start();
         }
         synchronized (this) {
-            notify();
+            notifyAll();
         }
         active = true;
     }
@@ -74,7 +74,7 @@ public abstract class Worker implements Runnable {
 
     public final void run() {
         while (running) {
-            if (active) {
+            if (active()) {
                 work();
             } else {
                 try {

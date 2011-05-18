@@ -23,7 +23,11 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         super(TITLE);        
         iTunes = new iTunes();        
     }
-
+    
+    /*public boolean active() {
+        return active;
+    }*/
+    
     public void activate() {
         synchronized (iTunes) {
             iTunes.connect();

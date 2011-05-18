@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pm.device.DeviceSelector;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
@@ -18,7 +17,6 @@ import pm.event.EventRouter;
 
 public abstract class Manager extends EventHandler {
     protected Log log = LogFactory.getLog(getClass());
-    protected DeviceSelector deviceSelector;
 
     protected ArrayList<Device> deviceList;
 
@@ -37,7 +35,6 @@ public abstract class Manager extends EventHandler {
             new RumblepadDevice(),
             new Extreme3DDevice(),
             new NetworkDevice()};
-        deviceSelector = new DeviceSelector(deviceArray);
     }
 
     public void exit() {

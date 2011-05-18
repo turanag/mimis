@@ -9,14 +9,15 @@ import org.apache.commons.logging.LogFactory;
 
 import pm.Worker;
 
-public class SelectButton<T extends Worker & Selectable> extends JToggleButton implements ItemListener {
+public class SelectButton<T extends Worker> extends JToggleButton implements ItemListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final long serialVersionUID = 1L;
     protected T activatable;
 
-    public SelectButton(T activatable) {
+    public SelectButton(T activatable, String title) {
         this.activatable = activatable;
+        setText(title);
         addItemListener(this);
     }
 

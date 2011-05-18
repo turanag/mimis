@@ -3,13 +3,19 @@ package pm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pm.application.ApplicationSelector;
 import pm.application.cmd.windows.gomplayer.GomPlayerApplication;
 import pm.application.cmd.windows.winamp.WinampApplication;
 import pm.application.cmd.windows.wmp.WMPApplication;
 import pm.application.itunes.iTunesApplication;
 import pm.application.mpc.MPCApplication;
 import pm.application.vlc.VLCApplication;
+import pm.device.javainput.extreme3d.Extreme3DDevice;
+import pm.device.javainput.rumblepad.RumblepadDevice;
+import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.network.NetworkDevice;
+import pm.device.panel.PanelDevice;
+import pm.device.player.PlayerDevice;
+import pm.device.wiimote.WiimoteDevice;
 import pm.event.router.LocalRouter;
 import pm.util.ArrayCycle;
 import pm.value.Action;
@@ -17,7 +23,6 @@ import pm.value.Action;
 public class Main extends Manager {
     protected Log log = LogFactory.getLog(getClass());
     protected ArrayCycle<Application> applicationCycle;
-    protected ApplicationSelector applicationSelector;
 
     public Main() {
         super(new LocalRouter());
@@ -48,9 +53,17 @@ public class Main extends Manager {
             new WMPApplication(),
             new MPCApplication(),
             new VLCApplication(),
-            new WinampApplication()};        
-        applicationSelector = new ApplicationSelector(applicationArray);
+            new WinampApplication()};
         applicationCycle = new ArrayCycle<Application>(applicationArray);
+        Device[] deviceArray = new Device[] {
+                new WiimoteDevice(),
+                new PanelDevice(),
+                new JIntellitypeDevice(),
+                new PlayerDevice(),
+                new RumblepadDevice(),
+                new Extreme3DDevice(),
+                new NetworkDevice()};
+        GUI gui = new GUI(applicationArray, deviceArray);
         eventRouter.set(applicationCycle.current());
         super.start(false);
     }
