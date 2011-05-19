@@ -8,12 +8,15 @@ public abstract class Worker implements Runnable {
 
     protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
+    public static final int CHECK_ALIVE_INTERVAL = 1000;
 
     protected boolean running = false;
     protected boolean active = false;
+    protected boolean connected;
+    
 
     protected Object lock;
-
+    
     public void start(boolean thread) {
         running = true;
         if (thread) {
@@ -26,6 +29,8 @@ public abstract class Worker implements Runnable {
 
     public void start() {
         start(THREAD);
+        monitorConnection();
+        connected = false;
     }
 
     public void stop() {
@@ -89,4 +94,31 @@ public abstract class Worker implements Runnable {
     }
 
     protected abstract void work();
+    
+    public boolean connected() {
+        return connected;
+    }
+    
+    protected void monitorConnection() {
+        new Thread() {
+            protected long timestamp = System.currentTimeMillis();
+            
+            public void run() {
+                while (super.isAlive()) {
+                    if (timestamp + (2 * CHECK_ALIVE_INTERVAL) > System.currentTimeMillis()) {
+                        timestamp = System.currentTimeMillis();
+                        connected = true;
+                        log.debug("Het gaat nog helemaal goed");
+                    } else {
+                        log.debug("Het interval is overschreden");
+                        return;
+                    }
+                    try {
+                        Thread.sleep(CHECK_ALIVE_INTERVAL);
+                    } catch (InterruptedException e) {}
+                }
+                connected = false;
+            }
+        }.start();
+    }
 }

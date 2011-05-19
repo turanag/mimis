@@ -14,11 +14,14 @@ public class SelectButton<T extends Worker> extends JToggleButton implements Ite
 
     protected static final long serialVersionUID = 1L;
     protected T activatable;
+    
+    public static final int CHECK_ALIVE_INTERVAL = 1000;
 
     public SelectButton(T activatable, String title) {
         this.activatable = activatable;
         setText(title);
         addItemListener(this);
+        monitorApplication();
     }
 
     public void itemStateChanged(ItemEvent itemEvent) {
@@ -29,6 +32,21 @@ public class SelectButton<T extends Worker> extends JToggleButton implements Ite
         } else {
             System.out.println("Deselected");
             activatable.deactivate();
-        }   
+        }
+    }
+    
+    protected void monitorApplication() {
+        new Thread() {
+            public void run() {
+                while (super.isAlive()) {
+                    if (!activatable.connected()) {
+                        //log.debug("Nu moet het knopje uit gaan!");
+                    }
+                    try {
+                        Thread.sleep(CHECK_ALIVE_INTERVAL);
+                    } catch (InterruptedException e) {}
+                }
+            }
+        }.start();
     }
 }

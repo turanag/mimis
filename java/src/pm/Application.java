@@ -19,5 +19,5 @@ public abstract class Application extends EventHandler implements Selectable {
     public void exit() {
         deactivate();
         stop();
-    }    
+    }
 }
