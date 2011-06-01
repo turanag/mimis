@@ -33,7 +33,7 @@ public class NetworkDevice extends Device {
         this(PORT);
     }
 
-    public void initialise() {
+    public void activate() {
         try {
             server = new Server(port);
             server.start();
@@ -42,7 +42,7 @@ public class NetworkDevice extends Device {
         }
     }
 
-    public void exit() {
+    public void deactivate() {
         server.stop();
     }
 
@@ -65,19 +65,21 @@ public class NetworkDevice extends Device {
             System.out.println("Server started");
         }
 
-        public void run() {
-            while (running) {
-                System.out.println("Server is waiting for clients");
-                try {
-                    Socket socket = serverSocket.accept();
-                    Client client = new Client(socket);
-                    client.start();
-                    System.out.println("Client connected");
-                } catch (IOException e) {}
-            }
+        public void work() {
+            System.out.println("Server is waiting for clients");
+            try {
+                Socket socket = serverSocket.accept();
+                Client client = new Client(socket);
+                client.start();
+                System.out.println("Client connected");
+            } catch (IOException e) {}
+        }
+        
+        public void stop() {
             for (Client client : clientList) {
                 client.stop();
             }
+            super.stop();
         }
     }
 
@@ -93,7 +95,7 @@ public class NetworkDevice extends Device {
             clientList.add(this);
         }
 
-        public void run() {
+        public void work() {
             try {
                 Object object;
                 do {
@@ -109,6 +111,9 @@ public class NetworkDevice extends Device {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+
+        public void stop() {
             System.out.println("stoppen");
             try {
                 disconnect();
@@ -117,7 +122,7 @@ public class NetworkDevice extends Device {
                 clientList.remove(this);
             }
         }
-        
+
         public void send(Object object) throws IOException {
             objectOutputStream.writeObject(object);
         }

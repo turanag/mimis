@@ -9,20 +9,20 @@ import pm.Event;
 import pm.Worker;
 import pm.event.EventRouter;
 import pm.event.Feedback;
-import pm.exception.event.spreader.NetworkSpreaderException;
+import pm.exception.event.router.GlobalRouterException;
 
 public class GlobalRouter extends EventRouter {
     protected Socket socket;
     protected ObjectOutputStream objectOutputStream;
     protected ObjectInputStream objectInputStream;
 
-    public GlobalRouter(String ip, int port) throws NetworkSpreaderException {
+    public GlobalRouter(String ip, int port) throws GlobalRouterException {
         try {
             socket = new Socket(ip, port);
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             new Worker() {
-                public void run() {
+                public void work() {
                     try {
                         Object object;
                         do {
@@ -41,7 +41,7 @@ public class GlobalRouter extends EventRouter {
             return;
         } catch (UnknownHostException e) {
         } catch (IOException e) {}
-        throw new NetworkSpreaderException();
+        throw new GlobalRouterException();
     }
 
     public void event(Event event) {

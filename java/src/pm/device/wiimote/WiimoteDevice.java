@@ -177,9 +177,9 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public void deactivate() {
-        wiimote.deactivateMotionSensing();        
+        wiimote.deactivateMotionSensing();
     }
-    
+
     public void exit() {
         wiimoteService.exit();
         super.exit();

@@ -15,7 +15,7 @@ public class PanelDevice extends Device implements PanelButtonListener {
         super(TITLE);
     }
 
-    public void initialise() {
+    public void activate() {
         panel = new Panel(this);
         //panel.updateTime(12342398);
         //panel.updatePosition(43);
@@ -31,7 +31,7 @@ public class PanelDevice extends Device implements PanelButtonListener {
         add(new Press(PanelButton.VOLUME_UP), new Task(Target.APPLICATION, Action.VOLUME_UP));
     }
 
-    public void exit() {
+    public void deactivate() {
         panel.dispose();
     }
 

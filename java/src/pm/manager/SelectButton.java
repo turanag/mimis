@@ -1,7 +1,8 @@
-package pm.selector;
+package pm.manager;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.Action;
 import javax.swing.JToggleButton;
 
 import org.apache.commons.logging.Log;
@@ -9,19 +10,18 @@ import org.apache.commons.logging.LogFactory;
 
 import pm.Worker;
 
-public class SelectButton<T extends Worker> extends JToggleButton implements ItemListener {
+public class SelectButton<T extends Worker & Titled> extends JToggleButton implements ItemListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final long serialVersionUID = 1L;
     protected T activatable;
-    
-    public static final int CHECK_ALIVE_INTERVAL = 1000;
+    protected Action action;
 
-    public SelectButton(T activatable, String title) {
+    public SelectButton(T activatable) {
         this.activatable = activatable;
-        setText(title);
+        setText(activatable.title());
         addItemListener(this);
-        monitorApplication();
+        //getModel().setPressed(true);
     }
 
     public void itemStateChanged(ItemEvent itemEvent) {
@@ -34,19 +34,8 @@ public class SelectButton<T extends Worker> extends JToggleButton implements Ite
             activatable.deactivate();
         }
     }
-    
-    protected void monitorApplication() {
-        new Thread() {
-            public void run() {
-                while (super.isAlive()) {
-                    if (!activatable.connected()) {
-                        //log.debug("Nu moet het knopje uit gaan!");
-                    }
-                    try {
-                        Thread.sleep(CHECK_ALIVE_INTERVAL);
-                    } catch (InterruptedException e) {}
-                }
-            }
-        }.start();
+
+    public void setPressed(boolean pressed) {
+        getModel().setPressed(pressed);
     }
 }

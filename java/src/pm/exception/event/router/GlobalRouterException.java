@@ -1,7 +1,7 @@
-package pm.exception.event.spreader;
+package pm.exception.event.router;
 
 import pm.exception.event.SpreaderException;
 
-public class NetworkSpreaderException extends SpreaderException {
+public class GlobalRouterException extends SpreaderException {
     protected static final long serialVersionUID = 1L;
 }

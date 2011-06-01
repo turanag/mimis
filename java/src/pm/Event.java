@@ -17,13 +17,11 @@ public class Event  {
     }
 
     public boolean compatible(EventListener eventListener) {
-        System.out.println("Event compatible()");
-        System.out.println(eventListener);
         switch (target) {
             case ALL:
                 return true;
-            case MANAGER:
-                return eventListener instanceof Manager;
+            case MIMIS:
+                return eventListener instanceof Mimis;
             case DEVICES:
                 return eventListener instanceof Device;
             case APPLICATIONS:

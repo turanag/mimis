@@ -42,9 +42,4 @@ public abstract class EventHandler extends EventListener {
     }
 
     protected void action(Action action) {}
-    
-    public void activate() {
-        super.activate();
-        add(new Feedback());
-    }
 }

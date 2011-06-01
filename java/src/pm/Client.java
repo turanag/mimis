@@ -1,36 +1,51 @@
 package pm;
 
-import pm.event.router.GlobalRouter;
-import pm.exception.event.spreader.NetworkSpreaderException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-public class Client extends Manager {
-    public static final String TITLE = "Client";
-    
-    public static final String IP = "192.168.1.100";
+import pm.device.javainput.extreme3d.Extreme3DDevice;
+import pm.device.javainput.rumblepad.RumblepadDevice;
+import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.network.NetworkDevice;
+import pm.device.panel.PanelDevice;
+import pm.device.player.PlayerDevice;
+import pm.device.wiimote.WiimoteDevice;
+import pm.event.EventRouter;
+import pm.event.router.GlobalRouter;
+import pm.exception.event.router.GlobalRouterException;
+
+public class Client {
+    protected Log log = LogFactory.getLog(getClass());
+
+    public static final String IP = "127.0.0.1";
     public static final int PORT = 6789;
 
-    public Client(String ip, int port) throws NetworkSpreaderException {
-        super(new GlobalRouter(ip, port));
-    }
+    protected EventRouter eventRouter;
+    protected Device[] deviceArray;
 
-    public Client() throws NetworkSpreaderException {
+    public Client() throws GlobalRouterException {
         this(IP, PORT);
     }
 
+    public Client(String ip, int port) throws GlobalRouterException {
+        eventRouter = new GlobalRouter(ip, port);
+        deviceArray = new Device[] {
+            new WiimoteDevice(),
+            new PanelDevice(),
+            new JIntellitypeDevice(),
+            new PlayerDevice(),
+            new RumblepadDevice(),
+            new Extreme3DDevice(),
+            new NetworkDevice()};
+    }
+
     public void start() {
-        initialise();
-        super.start(false);
+        log.debug("Client");
+        Mimis mimis = new Mimis(eventRouter, deviceArray);
+        mimis.start();
     }
 
     public static void main(String[] args) {
-        try {
-            new Client().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String title() {
-        return TITLE;
+        new Main().start();
     }
 }

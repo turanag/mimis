@@ -33,10 +33,10 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.addIntellitypeListener(this);
         add(
             new Hotkey(Key.PRIOR),
-            new Task(Target.MANAGER, Action.PREVIOUS));
+            new Task(Target.MIMIS, Action.PREVIOUS));
         add(
             new Hotkey(Key.NEXT),
-            new Task(Target.MANAGER, Action.NEXT));
+            new Task(Target.MIMIS, Action.NEXT));
         add(
             new Press(CommandButton.VOLUME_DOWN),
             new Task(Target.APPLICATIONS, Action.VOLUME_DOWN));
@@ -45,7 +45,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             new Task(Target.APPLICATIONS, Action.VOLUME_UP));
         add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
-            new Task(Target.MANAGER, Action.EXIT));
+            new Task(Target.MIMIS, Action.EXIT));
         add(
             new Hotkey(Modifier.CTRL | Modifier.SHIFT | Modifier.WIN, 'n'),
             new Task(Target.APPLICATION, Action.NEXT));

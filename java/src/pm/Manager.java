@@ -1,47 +1,61 @@
 package pm;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.JToggleButton;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pm.device.javainput.extreme3d.Extreme3DDevice;
-import pm.device.javainput.rumblepad.RumblepadDevice;
-import pm.device.jintellitype.JIntellitypeDevice;
-import pm.device.network.NetworkDevice;
-import pm.device.panel.PanelDevice;
-import pm.device.player.PlayerDevice;
-import pm.device.wiimote.WiimoteDevice;
-import pm.event.EventHandler;
-import pm.event.EventRouter;
+import pm.manager.SelectButton;
+import pm.manager.Titled;
 
-public abstract class Manager extends EventHandler {
+public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     protected Log log = LogFactory.getLog(getClass());
+    protected static final long serialVersionUID = 1L;
+    protected static final int INTERVAL = 5000;
 
-    protected ArrayList<Device> deviceList;
-
-    public Manager(EventRouter eventRouter) {
-        EventHandler.initialise(eventRouter);
-        eventRouter.start();
+    protected T[] manageableArray;
+    protected Map<T, SelectButton<T>> buttonMap;
+    
+    public Manager(String title) {
+        log.debug("Manager constructed");
     }
 
-    public void start() {
-        initialise();
-        Device[] deviceArray = new Device[] {
-            new WiimoteDevice(),
-            new PanelDevice(),
-            new JIntellitypeDevice(),
-            new PlayerDevice(),
-            new RumblepadDevice(),
-            new Extreme3DDevice(),
-            new NetworkDevice()};
+    public Manager(T[] manageableArray) {
+        this.manageableArray = manageableArray;
+        createButtons();
     }
 
-    public void exit() {
-        log.debug("Exit devices...");
-        for (Device device : deviceList) {
-            device.exit();
+    public void stop() {
+        super.stop();
+        for (T manageable : manageableArray) {
+            manageable.exit();
         }
-        stop();
+        super.stop();
+    }
+
+    protected void createButtons() {
+        buttonMap = new HashMap<T, SelectButton<T>>();
+        for (T manageable : manageableArray) {
+            SelectButton<T> button = new SelectButton<T>(manageable);
+            buttonMap.put(manageable, button);
+        }
+    }
+
+    protected JToggleButton[] getButtons() {
+        return buttonMap.values().toArray(new JToggleButton[]{});
+    }
+
+    protected void work() {
+        long before = Calendar.getInstance().getTimeInMillis();
+        for (T manageable : manageableArray) {
+            boolean active = manageable.active();
+            buttonMap.get(manageable).setPressed(active);
+        }
+        long after = Calendar.getInstance().getTimeInMillis();
+        int sleep = INTERVAL - (int) (after - before);
+        sleep(sleep);
     }
 }

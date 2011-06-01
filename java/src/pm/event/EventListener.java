@@ -7,30 +7,40 @@ import pm.Worker;
 
 public abstract class EventListener extends Worker {
     protected Queue<Event> eventQueue;
-    protected Object available;
+    protected Object work;
 
     public EventListener() {
         eventQueue = new ConcurrentLinkedQueue<Event>();
-        available = new Object();
+        work = new Object();
     }
 
     public void add(Event event) {
         eventQueue.add(event);
-        synchronized (available) {
-            available.notifyAll();
+        synchronized (work) {
+            work.notifyAll();
         }
     }
 
     public final void work() {
         while (eventQueue.isEmpty()) {
-            synchronized (available) {
+            synchronized (work) {
                 try {
-                    available.wait();
+                    work.wait();
                 } catch (InterruptedException e) {}
+                if (!running) {
+                    return;
+                }
             }
         }
         event(eventQueue.poll());
    }
+
+    public void stop() {
+        super.stop();
+        synchronized (work) {
+            work.notifyAll();
+        }
+    }
 
     public abstract void event(Event event);
 }

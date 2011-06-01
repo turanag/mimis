@@ -24,7 +24,7 @@ public abstract class JavaInputDevice extends Device {
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 
-    public void initialise(String name) throws DeviceInitialiseException {
+    public void activate(String name) throws DeviceInitialiseException {
         try {
             javaInputListener = new JavaInputListener(this, getDevice(name));
             javaInputListener.start();
@@ -33,7 +33,7 @@ public abstract class JavaInputDevice extends Device {
         }        
     }
 
-    public void exit() {
+    public void deactivate() {
         javaInputListener.exit();
     }
 

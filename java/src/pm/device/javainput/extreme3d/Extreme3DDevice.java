@@ -40,7 +40,7 @@ public class Extreme3DDevice extends JavaInputDevice {
                     new Press(Extreme3DButton.TWO),
                     new Press(Extreme3DButton.ELEVEN),
                     new Release(Extreme3DButton.ONE)),
-                new Task(Target.MANAGER, Action.EXIT));
+                new Task(Target.MIMIS, Action.EXIT));
         } catch (MacroException e) {
             e.printStackTrace();
         }

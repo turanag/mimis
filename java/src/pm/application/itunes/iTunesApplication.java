@@ -36,6 +36,19 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         super.activate();
     }
 
+    public boolean active() {
+        log.info("Check iTunes");
+        try {
+            iTunes.getCurrentTrack();
+            active = true;
+        } catch (Exception e) {
+            log.fatal(e);
+            active = false;
+        }
+        log.info(active);
+        return active;
+    }
+
     public void deactivate() {
         try {
             synchronized (iTunes) {

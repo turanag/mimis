@@ -8,10 +8,12 @@ public class ArrayCycle<E> extends ArrayList<E> {
     protected int index = 0;
     //protected Object nonEmpty;
 
-    public ArrayCycle(E... elementArary) {
+    public ArrayCycle(E... elementArray) {
+        if (elementArray != null) {
         //nonEmpty = new Object();
-        for (E element : elementArary) {
-            add(element);
+            for (E element : elementArray) {
+                add(element);
+            }
         }
     }
 

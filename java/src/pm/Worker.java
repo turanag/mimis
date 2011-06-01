@@ -8,34 +8,36 @@ public abstract class Worker implements Runnable {
 
     protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
-    public static final int CHECK_ALIVE_INTERVAL = 1000;
 
     protected boolean running = false;
     protected boolean active = false;
-    protected boolean connected;
-    
 
-    protected Object lock;
-    
     public void start(boolean thread) {
+        log.debug("Start");
         running = true;
+        activate();
         if (thread) {
+            log.debug("Start thread");
             new Thread(this).start();
         } else {
+            log.debug("Run directly");
             run();
         }
-        activate();
     }
 
     public void start() {
         start(THREAD);
-        monitorConnection();
-        connected = false;
     }
 
     public void stop() {
+        log.debug("Stop");
+        if (active()) {
+            deactivate();
+        }
         running = false;
-        deactivate();
+        synchronized (this) {
+            notifyAll();
+        }
     }
 
     protected void sleep(int time) {
@@ -57,24 +59,11 @@ public abstract class Worker implements Runnable {
     }
 
     public void activate() {
-        if (!running) {
-            start();
-        }
-        synchronized (this) {
-            notifyAll();
-        }
         active = true;
     }
 
     public void deactivate() {
         active = false;
-    }
-
-    public void deactivate(boolean stop) {
-        deactivate();
-        if (stop && running) {
-            stop();
-        }
     }
 
     public final void run() {
@@ -84,41 +73,15 @@ public abstract class Worker implements Runnable {
             } else {
                 try {
                     synchronized (this) {
+                        log.debug("Wait");
                         wait();
                     }
                 } catch (InterruptedException e) {
                     log.info(e);
                 }
             }
-       }
+        }
     }
 
     protected abstract void work();
-    
-    public boolean connected() {
-        return connected;
-    }
-    
-    protected void monitorConnection() {
-        new Thread() {
-            protected long timestamp = System.currentTimeMillis();
-            
-            public void run() {
-                while (super.isAlive()) {
-                    if (timestamp + (2 * CHECK_ALIVE_INTERVAL) > System.currentTimeMillis()) {
-                        timestamp = System.currentTimeMillis();
-                        connected = true;
-                        log.debug("Het gaat nog helemaal goed");
-                    } else {
-                        log.debug("Het interval is overschreden");
-                        return;
-                    }
-                    try {
-                        Thread.sleep(CHECK_ALIVE_INTERVAL);
-                    } catch (InterruptedException e) {}
-                }
-                connected = false;
-            }
-        }.start();
-    }
 }

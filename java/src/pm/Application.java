@@ -1,9 +1,9 @@
 package pm;
 
 import pm.event.EventHandler;
-import pm.selector.Selectable;
+import pm.manager.Titled;
 
-public abstract class Application extends EventHandler implements Selectable {
+public abstract class Application extends EventHandler implements Titled, Exitable {
     protected String title;
     protected boolean active;
 
@@ -17,7 +17,9 @@ public abstract class Application extends EventHandler implements Selectable {
     }
 
     public void exit() {
-        deactivate();
+        if (active()) {
+            deactivate();
+        }
         stop();
     }
 }
