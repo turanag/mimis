@@ -20,15 +20,15 @@ public class Mimis extends EventHandler {
     protected Manager<Device> deviceManager;
     
     public Mimis(EventRouter eventRouter) {
-        this(eventRouter, new Application[] {}, new Device[] {});
+        this(eventRouter, new Application[0], new Device[0]);
     }
     
     public Mimis(EventRouter eventRouter, Application[] applicationArray) {
-        this(eventRouter, applicationArray, new Device[] {});
+        this(eventRouter, applicationArray, new Device[0]);
     }
 
     public Mimis(EventRouter eventRouter, Device[] deviceArray) {
-        this(eventRouter, new Application[] {}, deviceArray);
+        this(eventRouter, new Application[0], deviceArray);
     }
 
     public Mimis(EventRouter eventRouter, Application[] applicationArray, Device[] deviceArray) {
