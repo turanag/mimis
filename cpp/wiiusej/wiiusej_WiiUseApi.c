@@ -670,7 +670,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 	}
 }
 
-/* Calibration */
+/* Calibration *
 JNIEXPORT jshortArray JNICALL Java_wiiusej_WiiUseApi_getCalibration
 (JNIEnv *env, jobject obj, jint id) {
 	struct wiimote_t wm = *wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
@@ -684,7 +684,7 @@ JNIEXPORT jshortArray JNICALL Java_wiiusej_WiiUseApi_getCalibration
 	jshortArray jShorts = (*env)->NewShortArray(env, 6);
 	(*env)->SetShortArrayRegion(env, jShorts, 0, 6, calibration);
 	return jShorts;
-}
+}*/
 
 /* Speaker */
 #include "speaker.h"
