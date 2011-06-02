@@ -1,7 +1,6 @@
 package mimis.device.lirc.button;
 
 import mimis.device.lirc.LircButton;
-import mimis.exception.button.UnknownButtonException;
 
 public enum PhiliphsRCLE011Button implements LircButton {
     POWER ("Standby"),
@@ -43,21 +42,12 @@ public enum PhiliphsRCLE011Button implements LircButton {
     public static final String NAME = "Philips_RCLE011";
 
     protected String code;
-    
+
     private PhiliphsRCLE011Button(String code) {
         this.code = code;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public static PhiliphsRCLE011Button create(String code) throws UnknownButtonException {
-        for (PhiliphsRCLE011Button button : PhiliphsRCLE011Button.values()) {
-            if (button.getCode().equals(code)) {
-                return button;
-            }
-        }
-        throw new UnknownButtonException();
     }
 }

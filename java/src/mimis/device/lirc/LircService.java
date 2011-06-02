@@ -16,7 +16,6 @@ import java.util.Scanner;
 import mimis.Worker;
 import mimis.exception.button.UnknownButtonException;
 
-
 public class LircService extends Worker {
     public static final String IP = "127.0.0.1";
     public static final int PORT = 8765;
@@ -33,6 +32,7 @@ public class LircService extends Worker {
 
     public LircService(HashMap<String, LircButton[]> buttonMap) {
         this(buttonMap, IP, PORT);
+        //String send = Native.getValue("HKEY_CURRENT_USER\\Software\\LIRC", "password");
     }
 
     public LircService(HashMap<String, LircButton[]> buttonMap, String ip, int port) {
@@ -83,7 +83,7 @@ public class LircService extends Worker {
             String string = bufferedReader.readLine();
             try {
                 LircButton lircButton = parseButton(new Scanner(string));
-                log.debug(String.format("Lirc button: %s", lircButton));
+                //log.debug(String.format("Lirc button: %s", lircButton));
                 for (LircButtonListener lircbuttonListener : lircButtonListenerList) {
                     lircbuttonListener.add(lircButton);
                 }
@@ -112,10 +112,8 @@ public class LircService extends Worker {
         throw new UnknownButtonException();
     }
 
-    public static void main(String[] args) {
-        System.out.println("hey");
-        //String send = Native.getValue("HKEY_CURRENT_USER\\Software\\LIRC", "password");
-        new LircDevice().start();
+    public static void main(String[] args) {        
+        new LircDevice().activate();
         while (true);
     }
 }

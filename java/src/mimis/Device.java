@@ -76,6 +76,7 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
 
     /* Recognize events */
     protected void add(State state) {
+        log.debug(state.toString() + " " + state.getButton());
         sequenceListener.add(state);
     }
 
