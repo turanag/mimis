@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.lirc.LircDevice;
 import pm.device.network.NetworkDevice;
 import pm.device.panel.PanelDevice;
 import pm.device.player.PlayerDevice;
@@ -30,6 +31,7 @@ public class Client {
     public Client(String ip, int port) throws GlobalRouterException {
         eventRouter = new GlobalRouter(ip, port);
         deviceArray = new Device[] {
+            new LircDevice(),
             new WiimoteDevice(),
             new PanelDevice(),
             new JIntellitypeDevice(),

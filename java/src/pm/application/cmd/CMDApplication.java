@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import pm.Application;
 import pm.util.Native;
+import pm.util.VBScript;
 
 public abstract class CMDApplication extends Application {
     protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
@@ -18,7 +19,7 @@ public abstract class CMDApplication extends Application {
         this.title = title;
     }
 
-    protected void initialise() {
+    public void activate() {
         String key = String.format("%s\\%s", REGISTRY, program);
         // Check of naam is gevonden in register
         String path = Native.getValue(key);
@@ -30,13 +31,15 @@ public abstract class CMDApplication extends Application {
             e.printStackTrace();
             //throw new ApplicationInitialiseException();
         }
+        super.activate();
     }
 
-    public void activate() {
-        if (!active) {
-            initialise();
+    public boolean active() {
+        try {
+            return active = VBScript.isRunning(program);
+        } catch (IOException e) {
+            return false;
         }
-        super.activate();
     }
 
     public void deactivate() {

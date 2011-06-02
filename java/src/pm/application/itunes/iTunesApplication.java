@@ -37,15 +37,15 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     }
 
     public boolean active() {
-        log.info("Check iTunes");
+        //log.info("Check iTunes");
         try {
             iTunes.getCurrentTrack();
             active = true;
         } catch (Exception e) {
-            log.fatal(e);
+            //log.fatal(e);
             active = false;
         }
-        log.info(active);
+        //log.info(active);
         return active;
     }
 

@@ -20,11 +20,14 @@ public class SelectButton<T extends Worker & Titled> extends JToggleButton imple
     public SelectButton(T activatable) {
         this.activatable = activatable;
         setText(activatable.title());
+        setRolloverEnabled(false);
         addItemListener(this);
-        //getModel().setPressed(true);
+        //setFocusable(false);
+        //getModel().setRollover(true);
     }
 
     public void itemStateChanged(ItemEvent itemEvent) {
+        //setSelected();
         int state = itemEvent.getStateChange();
         if (state == ItemEvent.SELECTED) {
             System.out.println("Selected");

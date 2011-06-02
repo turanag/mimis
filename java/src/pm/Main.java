@@ -12,6 +12,7 @@ import pm.application.vlc.VLCApplication;
 import pm.device.javainput.extreme3d.Extreme3DDevice;
 import pm.device.javainput.rumblepad.RumblepadDevice;
 import pm.device.jintellitype.JIntellitypeDevice;
+import pm.device.lirc.LircDevice;
 import pm.device.network.NetworkDevice;
 import pm.device.panel.PanelDevice;
 import pm.device.player.PlayerDevice;
@@ -36,6 +37,7 @@ public class Main {
             new VLCApplication(),
             new WinampApplication()};
         deviceArray = new Device[] {
+            new LircDevice(),
             new WiimoteDevice(),
             new PanelDevice(),
             new JIntellitypeDevice(),
@@ -48,7 +50,7 @@ public class Main {
     public void start() {
         log.debug("Main");
         Mimis mimis = new Mimis(eventRouter, applicationArray, deviceArray);
-        mimis.start();
+        mimis.activate();
     }
 
     public static void main(String[] args) {

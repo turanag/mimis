@@ -8,7 +8,6 @@ import pm.event.Task;
 import pm.exception.MacroException;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.button.UnknownDirectionException;
-import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.macro.state.Release;
@@ -25,11 +24,6 @@ public class Extreme3DDevice extends JavaInputDevice {
     }
 
     public void initialise() {
-        try {
-            super.initialise(NAME);
-        } catch (DeviceInitialiseException e) {
-            e.printStackTrace();
-        }
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),

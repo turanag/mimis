@@ -41,9 +41,9 @@ public class Mimis extends EventHandler {
         applicationCycle = new ArrayCycle<Application>(applicationArray);
     }
 
-    public void start() {
-        log.debug("Start managers");
-        applicationManager.start();
+    public void activate() {
+        log.debug("Activate managers");
+        applicationManager.activate();
         deviceManager.start();
     
         log.debug("Create gui");
@@ -53,7 +53,7 @@ public class Mimis extends EventHandler {
             log.debug("Initialise application cycle");
             eventRouter.set(applicationCycle.current());
         }
-        super.start(false);
+        super.activate(false);
     }
 
     public void exit() {

@@ -15,7 +15,6 @@ public abstract class Worker implements Runnable {
     public void start(boolean thread) {
         log.debug("Start");
         running = true;
-        activate();
         if (thread) {
             log.debug("Start thread");
             new Thread(this).start();
@@ -59,6 +58,13 @@ public abstract class Worker implements Runnable {
     }
 
     public void activate() {
+        activate(THREAD);
+    }
+
+    public void activate(boolean thread) {
+        if (!running) {
+            start(thread);
+        }
         active = true;
     }
 

@@ -1,5 +1,9 @@
 package pm.device.panel;
 
+import java.awt.event.WindowEvent;
+
+import javax.swing.WindowConstants;
+
 import pm.Device;
 import pm.event.Task;
 import pm.macro.state.Press;
@@ -16,7 +20,16 @@ public class PanelDevice extends Device implements PanelButtonListener {
     }
 
     public void activate() {
-        panel = new Panel(this);
+        panel = new Panel(this) {
+            protected static final long serialVersionUID = 1L;
+            protected void processWindowEvent(WindowEvent e) {
+                log.debug("Window closing");
+                if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+                    deactivate();
+                }
+            }
+        };
+        panel.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         //panel.updateTime(12342398);
         //panel.updatePosition(43);
         add(new Press(PanelButton.PREVIOUS), new Task(Target.APPLICATION, Action.PREVIOUS));
@@ -31,8 +44,19 @@ public class PanelDevice extends Device implements PanelButtonListener {
         add(new Press(PanelButton.VOLUME_UP), new Task(Target.APPLICATION, Action.VOLUME_UP));
     }
 
+    public boolean active() {
+        return active = panel != null && panel.isValid();
+    }
+
     public void deactivate() {
         panel.dispose();
+    }
+
+    protected void processWindowEvent(WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            log.debug("Window closing");
+            deactivate();
+        }
     }
 
     public void buttonPressed(PanelButton panelButton) {

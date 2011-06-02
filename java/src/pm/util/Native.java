@@ -36,12 +36,12 @@ public class Native {
         }
         return count > 0 ? handleList.get(0) : -1;
     }
-    
-    public static String getValue(String key, String name) throws IOException {
+
+    public static String getValue(String key, String name) {
         String command = String.format("reg query \"%s\"", key);
-        Process process = Runtime.getRuntime().exec(command);
-        Scanner processScanner = new Scanner(process.getInputStream());
         try {
+            Process process = Runtime.getRuntime().exec(command);
+            Scanner processScanner = new Scanner(process.getInputStream());
             processScanner.nextLine();
             processScanner.nextLine();
             while (processScanner.hasNextLine()) {
@@ -54,15 +54,13 @@ public class Native {
                     return lineScanner.nextLine().trim();
                 }
             }
+        } catch (IOException e) {
         } catch (NoSuchElementException e) {}
         return null;
     }
 
     public static String getValue(String key) {
-        try {
-            return getValue(key, "(Default");
-        } catch (IOException e) {}
-        return null;
+        return getValue(key, "(Default");
     }
 
     public static String replaceVariables(String string) {

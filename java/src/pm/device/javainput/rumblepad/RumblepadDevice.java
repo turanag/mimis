@@ -8,7 +8,6 @@ import pm.event.task.Continuous;
 import pm.event.task.Dynamic;
 import pm.exception.button.UnknownButtonException;
 import pm.exception.button.UnknownDirectionException;
-import pm.exception.device.DeviceInitialiseException;
 import pm.macro.state.Hold;
 import pm.macro.state.Press;
 import pm.value.Action;
@@ -24,11 +23,6 @@ public class RumblepadDevice extends JavaInputDevice {
     }
 
     public void initialise(){
-        try {
-            super.initialise(NAME);
-        } catch (DeviceInitialiseException e) {
-            e.printStackTrace();
-        }
         add(
             new Press(RumblepadButton.ONE),
             new Task(Target.APPLICATION, Action.PLAY));
