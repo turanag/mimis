@@ -23,6 +23,7 @@ public class GUI extends JFrame {
     protected static final String DEVICE_TITLE = "Devices";
     
     protected Mimis mimis;
+    protected TextArea textArea;
 
     public GUI(Mimis mimis, Manager<Application> applicationManager, Manager<Device> deviceManager) {
         super(TITLE);
@@ -34,7 +35,7 @@ public class GUI extends JFrame {
         setLayout(new GridLayout(0, 1));
         JPanel controlPanel = createControlPanel(applicationManager, deviceManager);
         add(controlPanel);
-        JPanel feedbackPanel = createFeedbackPanel();
+        JPanel feedbackPanel = createTextPanel();
         add(feedbackPanel);
         setResizable(false);
         setVisible(true);
@@ -60,24 +61,31 @@ public class GUI extends JFrame {
         return panel;
     }
 
-    protected JPanel createFeedbackPanel() {
-        JPanel feedbackPanel = new JPanel();
-        TextArea textArea = new TextArea();
+    protected JPanel createTextPanel() {
+        JPanel textPanel = new JPanel();
+        textArea = new TextArea();
         textArea.setEditable(false);
-        feedbackPanel.add(textArea);
-        return feedbackPanel;
+        textPanel.add(textArea);
+        return textPanel;
     }
 
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
-            exit();
+            stop();
             mimis.stop();
         }
     }
 
-    protected void exit() {
-        log.debug("Dispose");
+    protected void stop() {
         dispose();
+    }
+
+    public void write(String string) {
+        textArea.append(string);
+    }
+    
+    public void clear() {
+        textArea.setText(null);
     }
 }

@@ -12,7 +12,6 @@ import mimis.manager.Titled;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     protected Log log = LogFactory.getLog(getClass());
     protected static final long serialVersionUID = 1L;

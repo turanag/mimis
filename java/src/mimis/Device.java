@@ -27,6 +27,7 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     }
     
     public void start() {
+        log.fatal("start");
         sequenceListener = new SequenceListener(this);
         super.start();
     }
@@ -96,6 +97,6 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
                 log.error(e);
             }
         }
-        stop();
+        super.stop();
     }
 }

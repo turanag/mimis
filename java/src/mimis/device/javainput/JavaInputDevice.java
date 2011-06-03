@@ -26,6 +26,7 @@ public abstract class JavaInputDevice extends Device {
     protected Button previousDirectionalButton;
 
     public void activate(String name) throws ActivateException {
+        log.fatal("act");
         try {
             javaInputListener = new JavaInputListener(this, getDevice(name));
         } catch (DeviceNotFoundException e) {
@@ -35,7 +36,9 @@ public abstract class JavaInputDevice extends Device {
     }
 
     public void deactivate() throws DeactivateException {
-        javaInputListener.deactivate();
+        if (active) {
+            javaInputListener.deactivate();
+        }
     }
 
     public void processEvent(JXInputAxisEvent event) {

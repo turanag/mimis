@@ -2,7 +2,9 @@ package mimis;
 
 import mimis.event.EventHandler;
 import mimis.event.EventRouter;
+import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
+import mimis.feedback.TextFeedback;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 
@@ -72,15 +74,21 @@ public class Mimis extends EventHandler {
         switch (action) {
             case NEXT:
                 eventRouter.set(applicationCycle.next());
-                System.out.println(applicationCycle.current());
+                add(new TextFeedback("Next application: " + applicationCycle.current().title()));
                 break;
             case PREVIOUS:
                 eventRouter.set(applicationCycle.previous());
-                System.out.println(applicationCycle.current());
+                add(new TextFeedback("Previous application: " + applicationCycle.current().title()));
                 break;
             case EXIT:
                 stop();
                 break;
+        }
+    }
+    
+    protected void feedback(Feedback feedback) {
+        if (feedback instanceof TextFeedback) {
+            gui.write(((TextFeedback) feedback).getText());
         }
     }
 }

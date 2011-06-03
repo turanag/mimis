@@ -12,7 +12,6 @@ import mimis.exception.worker.DeactivateException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-// Eventueel handigere knoppen gebruiken ivm terugtogglen
 public class SelectButton<T extends Worker & Titled> extends JToggleButton implements ItemListener {
     protected Log log = LogFactory.getLog(getClass());
 
@@ -23,29 +22,25 @@ public class SelectButton<T extends Worker & Titled> extends JToggleButton imple
     public SelectButton(T activatable) {
         this.activatable = activatable;
         setText(activatable.title());
-        setRolloverEnabled(false);
         addItemListener(this);
-        //setFocusable(false);
-        //getModel().setRollover(true);
     }
 
     public void itemStateChanged(ItemEvent itemEvent) {
-        //setSelected();
         int state = itemEvent.getStateChange();
         if (state == ItemEvent.SELECTED) {
-            System.out.println("Selected");
+            log.trace("Selected: " + activatable.title());
+            setPressed(false);
             try {
                 activatable.activate();
             } catch (ActivateException e) {
-                // Het knopje moet worden terug getoggled
                 log.error(e);
             }
         } else {
-            System.out.println("Deselected");
+            log.trace("Deselected: " + activatable.title());
+            setPressed(true);
             try {
                 activatable.deactivate();
             } catch (DeactivateException e) {
-                // Het knopje moet worden terug getoggled
                 log.error(e);
             }
         }
