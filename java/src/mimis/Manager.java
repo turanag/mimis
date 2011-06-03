@@ -33,7 +33,7 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     public void stop() {
         super.stop();
         for (T manageable : manageableArray) {
-            manageable.exit();
+            manageable.stop();
         }
         super.stop();
     }

@@ -8,7 +8,6 @@ import java.net.URL;
 import mimis.application.cmd.CMDApplication;
 import mimis.value.Action;
 
-
 public class VLCApplication extends CMDApplication {
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
@@ -27,19 +26,24 @@ public class VLCApplication extends CMDApplication {
     }
 
     public void command(String command) {
-        String request = "http://" + HOST + ":" + PORT + "/requests/status.xml?command=" + command;
-        try {           
-            int response = ((HttpURLConnection)(new URL(request)).openConnection()).getResponseCode();
-            System.out.printf("Response: %d\n", response);
+        //String request = "http://" + HOST + ":" + PORT + "/requests/status.xml?command=" + command;
+        String request = String.format("http://%s:%d/requests/status.xml?command=%s", HOST, PORT, command);
+        try {
+            // Todo: check response voor 200, status ok
+            //int response = ((HttpURLConnection)(new URL(request)).openConnection()).getResponseCode();
+            URL url = new URL(request);
+            HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
+            int response = httpUrlConnection.getResponseCode();
+            log.debug("Response: " + response);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
     public void action(Action action) {
-        System.out.println("VLCApplication: " + action);
+        log.trace("VLCApplication: " + action);
         switch (action) {
             case PLAY:
                 command("pl_pause");
@@ -92,8 +96,7 @@ public class VLCApplication extends CMDApplication {
     }
 
     protected int toggleMute() {
-        muted =! muted;
-        return muted ? 0 : volume;
+        return (muted = !muted) ? 0 : volume;
     }
 
     public String title() {

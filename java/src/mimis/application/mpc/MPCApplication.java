@@ -13,8 +13,7 @@ public class MPCApplication extends WindowsApplication {
     }
     
     public void action(Action action) {
-        System.out.println("MPCApplication: " + action);
-        System.out.println(handle);
+        log.trace("MPCApplication: " + action);
         switch (action) {
             case PLAY:
                 command(889);

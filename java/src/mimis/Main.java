@@ -12,10 +12,10 @@ import mimis.device.jintellitype.JIntellitypeDevice;
 import mimis.device.lirc.LircDevice;
 import mimis.device.network.NetworkDevice;
 import mimis.device.panel.PanelDevice;
-import mimis.device.player.PlayerDevice;
 import mimis.device.wiimote.WiimoteDevice;
 import mimis.event.EventRouter;
 import mimis.event.router.LocalRouter;
+import mimis.exception.worker.ActivateException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +42,6 @@ public class Main {
             new WiimoteDevice(),
             new PanelDevice(),
             new JIntellitypeDevice(),
-            new PlayerDevice(),
             new RumblepadDevice(),
             new Extreme3DDevice(),
             new NetworkDevice()};
@@ -51,7 +50,11 @@ public class Main {
     public void start() {
         log.debug("Main");
         Mimis mimis = new Mimis(eventRouter, applicationArray, deviceArray);
-        mimis.activate();
+        try {
+            mimis.activate();
+        } catch (ActivateException e) {
+            log.fatal(e);
+        }
     }
 
     public static void main(String[] args) {

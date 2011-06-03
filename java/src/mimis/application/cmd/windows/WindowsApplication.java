@@ -1,6 +1,7 @@
 package mimis.application.cmd.windows;
 
 import mimis.application.cmd.CMDApplication;
+import mimis.exception.worker.ActivateException;
 import mimis.util.Windows;
 import mimis.value.Command;
 import mimis.value.Key;
@@ -21,15 +22,16 @@ public abstract class WindowsApplication extends CMDApplication {
         handle = -1;
     }
 
-    public void initialise() {
+    public void activate() throws ActivateException {
         handle = Windows.findWindow(name, null);
         if (handle < 1) {
-            super.initialise();
+            super.activate();
             sleep(START_SLEEP);
             handle = Windows.findWindow(name, null);
         }
+        active = handle > 0;
         if (handle < 1) {
-            //throw new ApplicationInitialiseException();
+            throw new ActivateException();
         }
     }
     

@@ -23,7 +23,8 @@ public class Extreme3DDevice extends JavaInputDevice {
         super(NAME);
     }
 
-    public void initialise() {
+    public void start() {
+        super.start();
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),
@@ -36,8 +37,12 @@ public class Extreme3DDevice extends JavaInputDevice {
                     new Release(Extreme3DButton.ONE)),
                 new Task(Target.MIMIS, Action.EXIT));
         } catch (MacroException e) {
-            e.printStackTrace();
+            log.error(e);
         }
+    }
+    
+    public void initialise() {
+       
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

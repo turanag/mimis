@@ -6,6 +6,8 @@ import mimis.Button;
 import mimis.Device;
 import mimis.device.lirc.button.DenonRC176;
 import mimis.device.lirc.button.PhiliphsRCLE011Button;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
 import mimis.util.Multiplexer;
@@ -31,13 +33,13 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
         lircService.add(this);
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         multiplexer.start();
         lircService.activate();
         super.activate();
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         multiplexer.deactivate();
         lircService.deactivate();
         super.deactivate();

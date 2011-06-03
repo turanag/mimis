@@ -3,6 +3,7 @@ package mimis.device.javainput;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import mimis.Worker;
 import mimis.exception.ButtonException;
 
 
@@ -19,10 +20,7 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEventListener;
 import de.hardcode.jxinput.event.JXInputEventManager;
 
-public class JavaInputListener implements Runnable, JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
-    protected static final int SLEEP = 100;
-
-    protected boolean run;
+public class JavaInputListener extends Worker implements Runnable, JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
     protected JavaInputDevice javaInputDevice;
     protected JXInputDevice jxinputDevice;
     protected Queue<JXInputAxisEvent> axisEventQueue;
@@ -71,40 +69,20 @@ public class JavaInputListener implements Runnable, JXInputAxisEventListener, JX
         directionalEventQueue.add(event);        
     }
 
-    public void start() {
-        new Thread(this).start();
-    }
-
-    public void run() {
-        run = true;
-        while (run) {
-            JXInputManager.updateFeatures();
-            boolean sleep = true;
-            if (!axisEventQueue.isEmpty()) {
-                javaInputDevice.processEvent(axisEventQueue.poll());
-                sleep = false;
-            }
-            if (!buttonEventQueue.isEmpty()) {
-                try {
-                    javaInputDevice.processEvent(buttonEventQueue.poll());
-                } catch (ButtonException e) {}
-                sleep = false;
-            }
-            if (!directionalEventQueue.isEmpty()) {
-                try {
-                    javaInputDevice.processEvent(directionalEventQueue.poll());
-                } catch (ButtonException e) {}
-                sleep = false;
-            }
-            if (sleep) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException e) {}
-            }
+    public void work() {
+        JXInputManager.updateFeatures();
+        if (!axisEventQueue.isEmpty()) {
+            javaInputDevice.processEvent(axisEventQueue.poll());
+        } else if (!buttonEventQueue.isEmpty()) {
+            try {
+                javaInputDevice.processEvent(buttonEventQueue.poll());
+            } catch (ButtonException e) {}
+        } else if (!directionalEventQueue.isEmpty()) {
+            try {
+                javaInputDevice.processEvent(directionalEventQueue.poll());
+            } catch (ButtonException e) {}
+        } else {
+            sleep();
         }
-    }
-
-    public void exit() {
-        run = false;
     }
 }

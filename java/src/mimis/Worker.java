@@ -1,5 +1,8 @@
 package mimis;
 
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,7 +34,11 @@ public abstract class Worker implements Runnable {
     public void stop() {
         log.trace("Stop");
         if (active()) {
-            deactivate();
+            try {
+                deactivate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         }
         running = false;
         synchronized (this) {
@@ -57,7 +64,7 @@ public abstract class Worker implements Runnable {
         return active;
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         activate(THREAD);
     }
 
@@ -71,7 +78,7 @@ public abstract class Worker implements Runnable {
         }
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         active = false;
     }
 

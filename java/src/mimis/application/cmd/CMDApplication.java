@@ -3,6 +3,8 @@ package mimis.application.cmd;
 import java.io.IOException;
 
 import mimis.Application;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.util.VBScript;
 
@@ -20,7 +22,7 @@ public abstract class CMDApplication extends Application {
         this.title = title;
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         String key = String.format("%s\\%s", REGISTRY, program);
         // Check of naam is gevonden in register
         String path = Native.getValue(key);
@@ -29,8 +31,7 @@ public abstract class CMDApplication extends Application {
             command = Native.replaceVariables(command);
             process = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
-            e.printStackTrace();
-            //throw new ApplicationInitialiseException();
+            throw new ActivateException();
         }
         super.activate();
     }
@@ -39,11 +40,11 @@ public abstract class CMDApplication extends Application {
         try {
             return active = VBScript.isRunning(program);
         } catch (IOException e) {
-            return false;
+            return active = false;
         }
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         if (process != null) {
             process.destroy();
         }

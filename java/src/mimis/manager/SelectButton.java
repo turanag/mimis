@@ -6,11 +6,13 @@ import javax.swing.Action;
 import javax.swing.JToggleButton;
 
 import mimis.Worker;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
+// Eventueel handigere knoppen gebruiken ivm terugtogglen
 public class SelectButton<T extends Worker & Titled> extends JToggleButton implements ItemListener {
     protected Log log = LogFactory.getLog(getClass());
 
@@ -32,10 +34,20 @@ public class SelectButton<T extends Worker & Titled> extends JToggleButton imple
         int state = itemEvent.getStateChange();
         if (state == ItemEvent.SELECTED) {
             System.out.println("Selected");
-            activatable.activate();
+            try {
+                activatable.activate();
+            } catch (ActivateException e) {
+                // Het knopje moet worden terug getoggled
+                log.error(e);
+            }
         } else {
             System.out.println("Deselected");
-            activatable.deactivate();
+            try {
+                activatable.deactivate();
+            } catch (DeactivateException e) {
+                // Het knopje moet worden terug getoggled
+                log.error(e);
+            }
         }
     }
 

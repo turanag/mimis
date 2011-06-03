@@ -6,7 +6,6 @@ import mimis.device.jintellitype.JIntellitypeDevice;
 import mimis.device.lirc.LircDevice;
 import mimis.device.network.NetworkDevice;
 import mimis.device.panel.PanelDevice;
-import mimis.device.player.PlayerDevice;
 import mimis.device.wiimote.WiimoteDevice;
 import mimis.event.EventRouter;
 import mimis.event.router.GlobalRouter;
@@ -36,7 +35,6 @@ public class Client {
             new WiimoteDevice(),
             new PanelDevice(),
             new JIntellitypeDevice(),
-            new PlayerDevice(),
             new RumblepadDevice(),
             new Extreme3DDevice(),
             new NetworkDevice()};

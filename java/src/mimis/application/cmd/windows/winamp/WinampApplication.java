@@ -40,7 +40,7 @@ public class WinampApplication extends WindowsApplication {
     }
 
     public void action(Action action) {
-        System.out.println("WinampApplication: " + action);
+        log.trace("WinampApplication: " + action);
         switch (action) {
             case PLAY:
                 System.out.println(user(0, IPC_ISPLAYING));

@@ -13,7 +13,7 @@ public class GomPlayerApplication extends WindowsApplication {
     }
 
     public void action(Action action) {
-        System.out.println("GomPlayerApplication: " + action);
+        log.trace("GomPlayerApplication: " + action);
         switch (action) {
             case PLAY:
                 command(0x800C);

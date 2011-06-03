@@ -22,7 +22,8 @@ public class RumblepadDevice extends JavaInputDevice {
         super(NAME);
     }
 
-    public void initialise(){
+    public void start() {
+        super.start();
         add(
             new Press(RumblepadButton.ONE),
             new Task(Target.APPLICATION, Action.PLAY));

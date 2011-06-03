@@ -1,7 +1,8 @@
 package mimis.application.itunes;
 
 import mimis.Application;
-import mimis.event.Feedback;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
@@ -23,12 +24,8 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         super(TITLE);        
         iTunes = new iTunes();        
     }
-    
-    /*public boolean active() {
-        return active;
-    }*/
-    
-    public void activate() {
+
+    public void activate() throws ActivateException {
         synchronized (iTunes) {
             iTunes.connect();
             iTunes.addEventHandler(this);
@@ -37,31 +34,29 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     }
 
     public boolean active() {
-        //log.info("Check iTunes");
         try {
-            iTunes.getCurrentTrack();
+            iTunes.getMute();
             active = true;
         } catch (Exception e) {
-            //log.fatal(e);
             active = false;
         }
-        //log.info(active);
         return active;
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         try {
             synchronized (iTunes) {
                 iTunes.quit();
             }
         } catch (Exception e) {
-            log.info("Unexpected deactivation exception", e);
+            throw new DeactivateException();
+        } finally {
+            super.deactivate();
         }
-        super.deactivate();
     }
- 
+
     protected void action(Action action) {
-        System.out.println("iTunesApplication: " + action);
+        log.trace("iTunesApplication: " + action);
         switch (action) {
             case PLAY:
                 iTunes.playPause();
@@ -108,20 +103,19 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         return iTunes.getSoundVolume();
     }
 
-    /* iTunesEventInterface => naar eigen class? */
     public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
     public void onPlayerPlayEvent(ITTrack iTrack) {
         if (active) {
-            System.out.println("iTunes play");
-            eventRouter.add(new Feedback());
+            log.trace("iTunesEvent: play");
         }
     }
+    
     public void onPlayerStopEvent(ITTrack iTrack) {
         if (active) {
-            System.out.println("iTunes stop");
-            eventRouter.add(new Feedback());
+            log.trace("iTunesEvent: stop");
         }
     }
+
     public void onPlayerPlayingTrackChangedEvent(ITTrack iTrack) {}
     public void onCOMCallsDisabledEvent(ITCOMDisabledReason reason) {}
     public void onCOMCallsEnabledEvent() {}

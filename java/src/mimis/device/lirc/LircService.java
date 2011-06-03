@@ -15,6 +15,8 @@ import java.util.Scanner;
 
 import mimis.Worker;
 import mimis.exception.button.UnknownButtonException;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 
 public class LircService extends Worker {
     public static final String IP = "127.0.0.1";
@@ -50,7 +52,7 @@ public class LircService extends Worker {
         lircButtonListenerList.remove(lircButtonListener);
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         try {
             socket = new Socket(ip, port);
 
@@ -60,22 +62,25 @@ public class LircService extends Worker {
             outputStream = socket.getOutputStream();
             printWriter = new PrintWriter(outputStream);
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            log.info(e);
+            throw new ActivateException();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e);
+            throw new ActivateException();
         }
         super.activate();
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         try {
             inputStream.close();
             outputStream.close();
             socket.close();
         } catch (IOException e) {
-            //e.printStackTrace();
+            log.error(e);
+        } finally {
+            super.deactivate();
         }
-        super.deactivate();
     }
 
     public void work() {
@@ -83,13 +88,13 @@ public class LircService extends Worker {
             String string = bufferedReader.readLine();
             try {
                 LircButton lircButton = parseButton(new Scanner(string));
-                //log.debug(String.format("Lirc button: %s", lircButton));
+                log.trace("LircButton: " + lircButton);
                 for (LircButtonListener lircbuttonListener : lircButtonListenerList) {
                     lircbuttonListener.add(lircButton);
                 }
             } catch (UnknownButtonException e) {}
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -99,7 +104,7 @@ public class LircService extends Worker {
             scanner.next();
             String code = scanner.next();
             String remote = scanner.next();
-            //log.debug(String.format("%s: %s", remote, code));            
+            //log.debug(String.format("%s: %s", remote, code));
             LircButton[] buttonArray = buttonMap.get(remote);
             if (buttonArray != null) {            
                 for (LircButton button : buttonArray) {
@@ -108,12 +113,9 @@ public class LircService extends Worker {
                     }
                 }
             }
-        } catch (InputMismatchException e) {}
+        } catch (InputMismatchException e) {
+            log.error(e);
+        }
         throw new UnknownButtonException();
-    }
-
-    public static void main(String[] args) {        
-        new LircDevice().activate();
-        while (true);
     }
 }

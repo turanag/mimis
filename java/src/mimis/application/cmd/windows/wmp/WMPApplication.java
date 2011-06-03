@@ -13,8 +13,7 @@ public class WMPApplication extends WindowsApplication {
     }
 
     public void action(Action action) {
-        System.out.println("WMPApplication: " + action);
-        System.out.println(handle);
+        log.trace("WMPApplication: " + action);
         switch (action) {
             case PLAY:
                 command(18808);

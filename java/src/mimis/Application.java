@@ -1,6 +1,7 @@
 package mimis;
 
 import mimis.event.EventHandler;
+import mimis.exception.worker.DeactivateException;
 import mimis.manager.Titled;
 
 public abstract class Application extends EventHandler implements Titled, Exitable {
@@ -16,10 +17,14 @@ public abstract class Application extends EventHandler implements Titled, Exitab
         return title;
     }
 
-    public void exit() {
+    public void stop() {
         if (active()) {
-            deactivate();
+            try {
+                deactivate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         }
-        stop();
+        super.stop();
     }
 }

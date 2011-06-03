@@ -1,5 +1,5 @@
 package mimis;
 
 public interface Exitable {
-    public void exit();
+    public void stop();
 }

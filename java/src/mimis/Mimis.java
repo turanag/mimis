@@ -2,12 +2,12 @@ package mimis;
 
 import mimis.event.EventHandler;
 import mimis.event.EventRouter;
+import mimis.exception.worker.ActivateException;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 
 public class Mimis extends EventHandler {
     protected Log log = LogFactory.getLog(getClass());
@@ -19,11 +19,11 @@ public class Mimis extends EventHandler {
 
     protected Manager<Application> applicationManager;
     protected Manager<Device> deviceManager;
-    
+
     public Mimis(EventRouter eventRouter) {
         this(eventRouter, new Application[0], new Device[0]);
     }
-    
+
     public Mimis(EventRouter eventRouter, Application[] applicationArray) {
         this(eventRouter, applicationArray, new Device[0]);
     }
@@ -36,20 +36,20 @@ public class Mimis extends EventHandler {
         EventHandler.initialise(eventRouter);
         applicationManager = new Manager<Application>(applicationArray);
         deviceManager = new Manager<Device>(deviceArray);
-        
+
         this.applicationArray = applicationArray;
         this.deviceArray = deviceArray;
         applicationCycle = new ArrayCycle<Application>(applicationArray);
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         log.debug("Activate managers");
         applicationManager.activate();
-        deviceManager.start();
-    
+        deviceManager.activate();
+
         log.debug("Create gui");
         gui = new GUI(this, applicationManager, deviceManager);
-    
+
         if (applicationCycle.size() > 0) {
             log.debug("Initialise application cycle");
             eventRouter.set(applicationCycle.current());
@@ -57,15 +57,14 @@ public class Mimis extends EventHandler {
         super.activate(false);
     }
 
-    public void exit() {
+    public void stop() {
         log.debug("Stop event router");
         eventRouter.stop();
-        
+
         log.debug("Stop managers");
         applicationManager.stop();
-        deviceManager.stop();        
-
-        stop();
+        deviceManager.stop();
+        super.stop();
     }
 
     protected void action(Action action) {
@@ -80,7 +79,7 @@ public class Mimis extends EventHandler {
                 System.out.println(applicationCycle.current());
                 break;
             case EXIT:
-                exit();
+                stop();
                 break;
         }
     }

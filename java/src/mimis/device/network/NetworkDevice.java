@@ -11,10 +11,10 @@ import mimis.Device;
 import mimis.Event;
 import mimis.Worker;
 import mimis.event.Feedback;
+import mimis.exception.worker.ActivateException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 
 public class NetworkDevice extends Device {
     protected static final String TITLE = "Network";
@@ -34,12 +34,12 @@ public class NetworkDevice extends Device {
         this(PORT);
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
         try {
             server = new Server(port);
             server.start();
         } catch (IOException e) {
-            //throw new DeviceInitialiseException();
+            throw new ActivateException();
         }
     }
 
@@ -63,16 +63,16 @@ public class NetworkDevice extends Device {
         public Server(int port) throws IOException {
             serverSocket = new ServerSocket(port);
             clientList = new ArrayList<Client>();
-            System.out.println("Server started");
+            log.trace("Server started");
         }
 
         public void work() {
-            System.out.println("Server is waiting for clients");
+            log.trace("Server is waiting for clients");
             try {
                 Socket socket = serverSocket.accept();
                 Client client = new Client(socket);
                 client.start();
-                System.out.println("Client connected");
+                log.trace("Client connected");
             } catch (IOException e) {}
         }
         
@@ -102,10 +102,9 @@ public class NetworkDevice extends Device {
                 do {
                     object = objectInputStream.readObject();
                     if (object instanceof Event) {
-                        log.debug("event binnen!");
+                        log.trace(object);
                         eventRouter.add((Event) object);
                     }
-                    log.debug("iets te lezen!");                    
                 } while (object != null);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -115,10 +114,10 @@ public class NetworkDevice extends Device {
         }
 
         public void stop() {
-            System.out.println("stoppen");
             try {
                 disconnect();
             } catch (IOException e) {
+                log.error(e);
             } finally {
                 clientList.remove(this);
             }

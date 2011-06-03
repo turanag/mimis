@@ -29,7 +29,8 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         Hotkey.initialise(hotkeyList, jit);
     }
 
-    public void initialise() {
+    public void start() {
+        super.start();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         add(
@@ -67,23 +68,27 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
     }
 
     public void onIntellitype(int command) {
-        try {
+        if (active) {
+            try {
             CommandButton commandButton = CommandButton.create(command);
             add(new Press(commandButton));
             add(new Release(commandButton));
-        } catch (UnknownButtonException e) {
-            e.printStackTrace();
+            } catch (UnknownButtonException e) {
+                log.error(e);
+            }
         }
     }
 
     public void onHotKey(int id) {
-        Hotkey hotkey = hotkeyList.get(id);
-        add(new Press(hotkey));
-        add(new Release(hotkey));
+        if (active) {
+            Hotkey hotkey = hotkeyList.get(id);
+            add(new Press(hotkey));
+            add(new Release(hotkey));
+        }
     }
 
-    public void exit() {
-        super.exit();
+    public void stop() {
+        super.stop();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);
         jit.cleanUp();
