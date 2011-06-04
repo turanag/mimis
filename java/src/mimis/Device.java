@@ -2,16 +2,12 @@ package mimis;
 
 import mimis.event.EventHandler;
 import mimis.event.Task;
-import mimis.event.task.Continuous;
-import mimis.event.task.Stopper;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.macro.Sequence;
 import mimis.macro.SequenceListener;
 import mimis.macro.State;
-import mimis.macro.state.Hold;
 import mimis.macro.state.Press;
-import mimis.macro.state.Release;
 import mimis.manager.Titled;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {
@@ -46,32 +42,6 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
 
     protected void add(Press press, Task task) {
         add(press, task, true);
-    }
-
-    protected void add(Hold hold, Task pressTask, Task releaseTask) {
-        Button button = hold.getButton();
-        add(new Press(button), pressTask, false);
-        add(new Release(button), releaseTask);
-    }
-
-    protected void add(Sequence startSequence, Sequence stopSequence, Continuous continuous) {
-        add(startSequence, continuous);
-        add(stopSequence, new Stopper(continuous));
-    }
-
-    protected void add(State startEvent, State stopEvent, Continuous continuous) {
-        add(startEvent, continuous);
-        add(stopEvent, new Stopper(continuous));
-    }
-
-    protected void add(Press startPress, Press stopPress, Continuous continuous) {
-        add(new Macro(startPress), continuous);
-        add(new Macro(stopPress), new Stopper(continuous));
-    }
-
-    protected void add(Hold hold, Continuous continuous) {
-        Button button = hold.getButton();
-        add(new Press(button), new Release(button), continuous);
     }
 
     /* Recognize events */

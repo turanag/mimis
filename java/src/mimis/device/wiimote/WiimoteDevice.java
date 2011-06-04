@@ -8,7 +8,6 @@ import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
-import mimis.macro.state.Hold;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
 import mimis.value.Action;
@@ -56,17 +55,17 @@ public class WiimoteDevice extends Device implements GestureListener {
         }
         wiimote.activateMotionSensing();   
 
-        add(
+        /*add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
-            new Task(Action.STOP));
+            new Task(Action.STOP));*/
         add(
             new Press(WiimoteButton.B),
             new Task(Action.SAVE));
         add(
             new Press(WiimoteButton.DOWN),
             new Task(Action.LOAD));
-        add(
+        /*add(
             new Hold(WiimoteButton.HOME),
             new Task(Action.RECOGNIZE),
             new Task(Action.STOP));/*

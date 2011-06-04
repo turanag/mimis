@@ -4,15 +4,13 @@ import mimis.Button;
 import mimis.device.javainput.DirectionButton;
 import mimis.device.javainput.JavaInputDevice;
 import mimis.event.Task;
-import mimis.event.task.Continuous;
-import mimis.event.task.Dynamic;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.worker.ActivateException;
-import mimis.macro.state.Hold;
 import mimis.macro.state.Press;
 import mimis.value.Action;
 import mimis.value.Target;
+
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
@@ -41,7 +39,7 @@ public class RumblepadDevice extends JavaInputDevice {
         add(
             new Press(RumblepadButton.EIGHT),
             new Task(Target.MIMIS, Action.PREVIOUS));
-        add(
+        /*add(
             new Hold(RumblepadButton.FIVE),
             new Dynamic(Action.FORWARD, Target.APPLICATION, 200, -30));
         add(
@@ -52,7 +50,7 @@ public class RumblepadDevice extends JavaInputDevice {
             new Continuous(Action.VOLUME_DOWN, Target.APPLICATION, 100));
         add(
             new Hold(RumblepadButton.TEN),
-            new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
+            new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));*/
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {
