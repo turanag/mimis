@@ -4,6 +4,7 @@ import mimis.event.EventHandler;
 import mimis.event.Task;
 import mimis.exception.WorkerException;
 import mimis.exception.worker.DeactivateException;
+import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.value.Action;
 

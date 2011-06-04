@@ -21,8 +21,18 @@ public abstract class EventHandler extends EventListener {
     protected void feedback(Feedback feedback) {}
 
     protected void task(Task task) {
-        action(task.getAction());
+        Action action = task.getAction();
+        switch (task.getSignal()) {
+            case BEGIN:
+                begin(action);
+                break;
+            case END:
+                end(action);
+                break;
+        }
     }
 
+    protected void begin(Action action) {}
+    protected void end(Action action) {}
     protected void action(Action action) {}
 }

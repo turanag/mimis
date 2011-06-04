@@ -8,6 +8,7 @@ import mimis.macro.Sequence;
 import mimis.macro.SequenceListener;
 import mimis.macro.State;
 import mimis.macro.state.Press;
+import mimis.manager.Exitable;
 import mimis.manager.Titled;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {

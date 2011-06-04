@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.swing.JButton;
 
+import mimis.manager.Exitable;
 import mimis.manager.SelectButton;
 import mimis.manager.Titled;
 
