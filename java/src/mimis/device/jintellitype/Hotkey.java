@@ -34,6 +34,10 @@ public class Hotkey implements Button {
         this(key.getCode());
     }
 
+    public Hotkey(int modifier, Key key) {
+        this(modifier, key.getCode());
+    }
+
     public static void initialise(ArrayList<Hotkey> actionList, JIntellitype jit) {
         Hotkey.hotkeyList = actionList;
         Hotkey.jit = jit;

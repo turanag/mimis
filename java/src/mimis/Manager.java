@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
 import mimis.manager.SelectButton;
 import mimis.manager.Titled;
@@ -19,10 +19,6 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
 
     protected T[] manageableArray;
     protected Map<T, SelectButton<T>> buttonMap;
-    
-    public Manager(String title) {
-        log.debug("Manager constructed");
-    }
 
     public Manager(T[] manageableArray) {
         this.manageableArray = manageableArray;
@@ -30,7 +26,6 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     }
 
     public void stop() {
-        super.stop();
         for (T manageable : manageableArray) {
             manageable.stop();
         }
@@ -45,15 +40,17 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
         }
     }
 
-    protected JToggleButton[] getButtons() {
-        return buttonMap.values().toArray(new JToggleButton[]{});
+    protected JButton[] getButtons() {
+        return buttonMap.values().toArray(new JButton[]{});
     }
 
     protected void work() {
         long before = Calendar.getInstance().getTimeInMillis();
         for (T manageable : manageableArray) {
             boolean active = manageable.active();
-            buttonMap.get(manageable).setPressed(active);
+            //buttonMap.get(manageable).getModel().setArmed(active);
+
+            buttonMap.get(manageable).getModel().setPressed(active);
         }
         long after = Calendar.getInstance().getTimeInMillis();
         int sleep = INTERVAL - (int) (after - before);

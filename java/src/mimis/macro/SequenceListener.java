@@ -3,14 +3,18 @@ package mimis.macro;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import mimis.Event;
 import mimis.event.EventHandler;
 import mimis.event.EventListener;
 import mimis.event.Task;
 import mimis.value.Target;
 
-
 public class SequenceListener {
+    protected Log log = LogFactory.getLog(getClass());
+
     protected EventHandler eventHandler;
     protected ArrayList<Sequence> sequenceList;
     protected HashMap<Sequence, Event> eventMap;
@@ -37,6 +41,7 @@ public class SequenceListener {
     }
 
     public void add(State state) {
+        log.trace(state);
         for (Sequence sequence : sequenceList) {
             activeList.add(new Active(sequence));
         }

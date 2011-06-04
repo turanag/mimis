@@ -5,6 +5,7 @@ import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
 import mimis.feedback.TextFeedback;
+import mimis.macro.SequenceListener;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 
@@ -35,16 +36,28 @@ public class Mimis extends EventHandler {
     }
 
     public Mimis(EventRouter eventRouter, Application[] applicationArray, Device[] deviceArray) {
-        EventHandler.initialise(eventRouter);
-        applicationManager = new Manager<Application>(applicationArray);
-        deviceManager = new Manager<Device>(deviceArray);
-
         this.applicationArray = applicationArray;
         this.deviceArray = deviceArray;
         applicationCycle = new ArrayCycle<Application>(applicationArray);
+
+        log.debug("Initialise EventHandler and SequenceListener");
+        EventHandler.initialise(eventRouter);
+        SequenceListener.initialise(eventRouter);
+
+        log.debug("Add EventListeners to EventRouter");
+        eventRouter.add(this);
+        eventRouter.add(applicationArray);
+        eventRouter.add(deviceArray);
+
+        log.debug("Create managers");
+        applicationManager = new Manager<Application>(applicationArray);
+        deviceManager = new Manager<Device>(deviceArray);
     }
 
     public void activate() throws ActivateException {
+        log.debug("Activate event router");
+        eventRouter.activate();
+
         log.debug("Activate managers");
         applicationManager.activate();
         deviceManager.activate();
@@ -85,10 +98,10 @@ public class Mimis extends EventHandler {
                 break;
         }
     }
-    
+
     protected void feedback(Feedback feedback) {
         if (feedback instanceof TextFeedback) {
-            gui.write(((TextFeedback) feedback).getText());
+            gui.writeLine(((TextFeedback) feedback).getText());
         }
     }
 }

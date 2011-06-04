@@ -5,16 +5,16 @@ import mimis.exception.button.UnknownButtonException;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 
 public enum RumblepadButton implements Button {
-    ONE    ("SelectButton 0"),
-    TWO    ("SelectButton 1"),
-    THREE  ("SelectButton 2"),
-    FOUR   ("SelectButton 3"),
-    FIVE   ("SelectButton 4"),
-    SIX    ("SelectButton 5"),
-    SEVEN  ("SelectButton 6"),
-    EIGHT  ("SelectButton 7"),
-    NINE   ("SelectButton 8"),
-    TEN    ("SelectButton 9");
+    ONE    ("Button 0"),
+    TWO    ("Button 1"),
+    THREE  ("Button 2"),
+    FOUR   ("Button 3"),
+    FIVE   ("Button 4"),
+    SIX    ("Button 5"),
+    SEVEN  ("Button 6"),
+    EIGHT  ("Button 7"),
+    NINE   ("Button 8"),
+    TEN    ("Button 9");
 
     protected String code;
 

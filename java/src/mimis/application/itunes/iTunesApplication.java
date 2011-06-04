@@ -57,6 +57,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
 
     protected void action(Action action) {
         log.trace("iTunesApplication: " + action);
+        if (!active) return;
         switch (action) {
             case PLAY:
                 iTunes.playPause();

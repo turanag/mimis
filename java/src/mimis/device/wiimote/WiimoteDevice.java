@@ -7,6 +7,7 @@ import mimis.event.Feedback;
 import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
+import mimis.exception.worker.ActivateException;
 import mimis.macro.state.Hold;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
@@ -45,7 +46,16 @@ public class WiimoteDevice extends Device implements GestureListener {
         gestureDevice.add(this);
     }
 
-    public void initialise() {
+    public void activate() throws ActivateException {
+        super.activate();
+        try {
+            wiimote = wiimoteService.getDevice(this);
+        } catch (DeviceNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        wiimote.activateMotionSensing();   
+
         add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
@@ -165,16 +175,6 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void feedback(Feedback feedback) {
         System.out.println("Wiimote feedback");
         wiimote.rumble(RUMBLE);
-    }
-
-    public void activate() {
-        try {
-            wiimote = wiimoteService.getDevice(this);
-        } catch (DeviceNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        wiimote.activateMotionSensing();        
     }
 
     public void deactivate() {

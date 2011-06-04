@@ -1,18 +1,16 @@
 package mimis.manager;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Action;
-import javax.swing.JToggleButton;
-
+import javax.swing.JButton;
 import mimis.Worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SelectButton<T extends Worker & Titled> extends JToggleButton implements ItemListener {
+public class SelectButton<T extends Worker & Titled> extends JButton implements ActionListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final long serialVersionUID = 1L;
@@ -22,31 +20,23 @@ public class SelectButton<T extends Worker & Titled> extends JToggleButton imple
     public SelectButton(T activatable) {
         this.activatable = activatable;
         setText(activatable.title());
-        addItemListener(this);
+        setFocusable(false);
+        addActionListener(this);
     }
 
-    public void itemStateChanged(ItemEvent itemEvent) {
-        int state = itemEvent.getStateChange();
-        if (state == ItemEvent.SELECTED) {
-            log.trace("Selected: " + activatable.title());
-            setPressed(false);
-            try {
-                activatable.activate();
-            } catch (ActivateException e) {
-                log.error(e);
-            }
-        } else {
-            log.trace("Deselected: " + activatable.title());
-            setPressed(true);
+    public void actionPerformed(ActionEvent event) {
+        if (activatable.active()) {
             try {
                 activatable.deactivate();
             } catch (DeactivateException e) {
                 log.error(e);
             }
-        }
-    }
-
-    public void setPressed(boolean pressed) {
-        getModel().setPressed(pressed);
+        } else {
+            try {
+                activatable.activate();
+            } catch (ActivateException e) {
+                log.error(e);
+            }
+        }        
     }
 }

@@ -17,20 +17,15 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public class RumblepadDevice extends JavaInputDevice {
+    protected static final String TITLE = "RumblePad";
     protected static final String NAME = "Logitech RumblePad 2 USB";
 
     public RumblepadDevice() {
-        super(NAME);
+        super(TITLE, NAME);
     }
 
     public void activate() throws ActivateException {
         super.activate();
-        start();
-    }
-
-    public void start() {
-        log.fatal("start");
-
         add(
             new Press(RumblepadButton.ONE),
             new Task(Target.APPLICATION, Action.PLAY));
@@ -58,7 +53,6 @@ public class RumblepadDevice extends JavaInputDevice {
         add(
             new Hold(RumblepadButton.TEN),
             new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
-        super.start();
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

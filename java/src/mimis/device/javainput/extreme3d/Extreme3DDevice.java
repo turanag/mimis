@@ -8,6 +8,7 @@ import mimis.event.Task;
 import mimis.exception.MacroException;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
+import mimis.exception.worker.ActivateException;
 import mimis.macro.state.Hold;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
@@ -17,14 +18,15 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public class Extreme3DDevice extends JavaInputDevice {
+    protected static final String TITLE = "Extreme 3D";
     protected static final String NAME = "Logitech Extreme 3D";
 
     public Extreme3DDevice() {
-        super(NAME);
+        super(TITLE, NAME);
     }
 
-    public void start() {
-        super.start();
+    public void activate() throws ActivateException {
+        super.activate();
         try {
             add(
                 new Press(Extreme3DButton.TWELVE),

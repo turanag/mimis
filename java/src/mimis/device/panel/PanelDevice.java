@@ -6,6 +6,7 @@ import javax.swing.WindowConstants;
 
 import mimis.Device;
 import mimis.event.Task;
+import mimis.exception.worker.ActivateException;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
 import mimis.value.Action;
@@ -20,7 +21,8 @@ public class PanelDevice extends Device implements PanelButtonListener {
         super(TITLE);
     }
 
-    public void activate() {
+    public void activate() throws ActivateException {
+        super.activate();
         panel = new Panel(this) {
             protected static final long serialVersionUID = 1L;
             protected void processWindowEvent(WindowEvent e) {

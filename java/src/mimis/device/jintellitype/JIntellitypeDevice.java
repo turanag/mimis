@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import mimis.Device;
 import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
+import mimis.exception.worker.ActivateException;
 import mimis.macro.state.Press;
 import mimis.macro.state.Release;
 import mimis.value.Action;
@@ -29,8 +30,8 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         Hotkey.initialise(hotkeyList, jit);
     }
 
-    public void start() {
-        super.start();
+    public void activate() throws ActivateException {
+        super.activate();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
         add(
@@ -61,6 +62,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'r'),
             new Hotkey(Modifier.CTRL | Modifier.WIN, 's'),
             new Continuous(Action.REPEAT, Target.APPLICATIONS, 500));*/
+
     }
 
     protected void add(Hotkey hotkey, Task task) {

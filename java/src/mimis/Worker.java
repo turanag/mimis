@@ -16,7 +16,6 @@ public abstract class Worker implements Runnable {
     protected boolean active = false;
 
     public void start(boolean thread) {
-        log.trace("Start");
         running = true;
         if (thread) {
             log.debug("Start thread");
@@ -69,10 +68,10 @@ public abstract class Worker implements Runnable {
     }
 
     public void activate(boolean thread) {
+        active = true;
         if (!running) {
             start(thread);
         }
-        active = true;
         synchronized (this) {
             notifyAll();
         }

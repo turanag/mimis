@@ -24,6 +24,7 @@ public abstract class WindowsApplication extends CMDApplication {
 
     public void activate() throws ActivateException {
         handle = Windows.findWindow(name, null);
+        log.info(handle);
         if (handle < 1) {
             super.activate();
             sleep(START_SLEEP);
@@ -34,7 +35,11 @@ public abstract class WindowsApplication extends CMDApplication {
             throw new ActivateException();
         }
     }
-    
+
+    public boolean active() {
+        return (handle = Windows.findWindow(name, null)) > 0;
+    }
+
     protected void command(Command command) {
         Windows.sendMessage(handle, Windows.WM_APPCOMMAND, handle, command.getCode() << 16);
     }

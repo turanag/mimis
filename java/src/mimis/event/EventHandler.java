@@ -11,12 +11,8 @@ public abstract class EventHandler extends EventListener {
         EventHandler.eventRouter = eventRouter;
     }
 
-    protected void initialise() {
-        eventRouter.add(this);
-    }
-
     public void event(Event event) {
-        System.out.println(event);
+        log.debug("aaa" + event);
         if (event instanceof Feedback) {
             feedback((Feedback) event);
         } else if (event instanceof Task) {

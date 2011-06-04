@@ -17,8 +17,10 @@ public abstract class EventRouter extends EventListener {
         eventListenerList = new ArrayList<EventListener>();
     }
 
-    public void add(EventListener eventListener) {
-        eventListenerList.add(eventListener);
+    public void add(EventListener... eventListenerArray) {
+        for (EventListener eventListener : eventListenerArray) {
+            eventListenerList.add(eventListener);
+        }
     }
 
     public void remove(EventListener eventListener) {

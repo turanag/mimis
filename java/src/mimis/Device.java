@@ -4,6 +4,7 @@ import mimis.event.EventHandler;
 import mimis.event.Task;
 import mimis.event.task.Continuous;
 import mimis.event.task.Stopper;
+import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.macro.Sequence;
 import mimis.macro.SequenceListener;
@@ -15,21 +16,15 @@ import mimis.manager.Titled;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {
     protected String title;
-    protected boolean active;
     protected SequenceListener sequenceListener;
-
-    static {
-        SequenceListener.initialise(eventRouter);
-    }
 
     public Device(String title) {
         this.title = title;
     }
-    
-    public void start() {
-        log.fatal("start");
+
+    public void activate() throws ActivateException {
+        super.activate();
         sequenceListener = new SequenceListener(this);
-        super.start();
     }
 
     /* Register macro's */

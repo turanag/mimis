@@ -40,6 +40,7 @@ public class WinampApplication extends WindowsApplication {
     }
 
     public void action(Action action) {
+        log.fatal(handle);
         log.trace("WinampApplication: " + action);
         switch (action) {
             case PLAY:

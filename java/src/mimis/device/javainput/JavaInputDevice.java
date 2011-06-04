@@ -18,17 +18,22 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public abstract class JavaInputDevice extends Device {
-    public JavaInputDevice(String title) {
+    protected String name;
+
+    public JavaInputDevice(String title, String name) {
         super(title);
+        this.name = name;
     }
 
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 
-    public void activate(String name) throws ActivateException {
-        log.fatal("act");
+    public void activate() throws ActivateException {
+        super.activate();
         try {
-            javaInputListener = new JavaInputListener(this, getDevice(name));
+            JXInputDevice jxinputDevice = getDevice(name);
+            log.debug(jxinputDevice);
+            javaInputListener = new JavaInputListener(this, jxinputDevice);
         } catch (DeviceNotFoundException e) {
             throw new ActivateException();
         }
