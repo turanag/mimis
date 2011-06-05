@@ -39,7 +39,7 @@ public class WinampApplication extends WindowsApplication {
         muted = volume == 0;
     }
 
-    public void action(Action action) {
+    public void end(Action action) {
         log.fatal(handle);
         log.trace("WinampApplication: " + action);
         switch (action) {

@@ -33,25 +33,26 @@ public class GlobalRouter extends EventRouter {
                             }                 
                         } while (object != null);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        log.error(e);
                     } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+                        log.error(e);
                     }
                 }
             };
             return;
         } catch (UnknownHostException e) {
-        } catch (IOException e) {}
+            log.error(e);
+        } catch (IOException e) {
+            log.error(e);
+        }
         throw new GlobalRouterException();
     }
 
     public void event(Event event) {
-        System.out.println("NetworkSpreader: event!");
-        //System.out.println(socket.isConnected());
         try {
             objectOutputStream.writeObject(event);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 }

@@ -4,12 +4,12 @@ import mimis.event.EventHandler;
 import mimis.event.Task;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.macro.Sequence;
-import mimis.macro.SequenceListener;
-import mimis.macro.State;
-import mimis.macro.state.Press;
 import mimis.manager.Exitable;
 import mimis.manager.Titled;
+import mimis.sequence.Sequence;
+import mimis.sequence.SequenceListener;
+import mimis.sequence.State;
+import mimis.sequence.state.Press;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {
     protected String title;

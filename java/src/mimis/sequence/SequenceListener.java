@@ -1,4 +1,4 @@
-package mimis.macro;
+package mimis.sequence;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,20 +10,21 @@ import mimis.Event;
 import mimis.event.EventHandler;
 import mimis.event.EventListener;
 import mimis.event.Task;
+import mimis.value.Signal;
 import mimis.value.Target;
 
 public class SequenceListener {
     protected Log log = LogFactory.getLog(getClass());
 
-    protected EventHandler eventHandler;
+    protected EventHandler self;
     protected ArrayList<Sequence> sequenceList;
     protected HashMap<Sequence, Event> eventMap;
     protected ArrayList<Active> activeList;
     
     protected static EventListener eventListener;
 
-    public SequenceListener(EventHandler eventHandler) {
-        this.eventHandler = eventHandler;
+    public SequenceListener(EventHandler self) {
+        this.self = self;
         sequenceList = new ArrayList<Sequence>();
         eventMap = new HashMap<Sequence, Event>();
         activeList = new ArrayList<Active>();
@@ -48,13 +49,11 @@ public class SequenceListener {
         ArrayList<Active> removeList = new ArrayList<Active>();
         for (Active active : activeList) {
             if (active.next(state)) {
-                if (active.last()) {
-                    Event event = eventMap.get(active.getSequence());
-                    if (event.getTarget().equals(Target.SELF)) {
-                        eventHandler.event(event);
-                    } else {
-                        eventListener.add(event);
-                    }
+                Event event = eventMap.get(active.getSequence());
+                if (active.first()) {
+                    add(event, Signal.BEGIN);
+                } else if (active.last()) {
+                    add(event, Signal.END);
                     removeList.add(active);
                 }
             } else {
@@ -63,6 +62,18 @@ public class SequenceListener {
         }
         for (Active active : removeList) {
             activeList.remove(active);
+        }
+    }
+    
+    protected void add(Event event, Signal signal) {
+        if (event instanceof Task) {
+            Task task = (Task) event;
+            task.setSignal(signal);
+        }
+        if (event.getTarget().equals(Target.SELF)) {
+            eventListener.add(event);
+        } else {
+            self.add(event);
         }
     }
 }

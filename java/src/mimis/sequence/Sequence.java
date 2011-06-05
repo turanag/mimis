@@ -1,4 +1,4 @@
-package mimis.macro;
+package mimis.sequence;
 
 public class Sequence {
     protected State[] eventArray;

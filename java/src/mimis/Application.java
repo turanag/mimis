@@ -14,7 +14,6 @@ public abstract class Application extends EventHandler implements Titled, Exitab
 
     public Application(String title) {
         this.title = title;
-        //initialise();
     }
 
     public String title() {

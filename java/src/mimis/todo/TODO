@@ -1,46 +1,15 @@
 TODO
 ------------
-mappings lezen vanuit config bestand
-
 exeptions en foutmeldingen nakijken/afhandelen/loggen
 
-initialises en exits controleren op succes. tussendoor afgesloten apps en devs herkennen en restarten? op runtime nieuwe applicaties of devices toevoegen of sluiten.
-
-nummerinfo weergeven, waar? via feedback?
-
-javadoc maken, class diagram opstellen enz.....
-
-meer applicaties implementeren, zoals VLC, WMP, Youtube? (interface naar flash?)
-
-client maken die remote devices kan beheren en lokaal acties kan uitvoeren
+feedback?
 
 mogelijkheid tot webstart onderzoeken
-
-alle listeners in gezamelijk pakket plaatsen?
 
 
 IN PROGRESS
 -------------
-naamgeving en indeling classes/packages controleren
-+TaskGatherererer hernoemt naar TaskManager
-+value package waar algemene (gedeelde) enums in komen
 
 exporteren naar uitvoerbare jar file
-+Eclipse kan exporteren, maar bij uitvoeren gebeurd er niets. Moet er een status scherm komen? (Een swing console bijvoorbeeld)
 
-logo ontwerpen
-+logo is af, favicon maken?
-
-feedback systeem implementeren, rumble voor zowel wiimote als rumblepad
-+feedback voor rumblepad komt er niet, te veel werk en gebruikte api lijkt niet eenvoudig aanpasbaar
-
-algemene listener parent class / interface maken? die zou standaard thread functies implementeren / vereisen: start, run, stop
-+hier zijn al enkele aanpassingen aan gemaakt, de main stuurt nu direct de TaskManager aan in plaats van dat het vannuit een Device of Application gebeurd
-
-log bijhouden
-+werkt via apache commons logging, nu nog boodschappen toevoegen!
-
-
-DONE
--------------
-lantextdevice generiek maken met normale textdevice
+favicon maken?

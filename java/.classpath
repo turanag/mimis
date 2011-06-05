@@ -6,6 +6,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Mimis/native"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="native"/>
 	<classpathentry kind="lib" path="cfg"/>
 	<classpathentry kind="lib" path="resource"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>

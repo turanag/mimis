@@ -6,8 +6,7 @@ import mimis.value.Signal;
 import mimis.value.Target;
 
 public class Task extends Event {
-    public static Target TARGET = Target.SELF;
-    public static Signal SIGNAL = Signal.END;
+    public static final Target TARGET = Target.SELF;
 
     protected Action action;
     protected Signal signal;
@@ -17,12 +16,8 @@ public class Task extends Event {
     }
 
     public Task(Target target, Action action) {
-        this(target, action, SIGNAL);
-    }
-
-    public Task(Target target, Action action, Signal signal) {
-        super(target);
-        this.action = action;
+       super(target);
+       this.action = action;
     }
 
     public Action getAction() {
@@ -31,5 +26,9 @@ public class Task extends Event {
 
     public Signal getSignal() {
         return signal;
+    }
+
+    public void setSignal(Signal signal) {
+        this.signal = signal;
     }
 }

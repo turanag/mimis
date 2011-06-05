@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import mimis.Application;
 
-
 public abstract class EventRouter extends EventListener {
     protected ArrayList<EventListener> eventListenerList;
     protected Application application;

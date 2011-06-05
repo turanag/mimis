@@ -1,7 +1,7 @@
-package mimis.macro.state;
+package mimis.sequence.state;
 
 import mimis.Button;
-import mimis.macro.State;
+import mimis.sequence.State;
 
 public class Release extends State {   
     public Release(Button button) {

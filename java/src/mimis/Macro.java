@@ -3,11 +3,11 @@ package mimis;
 import java.util.ArrayList;
 
 import mimis.exception.macro.StateOrderException;
-import mimis.macro.Sequence;
-import mimis.macro.State;
-import mimis.macro.state.Hold;
-import mimis.macro.state.Press;
-import mimis.macro.state.Release;
+import mimis.sequence.Sequence;
+import mimis.sequence.State;
+import mimis.sequence.state.Hold;
+import mimis.sequence.state.Press;
+import mimis.sequence.state.Release;
 
 
 public class Macro extends Sequence {

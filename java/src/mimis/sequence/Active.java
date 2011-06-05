@@ -1,4 +1,4 @@
-package mimis.macro;
+package mimis.sequence;
 
 
 public class Active {
@@ -24,6 +24,10 @@ public class Active {
     public boolean next(State state) {
         State next = sequence.get(++step);
         return next == null ? false : state.equals(next);
+    }
+    
+    public boolean first() {
+        return step == 0;
     }
 
     public boolean last() {

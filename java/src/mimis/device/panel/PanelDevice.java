@@ -7,8 +7,8 @@ import javax.swing.WindowConstants;
 import mimis.Device;
 import mimis.event.Task;
 import mimis.exception.worker.ActivateException;
-import mimis.macro.state.Press;
-import mimis.macro.state.Release;
+import mimis.sequence.state.Press;
+import mimis.sequence.state.Release;
 import mimis.value.Action;
 import mimis.value.Target;
 

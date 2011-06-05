@@ -7,7 +7,7 @@ import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.worker.ActivateException;
-import mimis.macro.state.Press;
+import mimis.sequence.state.Press;
 import mimis.value.Action;
 import mimis.value.Target;
 

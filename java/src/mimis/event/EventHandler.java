@@ -34,5 +34,4 @@ public abstract class EventHandler extends EventListener {
 
     protected void begin(Action action) {}
     protected void end(Action action) {}
-    protected void action(Action action) {}
 }

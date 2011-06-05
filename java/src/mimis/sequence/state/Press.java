@@ -1,7 +1,7 @@
-package mimis.macro.state;
+package mimis.sequence.state;
 
 import mimis.Button;
-import mimis.macro.State;
+import mimis.sequence.State;
 
 public class Press extends State {
     public Press(Button button) {

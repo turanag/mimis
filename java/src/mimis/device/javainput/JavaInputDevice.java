@@ -8,8 +8,8 @@ import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.macro.state.Press;
-import mimis.macro.state.Release;
+import mimis.sequence.state.Press;
+import mimis.sequence.state.Release;
 
 import de.hardcode.jxinput.JXInputDevice;
 import de.hardcode.jxinput.JXInputManager;
