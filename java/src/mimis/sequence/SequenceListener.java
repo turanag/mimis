@@ -71,9 +71,9 @@ public class SequenceListener {
             task.setSignal(signal);
         }
         if (event.getTarget().equals(Target.SELF)) {
-            eventListener.add(event);
-        } else {
             self.add(event);
+        } else {
+            eventListener.add(event);
         }
     }
 }

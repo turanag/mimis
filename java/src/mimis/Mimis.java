@@ -68,6 +68,7 @@ public class Mimis extends EventHandler {
         if (applicationCycle.size() > 0) {
             log.debug("Initialise application cycle");
             eventRouter.set(applicationCycle.current());
+            add(new TextFeedback("Current application: " + applicationCycle.current().title()));
         }
         super.activate(false);
     }
@@ -82,7 +83,7 @@ public class Mimis extends EventHandler {
         super.stop();
     }
 
-    protected void action(Action action) {
+    protected void end(Action action) {
         log.debug(String.format("action(%s)", action));
         switch (action) {
             case NEXT:
