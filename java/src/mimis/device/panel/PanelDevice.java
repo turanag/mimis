@@ -45,6 +45,8 @@ public class PanelDevice extends Device implements PanelButtonListener {
         add(new Press(PanelButton.VOLUME_DOWN), new Task(Target.APPLICATION, Action.VOLUME_DOWN));
         add(new Press(PanelButton.MUTE), new Task(Target.APPLICATION, Action.MUTE));
         add(new Press(PanelButton.VOLUME_UP), new Task(Target.APPLICATION, Action.VOLUME_UP));
+        add(new Press(PanelButton.REPEAT), new Task(Target.APPLICATION, Action.REPEAT));
+        add(new Press(PanelButton.SHUFFLE), new Task(Target.APPLICATION, Action.SHUFFLE));
     }
 
     public boolean active() {

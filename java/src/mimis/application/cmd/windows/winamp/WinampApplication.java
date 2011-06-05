@@ -32,15 +32,32 @@ public class WinampApplication extends WindowsApplication {
 
     protected double volume;
     protected boolean muted;
-
+    protected boolean forward;
+    protected boolean rewind;
+    
     public WinampApplication() {
         super(PROGRAM, TITLE, NAME);
         volume = getVolume();
         muted = volume == 0;
     }
+    
+    public void begin(Action action) {
+        log.trace("WinampApplication: " + action);
+        switch (action) {
+        case FORWARD:
+            forward = true;
+            while (forward) {
+                command(WINAMP_FFWD5S);
+                sleep(200);
+            }
+            break;
+        case REWIND:
+            command(WINAMP_REW5S);
+            break;
+        }
+    }
 
     public void end(Action action) {
-        log.fatal(handle);
         log.trace("WinampApplication: " + action);
         switch (action) {
             case PLAY:
@@ -61,13 +78,12 @@ public class WinampApplication extends WindowsApplication {
                 command(WINAMP_BUTTON1);
                 break;
             case FORWARD:
-                command(WINAMP_FFWD5S);
+                forward = false;
                 break;
             case REWIND:
                 command(WINAMP_REW5S);
                 break;
             case MUTE:
-                System.out.println(getDuration() +" "+ getElapsed());
                 if (muted) {
                     setVolume(volume);
                 } else {
@@ -77,7 +93,6 @@ public class WinampApplication extends WindowsApplication {
                 muted = !muted;
                 break;
             case VOLUME_UP:
-                System.out.println(getVolume());
                 command(WINAMP_VOLUMEUP);
                 break;
             case VOLUME_DOWN:
@@ -118,4 +133,3 @@ public class WinampApplication extends WindowsApplication {
         return user(0, IPC_GETOUTPUTTIME) / 1000;
     }
 }
-

@@ -67,8 +67,7 @@ public class SequenceListener {
     
     protected void add(Event event, Signal signal) {
         if (event instanceof Task) {
-            Task task = (Task) event;
-            task.setSignal(signal);
+            event = ((Task) event).setSignal(signal);
         }
         if (event.getTarget().equals(Target.SELF)) {
             self.add(event);

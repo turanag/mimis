@@ -55,7 +55,20 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         }
     }
 
-    protected void action(Action action) {
+    protected void begin(Action action) {
+        log.trace("iTunesApplication: " + action);
+        if (!active) return;
+        switch (action) {
+            case FORWARD:
+                iTunes.fastForward();
+                break;
+            case REWIND:
+                iTunes.rewind();
+                break;
+        }
+    }
+
+    protected void end(Action action) {
         log.trace("iTunesApplication: " + action);
         if (!active) return;
         switch (action) {
@@ -69,10 +82,10 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 iTunes.previousTrack();
                 break;
             case FORWARD:
-                iTunes.setPlayerPosition(iTunes.getPlayerPosition() + POSTION_CHANGE_RATE);
+                iTunes.play();
                 break;
             case REWIND:
-                iTunes.setPlayerPosition(iTunes.getPlayerPosition() - POSTION_CHANGE_RATE);
+                iTunes.play();
                 break;
             case MUTE:
                 iTunes.toggleMute();
@@ -110,7 +123,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             log.trace("iTunesEvent: play");
         }
     }
-    
+
     public void onPlayerStopEvent(ITTrack iTrack) {
         if (active) {
             log.trace("iTunesEvent: stop");

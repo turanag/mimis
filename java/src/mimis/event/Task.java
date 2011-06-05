@@ -16,8 +16,13 @@ public class Task extends Event {
     }
 
     public Task(Target target, Action action) {
-       super(target);
-       this.action = action;
+        this(target, action, null);
+    }
+
+    public Task(Target target, Action action, Signal signal) {
+        super(target);
+        this.action = action;
+        this.signal = signal;
     }
 
     public Action getAction() {
@@ -28,7 +33,7 @@ public class Task extends Event {
         return signal;
     }
 
-    public void setSignal(Signal signal) {
-        this.signal = signal;
+    public Task setSignal(Signal signal) {
+        return new Task(target, action, signal);
     }
 }

@@ -20,7 +20,7 @@ public class Active {
     }
 
     public boolean first() {
-        return step == -1;
+        return step == 0;
     }
 
     public boolean last() {

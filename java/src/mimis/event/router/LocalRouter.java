@@ -7,7 +7,6 @@ import mimis.value.Target;
 
 public class LocalRouter extends EventRouter {
     public void event(Event event) {
-        System.out.println("LocalSpreader krijgt event via event() " + event.getTarget());
         Target target = event.getTarget();
         switch (target) {
             case APPLICATION:

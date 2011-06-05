@@ -84,47 +84,9 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     protected void layoutControls() {
         setLayout(new BorderLayout());
-        //layoutFeedbackPanel();
         layoutControlPanel();
     }
     
-    /*protected void layoutFeedbackPanel() {
-        JPanel feedbackPanel = new JPanel();
-        feedbackArea = new JTextArea(10, 32);
-        feedbackArea.setEditable(false);
-        feedbackPanel.add(feedbackArea);
-        
-        scrollPane = new JScrollPane();
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.getViewport().add(feedbackArea);
-        feedbackPanel.add(scrollPane);
-       
-        add(feedbackPanel, BorderLayout.SOUTH);
-        
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");     
-        feedbackArea.append("Hier komt allerlei feedback te staan!\n");  
-        
-        
-        JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
-        scrollBar.setValue(scrollBar.getMaximum());
-    }*/
-
     protected void layoutControlPanel() {
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BorderLayout());
