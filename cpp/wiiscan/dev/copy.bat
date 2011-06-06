@@ -1,0 +1,1 @@
+copy wiiscan.exe ..\..\..\java\native\
