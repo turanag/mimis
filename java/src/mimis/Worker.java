@@ -97,6 +97,6 @@ public abstract class Worker implements Runnable {
             }
         }
     }
-
+    
     protected abstract void work();
 }

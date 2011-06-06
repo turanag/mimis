@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
@@ -55,7 +56,7 @@ public class GUI extends JFrame {
     protected JPanel createManagerPanel(Manager<?> manager, String title) {
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(new JLabel(title, SwingConstants.CENTER));
-        for (JButton button : manager.getButtons()) {
+        for (JToggleButton button : manager.getButtons()) {
             panel.add(button);
         }
         return panel;

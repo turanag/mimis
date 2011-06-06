@@ -4,8 +4,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
+import mimis.exception.worker.ActivateException;
 import mimis.manager.Exitable;
 import mimis.manager.SelectButton;
 import mimis.manager.Titled;
@@ -41,17 +42,16 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
         }
     }
 
-    protected JButton[] getButtons() {
-        return buttonMap.values().toArray(new JButton[]{});
+    protected JToggleButton[] getButtons() {
+        return buttonMap.values().toArray(new JToggleButton[]{});
     }
 
     protected void work() {
         long before = Calendar.getInstance().getTimeInMillis();
         for (T manageable : manageableArray) {
             boolean active = manageable.active();
-            //buttonMap.get(manageable).getModel().setArmed(active);
-
-            buttonMap.get(manageable).getModel().setPressed(active);
+            SelectButton<T> button = buttonMap.get(manageable);
+            button.setPressed(active);
         }
         long after = Calendar.getInstance().getTimeInMillis();
         int sleep = INTERVAL - (int) (after - before);
