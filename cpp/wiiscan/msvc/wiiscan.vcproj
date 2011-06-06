@@ -177,47 +177,47 @@
 			Filter="*.h"
 			>
 			<File
-				RelativePath=".\src\args.h"
+				RelativePath="..\args.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\configfile.h"
+				RelativePath="..\configfile.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\DelcomDLL.h"
+				RelativePath="..\DelcomDLL.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\exception.h"
+				RelativePath="..\exception.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\file.h"
+				RelativePath="..\file.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\funs.h"
+				RelativePath="..\funs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\stringfun.h"
+				RelativePath="..\stringfun.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\toolsfun.h"
+				RelativePath="..\toolsfun.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\usbm.h"
+				RelativePath="..\usbm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\wiiscan.h"
+				RelativePath="..\wiiscan.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\wiiuse.h"
+				RelativePath="..\wiiuse.h"
 				>
 			</File>
 		</Filter>
@@ -234,7 +234,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\src\wiiscan.cpp"
+			RelativePath="..\wiiscan.cpp"
 			>
 		</File>
 	</Files>
