@@ -74,13 +74,14 @@ public class Mimis extends EventHandler {
     }
 
     public void stop() {
+        super.stop();
+
         log.debug("Stop event router");
         eventRouter.stop();
 
         log.debug("Stop managers");
         applicationManager.stop();
         deviceManager.stop();
-        super.stop();
     }
 
     protected void end(Action action) {

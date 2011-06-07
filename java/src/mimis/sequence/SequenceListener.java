@@ -42,7 +42,6 @@ public class SequenceListener {
     }
 
     public void add(State state) {
-        log.trace(state);
         for (Sequence sequence : sequenceList) {
             activeList.add(new Active(sequence));
         }
@@ -64,7 +63,7 @@ public class SequenceListener {
             activeList.remove(active);
         }
     }
-    
+
     protected void add(Event event, Signal signal) {
         if (event instanceof Task) {
             event = ((Task) event).setSignal(signal);

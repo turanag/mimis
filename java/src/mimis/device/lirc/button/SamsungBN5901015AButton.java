@@ -63,4 +63,8 @@ public enum SamsungBN5901015AButton implements LircButton {
     public String getCode() {
         return code;
     }
+    
+    public String getName() {
+        return NAME;
+    }
 }

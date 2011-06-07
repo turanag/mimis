@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.swing.JToggleButton;
 
-import mimis.exception.worker.ActivateException;
 import mimis.manager.Exitable;
 import mimis.manager.SelectButton;
 import mimis.manager.Titled;
@@ -28,10 +27,10 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     }
 
     public void stop() {
+        super.stop();
         for (T manageable : manageableArray) {
             manageable.stop();
         }
-        super.stop();
     }
 
     protected void createButtons() {

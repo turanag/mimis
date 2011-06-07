@@ -19,7 +19,7 @@ public abstract class Worker implements Runnable {
         running = true;
         if (thread) {
             log.debug("Start thread");
-            new Thread(this).start();
+            new Thread(this, getClass().getName()).start();
         } else {
             log.debug("Run directly");
             run();
@@ -79,6 +79,9 @@ public abstract class Worker implements Runnable {
 
     public void deactivate() throws DeactivateException {
         active = false;
+        synchronized (this) {
+            notifyAll();
+        }
     }
 
     public final void run() {

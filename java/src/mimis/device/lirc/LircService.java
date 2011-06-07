@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import mimis.Worker;
+import mimis.device.lirc.button.PhiliphsRCLE011Button;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.util.Native;
 
 public class LircService extends Worker {
     public static final String IP = "127.0.0.1";
@@ -31,10 +32,11 @@ public class LircService extends Worker {
     protected BufferedReader bufferedReader;
     protected PrintWriter printWriter;
     protected HashMap<String, LircButton[]> buttonMap;
+    protected String send;
 
     public LircService(HashMap<String, LircButton[]> buttonMap) {
         this(buttonMap, IP, PORT);
-        //String send = Native.getValue("HKEY_CURRENT_USER\\Software\\LIRC", "password");
+        send = Native.getValue("HKEY_CURRENT_USER\\Software\\LIRC", "password");
     }
 
     public LircService(HashMap<String, LircButton[]> buttonMap, String ip, int port) {
@@ -73,6 +75,7 @@ public class LircService extends Worker {
 
     public void deactivate() throws DeactivateException {
         try {
+            bufferedReader.close();
             inputStream.close();
             outputStream.close();
             socket.close();
@@ -84,15 +87,23 @@ public class LircService extends Worker {
     }
 
     public void work() {
+        log.debug("wrk");
         try {
-            String string = bufferedReader.readLine();
+            String string;
+            //synchronized (this) {
+                string = bufferedReader.readLine();
+            //}
             try {
+                System.out.println(string);
                 LircButton lircButton = parseButton(new Scanner(string));
                 log.trace("LircButton: " + lircButton);
                 for (LircButtonListener lircbuttonListener : lircButtonListenerList) {
                     lircbuttonListener.add(lircButton);
                 }
-            } catch (UnknownButtonException e) {}
+                log.info(send(PhiliphsRCLE011Button.MUTE));
+            } catch (UnknownButtonException e) {
+                log.error(e);
+            }
         } catch (IOException e) {
             log.error(e);
         }
@@ -104,7 +115,7 @@ public class LircService extends Worker {
             scanner.next();
             String code = scanner.next();
             String remote = scanner.next();
-            //log.debug(String.format("%s: %s", remote, code));
+            log.trace(String.format("%s: %s", remote, code));
             LircButton[] buttonArray = buttonMap.get(remote);
             if (buttonArray != null) {            
                 for (LircButton button : buttonArray) {
@@ -117,5 +128,31 @@ public class LircService extends Worker {
             log.error(e);
         }
         throw new UnknownButtonException();
+    }
+
+    public boolean send(LircButton button) {
+        return send(button, 0);
+    }
+
+    public boolean send(LircButton button, int repeat) {
+        if (send == null) {
+            return false;
+        }
+        String command = String.format("%s %s %s\n", send, button.getName(), button.getCode());
+        log.debug(command);
+        printWriter.append(command);
+        printWriter.flush();
+        //synchronized (this) {
+            try {
+                bufferedReader.readLine();
+                bufferedReader.readLine();
+                String result = bufferedReader.readLine();
+                bufferedReader.readLine();
+                return result.equals("SUCCESS");
+            } catch (IOException e) {
+                log.error(e);
+            }
+            return false;
+        //}
     }
 }

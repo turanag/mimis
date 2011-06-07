@@ -59,4 +59,10 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
                 break;
         }
     }
+
+    public void stop() {
+        multiplexer.stop();
+        lircService.stop();
+        super.stop();
+    }
 }

@@ -8,6 +8,7 @@ import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
 import mimis.value.Action;
@@ -26,13 +27,16 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     protected static final int CONNECT_MAX = 10;
     protected static final int RUMBLE = 150;
+    public static final int TIMEOUT = 200;
 
     protected static WiimoteService wiimoteService;
 
     protected Wiimote wiimote;
     protected Calibration calibration;
     protected GestureDevice gestureDevice;
-    protected int gestureId = 0;
+    protected int gestureId;
+    protected WiimoteDiscovery wiimoteDiscovery;
+    protected boolean connected;
 
     static {
         WiimoteDevice.wiimoteService = new WiimoteService();
@@ -41,20 +45,15 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public WiimoteDevice() {
         super(TITLE);
+        wiimoteDiscovery = new WiimoteDiscovery(this);
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
+        gestureId = 0;
     }
 
+    /* Activation */
     public void activate() throws ActivateException {
-        super.activate();
-        try {
-            wiimote = wiimoteService.getDevice(this);
-        } catch (DeviceNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        wiimote.activateMotionSensing();   
-
+        connect();
         /*add(
             new Hold(WiimoteButton.A),
             new Task(Action.TRAIN),
@@ -117,7 +116,21 @@ public class WiimoteDevice extends Device implements GestureListener {
                 new Task(Target.APPLICATION, Action.DISLIKE));
         } catch (StateOrderException e) {}*/
     }
+    
+    public void deactivate() throws DeactivateException {
+        super.deactivate();
+        if (wiimote != null) {
+            wiimote.deactivateMotionSensing();
+        }
+        wiimoteDiscovery.disconnect();
+    }
 
+    public void stop() {
+        super.stop();
+        wiimoteService.exit();
+    }
+
+    /* Events */
     public void action(Action action) {
         switch (action) {
             case TRAIN:
@@ -145,17 +158,98 @@ public class WiimoteDevice extends Device implements GestureListener {
         }
     }
 
+    public void feedback(Feedback feedback) {
+        System.out.println("Wiimote feedback");
+        wiimote.rumble(RUMBLE);
+    }
+
+    /* Connectivity */
+    public void connect() {
+        wiimote = null;
+        try {
+            wiimote = wiimoteService.getDevice(this);
+            super.activate();
+        } catch (DeviceNotFoundException e) {
+            log.error(e);
+        } catch (ActivateException e) {
+            log.error(e);
+        }
+        if (wiimote == null) {
+            wiimoteDiscovery.work();
+            if (wiimote == null) {
+                wiimoteDiscovery.disconnect();
+                try {
+                    wiimoteDiscovery.activate();
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
+            }
+        }
+    }
+
+    public void connected() {
+        try {
+            wiimote = wiimoteService.getDevice(this);
+            //wiimote.activateMotionSensing();
+            try {
+                wiimoteDiscovery.deactivate();
+                super.activate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            } catch (ActivateException e) {
+                log.error(e);                
+            }
+        } catch (DeviceNotFoundException e) {
+            log.error(e);
+        }
+    }
+
+    public void disconnect() {
+        wiimote.disconnect();
+        wiimote = null;
+        wiimoteDiscovery.disconnect();
+    }
+
+    public void disconnected() {
+        try {
+            wiimoteDiscovery.activate();
+        } catch (ActivateException e) {
+            log.error(e);
+        }
+    }
+
+    public boolean active() {
+        if (wiimote != null) {
+            log.debug("Check activity");
+            connected = false;
+            wiimote.getStatus();
+            synchronized (this) {
+                try {
+                    wait(TIMEOUT);
+                } catch (InterruptedException e) {
+                    log.error(e);
+                }
+            }
+            if (!connected) {
+                disconnect();
+                active = false;
+            }
+        }
+        return active;
+    }
+
+    /* Listeners */
     public void onButtonsEvent(WiimoteButtonsEvent event) {
         int pressed = event.getButtonsJustPressed() - event.getButtonsHeld();
         int released = event.getButtonsJustReleased();
         try {
             if (pressed != 0 && released == 0) {
                 Button button = WiimoteButton.create(pressed);
-                System.out.println("Press: " + button);
+                log.trace("Press: " + button);
                 add(new Press(button));
             } else if (pressed == 0 && released != 0) {       
                 Button button = WiimoteButton.create(released);
-                System.out.println("Release: " + button);
+                log.trace("Release: " + button);
                 add(new Release(button));            
             }
         } catch (UnknownButtonException e) {}
@@ -169,19 +263,5 @@ public class WiimoteDevice extends Device implements GestureListener {
         if (event.isValid()) {
             System.out.printf("id #%d, prob %.0f%%, valid %b\n", event.getId(), 100 * event.getProbability(), event.isValid());
         }
-    }
-    
-    public void feedback(Feedback feedback) {
-        System.out.println("Wiimote feedback");
-        wiimote.rumble(RUMBLE);
-    }
-
-    public void deactivate() {
-        wiimote.deactivateMotionSensing();
-    }
-
-    public void stop() {
-        wiimoteService.exit();
-        super.stop();
     }
 }

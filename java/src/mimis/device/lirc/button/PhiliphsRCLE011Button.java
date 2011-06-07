@@ -18,26 +18,26 @@ public enum PhiliphsRCLE011Button implements LircButton {
     LEFT ("Left"),
     RIGHT ("Right"),
     VOLUME_UP ("Volume+"),
-    VOLUME_DOWN ("Volume-");
-    /*Mute,
-    Program+,
-    Program-,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-    7,
-    8,
-    9,
-    0,
-    Clock,
-    Out,
-    i+,
-    screenup,
-    screendown,
-    question;*/
+    VOLUME_DOWN ("Volume-"),
+    MUTE ("Mute"),
+    PROGRAM_UP ("Program+"),
+    PROGRUM_DOWN ("Program-"),
+    ONE ("1"),
+    TWO ("2"),
+    THREE ("3"),
+    FOUR ("4"),
+    FIVE ("5"),
+    SIX ("6"),
+    SEVEN ("7"),
+    EIGHT ("8"),
+    NINE ("9"),
+    ZERO ("0"),
+    CLOCK ("Clock"),
+    OUT ("Out"),
+    INFO ("i+"),
+    SCREEN_UP ("screenup"),
+    SCREEN_DOWN ("screendown"),
+    QUESTION ("question");
 
     public static final String NAME = "Philips_RCLE011";
 
@@ -49,5 +49,9 @@ public enum PhiliphsRCLE011Button implements LircButton {
 
     public String getCode() {
         return code;
+    }
+
+    public String getName() {
+        return NAME;
     }
 }

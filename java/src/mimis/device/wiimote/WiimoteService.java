@@ -3,6 +3,9 @@ package mimis.device.wiimote;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import mimis.exception.device.DeviceNotFoundException;
 
 import wiiusej.WiiUseApiManager;
@@ -23,6 +26,8 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
+    protected Log log = LogFactory.getLog(getClass());
+
     protected final boolean RUMBLE = false;
 
     protected ArrayList<Integer> wiimoteList;
@@ -51,7 +56,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
             if (!wiimoteList.contains(id)) {
                 wiimote.addWiiMoteEventListeners(this);
                 wiimoteList.add(id);
-                wiimoteDeviceMap.put(id, wiimoteDevice); // Todo: controleren of dit nodig is. Ligt aan hoe uniek het id is na bijvoorbeeld een reconnect. Wellicht voldoet een arrayList ook.
+                wiimoteDeviceMap.put(id, wiimoteDevice);
                 return wiimote;
             }
         }
@@ -76,12 +81,20 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
 
     public void onStatusEvent(StatusEvent event) {
         if (event.isConnected()) {
+            WiimoteDevice wiimoteDevice = getWiimoteDevice(event);            
+            wiimoteDevice.connected = true;
+            synchronized (wiimoteDevice) {
+                wiimoteDevice.notifyAll();
+            }
         }
     }
 
     public void onIrEvent(IREvent e) {}
     public void onExpansionEvent(ExpansionEvent event) {}
-    public void onDisconnectionEvent(DisconnectionEvent event) {}
+    public void onDisconnectionEvent(DisconnectionEvent event) {
+        log.debug("disconnect!");
+        
+    }
     public void onNunchukInsertedEvent(NunchukInsertedEvent event) {}
     public void onNunchukRemovedEvent(NunchukRemovedEvent event) {}
     public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent event) {}

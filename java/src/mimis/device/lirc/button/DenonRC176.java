@@ -43,4 +43,8 @@ public enum DenonRC176 implements LircButton {
     public String getCode() {
         return code;
     }
+
+    public String getName() {
+        return NAME;
+    }
 }
