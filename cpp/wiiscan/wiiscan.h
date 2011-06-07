@@ -31,10 +31,11 @@
 #include <bthdef.h>
 #include <BluetoothAPIs.h>
 
-#pragma comment ( lib, "Lib/wiiuse.lib")
-#pragma comment ( lib, "Lib/delcomdll.lib")
+#pragma comment ( lib, "odbccp32.lib")
+#pragma comment ( lib, "wiiuse.lib")
+#pragma comment ( lib, "delcomdll.lib")
 #pragma comment ( lib, "Irprops.lib")
-#pragma comment ( lib, "Ws2_32.lib")
+#pragma comment ( lib, "libcpmt.lib")
 
 namespace Wiiscan {
 
