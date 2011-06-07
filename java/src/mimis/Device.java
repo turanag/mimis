@@ -7,13 +7,13 @@ import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.sequence.EventMap;
-import mimis.sequence.SequenceListener;
+import mimis.sequence.EventParser;
 import mimis.sequence.State;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {
     protected String title;
     protected EventMapCycle eventMapCycle;
-    protected SequenceListener sequenceListener;
+    protected EventParser eventParser;
 
     public Device(String title) {
         this.title = title;
@@ -26,12 +26,12 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     /* Worker */
     public void activate() throws ActivateException {
         super.activate();
-        sequenceListener = new SequenceListener(this);
+        eventParser = new EventParser(this);
     }
 
     public void deactivate() throws DeactivateException {
         super.deactivate();
-        sequenceListener.reset();
+        eventParser.reset();
     }
 
     public void stop() {
@@ -45,20 +45,20 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
         super.stop();
     }
 
-    /* SequenceListener */
+    /* EventParser */
     protected void add(EventMap eventMap) {
-        sequenceListener.add(eventMap);
+        eventParser.add(eventMap);
     }
 
     protected void remove(EventMap eventMap) {
-        sequenceListener.remove(eventMap);
+        eventParser.remove(eventMap);
     }
 
-    protected void add(State state) {
-        sequenceListener.add(state);
+    protected void reset() {
+        eventParser.reset();
     }
     
-    protected void reset() {
-        sequenceListener.reset();
+    protected void add(State state) {
+        eventParser.add(state);
     }
 }

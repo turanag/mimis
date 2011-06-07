@@ -1,6 +1,5 @@
 package mimis.sequence;
 
-
 public class Active {
     protected Sequence sequence;
     protected int step;

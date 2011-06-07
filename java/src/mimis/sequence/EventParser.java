@@ -13,7 +13,7 @@ import mimis.event.Task;
 import mimis.value.Signal;
 import mimis.value.Target;
 
-public class SequenceListener {
+public class EventParser {
     protected Log log = LogFactory.getLog(getClass());
 
     protected EventHandler self;
@@ -23,7 +23,7 @@ public class SequenceListener {
 
     protected static EventListener eventListener;
 
-    public SequenceListener(EventHandler self) {
+    public EventParser(EventHandler self) {
         this.self = self;
         eventMap = new EventMap();
         sequenceList = new ArrayList<Sequence>();
@@ -31,7 +31,7 @@ public class SequenceListener {
     }
 
     public static void initialise(EventListener eventListener) {
-        SequenceListener.eventListener = eventListener;
+        EventParser.eventListener = eventListener;
     }
 
     public synchronized void add(EventMap eventMap) {
@@ -39,7 +39,7 @@ public class SequenceListener {
         sequenceList.addAll(eventMap.keySet());
     }
 
-    public void remove(EventMap eventMap) {
+    public synchronized void remove(EventMap eventMap) {
         for (Entry<Sequence, Event> entry : eventMap.entrySet()) {
             Sequence sequence = entry.getKey();
             this.eventMap.remove(sequence);

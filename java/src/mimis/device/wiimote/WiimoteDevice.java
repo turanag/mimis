@@ -27,8 +27,8 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected static WiimoteService wiimoteService;
     protected WiimoteEventMapCycle eventMapCycle;
     protected WiimoteDiscovery wiimoteDiscovery;
-    protected boolean connected;
     protected Wiimote wiimote;
+    protected boolean connected;
     protected GestureDevice gestureDevice;
     protected int gestureId;
 
@@ -46,13 +46,32 @@ public class WiimoteDevice extends Device implements GestureListener {
         gestureId = 0;
     }
 
-    /* Activation */
+    /* Worker */
     public void activate() throws ActivateException {
         super.activate();
         connect();
         add(eventMapCycle.mimis);
         add(eventMapCycle.player);
         add(eventMapCycle.like);
+    }
+    
+    public boolean active() {
+        if (wiimote != null) {
+            connected = false;
+            wiimote.getStatus();
+            synchronized (this) {
+                try {
+                    wait(TIMEOUT);
+                } catch (InterruptedException e) {
+                    log.error(e);
+                }
+            }
+            if (!connected) {
+                disconnect();
+                active = false;
+            }
+        }
+        return active;
     }
 
     public void deactivate() throws DeactivateException {
@@ -110,22 +129,12 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     /* Connectivity */
-    public void connect() {
+    public void connect() throws ActivateException {
         wiimote = null;
         try {
             wiimote = wiimoteService.getDevice(this);
-            super.activate();
         } catch (DeviceNotFoundException e) {
-            log.error(e);
-        } catch (ActivateException e) {
-            log.error(e);
-        }
-        if (wiimote == null) {
-            try {
-                wiimoteDiscovery.activate();
-            } catch (ActivateException e) {
-                log.error(e);
-            }
+            wiimoteDiscovery.activate();
         }
     }
 
@@ -155,25 +164,6 @@ public class WiimoteDevice extends Device implements GestureListener {
         } catch (ActivateException e) {
             log.error(e);
         }
-    }
-
-    public boolean active() {
-        if (wiimote != null) {
-            connected = false;
-            wiimote.getStatus();
-            synchronized (this) {
-                try {
-                    wait(TIMEOUT);
-                } catch (InterruptedException e) {
-                    log.error(e);
-                }
-            }
-            if (!connected) {
-                disconnect();
-                active = false;
-            }
-        }
-        return active;
     }
 
     /* Listeners */

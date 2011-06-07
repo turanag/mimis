@@ -89,12 +89,9 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
         }
     }
 
-    public void onIrEvent(IREvent e) {}
+    public void onIrEvent(IREvent event) {}
     public void onExpansionEvent(ExpansionEvent event) {}
-    public void onDisconnectionEvent(DisconnectionEvent event) {
-        log.debug("disconnect!");
-        
-    }
+    public void onDisconnectionEvent(DisconnectionEvent event) {}
     public void onNunchukInsertedEvent(NunchukInsertedEvent event) {}
     public void onNunchukRemovedEvent(NunchukRemovedEvent event) {}
     public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent event) {}

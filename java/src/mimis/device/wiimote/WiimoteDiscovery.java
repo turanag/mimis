@@ -37,7 +37,7 @@ public class WiimoteDiscovery extends Worker {
         } catch (IOException e) {
             log.error(e);
         } finally {
-            process =null;
+            process = null;
         }
         return false;
     }

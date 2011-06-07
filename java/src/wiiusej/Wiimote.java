@@ -493,10 +493,6 @@ public class Wiimote implements WiiUseApiListener {
 		return "Wiimote with ID : " + id;
 	}
 
-	public Calibration getCalibration() {
-	    return manager.getCalibration(id);
-	}
-	
 	public void rumble(int milliseconds) {
 	    activateRumble();
 	    try {
