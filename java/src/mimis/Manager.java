@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     protected Log log = LogFactory.getLog(getClass());
     protected static final long serialVersionUID = 1L;
-    protected static final int INTERVAL = 100;
+    protected static final int INTERVAL = 500;
 
     protected T[] manageableArray;
     protected Map<T, SelectButton<T>> buttonMap;

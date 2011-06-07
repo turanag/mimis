@@ -53,6 +53,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     /* Activation */
     public void activate() throws ActivateException {
+        super.activate();
         connect();
         /*add(
             new Hold(WiimoteButton.A),
@@ -175,14 +176,10 @@ public class WiimoteDevice extends Device implements GestureListener {
             log.error(e);
         }
         if (wiimote == null) {
-            wiimoteDiscovery.work();
-            if (wiimote == null) {
-                wiimoteDiscovery.disconnect();
-                try {
-                    wiimoteDiscovery.activate();
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+            try {
+                wiimoteDiscovery.activate();
+            } catch (ActivateException e) {
+                log.error(e);
             }
         }
     }
@@ -193,11 +190,8 @@ public class WiimoteDevice extends Device implements GestureListener {
             //wiimote.activateMotionSensing();
             try {
                 wiimoteDiscovery.deactivate();
-                super.activate();
             } catch (DeactivateException e) {
                 log.error(e);
-            } catch (ActivateException e) {
-                log.error(e);                
             }
         } catch (DeviceNotFoundException e) {
             log.error(e);
@@ -220,7 +214,6 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public boolean active() {
         if (wiimote != null) {
-            log.debug("Check activity");
             connected = false;
             wiimote.getStatus();
             synchronized (this) {

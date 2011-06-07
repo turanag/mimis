@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import mimis.Worker;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 
 public class WiimoteDiscovery extends Worker {
     protected WiimoteDevice wiimoteDevice;
+    protected Process process;
+    protected boolean disconnect;
 
     public WiimoteDiscovery(WiimoteDevice wiimoteDevice) {
         this.wiimoteDevice = wiimoteDevice;
@@ -23,7 +27,7 @@ public class WiimoteDiscovery extends Worker {
     public boolean execute(String parameters) {
         String command = "native/wiiscan.exe -l none " + parameters;
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            process = Runtime.getRuntime().exec(command);
             Scanner scanner = new Scanner(process.getInputStream());
             while (scanner.hasNext()) {
                 if (scanner.next().equals("[OK]")) {
@@ -32,14 +36,30 @@ public class WiimoteDiscovery extends Worker {
             }
         } catch (IOException e) {
             log.error(e);
+        } finally {
+            process =null;
         }
         return false;
     }
 
     protected void work() {
-        log.debug("Discover wiimotes");
         if (connect()) {
             wiimoteDevice.connected();
+        } else if (disconnect) {
+            disconnect();            
+        }
+        disconnect = false;
+    }
+
+    public void activate() throws ActivateException {
+        super.activate();
+        disconnect = true;
+    }
+
+    public void deactivate() throws DeactivateException {
+        super.deactivate();
+        if (process != null) {
+            process.destroy();
         }
     }
 
