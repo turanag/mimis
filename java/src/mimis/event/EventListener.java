@@ -16,7 +16,6 @@ public abstract class EventListener extends Worker {
     }
 
     public void add(Event event) {
-        log.info("event " + event + " " + active);
         eventQueue.add(event);
         synchronized (work) {
             work.notifyAll();

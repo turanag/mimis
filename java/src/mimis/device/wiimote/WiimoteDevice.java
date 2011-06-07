@@ -4,7 +4,6 @@ import mimis.Button;
 import mimis.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.event.Feedback;
-import mimis.event.Task;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
@@ -12,31 +11,26 @@ import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
 import mimis.value.Action;
-
 import org.wiigee.event.GestureEvent;
 import org.wiigee.event.GestureListener;
 import org.wiigee.util.Log;
 
 import wiiusej.Wiimote;
-import wiiusej.values.Calibration;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
 public class WiimoteDevice extends Device implements GestureListener {
     protected static final String TITLE = "Wiimote";
-
-    protected static final int CONNECT_MAX = 10;
     protected static final int RUMBLE = 150;
-    public static final int TIMEOUT = 200;
+    protected static final int TIMEOUT = 200;
 
     protected static WiimoteService wiimoteService;
-
-    protected Wiimote wiimote;
-    protected Calibration calibration;
-    protected GestureDevice gestureDevice;
-    protected int gestureId;
+    protected WiimoteEventMapCycle eventMapCycle;
     protected WiimoteDiscovery wiimoteDiscovery;
     protected boolean connected;
+    protected Wiimote wiimote;
+    protected GestureDevice gestureDevice;
+    protected int gestureId;
 
     static {
         WiimoteDevice.wiimoteService = new WiimoteService();
@@ -45,6 +39,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public WiimoteDevice() {
         super(TITLE);
+        eventMapCycle = new WiimoteEventMapCycle();
         wiimoteDiscovery = new WiimoteDiscovery(this);
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
@@ -55,69 +50,11 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void activate() throws ActivateException {
         super.activate();
         connect();
-        /*add(
-            new Hold(WiimoteButton.A),
-            new Task(Action.TRAIN),
-            new Task(Action.STOP));*/
-        add(
-            new Press(WiimoteButton.B),
-            new Task(Action.SAVE));
-        add(
-            new Press(WiimoteButton.DOWN),
-            new Task(Action.LOAD));
-        /*add(
-            new Hold(WiimoteButton.HOME),
-            new Task(Action.RECOGNIZE),
-            new Task(Action.STOP));/*
-        add(
-            new Press(WiimoteButton.A),
-            new Task(Target.APPLICATION, Action.PLAY));
-        add(
-            new Press(WiimoteButton.B),
-            new Task(Target.APPLICATION, Action.MUTE));
-        add(
-            new Press(WiimoteButton.ONE),
-            new Task(Target.APPLICATION, Action.SHUFFLE));
-        add(
-            new Press(WiimoteButton.TWO),
-            new Task(Target.APPLICATION, Action.REPEAT));
-        add(
-            new Press(WiimoteButton.UP),
-            new Task(Target.APPLICATION, Action.NEXT));
-        add(
-            new Press(WiimoteButton.DOWN),
-            new Task(Target.APPLICATION, Action.PREVIOUS));
-        add(
-            new Hold(WiimoteButton.RIGHT),
-            new Dynamic(Action.FORWARD, Target.APPLICATION, 200, -30));
-        add(
-            new Hold(WiimoteButton.LEFT),
-            new Dynamic(Action.REWIND, Target.APPLICATION, 200, -30));
-        add(
-            new Hold(WiimoteButton.MINUS),
-            new Continuous(Action.VOLUME_DOWN, Target.APPLICATION, 100));
-        add(
-            new Hold(WiimoteButton.PLUS),
-            new Continuous(Action.VOLUME_UP, Target.APPLICATION, 100));
-        add(
-            new Press(WiimoteButton.HOME),
-            new Task(Target.MANAGER, Action.NEXT));
-        try {
-            add(
-                new Macro(
-                    new Hold(WiimoteButton.TWO),
-                    new Press(WiimoteButton.PLUS),
-                    new Release(WiimoteButton.TWO)),
-                new Task(Target.APPLICATION, Action.LIKE));
-            add(
-                new Macro(
-                    new Hold(WiimoteButton.TWO),
-                    new Press(WiimoteButton.MINUS),
-                    new Release(WiimoteButton.TWO)),
-                new Task(Target.APPLICATION, Action.DISLIKE));
-        } catch (StateOrderException e) {}*/
+        add(eventMapCycle.mimis);
+        add(eventMapCycle.player);
+        add(eventMapCycle.like);
     }
-    
+
     public void deactivate() throws DeactivateException {
         super.deactivate();
         if (wiimote != null) {
@@ -132,29 +69,37 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     /* Events */
-    public void action(Action action) {
+    public void begin(Action action) {
         switch (action) {
             case TRAIN:
-                System.out.println("Wiimote Train");
+                log.debug("Gesture train");
                 gestureDevice.train();
                 break;
-            case STOP:
-                System.out.println("Wiimote Stop");
-                gestureDevice.stop();
-                break;
             case SAVE:
-                System.out.println("Wiimote Save");
+                log.debug("Gesture save");
                 gestureDevice.close();
                 gestureDevice.saveGesture(gestureId, "C:\\gesture-" + gestureId);
                 ++gestureId;
                 break;
             case LOAD:
+                log.debug("Gesture load");
                 for (int i = 0; i < gestureId; ++i) {
                     gestureDevice.loadGesture("C:\\gesture-" + i);
                 }
                 break;
             case RECOGNIZE:
+                log.debug("Gesture recognize");
                 gestureDevice.recognize();
+                break;
+        }
+    }
+    
+    public void end(Action action) {
+        switch (action) {
+            case TRAIN:
+            case RECOGNIZE:
+                log.debug("Gesture stop");
+                gestureDevice.stop();
                 break;
         }
     }

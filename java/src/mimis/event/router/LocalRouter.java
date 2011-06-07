@@ -17,7 +17,6 @@ public class LocalRouter extends EventRouter {
             default:
                 for (EventListener eventListener : eventListenerList) {
                     if (event.compatible(eventListener)) {
-                        log.trace(eventListener);
                         eventListener.add(event);
                     }
                 }

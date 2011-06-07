@@ -21,7 +21,6 @@ public abstract class EventHandler extends EventListener {
     protected void feedback(Feedback feedback) {}
 
     protected final void task(Task task) {
-        log.debug("Signal: " + task.signal);
         Action action = task.getAction();
         switch (task.getSignal()) {
             case BEGIN:

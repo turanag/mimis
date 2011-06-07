@@ -85,7 +85,6 @@ public class Mimis extends EventHandler {
     }
 
     protected void end(Action action) {
-        log.debug(String.format("action(%s)", action));
         switch (action) {
             case NEXT:
                 eventRouter.set(applicationCycle.next());

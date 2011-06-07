@@ -1,7 +1,7 @@
 package mimis.sequence;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,31 +17,44 @@ public class SequenceListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected EventHandler self;
+    protected EventMap eventMap;
     protected ArrayList<Sequence> sequenceList;
-    protected HashMap<Sequence, Event> eventMap;
     protected ArrayList<Active> activeList;
-    
+
     protected static EventListener eventListener;
 
     public SequenceListener(EventHandler self) {
         this.self = self;
+        eventMap = new EventMap();
         sequenceList = new ArrayList<Sequence>();
-        eventMap = new HashMap<Sequence, Event>();
         activeList = new ArrayList<Active>();
     }
 
     public static void initialise(EventListener eventListener) {
         SequenceListener.eventListener = eventListener;
     }
-    
-    public int add(Sequence sequence, Task task) {
-        int id = sequenceList.size();
-        sequenceList.add(sequence);
-        eventMap.put(sequence, task);
-        return id;
+
+    public synchronized void add(EventMap eventMap) {
+        this.eventMap.putAll(eventMap);
+        sequenceList.addAll(eventMap.keySet());
     }
 
-    public void add(State state) {
+    public void remove(EventMap eventMap) {
+        for (Entry<Sequence, Event> entry : eventMap.entrySet()) {
+            Sequence sequence = entry.getKey();
+            this.eventMap.remove(sequence);
+            sequenceList.remove(sequence);
+            activeList.remove(sequence);
+        }        
+    }
+
+    public synchronized void reset() {
+        eventMap.clear();
+        sequenceList.clear();
+        activeList.clear();
+    }
+
+    public synchronized void add(State state) {
         for (Sequence sequence : sequenceList) {
             activeList.add(new Active(sequence));
         }
