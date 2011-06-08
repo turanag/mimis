@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mimis.Event;
 import mimis.Worker;
+import mimis.exception.worker.DeactivateException;
 
 public abstract class EventListener extends Worker {
     protected Queue<Event> eventQueue;
@@ -34,9 +35,9 @@ public abstract class EventListener extends Worker {
             }
         }
         event(eventQueue.poll());
-   }
+    }
 
-    public void stop() {
+    public void stop() throws DeactivateException {
         super.stop();
         synchronized (work) {
             work.notifyAll();

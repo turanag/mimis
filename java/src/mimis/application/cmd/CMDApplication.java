@@ -23,8 +23,8 @@ public abstract class CMDApplication extends Application {
     }
 
     public void activate() throws ActivateException {
+        super.activate();
         String key = String.format("%s\\%s", REGISTRY, program);
-        // Check of naam is gevonden in register
         String path = Native.getValue(key);
         try {
             String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
@@ -33,7 +33,6 @@ public abstract class CMDApplication extends Application {
         } catch (IOException e) {
             throw new ActivateException();
         }
-        super.activate();
     }
 
     public boolean active() {
@@ -45,9 +44,9 @@ public abstract class CMDApplication extends Application {
     }
 
     public void deactivate() throws DeactivateException {
+        super.deactivate();
         if (process != null) {
             process.destroy();
         }
-        super.deactivate();
     }
 }

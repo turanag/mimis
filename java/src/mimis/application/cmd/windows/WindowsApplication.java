@@ -1,8 +1,13 @@
 package mimis.application.cmd.windows;
 
+import java.io.IOException;
+
 import mimis.application.cmd.CMDApplication;
+
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.util.Windows;
+import mimis.util.VBScript;
 import mimis.value.Command;
 import mimis.value.Key;
 import mimis.value.Type;
@@ -12,7 +17,6 @@ public abstract class WindowsApplication extends CMDApplication {
     protected final static int START_SLEEP = 500;
 
     protected String name;
-
     protected Process process;
     protected int handle;
 
@@ -23,10 +27,10 @@ public abstract class WindowsApplication extends CMDApplication {
     }
 
     public void activate() throws ActivateException {
+        super.activate();
         handle = Windows.findWindow(name, null);
         log.info(handle);
         if (handle < 1) {
-            super.activate();
             sleep(START_SLEEP);
             handle = Windows.findWindow(name, null);
         }
@@ -38,6 +42,15 @@ public abstract class WindowsApplication extends CMDApplication {
 
     public boolean active() {
         return (handle = Windows.findWindow(name, null)) > 0;
+    }
+
+    public void deactivate() throws DeactivateException {
+        try {
+            VBScript.terminate(program);
+        } catch (IOException e) {
+            log.error(e);
+            throw new DeactivateException();
+        }
     }
 
     protected void command(Command command) {

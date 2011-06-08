@@ -29,8 +29,8 @@ public enum DenonRC176Button implements LircButton {
     AMP_VOLUME_DOWN ("AMP_VOL_DOWN"),
     AMP_POWER ("AMP_POWER"),
     AMP_MUTE ("AMP_MUTE"),
-    AMP_NEXT ("TUN_CH_UP"),
-    AMP_PREVIOUS ("TUN_CH_DOWN");    
+    TUNER_UP ("TUN_CH_UP"),
+    TUNER_DOWN ("TUN_CH_DOWN");    
 
     public static final String NAME = "DENON_RC-176";
 

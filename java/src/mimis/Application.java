@@ -7,6 +7,7 @@ import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.value.Action;
+import mimis.value.Signal;
 
 public abstract class Application extends EventHandler implements Titled, Exitable {
     protected String title;
@@ -26,14 +27,17 @@ public abstract class Application extends EventHandler implements Titled, Exitab
             Action action = task.getAction();
             switch (action) {
                 case ACTIVATE:
-                    try {
-                        if (active()) {
-                            deactivate();
-                        } else {
-                            activate();
+                    if (task.getSignal().equals(Signal.BEGIN)) {
+                        try {
+                            log.debug(active());
+                            if (active()) {
+                                deactivate();
+                            } else {
+                                activate();
+                            }
+                        } catch (WorkerException e) {
+                            log.error(e);
                         }
-                    } catch (WorkerException e) {
-                        log.error(e);
                     }
                     return;
             }
@@ -41,7 +45,8 @@ public abstract class Application extends EventHandler implements Titled, Exitab
         super.event(event);
     }
 
-    public void stop() {
+    public void stop() throws DeactivateException {
+        super.stop();
         if (active()) {
             try {
                 deactivate();
@@ -49,6 +54,5 @@ public abstract class Application extends EventHandler implements Titled, Exitab
                 log.error(e);
             }
         }
-        super.stop();
     }
 }

@@ -80,7 +80,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         wiimoteDiscovery.disconnect();
     }
 
-    public void stop() {
+    public void stop() throws DeactivateException {
         super.stop();
         wiimoteService.exit();
     }
@@ -133,8 +133,10 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public void feedback(Feedback feedback) {
-        System.out.println("Wiimote feedback");
-        wiimote.rumble(RUMBLE);
+        if (active()) {
+            log.debug("Wiimote rumble feedback");
+            wiimote.rumble(RUMBLE);
+        }
     }
 
     /* Connectivity */

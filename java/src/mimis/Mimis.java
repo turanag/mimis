@@ -4,6 +4,7 @@ import mimis.event.EventHandler;
 import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.feedback.TextFeedback;
 import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
@@ -73,8 +74,10 @@ public class Mimis extends EventHandler {
         super.activate(false);
     }
 
-    public void stop() {
+    public void stop() throws DeactivateException {
         super.stop();
+        log.debug("Stop GUI");
+        gui.stop();
 
         log.debug("Stop event router");
         eventRouter.stop();
@@ -95,7 +98,11 @@ public class Mimis extends EventHandler {
                 add(new TextFeedback("Previous application: " + applicationCycle.current().title()));
                 break;
             case EXIT:
-                stop();
+                try {
+                    stop();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                }
                 break;
         }
     }

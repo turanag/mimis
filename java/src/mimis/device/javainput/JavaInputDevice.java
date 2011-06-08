@@ -42,6 +42,7 @@ public abstract class JavaInputDevice extends Device {
     }
 
     public void deactivate() throws DeactivateException {
+        super.deactivate();
         if (active) {
             javaInputListener.deactivate();
         }

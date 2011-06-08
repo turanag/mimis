@@ -80,7 +80,6 @@ public class SequenceParser {
     protected synchronized void add(Event event, Signal signal) {
         if (event instanceof Task) {
             event = ((Task) event).setSignal(signal);
-
         }
         if (event.getTarget().equals(Target.SELF)) {
             self.add(event);

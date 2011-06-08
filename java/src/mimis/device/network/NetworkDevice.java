@@ -12,6 +12,7 @@ import mimis.Event;
 import mimis.Worker;
 import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +44,7 @@ public class NetworkDevice extends Device {
         }
     }
 
-    public void deactivate() {
+    public void deactivate() throws DeactivateException {
         server.stop();
     }
 
@@ -76,11 +77,11 @@ public class NetworkDevice extends Device {
             } catch (IOException e) {}
         }
         
-        public void stop() {
+        public void stop() throws DeactivateException {
+            super.stop();
             for (Client client : clientList) {
                 client.stop();
             }
-            super.stop();
         }
     }
 

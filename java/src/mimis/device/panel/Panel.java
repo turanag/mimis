@@ -1,21 +1,29 @@
 package mimis.device.panel;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import mimis.exception.worker.DeactivateException;
 import mimis.util.swing.HoldButton;
 import mimis.util.swing.HoldButtonListener;
 import mimis.util.swing.ToggleButton;
 
 public class Panel extends JFrame implements HoldButtonListener {
     protected static final long serialVersionUID = 1L;
+    protected Log log = LogFactory.getLog(getClass());
+
     protected final static String TITLE = "MIMIS Panel Device";
 
-    protected PanelButtonListener panelButtonListener;
+    protected PanelDevice panelDevice;
     protected ClassLoader classLoader;
     protected HoldButton previousButton;
     protected HoldButton rewindButton;
@@ -29,15 +37,16 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected HoldButton repeatButton;
     protected HoldButton shuffleButton;
 
-    Panel(PanelButtonListener panelButtonListener) {
+    Panel(PanelDevice panelDevice) {
         super(TITLE);
-        this.panelButtonListener = panelButtonListener;
+        this.panelDevice = panelDevice;
         classLoader = getClass().getClassLoader();
         createControls();
         layoutControls();
         pack();
         setResizable(false);
         setVisible(true);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     protected URL getResource(String name) {
@@ -109,51 +118,62 @@ public class Panel extends JFrame implements HoldButtonListener {
     /* Listeners */
     public void buttonPressed(HoldButton button) {
         if (button.equals(previousButton)) {
-            panelButtonListener.buttonPressed(PanelButton.PREVIOUS);
+            panelDevice.buttonPressed(PanelButton.PREVIOUS);
         } else if (button.equals(rewindButton)) {
-            panelButtonListener.buttonPressed(PanelButton.REWIND);
+            panelDevice.buttonPressed(PanelButton.REWIND);
         } else if (button.equals(playPauseToggleButton)) {
-            panelButtonListener.buttonPressed(PanelButton.PLAY);
+            panelDevice.buttonPressed(PanelButton.PLAY);
         } else if (button.equals(forwardButton)) {
-            panelButtonListener.buttonPressed(PanelButton.FORWARD);
+            panelDevice.buttonPressed(PanelButton.FORWARD);
         } else if (button.equals(nextButton)) {
-            panelButtonListener.buttonPressed(PanelButton.NEXT);
+            panelDevice.buttonPressed(PanelButton.NEXT);
         } else if (button.equals(volumeDownButton)) {
-            panelButtonListener.buttonPressed(PanelButton.VOLUME_DOWN);
+            panelDevice.buttonPressed(PanelButton.VOLUME_DOWN);
         } else if (button.equals(muteToggleButton)) {
-            panelButtonListener.buttonPressed(PanelButton.MUTE);
+            panelDevice.buttonPressed(PanelButton.MUTE);
         } else if (button.equals(volumeUpButton)) {
-            panelButtonListener.buttonPressed(PanelButton.VOLUME_UP);
+            panelDevice.buttonPressed(PanelButton.VOLUME_UP);
         } else if (button.equals(repeatButton)) {
-            panelButtonListener.buttonPressed(PanelButton.REPEAT);
+            panelDevice.buttonPressed(PanelButton.REPEAT);
         } else if (button.equals(shuffleButton)) {
-            panelButtonListener.buttonPressed(PanelButton.SHUFFLE);
+            panelDevice.buttonPressed(PanelButton.SHUFFLE);
         }
     }
 
     public void buttonReleased(HoldButton button) {
         if (button.equals(previousButton)) {
-            panelButtonListener.buttonReleased(PanelButton.PREVIOUS);
+            panelDevice.buttonReleased(PanelButton.PREVIOUS);
         } else if (button.equals(rewindButton)) {
-            panelButtonListener.buttonReleased(PanelButton.REWIND);
+            panelDevice.buttonReleased(PanelButton.REWIND);
         } else if (button.equals(playPauseToggleButton)) {
-            panelButtonListener.buttonReleased(PanelButton.PLAY);
+            panelDevice.buttonReleased(PanelButton.PLAY);
             playPauseToggleButton.toggle();
         } else if (button.equals(forwardButton)) {
-            panelButtonListener.buttonReleased(PanelButton.FORWARD);
+            panelDevice.buttonReleased(PanelButton.FORWARD);
         } else if (button.equals(nextButton)) {
-            panelButtonListener.buttonReleased(PanelButton.NEXT);
+            panelDevice.buttonReleased(PanelButton.NEXT);
         } else if (button.equals(volumeDownButton)) {
-            panelButtonListener.buttonReleased(PanelButton.VOLUME_DOWN);
+            panelDevice.buttonReleased(PanelButton.VOLUME_DOWN);
         } else if (button.equals(muteToggleButton)) {
-            panelButtonListener.buttonReleased(PanelButton.MUTE);
+            panelDevice.buttonReleased(PanelButton.MUTE);
             muteToggleButton.toggle();
         } else if (button.equals(volumeUpButton)) {
-            panelButtonListener.buttonReleased(PanelButton.VOLUME_UP);
+            panelDevice.buttonReleased(PanelButton.VOLUME_UP);
         } else if (button.equals(repeatButton)) {
-            panelButtonListener.buttonReleased(PanelButton.REPEAT);
+            panelDevice.buttonReleased(PanelButton.REPEAT);
         } else if (button.equals(shuffleButton)) {
-            panelButtonListener.buttonReleased(PanelButton.SHUFFLE);
+            panelDevice.buttonReleased(PanelButton.SHUFFLE);
+        }
+    }
+
+    protected void processWindowEvent(WindowEvent event) {
+        if (event.getID() == WindowEvent.WINDOW_CLOSING) {
+            log.debug("Window closing");
+            try {
+                panelDevice.deactivate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         }
     }
 }

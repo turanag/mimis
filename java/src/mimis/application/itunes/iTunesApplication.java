@@ -1,8 +1,12 @@
 package mimis.application.itunes;
 
+import java.io.IOException;
+
 import mimis.Application;
+import mimis.Worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.util.VBScript;
 import mimis.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
@@ -12,19 +16,23 @@ import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Application implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
+    protected static final String PROGRAM = "iTunes.exe";
+    protected static final boolean QUIT = true;
 
-    protected static final boolean QUIT = false;
     protected static final int VOLUME_CHANGE_RATE = 5;
-    protected static final int VOLUME_SLEEP = 500;
+    protected static final int VOLUME_SLEEP = 100;
     protected static final String PLAYLIST_LIKE = "Like";
     protected static final String PLAYLIST_DISLIKE = "Dislike";
 
     protected iTunes iTunes;
-    protected boolean volume;
+    protected VolumeWorker volumeWorker;
+    protected boolean quiting;
 
     public iTunesApplication() {
         super(TITLE);        
-        iTunes = new iTunes();        
+        iTunes = new iTunes();
+        volumeWorker = new VolumeWorker();
+        quiting = false;
     }
 
     public void activate() throws ActivateException {
@@ -37,6 +45,17 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
 
     public boolean active() {
         try {
+            if (!active && !quiting && VBScript.isRunning(PROGRAM)) {
+                try {
+                    activate();
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
+            }
+        } catch (IOException e) {
+            log.error(e);
+        }
+        try {
             iTunes.getMute();
             active = true;
         } catch (Exception e) {
@@ -46,17 +65,24 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     }
 
     public void deactivate() throws DeactivateException {
+        super.deactivate();
+        volumeWorker.deactivate();
         try {
             if (QUIT) {
+                quiting = true;
                 synchronized (iTunes) {
                     iTunes.quit();
                 }
+                quiting = false;
             }
         } catch (Exception e) {
             throw new DeactivateException();
-        } finally {
-            super.deactivate();
         }
+    }
+
+    public void stop() throws DeactivateException {
+        super.stop();
+        volumeWorker.stop();
     }
 
     protected void begin(Action action) {
@@ -70,10 +96,18 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 iTunes.rewind();
                 break;
             case VOLUME_UP:
-                volume(true);
+                try {
+                    volumeWorker.activate(VOLUME_CHANGE_RATE);
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
                 break;
             case VOLUME_DOWN:
-                volume(false);
+                try {
+                    volumeWorker.activate(-VOLUME_CHANGE_RATE);
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
                 break;
         }
     }
@@ -102,7 +136,11 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volume = false;
+                try {
+                    volumeWorker.deactivate();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                }
                 break;
             case SHUFFLE:
                 iTunes.toggleShuffle();
@@ -116,15 +154,6 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             case DISLIKE:
                 iTunes.playlistAddCurrentTrack(PLAYLIST_DISLIKE);
                 break;
-        }
-    }
-
-    protected void volume(boolean up) {
-        volume = true;
-        while (volume) {
-            int change = (up ? 1 : -1) * VOLUME_CHANGE_RATE; 
-            iTunes.setSoundVolume(getVolume() + change);
-            sleep(VOLUME_SLEEP);
         }
     }
 
@@ -150,5 +179,19 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     public void onCOMCallsEnabledEvent() {}
     public void onQuittingEvent() {}
     public void onAboutToPromptUserToQuitEvent() {}
-    public void onSoundVolumeChangedEvent(int newVolume) {}
+    public void onSoundVolumeChangedEvent(int newVolume) {}    
+
+    protected class VolumeWorker extends Worker {
+        protected int volumeChangeRate;
+
+        public void activate(int volumeChangeRate) throws ActivateException {
+            super.activate();
+            this.volumeChangeRate = volumeChangeRate;
+        }
+
+        public void work() {
+            iTunes.setSoundVolume(getVolume() + volumeChangeRate);
+            sleep(VOLUME_SLEEP);
+        }
+    };
 }

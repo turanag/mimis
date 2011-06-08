@@ -12,8 +12,8 @@ public class GomPlayerApplication extends WindowsApplication {
         super(PROGRAM, TITLE, NAME);
     }
 
-    public void action(Action action) {
-        log.trace("GomPlayerApplication: " + action);
+    public void begin(Action action) {
+        log.trace("GomPlayerApplication begin: " + action);
         switch (action) {
             case PLAY:
                 command(0x800C);

@@ -18,13 +18,14 @@ public class PhiliphsRCLE011EventMap extends EventMap {
         add(PhiliphsRCLE011Button.PROGRAM_UP, new Task(Target.APPLICATION, Action.NEXT));
         add(PhiliphsRCLE011Button.PROGRAM_DOWN, new Task(Target.APPLICATION, Action.PREVIOUS));
         add(PhiliphsRCLE011Button.LEFT, new Task(Target.APPLICATION, Action.REWIND));
-        add(PhiliphsRCLE011Button.TUNE, new Task(Target.APPLICATION, Action.PAUSE));
+        add(PhiliphsRCLE011Button.TUNE, new Task(Target.APPLICATION, Action.PLAY));
         add(PhiliphsRCLE011Button.RIGHT, new Task(Target.APPLICATION, Action.FORWARD));
         add(PhiliphsRCLE011Button.VOLUME_DOWN, new Task(Target.APPLICATION, Action.VOLUME_DOWN));
         add(PhiliphsRCLE011Button.MUTE, new Task(Target.APPLICATION, Action.MUTE));
         add(PhiliphsRCLE011Button.VOLUME_UP, new Task(Target.APPLICATION, Action.VOLUME_UP));
-        add(PhiliphsRCLE011Button.VOLUME_UP, new Task(Target.APPLICATION, Action.VOLUME_UP));
         add(PhiliphsRCLE011Button.CLOCK, new Task(Target.APPLICATION, Action.REPEAT));
         add(PhiliphsRCLE011Button.OUT, new Task(Target.APPLICATION, Action.SHUFFLE));
+        add(PhiliphsRCLE011Button.RED, new Task(Target.APPLICATION, Action.DISLIKE));
+        add(PhiliphsRCLE011Button.GREEN, new Task(Target.APPLICATION, Action.LIKE));
     }
 }

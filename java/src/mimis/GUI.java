@@ -11,14 +11,16 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import mimis.exception.worker.DeactivateException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class GUI extends JFrame {
-    protected Log log = LogFactory.getLog(getClass());
     protected static final long serialVersionUID = 1L;
+    protected Log log = LogFactory.getLog(getClass());
 
-    protected static final String TITLE = "Mimis GUI";
+    protected static final String TITLE = "MIMIS Manager";
     protected static final String APPLICATION_TITLE = "Applications";
     protected static final String DEVICE_TITLE = "Devices";
     
@@ -69,11 +71,15 @@ public class GUI extends JFrame {
         return textPanel;
     }
 
-    protected void processWindowEvent(WindowEvent e) {
-        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+    protected void processWindowEvent(WindowEvent event) {
+        if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
             stop();
-            mimis.stop();
+            try {
+                mimis.stop();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         }
     }
 

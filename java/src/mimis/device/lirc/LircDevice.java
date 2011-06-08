@@ -67,7 +67,7 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
         }
     }
 
-    public void stop() {
+    public void stop() throws DeactivateException {
         multiplexer.stop();
         lircService.stop();
         super.stop();

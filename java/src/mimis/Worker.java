@@ -30,14 +30,9 @@ public abstract class Worker implements Runnable {
         start(THREAD);
     }
 
-    public void stop() {
-        log.trace("Stop");
+    public void stop() throws DeactivateException {
         if (active()) {
-            try {
-                deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+            deactivate();
         }
         running = false;
         synchronized (this) {
@@ -91,7 +86,6 @@ public abstract class Worker implements Runnable {
             } else {
                 try {
                     synchronized (this) {
-                        log.trace("Wait");
                         wait();
                     }
                 } catch (InterruptedException e) {

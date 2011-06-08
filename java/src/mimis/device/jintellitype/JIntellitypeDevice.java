@@ -13,7 +13,7 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 public class JIntellitypeDevice extends Device implements HotkeyListener, IntellitypeListener {
-    protected static final String TITLE = "JIntellitype";
+    protected static final String TITLE = "Keyboard";
 
     protected JIntellitypeEventMapCycle eventMapCycle;
     protected ArrayList<Hotkey> hotkeyList;
@@ -59,6 +59,10 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         super.deactivate();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);
+    }
+
+    public void stop() throws DeactivateException {
+        super.stop();
         jit.cleanUp();
     }
 }
