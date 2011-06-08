@@ -1,19 +1,17 @@
 package mimis;
 
-import mimis.device.EventMapCycle;
 import mimis.event.EventHandler;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.sequence.EventMap;
-import mimis.sequence.EventParser;
+import mimis.sequence.SequenceParser;
 import mimis.sequence.State;
 
 public abstract class Device extends EventHandler implements Titled, Exitable {
     protected String title;
-    protected EventMapCycle eventMapCycle;
-    protected EventParser eventParser;
+    protected SequenceParser sequenceParser;
 
     public Device(String title) {
         this.title = title;
@@ -26,12 +24,12 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     /* Worker */
     public void activate() throws ActivateException {
         super.activate();
-        eventParser = new EventParser(this);
+        sequenceParser = new SequenceParser(this);
     }
 
     public void deactivate() throws DeactivateException {
         super.deactivate();
-        eventParser.reset();
+        sequenceParser.reset();
     }
 
     public void stop() {
@@ -45,20 +43,20 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
         super.stop();
     }
 
-    /* EventParser */
+    /* SequenceParser */
     protected void add(EventMap eventMap) {
-        eventParser.add(eventMap);
+        sequenceParser.add(eventMap);
     }
 
     protected void remove(EventMap eventMap) {
-        eventParser.remove(eventMap);
+        sequenceParser.remove(eventMap);
     }
 
     protected void reset() {
-        eventParser.reset();
+        sequenceParser.reset();
     }
     
     protected void add(State state) {
-        eventParser.add(state);
+        sequenceParser.add(state);
     }
 }

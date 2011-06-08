@@ -5,7 +5,7 @@ import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
 import mimis.feedback.TextFeedback;
-import mimis.sequence.EventParser;
+import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 
@@ -40,9 +40,9 @@ public class Mimis extends EventHandler {
         this.deviceArray = deviceArray;
         applicationCycle = new ArrayCycle<Application>(applicationArray);
 
-        log.debug("Initialise EventHandler and EventParser");
+        log.debug("Initialise EventHandler and SequenceParser");
         EventHandler.initialise(eventRouter);
-        EventParser.initialise(eventRouter);
+        SequenceParser.initialise(eventRouter);
 
         log.debug("Add EventListeners to EventRouter");
         eventRouter.add(this);

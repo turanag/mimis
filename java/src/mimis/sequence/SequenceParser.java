@@ -13,7 +13,7 @@ import mimis.event.Task;
 import mimis.value.Signal;
 import mimis.value.Target;
 
-public class EventParser {
+public class SequenceParser {
     protected Log log = LogFactory.getLog(getClass());
 
     protected EventHandler self;
@@ -23,7 +23,7 @@ public class EventParser {
 
     protected static EventListener eventListener;
 
-    public EventParser(EventHandler self) {
+    public SequenceParser(EventHandler self) {
         this.self = self;
         eventMap = new EventMap();
         sequenceList = new ArrayList<Sequence>();
@@ -31,7 +31,7 @@ public class EventParser {
     }
 
     public static void initialise(EventListener eventListener) {
-        EventParser.eventListener = eventListener;
+        SequenceParser.eventListener = eventListener;
     }
 
     public synchronized void add(EventMap eventMap) {
