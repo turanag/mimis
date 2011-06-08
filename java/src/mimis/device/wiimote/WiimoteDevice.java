@@ -21,7 +21,7 @@ import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
 public class WiimoteDevice extends Device implements GestureListener {
     protected static final String TITLE = "Wiimote";
-    protected static final int RUMBLE = 150;
+    protected static final int RUMBLE = 50;
     protected static final int TIMEOUT = 200;
 
     protected static WiimoteService wiimoteService;
@@ -50,11 +50,9 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void activate() throws ActivateException {
         super.activate();
         connect();
-        add(eventMapCycle.mimis);
         add(eventMapCycle.player);
-        add(eventMapCycle.like);
     }
-    
+
     public boolean active() {
         if (wiimote != null) {
             connected = false;
@@ -90,6 +88,17 @@ public class WiimoteDevice extends Device implements GestureListener {
     /* Events */
     public void begin(Action action) {
         switch (action) {
+            case SHIFT:
+                log.debug("Shift");
+                reset();
+                add(eventMapCycle.mimis);
+                add(eventMapCycle.like);
+                break;
+            case UNSHIFT:
+                log.debug("Unshift");
+                reset();
+                add(eventMapCycle.player);
+                break;
             case TRAIN:
                 log.debug("Gesture train");
                 gestureDevice.train();
@@ -112,7 +121,7 @@ public class WiimoteDevice extends Device implements GestureListener {
                 break;
         }
     }
-    
+
     public void end(Action action) {
         switch (action) {
             case TRAIN:
@@ -141,7 +150,6 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void connected() {
         try {
             wiimote = wiimoteService.getDevice(this);
-            //wiimote.activateMotionSensing();
             try {
                 wiimoteDiscovery.deactivate();
             } catch (DeactivateException e) {

@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

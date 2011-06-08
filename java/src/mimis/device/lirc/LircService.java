@@ -11,9 +11,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+
 import mimis.Worker;
-import mimis.device.lirc.button.PhiliphsRCLE011Button;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
@@ -64,10 +65,10 @@ public class LircService extends Worker {
             outputStream = socket.getOutputStream();
             printWriter = new PrintWriter(outputStream);
         } catch (UnknownHostException e) {
-            log.info(e);
+            log.error(e);
             throw new ActivateException();
         } catch (IOException e) {
-            log.info(e);
+            log.error(e);
             throw new ActivateException();
         }
         super.activate();
@@ -87,20 +88,13 @@ public class LircService extends Worker {
     }
 
     public void work() {
-        log.debug("wrk");
         try {
-            String string;
-            //synchronized (this) {
-                string = bufferedReader.readLine();
-            //}
+            String string = bufferedReader.readLine();
             try {
-                System.out.println(string);
                 LircButton lircButton = parseButton(new Scanner(string));
-                log.trace("LircButton: " + lircButton);
                 for (LircButtonListener lircbuttonListener : lircButtonListenerList) {
                     lircbuttonListener.add(lircButton);
                 }
-                log.info(send(PhiliphsRCLE011Button.MUTE));
             } catch (UnknownButtonException e) {
                 log.error(e);
             }
@@ -126,6 +120,8 @@ public class LircService extends Worker {
             }
         } catch (InputMismatchException e) {
             log.error(e);
+        } catch (NoSuchElementException e) {
+            log.error(e);
         }
         throw new UnknownButtonException();
     }
@@ -142,17 +138,15 @@ public class LircService extends Worker {
         log.debug(command);
         printWriter.append(command);
         printWriter.flush();
-        //synchronized (this) {
-            try {
-                bufferedReader.readLine();
-                bufferedReader.readLine();
-                String result = bufferedReader.readLine();
-                bufferedReader.readLine();
-                return result.equals("SUCCESS");
-            } catch (IOException e) {
-                log.error(e);
-            }
-            return false;
-        //}
+        try {
+            bufferedReader.readLine();
+            bufferedReader.readLine();
+            String result = bufferedReader.readLine();
+            bufferedReader.readLine();
+            return result.equals("SUCCESS");
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package mimis.device.lirc.button;
+package mimis.device.lirc.remote;
 
 import mimis.device.lirc.LircButton;
 
@@ -21,7 +21,7 @@ public enum PhiliphsRCLE011Button implements LircButton {
     VOLUME_DOWN ("Volume-"),
     MUTE ("Mute"),
     PROGRAM_UP ("Program+"),
-    PROGRUM_DOWN ("Program-"),
+    PROGRAM_DOWN ("Program-"),
     ONE ("1"),
     TWO ("2"),
     THREE ("3"),

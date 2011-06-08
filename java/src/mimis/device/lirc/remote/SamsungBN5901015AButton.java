@@ -1,4 +1,4 @@
-package mimis.device.lirc.button;
+package mimis.device.lirc.remote;
 
 import mimis.device.lirc.LircButton;
 

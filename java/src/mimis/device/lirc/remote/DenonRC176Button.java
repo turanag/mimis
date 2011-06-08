@@ -1,8 +1,8 @@
-package mimis.device.lirc.button;
+package mimis.device.lirc.remote;
 
 import mimis.device.lirc.LircButton;
 
-public enum DenonRC176 implements LircButton {
+public enum DenonRC176Button implements LircButton {
     TAPE_AB ("TAPE_AB"),
     TAPE_REC ("TAPE_REC"),
     TAPE_PAUSE ("TAPE_PAUSE"),
@@ -36,7 +36,7 @@ public enum DenonRC176 implements LircButton {
 
     protected String code;
 
-    private DenonRC176(String code) {
+    private DenonRC176Button(String code) {
         this.code = code;
     }
 

@@ -27,7 +27,7 @@ public class EventMap extends HashMap<Sequence, Event> {
         }
     }
 
-    protected void add(State state, Task task) {
+    public void add(State state, Task task) {
         add(new Sequence(state), task);
     }
 

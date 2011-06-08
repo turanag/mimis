@@ -17,8 +17,7 @@ public class LocalRouter extends EventRouter {
                 }
                 if (event instanceof Task) {
                     Task task = (Task) event;
-                    add(new TextFeedback("Action: " + task.getAction()));
-
+                    add(new TextFeedback(String.format("Action (%s): %s", task.getSignal(), task.getAction())));
                 }
                 break;
             default:

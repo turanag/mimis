@@ -160,7 +160,7 @@ public class WiimoteWiigee extends Wiigee {
     /**
      * Sets the Trainbutton for all wiimotes;
      *
-     * @param b SelectButton encoding, see static Wiimote values
+     * @param b ManageButton encoding, see static Wiimote values
      */
     public void setTrainButton(int b) {
         for (int i = 0; i < this.devices.size(); i++) {
@@ -171,7 +171,7 @@ public class WiimoteWiigee extends Wiigee {
     /**
      * Sets the Recognitionbutton for all wiimotes;
      *
-     * @param b SelectButton encoding, see static Wiimote values
+     * @param b ManageButton encoding, see static Wiimote values
      */
     public void setRecognitionButton(int b) {
         for (int i = 0; i < this.devices.size(); i++) {
@@ -182,7 +182,7 @@ public class WiimoteWiigee extends Wiigee {
     /**
      * Sets the CloseGesturebutton for all wiimotes;
      *
-     * @param b SelectButton encoding, see static Wiimote values
+     * @param b ManageButton encoding, see static Wiimote values
      */
     public void setCloseGestureButton(int b) {
         for (int i = 0; i < this.devices.size(); i++) {

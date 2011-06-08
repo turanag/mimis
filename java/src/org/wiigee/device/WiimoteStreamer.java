@@ -81,7 +81,7 @@ public class WiimoteStreamer extends Thread {
                 if((b[1] & 0xFF) == 0x31) {
                     this.handleButtonData(new byte[] { b[2], b[3] });
                     this.handleAccelerationData(new byte[] { b[4], b[5], b[6] });
-                    //Log.write("0x31: SelectButton + Acc");
+                    //Log.write("0x31: ManageButton + Acc");
                 }
                 else if ((b[1] & 0xFF) == 0x33) {
                     this.handleButtonData(new byte[] { b[2], b[3] });
@@ -90,7 +90,7 @@ public class WiimoteStreamer extends Thread {
                                             b[10], b[11], b[12],
                                             b[13], b[14], b[15],
                                             b[16], b[17], b[18]});
-                    //Log.write("0x33: SelectButton + Acc + Irda");
+                    //Log.write("0x33: ManageButton + Acc + Irda");
                 }
                 else if ((b[1] & 0xFF) == 0x37) {
                     this.handleButtonData(new byte[] { b[2], b[3] });
@@ -100,7 +100,7 @@ public class WiimoteStreamer extends Thread {
                                        b[13], b[14], b[15], b[16]});
                     this.handleWiiMotionPlusData(
                             new byte[]{b[17], b[18], b[19], b[20], b[21], b[22]});
-                    //Log.write("0x37: SelectButton + Acc + Ext");
+                    //Log.write("0x37: ManageButton + Acc + Ext");
                 }
                 else if ((b[1] & 0xFF) == 0x21) {
                     this.handleButtonData(new byte[] { b[2], b[3] });

@@ -13,12 +13,14 @@ import com.dt.iTunesController.iTunesEventsInterface;
 public class iTunesApplication extends Application implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
 
-    protected static final int POSTION_CHANGE_RATE = 1;
+    protected static final boolean QUIT = false;
     protected static final int VOLUME_CHANGE_RATE = 5;
+    protected static final int VOLUME_SLEEP = 500;
     protected static final String PLAYLIST_LIKE = "Like";
     protected static final String PLAYLIST_DISLIKE = "Dislike";
 
     protected iTunes iTunes;
+    protected boolean volume;
 
     public iTunesApplication() {
         super(TITLE);        
@@ -45,8 +47,10 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
 
     public void deactivate() throws DeactivateException {
         try {
-            synchronized (iTunes) {
-                iTunes.quit();
+            if (QUIT) {
+                synchronized (iTunes) {
+                    iTunes.quit();
+                }
             }
         } catch (Exception e) {
             throw new DeactivateException();
@@ -56,7 +60,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     }
 
     protected void begin(Action action) {
-        log.trace("iTunesApplication: " + action);
+        log.trace("iTunesApplication begin: " + action);
         if (!active) return;
         switch (action) {
             case FORWARD:
@@ -65,11 +69,17 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             case REWIND:
                 iTunes.rewind();
                 break;
+            case VOLUME_UP:
+                volume(true);
+                break;
+            case VOLUME_DOWN:
+                volume(false);
+                break;
         }
     }
 
     protected void end(Action action) {
-        log.trace("iTunesApplication: " + action);
+        log.trace("iTunesApplication end: " + action);
         if (!active) return;
         switch (action) {
             case PLAY:
@@ -82,27 +92,23 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 iTunes.previousTrack();
                 break;
             case FORWARD:
-                iTunes.play();
+                iTunes.resume();
                 break;
             case REWIND:
-                iTunes.play();
+                iTunes.resume();
                 break;
             case MUTE:
                 iTunes.toggleMute();
                 break;
             case VOLUME_UP:
-                iTunes.setSoundVolume(getVolume() + VOLUME_CHANGE_RATE);
-                break;
             case VOLUME_DOWN:
-                iTunes.setSoundVolume(getVolume() - VOLUME_CHANGE_RATE);
+                volume = false;
                 break;
             case SHUFFLE:
                 iTunes.toggleShuffle();
-                //iTunes.fastForward();
                 break;
             case REPEAT:
                 iTunes.cycleSongRepeat();
-                //iTunes.resume();
                 break;
             case LIKE:
                 iTunes.playlistAddCurrentTrack(PLAYLIST_LIKE);
@@ -110,6 +116,15 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
             case DISLIKE:
                 iTunes.playlistAddCurrentTrack(PLAYLIST_DISLIKE);
                 break;
+        }
+    }
+
+    protected void volume(boolean up) {
+        volume = true;
+        while (volume) {
+            int change = (up ? 1 : -1) * VOLUME_CHANGE_RATE; 
+            iTunes.setSoundVolume(getVolume() + change);
+            sleep(VOLUME_SLEEP);
         }
     }
 

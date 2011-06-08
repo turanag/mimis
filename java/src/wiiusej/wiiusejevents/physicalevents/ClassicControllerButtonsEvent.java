@@ -56,7 +56,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		super(id, buttonsJustPressed, buttonsJustReleased, buttonsHeld);
 	}
 
-	/* SelectButton LEFT */
+	/* ManageButton LEFT */
 
 	public boolean isButtonLeftJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_LEFT);
@@ -74,7 +74,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_LEFT);
 	}
 
-	/* SelectButton RIGHT */
+	/* ManageButton RIGHT */
 
 	public boolean isButtonRightJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_RIGHT);
@@ -92,7 +92,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_RIGHT);
 	}
 
-	/* SelectButton UP */
+	/* ManageButton UP */
 
 	public boolean isButtonUpJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_UP);
@@ -110,7 +110,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_UP);
 	}
 
-	/* SelectButton DOWN */
+	/* ManageButton DOWN */
 
 	public boolean isButtonDownJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_DOWN);
@@ -128,7 +128,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_DOWN);
 	}
 	
-	/* SelectButton A */
+	/* ManageButton A */
 
 	public boolean isButtonAJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_A);
@@ -146,7 +146,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_A);
 	}
 	
-	/* SelectButton B */
+	/* ManageButton B */
 
 	public boolean isButtonBJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_B);
@@ -164,7 +164,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_B);
 	}
 	
-	/* SelectButton X */
+	/* ManageButton X */
 
 	public boolean isButtonXJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_X);
@@ -182,7 +182,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_X);
 	}
 
-	/* SelectButton Y */
+	/* ManageButton Y */
 
 	public boolean isButtonYJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_Y);
@@ -200,7 +200,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_Y);
 	}
 	
-	/* SelectButton FullLeft */
+	/* ManageButton FullLeft */
 
 	public boolean isButtonFullLeftJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_FULL_L);
@@ -218,7 +218,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_FULL_L);
 	}
 	
-	/* SelectButton FullRight */
+	/* ManageButton FullRight */
 
 	public boolean isButtonFullRightJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_FULL_R);
@@ -236,7 +236,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_FULL_R);
 	}
 	
-	/* SelectButton Home */
+	/* ManageButton Home */
 
 	public boolean isButtonHomeJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_HOME);
@@ -254,7 +254,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_HOME);
 	}
 	
-	/* SelectButton Minus */
+	/* ManageButton Minus */
 
 	public boolean isButtonMinusJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_MINUS);
@@ -272,7 +272,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_MINUS);
 	}	
 	
-	/* SelectButton Plus */
+	/* ManageButton Plus */
 
 	public boolean isButtonPlusJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_PLUS);
@@ -290,7 +290,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_PLUS);
 	}	
 	
-	/* SelectButton ZL */
+	/* ManageButton ZL */
 
 	public boolean isButtonZLJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_ZL);
@@ -308,7 +308,7 @@ public class ClassicControllerButtonsEvent extends ButtonsEvent{
 		return isButtonPressed(CLASSIC_CTRL_BUTTON_ZL);
 	}
 	
-	/* SelectButton ZR */
+	/* ManageButton ZR */
 
 	public boolean isButtonZRJustPressed() {
 		return isButtonJustPressed(CLASSIC_CTRL_BUTTON_ZR);

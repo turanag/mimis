@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.swing.JToggleButton;
 
 import mimis.manager.Exitable;
-import mimis.manager.SelectButton;
+import mimis.manager.ManageButton;
 import mimis.manager.Titled;
 
 import org.apache.commons.logging.Log;
@@ -19,7 +19,7 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     protected static final int INTERVAL = 500;
 
     protected T[] manageableArray;
-    protected Map<T, SelectButton<T>> buttonMap;
+    protected Map<T, ManageButton<T>> buttonMap;
 
     public Manager(T[] manageableArray) {
         this.manageableArray = manageableArray;
@@ -34,9 +34,9 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     }
 
     protected void createButtons() {
-        buttonMap = new HashMap<T, SelectButton<T>>();
+        buttonMap = new HashMap<T, ManageButton<T>>();
         for (T manageable : manageableArray) {
-            SelectButton<T> button = new SelectButton<T>(manageable);
+            ManageButton<T> button = new ManageButton<T>(manageable);
             buttonMap.put(manageable, button);
         }
     }
@@ -49,7 +49,7 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
         long before = Calendar.getInstance().getTimeInMillis();
         for (T manageable : manageableArray) {
             boolean active = manageable.active();
-            SelectButton<T> button = buttonMap.get(manageable);
+            ManageButton<T> button = buttonMap.get(manageable);
             button.setPressed(active);
         }
         long after = Calendar.getInstance().getTimeInMillis();

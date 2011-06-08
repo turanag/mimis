@@ -13,32 +13,32 @@ import mimis.exception.worker.DeactivateException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SelectButton<T extends Worker & Titled> extends JToggleButton implements MouseListener {
+public class ManageButton<T extends Worker & Titled> extends JToggleButton implements MouseListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final long serialVersionUID = 1L;
-    protected T activatable;
+    protected T manageable;
     protected Action action;
 
-    public SelectButton(T activatable) {
-        this.activatable = activatable;
-        setText(activatable.title());
+    public ManageButton(T manageable) {
+        this.manageable = manageable;
+        setText(manageable.title());
         setFocusable(false);
         addMouseListener(this);
     }
 
     public void mouseClicked(MouseEvent event) {
-        if (activatable.active()) {
+        if (manageable.active()) {
             try {
                 log.trace("Uit");
-                activatable.deactivate();
+                manageable.deactivate();
             } catch (DeactivateException e) {
                 log.error(e);
             }
         } else {
             try {
                 log.trace("Aan");
-                activatable.activate();
+                manageable.activate();
             } catch (ActivateException e) {
                 log.error(e);
             }
@@ -49,7 +49,7 @@ public class SelectButton<T extends Worker & Titled> extends JToggleButton imple
     public void mouseExited(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
-    
+
     public void setPressed(boolean pressed) {
         if (!isSelected() && pressed || isSelected() && !pressed) {
             doClick();

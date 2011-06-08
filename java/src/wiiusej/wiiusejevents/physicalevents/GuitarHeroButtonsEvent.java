@@ -50,7 +50,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		super(id, buttonsJustPressed, buttonsJustReleased, buttonsHeld);
 	}
 	
-	/* SelectButton Strum Up */
+	/* ManageButton Strum Up */
 
 	public boolean isButtonStrumUpJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_STRUM_UP);
@@ -68,7 +68,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_STRUM_UP);
 	}
 	
-	/* SelectButton Strum Down */
+	/* ManageButton Strum Down */
 
 	public boolean isButtonStrumDownJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_STRUM_DOWN);
@@ -86,7 +86,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_STRUM_DOWN);
 	}
 	
-	/* SelectButton blue */
+	/* ManageButton blue */
 
 	public boolean isButtonBlueJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_BLUE);
@@ -104,7 +104,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_BLUE);
 	}
 	
-	/* SelectButton Green */
+	/* ManageButton Green */
 
 	public boolean isButtonGreenJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_GREEN);
@@ -122,7 +122,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_GREEN);
 	}	
 
-	/* SelectButton Minus */
+	/* ManageButton Minus */
 
 	public boolean isButtonMinusJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_MINUS);
@@ -140,7 +140,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_MINUS);
 	}
 	
-	/* SelectButton Orange */
+	/* ManageButton Orange */
 
 	public boolean isButtonOrangeJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_ORANGE);
@@ -158,7 +158,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_ORANGE);
 	}
 	
-	/* SelectButton Plus */
+	/* ManageButton Plus */
 
 	public boolean isButtonPlusJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_PLUS);
@@ -176,7 +176,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_PLUS);
 	}
 	
-	/* SelectButton Red */
+	/* ManageButton Red */
 
 	public boolean isButtonRedJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_RED);
@@ -194,7 +194,7 @@ public class GuitarHeroButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(GUITAR_HERO_3_BUTTON_RED);
 	}
 	
-	/* SelectButton Yellow */
+	/* ManageButton Yellow */
 
 	public boolean isButtonYellowJustPressed() {
 		return isButtonJustPressed(GUITAR_HERO_3_BUTTON_YELLOW);

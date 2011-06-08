@@ -17,10 +17,6 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     protected PanelButtonListener panelButtonListener;
     protected ClassLoader classLoader;
-
-    //protected JTextArea feedbackArea;
-    //protected JScrollPane scrollPane;
-
     protected HoldButton previousButton;
     protected HoldButton rewindButton;
     protected HoldButton stopButton;
@@ -72,7 +68,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected void createControls() {
         previousButton = getButton("icons/previous.png", "Go to previous track");
         rewindButton = getButton("icons/rewind.png", "Skip backward");
-        playPauseToggleButton = getToggleButton("icons/play.png", "icons/pause.png", "Play/pause");//getButton("icons/play.png", "Play/pause");
+        playPauseToggleButton = getToggleButton("icons/play.png", "icons/pause.png", "Play/pause");
         forwardButton = getButton("icons/forward.png", "Skip forward");
         nextButton = getButton("icons/next.png", "Go to next track");
         volumeDownButton = getButton("icons/volumeDown.png", "Decrease volume");
@@ -160,15 +156,4 @@ public class Panel extends JFrame implements HoldButtonListener {
             panelButtonListener.buttonReleased(PanelButton.SHUFFLE);
         }
     }
-
-    /* Feedback */
-    /*public void addFeedback(String format, Object... args) {
-        feedbackArea.append(String.format(format, args));
-        JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
-        scrollBar.setValue(scrollBar.getMaximum());
-    }
-
-    public void clearFeedback() {
-        feedbackArea.setText("");
-    }*/
 }

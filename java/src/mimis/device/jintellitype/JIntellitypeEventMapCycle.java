@@ -3,7 +3,6 @@ package mimis.device.jintellitype;
 import mimis.device.EventMapCycle;
 import mimis.event.Task;
 import mimis.sequence.EventMap;
-import mimis.sequence.state.Press;
 import mimis.value.Action;
 import mimis.value.Key;
 import mimis.value.Target;
@@ -26,10 +25,10 @@ public class JIntellitypeEventMapCycle extends EventMapCycle {
         /* Player */
         player = new EventMap();
         player.add(
-            new Press(CommandButton.VOLUME_DOWN),
+            CommandButton.VOLUME_DOWN,
             new Task(Target.APPLICATIONS, Action.VOLUME_DOWN));
         player.add(
-            new Press(CommandButton.VOLUME_UP),
+            CommandButton.VOLUME_UP,
             new Task(Target.APPLICATIONS, Action.VOLUME_UP));
         player.add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
