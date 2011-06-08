@@ -1,8 +1,10 @@
 package mimis.event.router;
 
 import mimis.Event;
+import mimis.event.Task;
 import mimis.event.EventListener;
 import mimis.event.EventRouter;
+import mimis.feedback.TextFeedback;
 import mimis.value.Target;
 
 public class LocalRouter extends EventRouter {
@@ -12,6 +14,11 @@ public class LocalRouter extends EventRouter {
             case APPLICATION:
                 if (application != null) {
                     application.add(event);
+                }
+                if (event instanceof Task) {
+                    Task task = (Task) event;
+                    add(new TextFeedback("Action: " + task.getAction()));
+
                 }
                 break;
             default:

@@ -35,6 +35,7 @@ public abstract class JavaInputDevice extends Device {
             log.debug(jxinputDevice);
             javaInputListener = new JavaInputListener(this, jxinputDevice);
         } catch (DeviceNotFoundException e) {
+            active = false;
             throw new ActivateException();
         }
         javaInputListener.activate();
@@ -47,7 +48,7 @@ public abstract class JavaInputDevice extends Device {
     }
 
     public void processEvent(JXInputAxisEvent event) {
-        log.trace("JXInputAxisEvent: " + event);
+        //log.trace("JXInputAxisEvent: " + event);
     }
 
     public void processEvent(JXInputButtonEvent event) throws ButtonException {
