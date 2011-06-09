@@ -14,5 +14,7 @@ public enum PanelButton implements Button {
     MUTE,
     VOLUME_UP,
     REPEAT,
-    SHUFFLE;
+    SHUFFLE,
+    UP,
+    DOWN;
 }

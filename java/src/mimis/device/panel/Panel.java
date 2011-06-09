@@ -25,11 +25,13 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     protected PanelDevice panelDevice;
     protected ClassLoader classLoader;
+    protected HoldButton upButton;
     protected HoldButton previousButton;
     protected HoldButton rewindButton;
     protected HoldButton stopButton;
     protected ToggleButton playPauseToggleButton;
     protected HoldButton forwardButton;
+    protected HoldButton downButton;
     protected HoldButton nextButton;
     protected HoldButton volumeDownButton;
     protected ToggleButton muteToggleButton;
@@ -75,11 +77,13 @@ public class Panel extends JFrame implements HoldButtonListener {
     }
 
     protected void createControls() {
+        upButton = getButton("icons/up.png", "Go to previous application");
+        nextButton = getButton("icons/next.png", "Go to next track");
         previousButton = getButton("icons/previous.png", "Go to previous track");
         rewindButton = getButton("icons/rewind.png", "Skip backward");
         playPauseToggleButton = getToggleButton("icons/play.png", "icons/pause.png", "Play/pause");
         forwardButton = getButton("icons/forward.png", "Skip forward");
-        nextButton = getButton("icons/next.png", "Go to next track");
+        downButton = getButton("icons/down.png", "Go to next application");
         volumeDownButton = getButton("icons/volumeDown.png", "Decrease volume");
         muteToggleButton = getToggleButton("icons/mute.png", "icons/unmute.png", "Toggle Mute");
         volumeUpButton = getButton("icons/volumeUp.png", "Increase volume");
@@ -97,7 +101,8 @@ public class Panel extends JFrame implements HoldButtonListener {
         controlPanel.setLayout(new BorderLayout());
         
         JPanel upperControlPanel = new JPanel();
-        controlPanel.add(upperControlPanel, BorderLayout.NORTH);        
+        controlPanel.add(upperControlPanel, BorderLayout.NORTH);
+        upperControlPanel.add(upButton);
         upperControlPanel.add(previousButton);
         upperControlPanel.add(rewindButton);
         upperControlPanel.add(playPauseToggleButton);
@@ -106,6 +111,7 @@ public class Panel extends JFrame implements HoldButtonListener {
         
         JPanel lowerControlPanel = new JPanel();
         controlPanel.add(lowerControlPanel, BorderLayout.SOUTH);
+        lowerControlPanel.add(downButton);
         lowerControlPanel.add(repeatButton);
         lowerControlPanel.add(volumeDownButton);
         lowerControlPanel.add(muteToggleButton);
@@ -137,6 +143,10 @@ public class Panel extends JFrame implements HoldButtonListener {
             panelDevice.buttonPressed(PanelButton.REPEAT);
         } else if (button.equals(shuffleButton)) {
             panelDevice.buttonPressed(PanelButton.SHUFFLE);
+        } else if (button.equals(upButton)) {
+            panelDevice.buttonPressed(PanelButton.UP);
+        }  else if (button.equals(downButton)) {
+            panelDevice.buttonPressed(PanelButton.DOWN);
         }
     }
 
@@ -163,6 +173,10 @@ public class Panel extends JFrame implements HoldButtonListener {
             panelDevice.buttonReleased(PanelButton.REPEAT);
         } else if (button.equals(shuffleButton)) {
             panelDevice.buttonReleased(PanelButton.SHUFFLE);
+        } else if (button.equals(upButton)) {
+            panelDevice.buttonReleased(PanelButton.UP);
+        }  else if (button.equals(downButton)) {
+            panelDevice.buttonReleased(PanelButton.DOWN);
         }
     }
 

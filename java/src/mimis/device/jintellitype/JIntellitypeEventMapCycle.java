@@ -21,7 +21,8 @@ public class JIntellitypeEventMapCycle extends EventMapCycle {
         mimis.add(
             new Hotkey(Key.NEXT),
             new Task(Target.MIMIS, Action.NEXT));
-
+        add(mimis);
+        
         /* Player */
         player = new EventMap();
         player.add(
@@ -39,5 +40,6 @@ public class JIntellitypeEventMapCycle extends EventMapCycle {
         player.add(
             new Hotkey(Modifier.CTRL | Modifier.SHIFT | Modifier.WIN, 'p'),
             new Task(Target.APPLICATION, Action.PREVIOUS));
+        add(player);
     }
 }
