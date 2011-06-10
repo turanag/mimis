@@ -2,20 +2,20 @@ package mimis.device.panel;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import mimis.exception.worker.DeactivateException;
+import mimis.util.Swing;
 import mimis.util.swing.HoldButton;
 import mimis.util.swing.HoldButtonListener;
 import mimis.util.swing.ToggleButton;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class Panel extends JFrame implements HoldButtonListener {
     protected static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected final static String TITLE = "MIMIS Panel Device";
 
     protected PanelDevice panelDevice;
-    protected ClassLoader classLoader;
+
     protected HoldButton upButton;
     protected HoldButton previousButton;
     protected HoldButton rewindButton;
@@ -42,7 +42,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     Panel(PanelDevice panelDevice) {
         super(TITLE);
         this.panelDevice = panelDevice;
-        classLoader = getClass().getClassLoader();
+        setIconImage(Swing.getImage("kop.png"));
         createControls();
         layoutControls();
         pack();
@@ -51,25 +51,17 @@ public class Panel extends JFrame implements HoldButtonListener {
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
-    protected URL getResource(String name) {
-        return classLoader.getResource(name);
-    }
-
-    protected ImageIcon getImageIcon(String name) {
-        return new ImageIcon(getResource(name));
-    }
-
     protected HoldButton getButton(String name, String text) {
         HoldButton button = new HoldButton(this);
-        button.setIcon(getImageIcon(name));
+        button.setIcon(Swing.getImageIcon(name));
         button.setToolTipText(text);
         button.setFocusPainted(false);
         return button;
     }
 
     protected ToggleButton getToggleButton(String firstName, String secondName, String text) {
-        ImageIcon firstImageIcon = getImageIcon(firstName);
-        ImageIcon secondImageIcon = getImageIcon(secondName);
+        ImageIcon firstImageIcon = Swing.getImageIcon(firstName);
+        ImageIcon secondImageIcon = Swing.getImageIcon(secondName);
         ToggleButton button = new ToggleButton(this, firstImageIcon, secondImageIcon);
         button.setToolTipText(text);
         button.setFocusPainted(false);

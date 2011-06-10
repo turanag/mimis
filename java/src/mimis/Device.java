@@ -1,7 +1,6 @@
 package mimis;
 
 import mimis.event.EventHandler;
-import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
 import mimis.manager.Titled;
@@ -15,6 +14,7 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
 
     public Device(String title) {
         this.title = title;
+        sequenceParser = new SequenceParser(this);
     }
 
     public String title() {
@@ -22,11 +22,6 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     }
 
     /* Worker */
-    public void activate() throws ActivateException {
-        super.activate();
-        sequenceParser = new SequenceParser(this);
-    }
-
     public void deactivate() throws DeactivateException {
         super.deactivate();
         sequenceParser.reset();

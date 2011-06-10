@@ -26,6 +26,9 @@ public abstract class CMDApplication extends Application {
         super.activate();
         String key = String.format("%s\\%s", REGISTRY, program);
         String path = Native.getValue(key);
+        if (path == null) {
+            throw new ActivateException();
+        }
         try {
             String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
             command = Native.replaceVariables(command);

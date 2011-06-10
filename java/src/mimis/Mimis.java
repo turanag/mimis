@@ -5,7 +5,7 @@ import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.feedback.TextFeedback;
+import mimis.event.feedback.TextFeedback;
 import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;

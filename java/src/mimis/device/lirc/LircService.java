@@ -74,6 +74,13 @@ public class LircService extends Worker {
         super.activate();
     }
 
+    public boolean active() {
+        if (active && !socket.isConnected()) {
+            active = false;
+        }
+        return active;
+    }
+
     public void deactivate() throws DeactivateException {
         try {
             bufferedReader.close();

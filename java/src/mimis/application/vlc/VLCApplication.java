@@ -16,7 +16,7 @@ public class VLCApplication extends CMDApplication {
     protected static final int VOLUME_CHANGE_RATE = 20;
 
     protected static final String HOST = "127.0.0.1"; // localhost
-    protected static final int PORT = 8080;
+    protected static final int PORT = 1234;
 
     protected int volume = 255;
     protected boolean muted = false;
@@ -42,8 +42,8 @@ public class VLCApplication extends CMDApplication {
         }
     }
 
-    public void action(Action action) {
-        log.trace("VLCApplication: " + action);
+    public void end(Action action) {
+        log.trace("VLCApplication end: " + action);
         switch (action) {
             case PLAY:
                 command("pl_pause");

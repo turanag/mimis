@@ -4,7 +4,7 @@ import mimis.Event;
 import mimis.event.Task;
 import mimis.event.EventListener;
 import mimis.event.EventRouter;
-import mimis.feedback.TextFeedback;
+import mimis.event.feedback.TextFeedback;
 import mimis.value.Target;
 
 public class LocalRouter extends EventRouter {

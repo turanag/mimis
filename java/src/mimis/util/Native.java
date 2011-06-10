@@ -1,40 +1,46 @@
 package mimis.util;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Native {
-    public static int getHandle(String name) throws IOException {
-        File file = new File("native/list.exe");
-        Process process = Runtime.getRuntime().exec(file.getPath());
+    public static int getHandle(String title) throws IOException {
+        String command = String.format("native/list.exe w");
+        Process process = Runtime.getRuntime().exec(command);
         Scanner scanner = new Scanner(process.getInputStream());
-        ArrayList<Integer> handleList = new ArrayList<Integer>();
-        ArrayList<String> titleList = new ArrayList<String>();
+        scanner.nextLine();
         while (scanner.hasNextLine()) {
+            Scanner line = new Scanner(scanner.nextLine());
+            line.useDelimiter("\t");
             try {
-                int handle = new Integer(scanner.nextLine());
-                String title = scanner.nextLine();
-                if (title.contains(name)) {
-                    handleList.add(handle);
-                    titleList.add(title);
+                int handle = line.nextInt();
+                line.nextInt();
+                if (line.hasNext() && line.next().equals(title)) {
+                    return handle;
                 }
             } catch (InputMismatchException e) {}
         }
-        int count = handleList.size();
-        if (count == 1) {
-            return handleList.get(0);
+        return -1;
+    }
+
+    public static String getProgram(int processId) throws IOException {
+        String command = String.format("native/list.exe p");
+        Process process = Runtime.getRuntime().exec(command);
+        Scanner scanner = new Scanner(process.getInputStream());
+        scanner.nextLine();
+        while (scanner.hasNextLine()) {
+            Scanner line = new Scanner(scanner.nextLine());
+            line.useDelimiter("\t");
+            try {
+                if (line.nextInt() == processId) {
+                    return line.next();
+                }
+            } catch (InputMismatchException e) {}
         }
-        for (int i = 0; i < count; ++i) {
-            if (titleList.get(i).endsWith(name)) {
-                return handleList.get(i);
-            }
-        }
-        return count > 0 ? handleList.get(0) : -1;
+        return null;
     }
 
     public static String getValue(String key, String name) {
@@ -60,7 +66,7 @@ public class Native {
     }
 
     public static String getValue(String key) {
-        return getValue(key, "(Default");
+        return getValue(key, "(Default)");
     }
 
     public static String replaceVariables(String string) {

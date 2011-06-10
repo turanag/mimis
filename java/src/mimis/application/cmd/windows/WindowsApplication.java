@@ -29,7 +29,6 @@ public abstract class WindowsApplication extends CMDApplication {
     public void activate() throws ActivateException {
         super.activate();
         handle = Windows.findWindow(name, null);
-        log.info(handle);
         if (handle < 1) {
             sleep(START_SLEEP);
             handle = Windows.findWindow(name, null);
@@ -66,13 +65,13 @@ public abstract class WindowsApplication extends CMDApplication {
         //return Windows.sendMessage(handle, Windows.WM_USER + wParam, 0, 0);
     }
 
-    protected void key(Type key, int code) {
+    protected void key(Type type, int code) {
         int scanCode = Windows.mapVirtualKey(code, Windows.MAPVK_VK_TO_VSC);
-        Windows.postMessage(handle, key.getCode(), code, 1 | (scanCode << 16));
+        Windows.postMessage(handle, type.getCode(), code, 1 | (scanCode << 16));
     }
 
-    protected void key(Type key, char character) {
-        key(key, (int) Character.toUpperCase(character));
+    protected void key(Type type, char character) {
+        key(type, (int) Character.toUpperCase(character));
     }
 
     protected void key(Type key, Key virtualKey) {

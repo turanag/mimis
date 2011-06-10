@@ -40,8 +40,6 @@ public class WinampApplication extends WindowsApplication {
     protected SeekWorker seekWorker;
     protected double volume;
     protected boolean muted;
-    protected boolean forward;
-    protected boolean rewind;
     
     public WinampApplication() {
         super(PROGRAM, TITLE, NAME);
@@ -59,35 +57,23 @@ public class WinampApplication extends WindowsApplication {
 
     public void begin(Action action) {
         log.trace("WinampApplication begin: " + action);
-        switch (action) {
-            case VOLUME_UP:
-                try {
+        try {
+            switch (action) {
+                case VOLUME_UP:
                     volumeWorker.activate(1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
-                break;
-            case VOLUME_DOWN:
-                try {
+                    break;
+                case VOLUME_DOWN:
                     volumeWorker.activate(-1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
-                break;
-            case FORWARD:
-                try {
+                    break;
+                case FORWARD:
                     seekWorker.activate(1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
-                break;
-            case REWIND:
-                try {
+                    break;
+                case REWIND:
                     seekWorker.activate(-1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
-                break;
+                    break;
+            }
+        } catch (ActivateException e) {
+            log.error(e);
         }
     }
 
@@ -193,7 +179,7 @@ public class WinampApplication extends WindowsApplication {
 
         public void work() {
             command(seekDirection > 0 ? WINAMP_FFWD5S : WINAMP_REW5S);
-            sleep(VOLUME_SLEEP);
+            sleep(SEEK_SLEEP);
         }
     };
 }

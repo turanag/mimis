@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import mimis.exception.worker.DeactivateException;
+import mimis.util.Swing;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +31,7 @@ public class GUI extends JFrame {
     public GUI(Mimis mimis, Manager<Application> applicationManager, Manager<Device> deviceManager) {
         super(TITLE);
         this.mimis = mimis;
+        setIconImage(Swing.getImage("kop.png"));
         createFrame(applicationManager, deviceManager);
     }
 

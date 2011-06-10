@@ -2,6 +2,7 @@ package mimis;
 
 import mimis.event.EventHandler;
 import mimis.event.Task;
+import mimis.event.feedback.TextFeedback;
 import mimis.exception.WorkerException;
 import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
@@ -29,10 +30,11 @@ public abstract class Application extends EventHandler implements Titled, Exitab
                 case ACTIVATE:
                     if (task.getSignal().equals(Signal.BEGIN)) {
                         try {
-                            log.debug(active());
                             if (active()) {
+                                eventRouter.add(new TextFeedback("Deactivate application"));
                                 deactivate();
                             } else {
+                                eventRouter.add(new TextFeedback("Activate application"));
                                 activate();
                             }
                         } catch (WorkerException e) {

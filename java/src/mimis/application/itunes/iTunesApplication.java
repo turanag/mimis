@@ -26,19 +26,23 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
 
     protected iTunes iTunes;
     protected VolumeWorker volumeWorker;
+    protected boolean handle;
     protected boolean quiting;
 
     public iTunesApplication() {
         super(TITLE);        
         iTunes = new iTunes();
         volumeWorker = new VolumeWorker();
-        quiting = false;
+        handle = quiting = false;
     }
 
     public void activate() throws ActivateException {
         synchronized (iTunes) {
             iTunes.connect();
-            iTunes.addEventHandler(this);
+            if (!handle) {
+                iTunes.addEventHandler(this);
+                handle = true;
+            }
         }
         super.activate();
     }

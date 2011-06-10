@@ -1,4 +1,4 @@
-package mimis.feedback;
+package mimis.event.feedback;
 
 import mimis.event.Feedback;
 
