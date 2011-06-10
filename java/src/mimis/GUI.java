@@ -24,14 +24,14 @@ public class GUI extends JFrame {
     protected static final String TITLE = "MIMIS Manager";
     protected static final String APPLICATION_TITLE = "Applications";
     protected static final String DEVICE_TITLE = "Devices";
-    
+
     protected Mimis mimis;
     protected TextArea textArea;
 
     public GUI(Mimis mimis, Manager<Application> applicationManager, Manager<Device> deviceManager) {
         super(TITLE);
         this.mimis = mimis;
-        setIconImage(Swing.getImage("kop.png"));
+        setIconImage(Swing.getImage(Mimis.ICON));
         createFrame(applicationManager, deviceManager);
     }
 

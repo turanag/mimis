@@ -10,13 +10,14 @@ import mimis.device.wiimote.WiimoteDevice;
 import mimis.event.EventRouter;
 import mimis.event.router.GlobalRouter;
 import mimis.exception.event.router.GlobalRouterException;
+import mimis.exception.worker.ActivateException;
+import mimis.util.swing.Dialog;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 public class Client {
-    protected Log log = LogFactory.getLog(getClass());
+    protected static Log log = LogFactory.getLog(Client.class);
 
     public static final String IP = "127.0.0.1";
     public static final int PORT = 6789;
@@ -43,10 +44,20 @@ public class Client {
     public void start() {
         log.debug("Client");
         Mimis mimis = new Mimis(eventRouter, deviceArray);
-        mimis.start();
+        try {
+            mimis.activate();
+        } catch (ActivateException e) {
+            log.fatal(e);
+        }
     }
 
     public static void main(String[] args) {
-        new Main().start();
+        try {
+            String ip = Dialog.question("Server IP:", IP);
+            int port = Integer.valueOf(Dialog.question("Server Port:", PORT));
+            new Client(ip, port).start();
+        } catch (GlobalRouterException e) {
+            log.fatal(e);
+        }
     }
 }

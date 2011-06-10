@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Mimis extends EventHandler {
     protected Log log = LogFactory.getLog(getClass());
+    public static final String ICON = "M.png";
 
     protected ArrayCycle<Application> applicationCycle;
     protected Device[] deviceArray;

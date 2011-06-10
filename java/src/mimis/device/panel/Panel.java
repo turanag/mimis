@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import mimis.Mimis;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Swing;
 import mimis.util.swing.HoldButton;
@@ -42,7 +43,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     Panel(PanelDevice panelDevice) {
         super(TITLE);
         this.panelDevice = panelDevice;
-        setIconImage(Swing.getImage("kop.png"));
+        setIconImage(Swing.getImage(Mimis.ICON));
         createControls();
         layoutControls();
         pack();

@@ -20,7 +20,7 @@ public class Swing {
     }
 
     public static Image getImage(String name) {
-        return toolkit.getImage((getResource(name)));
+        return toolkit.getImage(getResource(name));
     }
 
     public static ImageIcon getImageIcon(String name) {

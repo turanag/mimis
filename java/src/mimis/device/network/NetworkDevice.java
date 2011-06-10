@@ -73,10 +73,12 @@ public class NetworkDevice extends Device {
                 Socket socket = serverSocket.accept();
                 Client client = new Client(socket);
                 client.start();
-                log.trace("Client connected");
-            } catch (IOException e) {}
+                log.debug("Client connected");
+            } catch (IOException e) {
+                log.error(e);
+            }
         }
-        
+
         public void stop() throws DeactivateException {
             super.stop();
             for (Client client : clientList) {
@@ -116,7 +118,9 @@ public class NetworkDevice extends Device {
 
         public void stop() {
             try {
-                disconnect();
+                objectInputStream.close();
+                objectOutputStream.close();
+                socket.close();    
             } catch (IOException e) {
                 log.error(e);
             } finally {
@@ -126,12 +130,6 @@ public class NetworkDevice extends Device {
 
         public void send(Object object) throws IOException {
             objectOutputStream.writeObject(object);
-        }
-
-        public void disconnect() throws IOException {
-            objectInputStream.close();
-            objectOutputStream.close();
-            socket.close();       
         }
     }
 }
