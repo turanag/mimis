@@ -23,6 +23,12 @@ public class GomPlayerApplication extends WindowsApplication {
         volumeWorker = new VolumeWorker();
         seekWorker = new SeekWorker();
     }
+    
+    public void stop() throws DeactivateException {
+        super.stop();
+        volumeWorker.stop();
+        seekWorker.stop();
+    }
 
     public void begin(Action action) {
         log.trace("GomPlayerApplication begin: " + action);

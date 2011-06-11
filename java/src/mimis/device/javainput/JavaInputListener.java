@@ -6,8 +6,6 @@ import java.util.Queue;
 import mimis.Worker;
 import mimis.exception.ButtonException;
 
-
-import de.hardcode.jxinput.Axis;
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
 import de.hardcode.jxinput.JXInputDevice;
@@ -37,12 +35,12 @@ public class JavaInputListener extends Worker implements Runnable, JXInputAxisEv
     }
 
     protected void addListeners() {
-        for (int i = 0; i < jxinputDevice.getMaxNumberOfAxes(); ++i) {
+        /*for (int i = 0; i < jxinputDevice.getMaxNumberOfAxes(); ++i) {
             Axis axis = jxinputDevice.getAxis(i);
             if (axis != null) {
                 JXInputEventManager.addListener(this, axis);
             }
-        }
+        }*/
         for (int i = 0; i < jxinputDevice.getMaxNumberOfButtons(); ++i) {
             Button button = jxinputDevice.getButton(i);
             if (button != null) {

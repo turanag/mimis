@@ -48,9 +48,9 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     /* Worker */
     public void activate() throws ActivateException {
-        super.activate();
         connect();
         add(eventMapCycle.player);
+        super.activate();
     }
 
     public boolean active() {
@@ -133,7 +133,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     public void feedback(Feedback feedback) {
-        if (active()) {
+        if (wiimote != null && active()) {
             log.debug("Wiimote rumble feedback");
             wiimote.rumble(RUMBLE);
         }

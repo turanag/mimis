@@ -4,37 +4,56 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import mimis.Worker;
 import mimis.application.cmd.CMDApplication;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
+import mimis.util.Native;
 import mimis.value.Action;
+import mimis.value.Amount;
 
 public class VLCApplication extends CMDApplication {
+    protected final static String REGISTRY = "HKEY_CLASSES_ROOT\\Applications\\vlc.exe\\shell\\Open\\command";
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
 
     protected static final int POSTION_CHANGE_RATE = 1;
     protected static final int VOLUME_CHANGE_RATE = 20;
 
-    protected static final String HOST = "127.0.0.1"; // localhost
-    protected static final int PORT = 1234;
+    protected static final String HOST = "localhost";
+    protected static final int PORT = 8080;
 
+    protected static final int VOLUME_SLEEP = 100;
+    protected static final int SEEK_SLEEP = 100;
+    
+    protected VolumeWorker volumeWorker;
+    protected SeekWorker seekWorker;
+    
     protected int volume = 255;
     protected boolean muted = false;
 
     public VLCApplication() {
         super(PROGRAM, TITLE);
+        volumeWorker = new VolumeWorker();
+        seekWorker = new SeekWorker();
+    }
+    
+    public String getPath() {
+        Pattern pattern = Pattern.compile("\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(Native.getValue(REGISTRY));
+        return matcher.find() ? matcher.group(1) : null;
     }
 
     public void command(String command) {
-        //String request = "http://" + HOST + ":" + PORT + "/requests/status.xml?command=" + command;
         String request = String.format("http://%s:%d/requests/status.xml?command=%s", HOST, PORT, command);
         try {
-            // Todo: check response voor 200, status ok
-            //int response = ((HttpURLConnection)(new URL(request)).openConnection()).getResponseCode();
             URL url = new URL(request);
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             int response = httpUrlConnection.getResponseCode();
-            log.debug("Response: " + response);
+            log.trace("Response: " + response);
         } catch (MalformedURLException e) {
             log.error(e);
         } catch (IOException e) {
@@ -42,6 +61,34 @@ public class VLCApplication extends CMDApplication {
         }
     }
 
+    public void stop() throws DeactivateException {
+        super.stop();
+        volumeWorker.stop();
+        seekWorker.stop();
+    }
+    
+    public void begin(Action action) {
+        log.trace("VLCApplication begin: " + action);
+        try {
+            switch (action) {
+                case VOLUME_UP:                    
+                    volumeWorker.activate("+");    
+                    break;
+                case VOLUME_DOWN:
+                    volumeWorker.activate("-");
+                    break;
+                case FORWARD:
+                    seekWorker.activate(Amount.SMALL, "+");
+                    break;
+                case REWIND:
+                    seekWorker.activate(Amount.SMALL, "-");
+                    break;
+            }
+        } catch (ActivateException e) {
+            log.error(e);
+        }
+    }
+    
     public void end(Action action) {
         log.trace("VLCApplication end: " + action);
         switch (action) {
@@ -58,19 +105,23 @@ public class VLCApplication extends CMDApplication {
                 command("pl_previous");
                 break;
             case FORWARD:
-                command("command=seek&val=+" + POSTION_CHANGE_RATE);
-                break;
             case REWIND:
-                command("command=seek&val=-" + POSTION_CHANGE_RATE);
+                try {
+                    seekWorker.deactivate();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                }
                 break;
             case MUTE:
                 command("volume&val=" + toggleMute());
                 break;
             case VOLUME_UP:
-                volumeUp();
-                break;
             case VOLUME_DOWN:
-                volumeDown();
+                try {
+                    volumeWorker.deactivate();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                }
                 break;
             case SHUFFLE:
                 command("command=pl_random");
@@ -102,4 +153,45 @@ public class VLCApplication extends CMDApplication {
     public String title() {
         return TITLE;
     }
+    
+    protected class VolumeWorker extends Worker {
+        protected String volumeChangeSign;
+
+        public void activate(String volumeChangeSign) throws ActivateException {
+            super.activate();
+            this.volumeChangeSign = volumeChangeSign;
+        }
+
+        public void work() {
+            volume += VOLUME_CHANGE_RATE;
+            command("volume&val=" + volumeChangeSign + VOLUME_CHANGE_RATE);
+            sleep(VOLUME_SLEEP);
+        }
+    };
+
+    protected class SeekWorker extends Worker {
+        protected Amount amount;
+        protected String seekDirection;
+
+        public void activate(Amount amount, String seekDirection) throws ActivateException {
+            super.activate();
+            this.amount = amount;
+            this.seekDirection = seekDirection;
+        }
+
+        public void work() {
+            switch (amount) {
+                case SMALL:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE);
+                    break;
+                case MEDIUM:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE * 2);
+                    break;
+                case LARGE:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE * 3);
+                    break;
+            }
+            sleep(SEEK_SLEEP);
+        }
+    };
 }

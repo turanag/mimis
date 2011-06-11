@@ -5,18 +5,18 @@ import mimis.exception.button.UnknownButtonException;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 
 public enum Extreme3DButton implements Button {
-    ONE    ("ManageButton 0"),
-    TWO    ("ManageButton 1"),
-    THREE  ("ManageButton 2"),
-    FOUR   ("ManageButton 3"),
-    FIVE   ("ManageButton 4"),
-    SIX    ("ManageButton 5"),
-    SEVEN  ("ManageButton 6"),
-    EIGHT  ("ManageButton 7"),
-    NINE   ("ManageButton 8"),
-    TEN    ("ManageButton 9"),
-    ELEVEN ("ManageButton 10"),
-    TWELVE ("ManageButton 11");
+    ONE    ("Button 0"),
+    TWO    ("Button 1"),
+    THREE  ("Button 2"),
+    FOUR   ("Button 3"),
+    FIVE   ("Button 4"),
+    SIX    ("Button 5"),
+    SEVEN  ("Button 6"),
+    EIGHT  ("Button 7"),
+    NINE   ("Button 8"),
+    TEN    ("Button 9"),
+    ELEVEN ("Button 10"),
+    TWELVE ("Button 11");
 
     protected String code;
 

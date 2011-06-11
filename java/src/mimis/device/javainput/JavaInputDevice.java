@@ -48,9 +48,7 @@ public abstract class JavaInputDevice extends Device {
         }
     }
 
-    public void processEvent(JXInputAxisEvent event) {
-        //log.trace("JXInputAxisEvent: " + event);
-    }
+    public void processEvent(JXInputAxisEvent event) {}
 
     public void processEvent(JXInputButtonEvent event) throws ButtonException {
         Button button = getButton(event);

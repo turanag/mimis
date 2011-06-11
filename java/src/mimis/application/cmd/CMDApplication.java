@@ -22,10 +22,14 @@ public abstract class CMDApplication extends Application {
         this.title = title;
     }
 
+    public String getPath() {
+        String key = String.format("%s\\%s", REGISTRY, program);
+        return Native.getValue(key);         
+    }
+
     public void activate() throws ActivateException {
         super.activate();
-        String key = String.format("%s\\%s", REGISTRY, program);
-        String path = Native.getValue(key);
+        String path = getPath();
         if (path == null) {
             throw new ActivateException();
         }
