@@ -9,15 +9,15 @@ import mimis.device.panel.PanelDevice;
 import mimis.device.wiimote.WiimoteDevice;
 import mimis.event.EventRouter;
 import mimis.event.router.GlobalRouter;
-import mimis.exception.event.router.GlobalRouterException;
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.util.swing.Dialog;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class Client {
-    protected static Log log = LogFactory.getLog(Client.class);
+    protected Log log = LogFactory.getLog(getClass());
 
     public static final String IP = "127.0.0.1";
     public static final int PORT = 6789;
@@ -25,11 +25,7 @@ public class Client {
     protected EventRouter eventRouter;
     protected Device[] deviceArray;
 
-    public Client() throws GlobalRouterException {
-        this(IP, PORT);
-    }
-
-    public Client(String ip, int port) throws GlobalRouterException {
+    public Client(String ip, int port) {
         eventRouter = new GlobalRouter(ip, port);
         deviceArray = new Device[] {
             new LircDevice(),
@@ -49,15 +45,16 @@ public class Client {
         } catch (ActivateException e) {
             log.fatal(e);
         }
+        try {
+            mimis.stop();
+        } catch (DeactivateException e) {
+            log.fatal(e);
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            String ip = Dialog.question("Server IP:", IP);
-            int port = Integer.valueOf(Dialog.question("Server Port:", PORT));
-            new Client(ip, port).start();
-        } catch (GlobalRouterException e) {
-            log.fatal(e);
-        }
+        String ip = Dialog.question("Server IP:", IP);
+        int port = Integer.valueOf(Dialog.question("Server Port:", PORT));
+        new Client(ip, port).start();
     }
 }

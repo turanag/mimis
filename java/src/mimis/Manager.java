@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.swing.JToggleButton;
 
-import mimis.application.cmd.windows.winamp.WinampApplication;
 import mimis.exception.worker.DeactivateException;
 import mimis.manager.Exitable;
 import mimis.manager.ManageButton;
@@ -31,10 +30,12 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     public void stop() throws DeactivateException {
         super.stop();
         for (T manageable : manageableArray) {
-            if (!(manageable instanceof WinampApplication)) {
-                manageable.stop();
-            }
+            manageable.stop();
         }
+    }
+
+    public int count() {
+        return manageableArray.length;
     }
 
     protected void createButtons() {

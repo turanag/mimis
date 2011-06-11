@@ -10,7 +10,6 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
-
 import de.hardcode.jxinput.JXInputDevice;
 import de.hardcode.jxinput.JXInputManager;
 import de.hardcode.jxinput.event.JXInputAxisEvent;

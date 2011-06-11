@@ -82,6 +82,7 @@ public class LircService extends Worker {
     }
 
     public void deactivate() throws DeactivateException {
+        super.deactivate();
         try {
             bufferedReader.close();
             inputStream.close();
@@ -89,8 +90,6 @@ public class LircService extends Worker {
             socket.close();
         } catch (IOException e) {
             log.error(e);
-        } finally {
-            super.deactivate();
         }
     }
 

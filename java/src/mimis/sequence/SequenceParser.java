@@ -3,15 +3,15 @@ package mimis.sequence;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import mimis.Event;
 import mimis.event.EventHandler;
 import mimis.event.EventListener;
 import mimis.event.Task;
 import mimis.value.Signal;
 import mimis.value.Target;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class SequenceParser {
     protected Log log = LogFactory.getLog(getClass());

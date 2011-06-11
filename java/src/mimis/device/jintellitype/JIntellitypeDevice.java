@@ -8,6 +8,7 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
+
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;

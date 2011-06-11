@@ -12,8 +12,8 @@ import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
 import mimis.util.Multiplexer;
-import mimis.util.multiplexer.SignalListener;
 import mimis.util.VBScript;
+import mimis.util.multiplexer.SignalListener;
 import mimis.value.Signal;
 
 public class LircDevice extends Device implements LircButtonListener, SignalListener {
@@ -50,6 +50,7 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     }
 
     public boolean active() {
+        log.trace("LircDevice active?");
         if (active && !lircService.active()) {
             active = false;
         } else if (!active) {
@@ -69,8 +70,9 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     }
 
     public void deactivate() throws DeactivateException {
+        log.debug("Deactivate LircDevice");
         super.deactivate();
-        multiplexer.deactivate();
+        multiplexer.stop();
         lircService.deactivate();
     }
 

@@ -6,7 +6,6 @@ import mimis.device.javainput.JavaInputDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.worker.ActivateException;
-
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 

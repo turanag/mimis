@@ -3,9 +3,9 @@ package mimis;
 import mimis.event.EventHandler;
 import mimis.event.EventRouter;
 import mimis.event.Feedback;
+import mimis.event.feedback.TextFeedback;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.event.feedback.TextFeedback;
 import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
@@ -57,15 +57,15 @@ public class Mimis extends EventHandler {
     }
 
     public void activate() throws ActivateException {
+        log.debug("Create gui");
+        gui = new GUI(this, applicationManager, deviceManager);
+        
         log.debug("Activate event router");
         eventRouter.activate();
 
         log.debug("Activate managers");
         applicationManager.activate();
         deviceManager.activate();
-
-        log.debug("Create gui");
-        gui = new GUI(this, applicationManager, deviceManager);
 
         if (applicationCycle.size() > 0) {
             log.debug("Initialise application cycle");

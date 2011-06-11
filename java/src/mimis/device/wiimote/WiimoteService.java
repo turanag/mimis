@@ -3,10 +3,10 @@ package mimis.device.wiimote;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import mimis.exception.device.DeviceNotFoundException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import mimis.exception.device.DeviceNotFoundException;
 
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;

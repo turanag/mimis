@@ -8,6 +8,7 @@ import org.wiigee.device.Device;
 import org.wiigee.event.ButtonListener;
 import org.wiigee.event.ButtonPressedEvent;
 import org.wiigee.event.GestureListener;
+
 import wiiusej.values.GForce;
 
 public class GestureDevice extends Device /*implements AccelerationListener */{

@@ -3,9 +3,9 @@ package mimis.device.wiimote;
 import mimis.device.EventMapCycle;
 import mimis.event.Task;
 import mimis.sequence.EventMap;
+import mimis.sequence.state.Release;
 import mimis.value.Action;
 import mimis.value.Target;
-import mimis.sequence.state.Release;
 
 public class WiimoteEventMapCycle extends EventMapCycle {
     protected static final long serialVersionUID = 1L;

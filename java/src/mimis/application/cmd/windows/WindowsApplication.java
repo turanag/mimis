@@ -3,11 +3,10 @@ package mimis.application.cmd.windows;
 import java.io.IOException;
 
 import mimis.application.cmd.CMDApplication;
-
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.util.Windows;
 import mimis.util.VBScript;
+import mimis.util.Windows;
 import mimis.value.Command;
 import mimis.value.Key;
 import mimis.value.Type;

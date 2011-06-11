@@ -42,9 +42,11 @@ public class NetworkDevice extends Device {
         } catch (IOException e) {
             throw new ActivateException();
         }
+        super.activate();
     }
 
     public void deactivate() throws DeactivateException {
+        super.deactivate();
         server.stop();
     }
 

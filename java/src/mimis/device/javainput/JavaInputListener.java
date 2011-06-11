@@ -5,7 +5,6 @@ import java.util.Queue;
 
 import mimis.Worker;
 import mimis.exception.ButtonException;
-
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
 import de.hardcode.jxinput.JXInputDevice;

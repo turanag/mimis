@@ -49,10 +49,14 @@ public class GUI extends JFrame {
 
     protected JPanel createControlPanel(Manager<Application> applicationManager, Manager<Device> deviceManager) {
         JPanel controlPanel = new JPanel(new GridLayout(1, 0));
-        JPanel applicationPanel = createManagerPanel(applicationManager, APPLICATION_TITLE);
-        controlPanel.add(applicationPanel);
-        JPanel devicePanel = createManagerPanel(deviceManager, DEVICE_TITLE);
-        controlPanel.add(devicePanel);
+        if (applicationManager.count() > 0) {
+            JPanel applicationPanel = createManagerPanel(applicationManager, APPLICATION_TITLE);
+            controlPanel.add(applicationPanel);
+        }
+        if (applicationManager.count() > 0) {
+            JPanel devicePanel = createManagerPanel(deviceManager, DEVICE_TITLE);
+            controlPanel.add(devicePanel);
+        }
         return controlPanel;
     }
 

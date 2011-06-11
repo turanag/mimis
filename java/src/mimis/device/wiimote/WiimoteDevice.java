@@ -11,6 +11,7 @@ import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
 import mimis.value.Action;
+
 import org.wiigee.event.GestureEvent;
 import org.wiigee.event.GestureListener;
 import org.wiigee.util.Log;

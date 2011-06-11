@@ -1,9 +1,9 @@
 package mimis.event.router;
 
 import mimis.Event;
-import mimis.event.Task;
 import mimis.event.EventListener;
 import mimis.event.EventRouter;
+import mimis.event.Task;
 import mimis.event.feedback.TextFeedback;
 import mimis.value.Target;
 
