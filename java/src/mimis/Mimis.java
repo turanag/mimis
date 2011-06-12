@@ -5,7 +5,6 @@ import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.event.feedback.TextFeedback;
 import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
@@ -59,7 +58,7 @@ public class Mimis extends EventHandler {
     public void activate() throws ActivateException {
         log.debug("Create gui");
         gui = new GUI(this, applicationManager, deviceManager);
-        
+
         log.debug("Activate event router");
         eventRouter.activate();
 
@@ -72,11 +71,11 @@ public class Mimis extends EventHandler {
             eventRouter.set(applicationCycle.current());
             add(new TextFeedback("Current application: " + applicationCycle.current().title()));
         }
-        super.activate(false);
+        super.activate();
     }
 
-    public void stop() throws DeactivateException {
-        super.stop();
+    public void stop() {
+        super.stop();   
         log.debug("Stop GUI");
         gui.stop();
 
@@ -99,11 +98,7 @@ public class Mimis extends EventHandler {
                 add(new TextFeedback("Previous application: " + applicationCycle.current().title()));
                 break;
             case EXIT:
-                try {
-                    stop();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                stop();
                 break;
         }
     }
