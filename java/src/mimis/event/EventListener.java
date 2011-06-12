@@ -29,7 +29,7 @@ public abstract class EventListener extends Worker {
                 try {
                     work.wait();
                 } catch (InterruptedException e) {}
-                if (!running) {
+                if (!run) {
                     return;
                 }
             }

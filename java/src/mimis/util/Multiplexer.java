@@ -47,6 +47,7 @@ public class Multiplexer extends Worker {
     }
 
     protected void work() {
+        log.debug("Multiplexer work");
         try {
             synchronized (this) {
                 wait(TIMEOUT);

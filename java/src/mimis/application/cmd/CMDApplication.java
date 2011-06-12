@@ -10,7 +10,7 @@ import mimis.util.VBScript;
 
 
 public abstract class CMDApplication extends Application {
-    protected final static String REGISTRY = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
+    protected final static String REGISTRY = "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
 
     protected String program;
     protected String title;

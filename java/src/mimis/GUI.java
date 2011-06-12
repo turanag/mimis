@@ -53,7 +53,7 @@ public class GUI extends JFrame {
             JPanel applicationPanel = createManagerPanel(applicationManager, APPLICATION_TITLE);
             controlPanel.add(applicationPanel);
         }
-        if (applicationManager.count() > 0) {
+        if (deviceManager.count() > 0) {
             JPanel devicePanel = createManagerPanel(deviceManager, DEVICE_TITLE);
             controlPanel.add(devicePanel);
         }
@@ -80,7 +80,6 @@ public class GUI extends JFrame {
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
-            stop();
             try {
                 mimis.stop();
             } catch (DeactivateException e) {

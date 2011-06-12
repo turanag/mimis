@@ -12,11 +12,11 @@ public abstract class Worker implements Runnable {
     protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
 
-    protected boolean running = false;
+    protected boolean run = false;
     protected boolean active = false;
 
     public void start(boolean thread) {
-        running = true;
+        run = true;
         if (thread) {
             log.debug("Start thread");
             new Thread(this, getClass().getName()).start();
@@ -32,9 +32,11 @@ public abstract class Worker implements Runnable {
 
     public void stop() throws DeactivateException {
         if (active()) {
+            log.debug("stop deact");
             deactivate();
+            log.debug("stop na deact");
         }
-        running = false;
+        run = false;
         synchronized (this) {
             notifyAll();
         }
@@ -64,7 +66,7 @@ public abstract class Worker implements Runnable {
 
     public void activate(boolean thread) {
         active = true;
-        if (!running) {
+        if (!run) {
             start(thread);
         }
         synchronized (this) {
@@ -80,7 +82,7 @@ public abstract class Worker implements Runnable {
     }
 
     public final void run() {
-        while (running) {
+        while (run) {
             if (active()) {
                 work();
             } else {

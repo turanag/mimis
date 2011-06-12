@@ -37,7 +37,7 @@ public class LircService extends Worker {
 
     public LircService(HashMap<String, LircButton[]> buttonMap) {
         this(buttonMap, IP, PORT);
-        send = Native.getValue("HKEY_CURRENT_USER\\Software\\LIRC", "password");
+        send = Native.getValue("HKCU\\Software\\LIRC", "password");
     }
 
     public LircService(HashMap<String, LircButton[]> buttonMap, String ip, int port) {
@@ -56,6 +56,7 @@ public class LircService extends Worker {
     }
 
     public void activate() throws ActivateException {
+        log.debug("Activate LircService");
         try {
             socket = new Socket(ip, port);
 
@@ -75,16 +76,18 @@ public class LircService extends Worker {
     }
 
     public boolean active() {
+        log.trace("LircService active?");
         if (active && !socket.isConnected()) {
             active = false;
         }
+        log.trace(active);
         return active;
     }
 
     public void deactivate() throws DeactivateException {
+        log.debug("Deactivate LircService");
         super.deactivate();
         try {
-            bufferedReader.close();
             inputStream.close();
             outputStream.close();
             socket.close();

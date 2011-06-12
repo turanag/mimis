@@ -41,7 +41,6 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     }
 
     public void activate() throws ActivateException {
-        multiplexer.start();
         lircService.activate();
         add(eventMapCycle.denonRC176);
         add(eventMapCycle.philiphsRCLE011);
@@ -52,7 +51,11 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     public boolean active() {
         log.trace("LircDevice active?");
         if (active && !lircService.active()) {
-            active = false;
+            try {
+                deactivate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         } else if (!active) {
             try {
                 if (VBScript.isRunning(PROGRAM)) {
@@ -72,8 +75,9 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     public void deactivate() throws DeactivateException {
         log.debug("Deactivate LircDevice");
         super.deactivate();
-        multiplexer.stop();
+        log.debug("nu lircserv");
         lircService.deactivate();
+        log.debug("nu erna");
     }
 
     public void add(LircButton lircButton) {
@@ -92,8 +96,9 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     }
 
     public void stop() throws DeactivateException {
-        multiplexer.stop();
-        lircService.stop();
+        log.debug("Stop LircDevice");
         super.stop();
+        lircService.stop();
+        multiplexer.stop();
     }
 }

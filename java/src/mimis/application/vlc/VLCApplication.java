@@ -16,7 +16,7 @@ import mimis.value.Action;
 import mimis.value.Amount;
 
 public class VLCApplication extends CMDApplication {
-    protected final static String REGISTRY = "HKEY_CLASSES_ROOT\\Applications\\vlc.exe\\shell\\Open\\command";
+    protected final static String REGISTRY = "HKCR\\Applications\\vlc.exe\\shell\\Open\\command";
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
 
