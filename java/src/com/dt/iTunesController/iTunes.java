@@ -1,6 +1,6 @@
 package com.dt.iTunesController;
 
-import com.jacob.activeX.*;
+import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.DispatchEvents;
 

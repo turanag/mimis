@@ -1,9 +1,11 @@
 package mimis;
 
+import java.io.Serializable;
+
 import mimis.event.EventListener;
 import mimis.value.Target;
 
-public class Event  {
+public class Event implements Serializable {
     protected static final long serialVersionUID = 1L;
 
     protected Target target;

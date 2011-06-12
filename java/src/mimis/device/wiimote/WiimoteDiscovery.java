@@ -63,7 +63,7 @@ public class WiimoteDiscovery extends Worker {
         }
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         disconnect();
     }

@@ -1,6 +1,7 @@
 package com.dt.iTunesController;
-import com.jacob.com.*;
 import java.util.Date;
+
+import com.jacob.com.Dispatch;
 
 /**
  * Represents a track.

@@ -6,6 +6,8 @@ import mimis.value.Signal;
 import mimis.value.Target;
 
 public class Task extends Event {
+    protected static final long serialVersionUID = 1L;
+
     public static final Target TARGET = Target.SELF;
 
     protected Action action;

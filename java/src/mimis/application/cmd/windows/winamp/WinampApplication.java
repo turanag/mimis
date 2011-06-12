@@ -49,7 +49,7 @@ public class WinampApplication extends WindowsApplication {
         seekWorker = new SeekWorker();
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         volumeWorker.stop();
         seekWorker.stop();

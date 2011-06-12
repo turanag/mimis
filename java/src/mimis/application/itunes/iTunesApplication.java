@@ -84,7 +84,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         }
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         volumeWorker.stop();
     }

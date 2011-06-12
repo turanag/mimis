@@ -21,7 +21,7 @@ import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 
 public class LircService extends Worker {
-    public static final String IP = "127.0.0.1";
+    public static final String IP = "localhost";
     public static final int PORT = 8765;
 
     protected ArrayList<LircButtonListener> lircButtonListenerList;
@@ -56,7 +56,7 @@ public class LircService extends Worker {
     }
 
     public void activate() throws ActivateException {
-        log.debug("Activate LircService");
+        log.trace("Activate LircService");
         try {
             socket = new Socket(ip, port);
 
@@ -76,7 +76,6 @@ public class LircService extends Worker {
     }
 
     public boolean active() {
-        log.trace("LircService active?");
         if (active && !socket.isConnected()) {
             active = false;
         }
@@ -85,7 +84,7 @@ public class LircService extends Worker {
     }
 
     public void deactivate() throws DeactivateException {
-        log.debug("Deactivate LircService");
+        log.trace("Deactivate LircService");
         super.deactivate();
         try {
             inputStream.close();

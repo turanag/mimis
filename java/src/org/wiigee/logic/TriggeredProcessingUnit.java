@@ -25,7 +25,14 @@
 package org.wiigee.logic;
 
 import java.util.Vector;
-import org.wiigee.event.*;
+
+import org.wiigee.event.AccelerationEvent;
+import org.wiigee.event.ActionStartEvent;
+import org.wiigee.event.ActionStopEvent;
+import org.wiigee.event.ButtonPressedEvent;
+import org.wiigee.event.ButtonReleasedEvent;
+import org.wiigee.event.MotionStartEvent;
+import org.wiigee.event.MotionStopEvent;
 import org.wiigee.util.Log;
 
 /**

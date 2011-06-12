@@ -49,7 +49,6 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     }
 
     public boolean active() {
-        log.trace("LircDevice active?");
         if (active && !lircService.active()) {
             try {
                 deactivate();
@@ -95,7 +94,7 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
         }
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         log.debug("Stop LircDevice");
         super.stop();
         lircService.stop();

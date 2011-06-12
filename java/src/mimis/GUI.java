@@ -11,7 +11,6 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import mimis.exception.worker.DeactivateException;
 import mimis.util.Swing;
 
 import org.apache.commons.logging.Log;
@@ -80,11 +79,7 @@ public class GUI extends JFrame {
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
-            try {
-                mimis.stop();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+            mimis.stop();
         }
     }
 

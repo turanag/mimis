@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.utils.AccelerationPanel;

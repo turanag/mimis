@@ -26,14 +26,11 @@ package org.wiigee.control;
 import java.io.IOException;
 import java.util.Vector;
 
-import javax.bluetooth.DiscoveryAgent;
-import javax.bluetooth.LocalDevice;
-
-import org.wiigee.util.Log;
 import org.wiigee.device.Wiimote;
 import org.wiigee.event.AccelerationListener;
 import org.wiigee.event.GestureListener;
 import org.wiigee.filter.Filter;
+import org.wiigee.util.Log;
 
 // Singleton
 public class WiimoteWiigee extends Wiigee {

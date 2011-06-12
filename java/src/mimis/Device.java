@@ -27,7 +27,7 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
         sequenceParser.reset();
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         if (active()) {
             try {
                 deactivate();

@@ -18,7 +18,6 @@ package wiiusej;
 
 import javax.swing.event.EventListenerList;
 
-import wiiusej.values.Calibration;
 import wiiusej.wiiusejevents.utils.WiiUseApiListener;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;

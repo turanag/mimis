@@ -61,7 +61,7 @@ public class VLCApplication extends CMDApplication {
         }
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         volumeWorker.stop();
         seekWorker.stop();

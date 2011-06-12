@@ -1,18 +1,24 @@
 package mimis.device.network;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mimis.Device;
 import mimis.Event;
 import mimis.Worker;
 import mimis.event.Feedback;
+import mimis.event.Task;
+import mimis.event.feedback.TextFeedback;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.value.Action;
+import mimis.value.Target;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,11 +30,12 @@ public class NetworkDevice extends Device {
     protected Log log = LogFactory.getLog(NetworkDevice.class);
     protected int port;
     protected Server server;
-    protected ArrayList<Client> clientList;
+    protected ConcurrentLinkedQueue<Client> clientList;
 
     public NetworkDevice(int port) {
         super(TITLE);
         this.port = port;
+        clientList = new ConcurrentLinkedQueue<Client>();
     }
 
     public NetworkDevice() {
@@ -36,13 +43,23 @@ public class NetworkDevice extends Device {
     }
 
     public void activate() throws ActivateException {
+        log.trace("Activate NetworkDevice");
         try {
             server = new Server(port);
-            server.start();
+            server.activate();
         } catch (IOException e) {
             throw new ActivateException();
         }
         super.activate();
+    }
+
+    public boolean active() {
+        for (Client client : clientList) {
+            if (!client.active()) {
+                client.stop();
+            }
+        }
+        return server == null ? active : (active = server.active());
     }
 
     public void deactivate() throws DeactivateException {
@@ -52,11 +69,7 @@ public class NetworkDevice extends Device {
 
     protected void feedback(Feedback feedback) {
         for (Client client : clientList) {
-            try {
-                client.send(feedback);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            client.send(feedback);
         }
     }
 
@@ -65,24 +78,35 @@ public class NetworkDevice extends Device {
 
         public Server(int port) throws IOException {
             serverSocket = new ServerSocket(port);
-            clientList = new ArrayList<Client>();
-            log.trace("Server started");
+            eventRouter.add(new TextFeedback("[NetworkDevice] Wating for clients"));
+        }
+
+        public boolean active() {
+            return active = !serverSocket.isClosed();
         }
 
         public void work() {
-            log.trace("Server is waiting for clients");
             try {
                 Socket socket = serverSocket.accept();
                 Client client = new Client(socket);
-                client.start();
-                log.debug("Client connected");
+                try {
+                    client.activate();
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
+                eventRouter.add(new TextFeedback("[NetworkDevice] Client connected: " + socket.getInetAddress()));
             } catch (IOException e) {
                 log.error(e);
             }
         }
 
-        public void stop() throws DeactivateException {
+        public void stop() {
             super.stop();
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                log.error(e);
+            }
             for (Client client : clientList) {
                 client.stop();
             }
@@ -91,18 +115,26 @@ public class NetworkDevice extends Device {
 
     protected class Client extends Worker {
         protected Socket socket;
-        protected ObjectInputStream objectInputStream;
+        protected InputStream inputStream;
+        protected OutputStream outputStream;
         protected ObjectOutputStream objectOutputStream;
 
         public Client(Socket socket) throws IOException {
             this.socket = socket;
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
             clientList.add(this);
         }
 
+        public boolean active() {
+            return active = socket.isConnected();
+        }
+
         public void work() {
+            ObjectInputStream objectInputStream;
             try {
+                objectInputStream = new ObjectInputStream(inputStream);
                 Object object;
                 do {
                     object = objectInputStream.readObject();
@@ -112,26 +144,33 @@ public class NetworkDevice extends Device {
                     }
                 } while (object != null);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e);
+                stop();
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
 
         public void stop() {
+            super.stop();
+            send(new Task(Target.SELF, Action.STOP));
+            clientList.remove(this);
             try {
-                objectInputStream.close();
-                objectOutputStream.close();
+                inputStream.close();
+                outputStream.close();
                 socket.close();    
             } catch (IOException e) {
                 log.error(e);
-            } finally {
-                clientList.remove(this);
             }
+            eventRouter.add(new TextFeedback("[NetworkDevice] Client disconnected: " + socket.getInetAddress()));
         }
 
-        public void send(Object object) throws IOException {
-            objectOutputStream.writeObject(object);
+        public void send(Object object) {
+            try {
+                objectOutputStream.writeObject(object);
+            } catch (IOException e) {
+                log.error(e);
+            }
         }
     }
 }

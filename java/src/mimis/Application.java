@@ -47,7 +47,7 @@ public abstract class Application extends EventHandler implements Titled, Exitab
         super.event(event);
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         if (active()) {
             try {

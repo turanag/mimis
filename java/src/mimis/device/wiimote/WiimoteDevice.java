@@ -81,7 +81,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         wiimoteDiscovery.disconnect();
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         wiimoteService.exit();
     }

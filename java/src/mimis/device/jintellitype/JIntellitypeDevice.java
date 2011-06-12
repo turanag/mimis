@@ -62,7 +62,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         jit.removeIntellitypeListener(this);
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         super.stop();
         jit.cleanUp();
     }

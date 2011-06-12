@@ -32,13 +32,6 @@ public class GlobalRouter extends EventRouter {
         super.activate();
     }
 
-    public boolean active() {
-        if (active && client.active()) {
-            active = false;
-        }
-        return active;
-    }
-
     public void deactivate() throws DeactivateException {
         client.stop();
     }
@@ -76,10 +69,6 @@ public class GlobalRouter extends EventRouter {
             } catch (ClassNotFoundException e) {
                 log.error(e);
             }
-        }
-
-        public boolean active() {
-            return active = socket.isConnected();
         }
 
         public void stop() {

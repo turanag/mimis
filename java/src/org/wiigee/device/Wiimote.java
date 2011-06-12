@@ -26,7 +26,12 @@ package org.wiigee.device;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
-import org.wiigee.event.*;
+
+import org.wiigee.event.InfraredEvent;
+import org.wiigee.event.InfraredListener;
+import org.wiigee.event.RotationEvent;
+import org.wiigee.event.RotationListener;
+import org.wiigee.event.RotationSpeedEvent;
 import org.wiigee.filter.Filter;
 import org.wiigee.util.Log;
 

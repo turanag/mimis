@@ -30,11 +30,13 @@ public abstract class Worker implements Runnable {
         start(THREAD);
     }
 
-    public void stop() throws DeactivateException {
+    public void stop() {
         if (active()) {
-            log.debug("stop deact");
-            deactivate();
-            log.debug("stop na deact");
+            try {
+                deactivate();
+            } catch (DeactivateException e) {
+                log.error(e);
+            }
         }
         run = false;
         synchronized (this) {

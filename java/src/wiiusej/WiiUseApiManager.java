@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.event.EventListenerList;
 
-import wiiusej.values.Calibration;
-import wiiusej.values.RawAcceleration;
 import wiiusej.wiiusejevents.utils.EventsGatherer;
 import wiiusej.wiiusejevents.utils.WiiUseApiListener;
 import wiiusej.wiiusejevents.wiiuseapievents.WiiUseApiEvent;

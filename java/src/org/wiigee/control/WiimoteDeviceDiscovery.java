@@ -26,14 +26,8 @@ package org.wiigee.control;
 import java.io.IOException;
 import java.util.Vector;
 
-import javax.bluetooth.DeviceClass;
-import javax.bluetooth.DiscoveryListener;
-import javax.bluetooth.RemoteDevice;
-import javax.bluetooth.ServiceRecord;
-
-import org.wiigee.util.Log;
-
 import org.wiigee.device.Wiimote;
+import org.wiigee.util.Log;
 
 public class WiimoteDeviceDiscovery implements DiscoveryListener {
 
