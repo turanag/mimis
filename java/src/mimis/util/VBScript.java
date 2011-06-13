@@ -10,7 +10,6 @@ public class VBScript {
     public static boolean isRunning(String program) throws IOException {
         boolean found = false;
         File file = File.createTempFile("vbsutils", ".vbs");
-        file.deleteOnExit();
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(String.format(
               "Set WshShell = WScript.CreateObject(\"WScript.Shell\")\n"
@@ -29,6 +28,9 @@ public class VBScript {
         String line = input.readLine();
         found = line != null && line.equals(program);
         input.close();
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {}
         file.delete();
         return found;
     }

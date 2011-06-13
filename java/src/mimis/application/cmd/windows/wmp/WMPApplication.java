@@ -12,7 +12,7 @@ public class WMPApplication extends WindowsApplication {
     protected final static String NAME = "WMPlayerApp";
 
     protected static final int VOLUME_SLEEP = 120;
-    
+
     protected VolumeWorker volumeWorker;
     
     public WMPApplication() {
