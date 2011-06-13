@@ -48,7 +48,10 @@ public class VBScript {
             + "Next\n"
             + "Set WSHShell = Nothing\n", program));
         fileWriter.close();
+        Process process = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {}
         file.delete();
-        Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
     }
 }
