@@ -2,6 +2,7 @@ package mimis.device.wiimote;
 
 import mimis.Button;
 import mimis.Device;
+import mimis.Worker;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.event.Feedback;
 import mimis.exception.button.UnknownButtonException;
@@ -10,6 +11,7 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
+import mimis.util.ArrayCycle;
 import mimis.value.Action;
 
 import org.wiigee.event.GestureEvent;
@@ -32,6 +34,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected boolean connected;
     protected GestureDevice gestureDevice;
     protected int gestureId;
+    protected LedWorker ledWorker;
 
     static {
         WiimoteDevice.wiimoteService = new WiimoteService();
@@ -45,6 +48,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
         gestureId = 0;
+        ledWorker = new LedWorker();
     }
 
     /* Worker */
@@ -56,6 +60,13 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public boolean active() {
         if (wiimote != null) {
+            if (!ledWorker.active()) {
+                try {
+                    ledWorker.activate();
+                } catch (ActivateException e) {
+                    log.error(e);
+                }
+            }
             connected = false;
             wiimote.getStatus();
             synchronized (this) {
@@ -65,25 +76,26 @@ public class WiimoteDevice extends Device implements GestureListener {
                     log.error(e);
                 }
             }
-            if (!connected) {
-                disconnect();
+            if (!connected) {                
                 active = false;
+                try {
+                    ledWorker.deactivate();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                }
             }
         }
         return active;
     }
 
-    public void deactivate() throws DeactivateException {
-        super.deactivate();
-        if (wiimote != null) {
-            wiimote.deactivateMotionSensing();
-        }
-        wiimoteDiscovery.disconnect();
-    }
-
     public void stop() {
         super.stop();
+        ledWorker.stop();
+        if (wiimote != null) {
+            disconnect();
+        }
         wiimoteService.exit();
+        wiimoteDiscovery.stop();
     }
 
     /* Events */
@@ -145,6 +157,7 @@ public class WiimoteDevice extends Device implements GestureListener {
         wiimote = null;
         try {
             wiimote = wiimoteService.getDevice(this);
+            ledWorker.activate();
         } catch (DeviceNotFoundException e) {
             wiimoteDiscovery.activate();
         }
@@ -166,7 +179,6 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void disconnect() {
         wiimote.disconnect();
         wiimote = null;
-        wiimoteDiscovery.disconnect();
     }
 
     public void disconnected() {
@@ -201,6 +213,39 @@ public class WiimoteDevice extends Device implements GestureListener {
     public void gestureReceived(GestureEvent event) {
         if (event.isValid()) {
             System.out.printf("id #%d, prob %.0f%%, valid %b\n", event.getId(), 100 * event.getProbability(), event.isValid());
+        }
+    }
+    
+    class LedWorker extends Worker {
+        protected ArrayCycle<Integer> ledCycle;
+
+        public LedWorker() {
+            ledCycle = new ArrayCycle<Integer>();
+            ledCycle.add(3);
+            ledCycle.add(6);
+            ledCycle.add(12);
+            ledCycle.add(8);
+            ledCycle.add(12);
+            ledCycle.add(6);
+            ledCycle.add(3);
+        }
+
+        public void deactivate() throws DeactivateException {
+            super.deactivate();
+            setLeds(1);
+        }
+
+        protected void work() {
+            setLeds(ledCycle.next()); 
+        }
+
+        protected void setLeds(int leds) {
+            wiimote.setLeds(
+                (leds & 1) > 0,
+                (leds & 2) > 0,
+                (leds & 4) > 0,
+                (leds & 8) > 0);
+                sleep(leds == 8 ? 200 : 100);
         }
     }
 }

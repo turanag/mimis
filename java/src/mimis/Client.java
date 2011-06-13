@@ -44,7 +44,6 @@ public class Client {
         } catch (ActivateException e) {
             log.fatal(e);
         }
-        mimis.stop();
     }
 
     public static void main(String[] args) {

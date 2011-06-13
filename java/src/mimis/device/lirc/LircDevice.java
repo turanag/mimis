@@ -74,9 +74,7 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
     public void deactivate() throws DeactivateException {
         log.debug("Deactivate LircDevice");
         super.deactivate();
-        log.debug("nu lircserv");
         lircService.deactivate();
-        log.debug("nu erna");
     }
 
     public void add(LircButton lircButton) {

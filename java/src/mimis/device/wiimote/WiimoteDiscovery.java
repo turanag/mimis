@@ -46,9 +46,9 @@ public class WiimoteDiscovery extends Worker {
         if (connect()) {
             wiimoteDevice.connected();
         } else if (disconnect) {
-            disconnect();            
+            disconnect();
+            disconnect = false;
         }
-        disconnect = false;
     }
 
     public void activate() throws ActivateException {
@@ -61,10 +61,5 @@ public class WiimoteDiscovery extends Worker {
         if (process != null) {
             process.destroy();
         }
-    }
-
-    public void stop() {
-        super.stop();
-        disconnect();
     }
 }

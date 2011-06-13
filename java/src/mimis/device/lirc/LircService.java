@@ -79,7 +79,6 @@ public class LircService extends Worker {
         if (active && !socket.isConnected()) {
             active = false;
         }
-        log.trace(active);
         return active;
     }
 
