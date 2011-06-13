@@ -29,6 +29,7 @@ public class VBScript {
         String line = input.readLine();
         found = line != null && line.equals(program);
         input.close();
+        file.delete();
         return found;
     }
 
@@ -47,6 +48,7 @@ public class VBScript {
             + "Next\n"
             + "Set WSHShell = Nothing\n", program));
         fileWriter.close();
+        file.delete();
         Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
     }
 }
