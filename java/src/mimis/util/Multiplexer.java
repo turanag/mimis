@@ -22,7 +22,7 @@ public class Multiplexer extends Worker {
         this.signalListener = signalListener;
     }
 
-    public void add(Object object) {
+    public synchronized void add(Object object) {
         if (this.object == null) {
             signalListener.add(Signal.BEGIN, object);
             this.object = object;
@@ -34,20 +34,17 @@ public class Multiplexer extends Worker {
             }
         } else if (this.object.equals(object)) {
             end = false;
-            synchronized (this) {
-                notifyAll();            
-            }
+            notifyAll();
         } else {
             end = true;
             synchronized (this) {
-                notifyAll();            
+                notifyAll();
             }
             add(object);
         }
     }
 
     protected void work() {
-        log.debug("Multiplexer work");
         try {
             synchronized (this) {
                 wait(TIMEOUT);

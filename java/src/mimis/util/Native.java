@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Native {
     public static int getHandle(String title) throws IOException {
-        String command = String.format("native/list.exe w");
+        String command = String.format("list.exe w");
         Process process = Runtime.getRuntime().exec(command);
         Scanner scanner = new Scanner(process.getInputStream());
         scanner.nextLine();
@@ -27,7 +27,7 @@ public class Native {
     }
 
     public static String getProgram(int processId) throws IOException {
-        String command = String.format("native/list.exe p");
+        String command = String.format("list.exe p");
         Process process = Runtime.getRuntime().exec(command);
         Scanner scanner = new Scanner(process.getInputStream());
         scanner.nextLine();

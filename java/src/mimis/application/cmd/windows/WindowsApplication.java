@@ -38,6 +38,13 @@ public abstract class WindowsApplication extends CMDApplication {
         }
     }
 
+    public boolean active() {
+        if (!active) {
+            handle = Windows.findWindow(name, null);
+        }
+        return super.active();
+    }
+
     public void deactivate() throws DeactivateException {
         try {
             VBScript.terminate(program);
