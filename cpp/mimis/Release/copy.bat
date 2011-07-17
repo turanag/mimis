@@ -1,0 +1,1 @@
+copy mimis.dll ..\..\Mimis\mimis.dll
