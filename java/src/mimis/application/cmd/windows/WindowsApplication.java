@@ -1,12 +1,9 @@
 package mimis.application.cmd.windows;
 
-import java.io.IOException;
-
 import mimis.application.cmd.CMDApplication;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.util.VBScript;
-import mimis.util.Windows;
+import mimis.util.Native;
 import mimis.value.Command;
 import mimis.value.Key;
 import mimis.value.Type;
@@ -15,61 +12,64 @@ public abstract class WindowsApplication extends CMDApplication {
     protected final static int TERMINATE_SLEEP = 500;
     protected final static int START_SLEEP = 500;
 
-    protected String name;
+    public static final int WM_CLOSE = 0x0010;
+    public static final int WM_COMMAND = 0x0111;
+    public static final int WM_APPCOMMAND = 0x0319;
+    public static final int WM_USER = 0x0400;
+    public static final int MAPVK_VK_TO_VSC = 0;
+
+    protected String window;
     protected Process process;
     protected int handle;
 
-    public WindowsApplication(String program, String title, String name) {
+    public WindowsApplication(String program, String title, String window) {
         super(program, title);
-        this.name = name;
-        handle = -1;
+        this.window = window;
+        handle = 0;
     }
 
     public void activate() throws ActivateException {
         super.activate();
-        handle = Windows.findWindow(name, null);
+        handle = Native.getHandle(window);
         if (handle < 1) {
             sleep(START_SLEEP);
-            handle = Windows.findWindow(name, null);
+            handle = Native.getHandle(window);
         }
         active = handle > 0;
-        if (handle < 1) {
+        if (!active) {
             throw new ActivateException();
         }
     }
 
     public boolean active() {
         if (!active) {
-            handle = Windows.findWindow(name, null);
+            handle = Native.getHandle(window);
         }
         return super.active();
     }
 
     public void deactivate() throws DeactivateException {
-        try {
-            VBScript.terminate(program);
-        } catch (IOException e) {
-            log.error(e);
+        if (!Native.terminate(program)) {
             throw new DeactivateException();
         }
     }
 
     protected void command(Command command) {
-        Windows.sendMessage(handle, Windows.WM_APPCOMMAND, handle, command.getCode() << 16);
+        Native.sendMessage(handle, WM_APPCOMMAND, handle, command.getCode() << 16);
     }
 
     protected void command(int command) {
-        Windows.sendMessage(handle, Windows.WM_COMMAND, command, 0);
+        Native.sendMessage(handle, WM_COMMAND, command, 0);
     }
 
     protected int user(int wParam, int lParam) {
-        return Windows.sendMessage(handle, Windows.WM_USER, wParam, lParam);
+        return Native.sendMessage(handle, WM_USER, wParam, lParam);
         //return Windows.sendMessage(handle, Windows.WM_USER + wParam, 0, 0);
     }
 
     protected void key(Type type, int code) {
-        int scanCode = Windows.mapVirtualKey(code, Windows.MAPVK_VK_TO_VSC);
-        Windows.postMessage(handle, type.getCode(), code, 1 | (scanCode << 16));
+        int scanCode = Native.mapVirtualKey(code, MAPVK_VK_TO_VSC);
+        Native.postMessage(handle, type.getCode(), code, 1 | (scanCode << 16));
     }
 
     protected void key(Type type, char character) {

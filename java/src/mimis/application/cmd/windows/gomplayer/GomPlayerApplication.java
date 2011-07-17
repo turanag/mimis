@@ -10,7 +10,7 @@ import mimis.value.Amount;
 public class GomPlayerApplication extends WindowsApplication {
     protected final static String PROGRAM = "GOM.exe";
     protected final static String TITLE = "GOM Player";
-    protected final static String NAME = "GomPlayer1.x";
+    protected final static String WINDOW = "GomPlayer1.x";
 
     protected static final int VOLUME_SLEEP = 100;
     protected static final int SEEK_SLEEP = 100;
@@ -19,7 +19,7 @@ public class GomPlayerApplication extends WindowsApplication {
     protected SeekWorker seekWorker;
 
     public GomPlayerApplication() {
-        super(PROGRAM, TITLE, NAME);
+        super(PROGRAM, TITLE, WINDOW);
         volumeWorker = new VolumeWorker();
         seekWorker = new SeekWorker();
     }

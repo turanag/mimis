@@ -1,6 +1,5 @@
 package mimis.device.lirc;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import mimis.Button;
@@ -12,7 +11,7 @@ import mimis.exception.worker.DeactivateException;
 import mimis.sequence.state.Press;
 import mimis.sequence.state.Release;
 import mimis.util.Multiplexer;
-import mimis.util.VBScript;
+import mimis.util.Native;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Signal;
 
@@ -56,16 +55,12 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
                 log.error(e);
             }
         } else if (!active) {
-            try {
-                if (VBScript.isRunning(PROGRAM)) {
-                    try {
-                        activate();
-                    } catch (ActivateException e) {
-                        log.error(e);
-                    }
+            if (Native.isRunning(PROGRAM)) {
+                try {
+                    activate();
+                } catch (ActivateException e) {
+                    log.error(e);
                 }
-            } catch (IOException e) {
-                log.error(e);
             }
         }
         return active;

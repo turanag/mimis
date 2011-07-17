@@ -14,6 +14,7 @@ public abstract class Worker implements Runnable {
 
     protected boolean run = false;
     protected boolean active = false;
+    protected int work = 0;
 
     public void start(boolean thread) {
         run = true;
@@ -42,6 +43,7 @@ public abstract class Worker implements Runnable {
         synchronized (this) {
             notifyAll();
         }
+        log.debug(String.format("%s: %d", getClass(), work));
     }
 
     protected void sleep(int time) {
@@ -86,6 +88,7 @@ public abstract class Worker implements Runnable {
     public final void run() {
         while (run) {
             if (active()) {
+                ++work;
                 work();
             } else {
                 try {

@@ -1,47 +1,43 @@
 package mimis.util;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Native {
-    public static int getHandle(String title) throws IOException {
-        String command = String.format("list.exe w");
-        Process process = Runtime.getRuntime().exec(command);
-        Scanner scanner = new Scanner(process.getInputStream());
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-            Scanner line = new Scanner(scanner.nextLine());
-            line.useDelimiter("\t");
-            try {
-                int handle = line.nextInt();
-                line.nextInt();
-                if (line.hasNext() && line.next().equals(title)) {
-                    return handle;
-                }
-            } catch (InputMismatchException e) {}
-        }
-        return -1;
+    static {
+        System.loadLibrary("mimis");
     }
 
-    public static String getProgram(int processId) throws IOException {
-        String command = String.format("list.exe p");
-        Process process = Runtime.getRuntime().exec(command);
-        Scanner scanner = new Scanner(process.getInputStream());
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-            Scanner line = new Scanner(scanner.nextLine());
-            line.useDelimiter("\t");
+    public void start() {
+        /*int handle = getHandle("Winamp v1.x");
+        System.out.println(handle);
+        sendMessage(handle, WindowsApplication.WM_CLOSE, 0, 0);
+        /*/
+        while (true) {//Winamp v1.x
+            System.out.println(isRunning("winamp.exe"));
+            //System.out.println(new Native().terminate("winamp.exe"));
+            //System.out.println(new Native().running("wmplayer.exe"));
             try {
-                if (line.nextInt() == processId) {
-                    return line.next();
-                }
-            } catch (InputMismatchException e) {}
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-        return null;
     }
+
+    public static void main(String[] args) {
+        new Native().start();
+    }
+
+    public native static int getHandle(String window);
+    public native static int sendMessage(int handle, int message, int wParam, int lParam);
+    public native static int postMessage(int handle, int message, int wParam, int lParam);
+    public static native int mapVirtualKey(int code, int type);    
+    public native static boolean isRunning(String program);
+    public native static boolean terminate(String program);
 
     public static String getValue(String key, String name) {
         String command = String.format("reg query \"%s\"", key);

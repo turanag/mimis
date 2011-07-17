@@ -6,8 +6,6 @@ import mimis.Application;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
-import mimis.util.VBScript;
-
 
 public abstract class CMDApplication extends Application {
     protected final static String REGISTRY = "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
@@ -43,11 +41,7 @@ public abstract class CMDApplication extends Application {
     }
 
     public boolean active() {
-        try {
-            return active = VBScript.isRunning(program);
-        } catch (IOException e) {
-            return active = false;
-        }
+        return active = Native.isRunning(program);
     }
 
     public void deactivate() throws DeactivateException {

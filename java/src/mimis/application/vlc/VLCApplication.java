@@ -12,7 +12,6 @@ import mimis.application.cmd.CMDApplication;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
-import mimis.util.VBScript;
 import mimis.value.Action;
 import mimis.value.Amount;
 
@@ -41,7 +40,7 @@ public class VLCApplication extends CMDApplication {
         volumeWorker = new VolumeWorker();
         seekWorker = new SeekWorker();
     }
-    
+
     public String getPath() {
         Pattern pattern = Pattern.compile("\"([^\"]+)\"");
         Matcher matcher = pattern.matcher(Native.getValue(REGISTRY));
@@ -66,11 +65,7 @@ public class VLCApplication extends CMDApplication {
         super.stop();
         volumeWorker.stop();
         seekWorker.stop();
-        try {
-            VBScript.terminate(program);
-        } catch (IOException e) {
-            log.error(e);
-        }
+        Native.terminate(program);
     }
     
     public void begin(Action action) {

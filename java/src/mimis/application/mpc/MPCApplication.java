@@ -9,7 +9,7 @@ import mimis.value.Action;
 public class MPCApplication extends WindowsApplication {
     protected final static String PROGRAM = "mpc-hc.exe";
     protected final static String TITLE = "Media Player Classic";
-    protected final static String NAME = "MediaPlayerClassicW";
+    protected final static String WINDOW = "MediaPlayerClassicW";
     
     protected static final int VOLUME_SLEEP = 50;
     protected static final int SEEK_SLEEP = 50;
@@ -18,7 +18,7 @@ public class MPCApplication extends WindowsApplication {
     protected SeekWorker seekWorker;
     
     public MPCApplication() {
-        super(PROGRAM, TITLE, NAME);
+        super(PROGRAM, TITLE, WINDOW);
         volumeWorker = new VolumeWorker();
         seekWorker = new SeekWorker();
     }

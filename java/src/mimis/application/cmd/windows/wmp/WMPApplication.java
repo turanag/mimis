@@ -9,14 +9,14 @@ import mimis.value.Action;
 public class WMPApplication extends WindowsApplication {
     protected final static String PROGRAM = "wmplayer.exe";
     protected final static String TITLE = "Windows Media Player";
-    protected final static String NAME = "WMPlayerApp";
+    protected final static String WINDOW = "WMPlayerApp";
 
     protected static final int VOLUME_SLEEP = 120;
 
     protected VolumeWorker volumeWorker;
     
     public WMPApplication() {
-        super(PROGRAM, TITLE, NAME);
+        super(PROGRAM, TITLE, WINDOW);
         volumeWorker = new VolumeWorker();
     }
 

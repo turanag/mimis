@@ -9,12 +9,12 @@ import mimis.value.Action;
 public class WinampApplication extends WindowsApplication {
     protected final static String PROGRAM = "winamp.exe";
     protected final static String TITLE = "Winamp";
-    protected final static String NAME = "Winamp v1.x";
+    protected final static String WINDOW = "Winamp v1.x";
 
     protected final static int STATUS_PLAYING = 1;
     protected final static int STATUS_PAUSED = 3;
     protected final static int STATUS_STOPPED = 0;
-    
+
     protected final static int IPC_ISPLAYING = 104;
     protected final static int IPC_GETOUTPUTTIME = 105;
     protected final static int IPC_SETVOLUME = 122;
@@ -40,9 +40,9 @@ public class WinampApplication extends WindowsApplication {
     protected SeekWorker seekWorker;
     protected double volume;
     protected boolean muted;
-    
+
     public WinampApplication() {
-        super(PROGRAM, TITLE, NAME);
+        super(PROGRAM, TITLE, WINDOW);
         volume = getVolume();
         muted = volume == 0;
         volumeWorker = new VolumeWorker();

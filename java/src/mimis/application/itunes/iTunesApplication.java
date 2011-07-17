@@ -1,12 +1,10 @@
 package mimis.application.itunes;
 
-import java.io.IOException;
-
 import mimis.Application;
 import mimis.Worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.util.VBScript;
+import mimis.util.Native;
 import mimis.value.Action;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
@@ -48,16 +46,12 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     }
 
     public boolean active() {
-        try {
-            if (!active && !quiting && VBScript.isRunning(PROGRAM)) {
-                try {
-                    activate();
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+        if (!active && !quiting && Native.isRunning(PROGRAM)) {
+            try {
+                activate();
+            } catch (ActivateException e) {
+                log.error(e);
             }
-        } catch (IOException e) {
-            log.error(e);
         }
         try {
             iTunes.getMute();

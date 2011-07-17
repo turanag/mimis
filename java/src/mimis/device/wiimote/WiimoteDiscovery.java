@@ -14,6 +14,7 @@ public class WiimoteDiscovery extends Worker {
 
     public WiimoteDiscovery(WiimoteDevice wiimoteDevice) {
         this.wiimoteDevice = wiimoteDevice;
+        disconnect = true;
     }
 
     protected boolean connect() {
@@ -53,7 +54,6 @@ public class WiimoteDiscovery extends Worker {
 
     public void activate() throws ActivateException {
         super.activate();
-        disconnect = true;
     }
 
     public void deactivate() throws DeactivateException {
