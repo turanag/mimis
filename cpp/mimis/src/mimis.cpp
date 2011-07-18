@@ -63,3 +63,27 @@ JNIEXPORT jboolean JNICALL Java_mimis_util_Native_terminate(JNIEnv *env, jclass 
 	delete hProcess;
 	return bResult;
 }
+
+JNIEXPORT jstring JNICALL Java_mimis_util_Native_getValue(JNIEnv *env, jclass cls, jint registry, jstring jkey, jstring jname) {
+	const char *key = env->GetStringUTFChars(jkey, 0);
+	const char *name = env->GetStringUTFChars(jname, 0);
+	HKEY hKey;
+	char *value = NULL;
+	if (RegOpenKey((HKEY) registry, key, &hKey) == ERROR_SUCCESS) {
+		char nameBuffer[255];
+		byte valueBuffer[255];
+		DWORD dwNameSize = sizeof(nameBuffer);
+		DWORD dwValueSize = sizeof(valueBuffer);
+		int i = 0;
+		while (RegEnumValue(hKey, i++, nameBuffer, &dwNameSize, NULL, NULL, valueBuffer, &dwValueSize) == ERROR_SUCCESS) {
+			if (strcmp(name, nameBuffer) == 0) {
+				value = (char*) valueBuffer;
+				break;
+			}
+			dwNameSize = sizeof(nameBuffer);
+		}
+	}
+	fflush(stdout);
+	RegCloseKey(hKey);
+	return env->NewStringUTF(value);
+}
