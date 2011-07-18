@@ -14,9 +14,11 @@ import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Action;
 import mimis.value.Amount;
+import mimis.value.Registry;
 
 public class VLCApplication extends CMDApplication {
-    protected final static String REGISTRY = "HKCR\\Applications\\vlc.exe\\shell\\Open\\command";
+    protected final static Registry REGISTRY = Registry.CLASSES_ROOT;
+    protected final static String KEY = "Applications\\vlc.exe\\shell\\Open\\command";
     protected final static String PROGRAM = "vlc.exe";
     protected final static String TITLE = "VLC media player";
 
@@ -43,7 +45,7 @@ public class VLCApplication extends CMDApplication {
 
     public String getPath() {
         Pattern pattern = Pattern.compile("\"([^\"]+)\"");
-        Matcher matcher = pattern.matcher(Native.getValue(REGISTRY));
+        Matcher matcher = pattern.matcher(Native.getValue(REGISTRY, KEY));
         return matcher.find() ? matcher.group(1) : null;
     }
 

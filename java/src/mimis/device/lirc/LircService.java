@@ -19,6 +19,7 @@ import mimis.exception.button.UnknownButtonException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
+import mimis.value.Registry;
 
 public class LircService extends Worker {
     public static final String IP = "localhost";
@@ -37,7 +38,7 @@ public class LircService extends Worker {
 
     public LircService(HashMap<String, LircButton[]> buttonMap) {
         this(buttonMap, IP, PORT);
-        send = Native.getValue("HKCU\\Software\\LIRC", "password");
+        send = Native.getValue(Registry.CURRENT_USER, "Software\\LIRC", "password");
     }
 
     public LircService(HashMap<String, LircButton[]> buttonMap, String ip, int port) {
