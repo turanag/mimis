@@ -41,13 +41,13 @@
 
 #ifdef WIN32
 	/* windows */
-	#define isnan(x)		_isnan(x)
-	#define isinf(x)		!_finite(x)
+	//#define isnan(x)		_isnan(x)
+	//#define isinf(x)		!_finite(x)
 
 	/* disable warnings I don't care about */
-	#pragma warning(disable:4244)		/* possible loss of data conversion	*/
-	#pragma warning(disable:4273)		/* inconsistent dll linkage			*/
-	#pragma warning(disable:4217)
+	//#pragma warning(disable:4244)		/* possible loss of data conversion	*/
+	//#pragma warning(disable:4273)		/* inconsistent dll linkage			*/
+	//#pragma warning(disable:4217)
 #else
 	/* nix */
 #endif

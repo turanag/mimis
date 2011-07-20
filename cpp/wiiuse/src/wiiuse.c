@@ -46,6 +46,8 @@
 
 #include "definitions.h"
 #include "wiiuse_internal.h"
+
+#include "wiiuse.h"
 #include "events.h"
 #include "io.h"
 

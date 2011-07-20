@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "definitions.h"
 #include "wiiuse_internal.h"
+#include "wiiuse.h"
 #include "speaker.h"
 
 void wiiuse_speaker_enable(struct wiimote_t* wm) {

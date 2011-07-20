@@ -219,13 +219,13 @@ int wiiuse_io_write(struct wiimote_t* wm, byte* buf, int len) {
 		case WIIUSE_STACK_UNKNOWN:
 		{
 			/* try to auto-detect the stack type */
-			if (i = WriteFile(wm->dev_handle, buf, 22, &bytes, &wm->hid_overlap)) {
+			if ((i = WriteFile(wm->dev_handle, buf, 22, &bytes, &wm->hid_overlap))) {
 				/* bluesoleil will always return 1 here, even if it's not connected */
 				wm->stack = WIIUSE_STACK_BLUESOLEIL;
 				return i;
 			}
 
-			if (i = HidD_SetOutputReport(wm->dev_handle, buf, len)) {
+			if ((i = HidD_SetOutputReport(wm->dev_handle, buf, len))) {
 				wm->stack = WIIUSE_STACK_MS;
 				return i;
 			}
