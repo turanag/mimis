@@ -1,1 +1,0 @@
-copy Release\WiiUseJ.dll ..\..\..\java\native\
