@@ -501,4 +501,51 @@ public class Wiimote implements WiiUseApiListener {
             deactivateRumble();
         }
 	}
+
+	/**
+	 * Speaker
+	 */
+    public void enableSpeaker() {
+        manager.enableSpeaker(id);
+    }
+
+    public void disableSpeaker() {
+        manager.disableSpeaker(id);        
+    }
+
+    public void muteSpeaker() {
+        manager.muteSpeaker(id);        
+    }
+
+    public void unmuteSpeaker() {
+        manager.unmuteSpeaker(id);        
+    }
+
+    public void activateSpeaker() {
+        manager.activateSpeaker(id);        
+    }
+
+    public void deactivateSpeaker() {
+        manager.deactivateSpeaker(id);
+    }
+
+    public void setSpeakerFormat(byte format) {
+        manager.setSpeakerFormat(format, format);
+    }
+
+    public void setSpeakerRate(int rate) {
+        manager.setSpeakerRate(id, rate);        
+    }
+
+    public void setSpeakerVolume(double volume) {
+        manager.setSpeakerVolume(id, volume);        
+    }
+
+    public void setSpeakerConfig(byte format, int rate, double volume) {
+        manager.setSpeakerConfig(id, format, rate, volume);        
+    }
+
+    public void streamSpeakerData(byte[] block) {
+        manager.streamSpeakerData(id, block);
+    }
 }

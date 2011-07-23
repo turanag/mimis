@@ -26,7 +26,7 @@ public class WiimoteDiscovery extends Worker {
     }
 
     public boolean execute(String parameters) {
-        String command = "native/wiiscan.exe -l none " + parameters;
+        String command = "wiiscan.exe -l none " + parameters;
         try {
             process = Runtime.getRuntime().exec(command);
             Scanner scanner = new Scanner(process.getInputStream());

@@ -347,4 +347,20 @@ public class WiiUseApi {
 	 *            the object where we store all the new events.
 	 */
 	native void specialPoll(EventsGatherer gath);
+
+	
+	/**
+	 * Speaker
+	 */
+    native void enableSpeaker(int id);
+    native void disableSpeaker(int id);
+    native void muteSpeaker(int id);
+    native void unmuteSpeaker(int id);
+    native void activateSpeaker(int id);
+    native void deactivateSpeaker(int id);
+    native void setSpeakerFormat(int id, byte format);
+    native void setSpeakerRate(int id, int rate);
+    native void setSpeakerVolume(int id, double volume);
+    native void setSpeakerConfig(int id, byte format, int rate, double volume);
+    native void streamSpeakerData(int id, byte[] block);
 }

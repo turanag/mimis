@@ -11,7 +11,7 @@ public class Native {
     public void start() {
         int handle = getHandle("Winamp v1.x");
         System.out.println(handle);
-        sendMessage(handle, Windows.WM_CLOSE, 0, 0);
+        //sendMessage(handle, Windows.WM_CLOSE, 0, 0);
         /*
         while (true) {//Winamp v1.x
             System.out.println(isRunning("winamp.exe"));

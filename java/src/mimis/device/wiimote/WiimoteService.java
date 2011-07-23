@@ -34,7 +34,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     protected Wiimote[] wiimoteArray;
     protected HashMap<Integer, WiimoteDevice> wiimoteDeviceMap;
 
-    WiimoteService() {
+    public WiimoteService() {
        wiimoteList = new ArrayList<Integer>();
        wiimoteArray = new Wiimote[0];
        wiimoteDeviceMap = new HashMap<Integer, WiimoteDevice>();

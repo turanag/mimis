@@ -660,4 +660,52 @@ public class WiiUseApiManager extends Thread {
 	protected void finalize() throws Throwable {
 		shutdown();
 	}
+
+	/**
+	 * Speaker
+	 */
+    public void enableSpeaker(int id) {
+        wiiuse.enableSpeaker(id);        
+    }
+
+    public void disableSpeaker(int id) {
+        wiiuse.disableSpeaker(id);        
+    }
+
+    public void muteSpeaker(int id) {
+        wiiuse.muteSpeaker(id);        
+    }
+
+    public void unmuteSpeaker(int id) {
+        wiiuse.unmuteSpeaker(id);        
+    }
+
+    public void activateSpeaker(int id) {
+        wiiuse.activateSpeaker(id);        
+    }
+
+    public void deactivateSpeaker(int id) {
+        wiiuse.deactivateSpeaker(id);        
+    }
+
+    public void setSpeakerFormat(int id, byte format) {
+        wiiuse.setSpeakerFormat(id, format);
+    }
+
+    public void setSpeakerRate(int id, int rate) {
+        wiiuse.setSpeakerRate(id, rate);        
+    }
+
+    public void setSpeakerVolume(int id, double volume) {
+        wiiuse.setSpeakerVolume(id, volume);        
+    }
+
+    public void setSpeakerConfig(int id, byte format, int rate, double volume) {
+        wiiuse.setSpeakerConfig(id, format, rate, volume);        
+    }
+
+    public void streamSpeakerData(int id, byte[] block) {
+        wiiuse.streamSpeakerData(id, block);
+        
+    }
 }
