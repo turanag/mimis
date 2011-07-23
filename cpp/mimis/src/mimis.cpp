@@ -83,7 +83,6 @@ JNIEXPORT jstring JNICALL Java_mimis_util_Native_getValue(JNIEnv *env, jclass cl
 			dwNameSize = sizeof(nameBuffer);
 		}
 	}
-	fflush(stdout);
 	RegCloseKey(hKey);
 	return env->NewStringUTF(value);
 }
