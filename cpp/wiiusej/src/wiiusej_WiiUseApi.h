@@ -273,11 +273,91 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 
 /*
  * Class:     wiiusej_WiiUseApi
- * Method:    getCalibration
- * Signature: (I)[S
+ * Method:    enableSpeaker
+ * Signature: (I)V
  */
-JNIEXPORT jshortArray JNICALL Java_wiiusej_WiiUseApi_getCalibration
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_enableSpeaker
   (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    disableSpeaker
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_disableSpeaker
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    muteSpeaker
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_muteSpeaker
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    unmuteSpeaker
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_unmuteSpeaker
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    activateSpeaker
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_activateSpeaker
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    deactivateSpeaker
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_deactivateSpeaker
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    setSpeakerFormat
+ * Signature: (IB)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFormat
+  (JNIEnv *, jobject, jint, jbyte);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    setSpeakerRate
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerRate
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    setSpeakerVolume
+ * Signature: (ID)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume
+  (JNIEnv *, jobject, jint, jdouble);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    setSpeakerConfig
+ * Signature: (IBID)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig
+  (JNIEnv *, jobject, jint, jbyte, jint, jdouble);
+
+/*
+ * Class:     wiiusej_WiiUseApi
+ * Method:    streamSpeakerData
+ * Signature: (I[B)V
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData
+  (JNIEnv *, jobject, jint, jbyteArray);
 
 #ifdef __cplusplus
 }

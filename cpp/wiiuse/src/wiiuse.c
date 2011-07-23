@@ -538,10 +538,11 @@ int wiiuse_write_data(struct wiimote_t* wm, unsigned int addr, byte* data, byte 
 	#ifdef WITH_WIIUSE_DEBUG
 	{
 		int i = 0;
-		printf("Write data is: ");
+		fprintf(stderr, "[DEBUG} Write data is: ");
 		for (; i < len; ++i)
-			printf("%x ", data[i]);
-		printf("\n");
+			fprintf(stderr, "%x ", data[i]);
+		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	#endif
 
@@ -607,14 +608,15 @@ int wiiuse_send(struct wiimote_t* wm, byte report_type, byte* msg, int len) {
 	#ifdef WITH_WIIUSE_DEBUG
 	{
 		int x = 2;
-		printf("[DEBUG] (id %i) SEND: (%x) %.2x ", wm->unid, buf[0], buf[1]);
+		fprintf(stderr, "[DEBUG] (id %i) SEND: (%x) %.2x ", wm->unid, buf[0], buf[1]);
 		#ifndef WIN32
 		for (; x < len+2; ++x)
 		#else
 		for (; x < len+1; ++x)
 		#endif
-			printf("%.2x ", buf[x]);
-		printf("\n");
+			fprintf(stderr, "%.2x ", buf[x]);
+		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	#endif
 

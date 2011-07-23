@@ -372,6 +372,16 @@ typedef struct ir_t {
 
 
 /**
+ *	@struct speaker_t
+ */
+typedef struct speaker_t {
+	byte format;
+	byte vol;
+	byte rate;
+} speaker_t;
+
+
+/**
  *	@struct joystick_t
  *	@brief Joystick calibration structure.
  *
@@ -563,6 +573,7 @@ typedef struct wiimote_t {
 	WCONST struct gforce_t gforce;			/**< current gravity forces on each axis	*/
 
 	WCONST struct ir_t ir;					/**< IR data								*/
+	WCONST struct speaker_t speaker;		/**< speaker								*/
 
 	WCONST unsigned short btns;				/**< what buttons have just been pressed	*/
 	WCONST unsigned short btns_held;		/**< what buttons are being held down		*/
@@ -643,6 +654,18 @@ WIIUSE_EXPORT extern void wiiuse_set_ir_sensitivity(struct wiimote_t* wm, int le
 WIIUSE_EXPORT extern void wiiuse_set_nunchuk_orient_threshold(struct wiimote_t* wm, float threshold);
 WIIUSE_EXPORT extern void wiiuse_set_nunchuk_accel_threshold(struct wiimote_t* wm, int threshold);
 
+/* speaker.c */
+WIIUSE_EXPORT extern void wiiuse_speaker_enable(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_disable(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_mute(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_unmute(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_activate(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_deactivate(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_format(struct wiimote_t* wm, byte format);
+WIIUSE_EXPORT extern void wiiuse_speaker_volume(struct wiimote_t* wm, double vol);
+WIIUSE_EXPORT extern void wiiuse_speaker_rate(struct wiimote_t* wm, double freq);
+WIIUSE_EXPORT extern void wiiuse_speaker_config(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_data(struct wiimote_t* wm, byte* data);
 
 #ifdef __cplusplus
 }

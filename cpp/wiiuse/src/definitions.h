@@ -39,8 +39,6 @@
 
 #define WIIMOTE_PI			3.14159265f
 
-//#define WITH_WIIUSE_DEBUG
-
 /* Error output macros */
 #define WIIUSE_ERROR(fmt, ...)		//fprintf(stderr, "[ERROR] " fmt "\n", ##__VA_ARGS__)
 
@@ -57,6 +55,7 @@
 												int i = strlen(file) - 1;														\
 												for (; i && (file[i] != '\\'); --i);											\
 												fprintf(stderr, "[DEBUG] %s:%i: " fmt "\n", file+i+1, __LINE__, ##__VA_ARGS__);	\
+												fflush(stderr);																	\
 											} while (0)
 	#else
 		#define WIIUSE_DEBUG(fmt, ...)	fprintf(stderr, "[DEBUG] " __FILE__ ":%i: " fmt "\n", __LINE__, ##__VA_ARGS__)

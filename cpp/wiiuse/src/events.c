@@ -480,10 +480,11 @@ static void event_data_read(struct wiimote_t* wm, byte* msg) {
 	#ifdef WITH_WIIUSE_DEBUG
 	{
 		int i = 0;
-		printf("Read: ");
+		fprintf(stderr, "[DEBUG] Read: ");
 		for (; i < req->size - req->wait; ++i)
-			printf("%x ", req->buf[i]);
-		printf("\n");
+			fprintf(stderr, "%x ", req->buf[i]);
+		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	#endif
 

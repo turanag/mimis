@@ -16,8 +16,6 @@
  */
 #ifndef WIN32
 #include <unistd.h>
-#else
-
 #endif
 
 #include "wiiusej_WiiUseApi.h"
@@ -32,14 +30,14 @@
 #define WIIMOTE_STATE_CONNECTED			0x0008
 #define WIIMOTE_IS_SET(wm, s)			((wm->state & (s)) == (s))
 #define WIIMOTE_IS_FLAG_SET(wm, s)		((wm->flags & (s)) == (s))
-#define WIIUSE_GET_IR_SENSITIVITY_CORRECTED(wm, lvl)									\
+#define WIIUSE_GET_IR_SENSITIVITY_CORRECTED(wm, lvl)					\
 			do {														\
 				if ((wm->state & 0x0200) == 0x0200) 		*lvl = 1;	\
 				else if ((wm->state & 0x0400) == 0x0400) 	*lvl = 2;	\
 				else if ((wm->state & 0x0800) == 0x0800) 	*lvl = 3;	\
 				else if ((wm->state & 0x1000) == 0x1000) 	*lvl = 4;	\
 				else if ((wm->state & 0x2000) == 0x2000) 	*lvl = 5;	\
-				else									*lvl = 0;		\
+				else										*lvl = 0;	\
 			} while (0)
 
 /********************* VARIABLES DECLARATIONS *****************************/
@@ -407,9 +405,6 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 	short leds = 0;
 	jclass cls = (*env)->GetObjectClass(env, gath);
 	jmethodID mid;
-	struct nunchuk_t* nc;
-	struct guitar_hero_3_t* gh;
-	struct classic_ctrl_t* cl;
 
 	//printf("avant poll, nbMaxwiimotes : %i \n",nbMaxWiimotes);
 	if (wiiuse_poll(wiimotes, nbMaxWiimotes)) {
@@ -499,7 +494,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						nc = (nunchuk_t*)&wiimotes[i]->exp.nunchuk;
+						struct nunchuk_t* nc = (nunchuk_t*)&wiimotes[i]->exp.nunchuk;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
@@ -524,7 +519,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						gh = (guitar_hero_3_t*)&wiimotes[i]->exp.gh3;
+						struct guitar_hero_3_t* gh = (guitar_hero_3_t*)&wiimotes[i]->exp.gh3;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
@@ -543,7 +538,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 						if (mid == 0) {
 							return;
 						}
-						cl = (classic_ctrl_t*)&wiimotes[i]->exp.classic;
+						struct classic_ctrl_t* cl = (classic_ctrl_t*)&wiimotes[i]->exp.classic;
 
 						(*env)->CallVoidMethod(env, gath, mid,
 								/* buttons */
@@ -687,65 +682,69 @@ JNIEXPORT jshortArray JNICALL Java_wiiusej_WiiUseApi_getCalibration
 	return jShorts;
 }*/
 
-/* Speaker */
-#include "speaker.h"
-/*
-void test(struct wiimote_t* wm) {
-	int i;
-	byte data[20] = {
-		0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,
-		0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3,0xC3};
-	wiiuse_speaker_activate(wm);
-	for (i = 0; i < 50; ++i) {
-		wiiuse_speaker_data(wm, data);
-	}
-	wiiuse_speaker_deactivate(wm);
-}*/
+/**
+ *  Speaker
+ */
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_enableSpeaker(JNIEnv *env, jobject obj, jint id) {
+	wiiuse_speaker_enable(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
+}
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_activateSpeaker
-(JNIEnv *env, jobject obj, jint id) {
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_disableSpeaker(JNIEnv *env, jobject obj, jint id){
+	wiiuse_speaker_disable(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
+}
+
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_muteSpeaker(JNIEnv *env, jobject obj, jint id) {
+	wiiuse_speaker_mute(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
+}
+
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_unmuteSpeaker(JNIEnv *env, jobject obj, jint id) {
+	wiiuse_speaker_unmute(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
+}
+
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_activateSpeaker(JNIEnv *env, jobject obj, jint id) {
 	wiiuse_speaker_activate(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
 }
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_deactivateSpeaker
-(JNIEnv *env, jobject obj, jint id) {
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_deactivateSpeaker(JNIEnv *env, jobject obj, jint id) {
 	wiiuse_speaker_deactivate(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
 }
-/*
-void testen(struct wiimote_t* wm, unsigned short freq) {
-	if (freq > 0x0000) {
-		cfg[2] = freq & 0x00ff;
-		cfg[3] = (freq & 0xff00) >> 8;
-	}
-	printf("unaangepast %d\n", freq);
-	printf("speaker 0x%02x%02x\n", cfg[2], cfg[3]);
-	fflush(stdout);
-	wiiuse_write_data(wm, WM_REG_SPEAKER, cfg, 9);
-}*/
 
-
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFrequency
-(JNIEnv *env, jobject obj, jint id, jint freq) {
-	wiiuse_speaker_frequency(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (unsigned short) freq);
-	//short a = ((short) freq) & 0xffff;
-	//printf("jni %d %d\n", freq, a);
-	//fflush(stdout);
-	//testen(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (unsigned short) freq);
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFormat(JNIEnv *env, jobject obj, jint id, jbyte format) {
+	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
+	wiiuse_speaker_config(wm);
+	wiiuse_speaker_format(wm, format);
 }
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume
-(JNIEnv *env, jobject obj, jint id, jshort vol) {
-	wiiuse_speaker_frequency(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), vol);
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerRate(JNIEnv *env, jobject obj, jint id, jint rate) {
+	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
+	wiiuse_speaker_rate(wm, rate);
+	wiiuse_speaker_config(wm);
 }
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData
-(JNIEnv *env, jobject obj, jint id, jshortArray sArray) {
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume(JNIEnv *env, jobject obj, jint id, jdouble vol) {
+	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
+	wiiuse_speaker_volume(wm, vol);
+	wiiuse_speaker_config(wm);
+}
+
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig(JNIEnv *env, jobject obj, jint id, jbyte format, jint rate, jdouble vol) {
+	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
+	wiiuse_speaker_format(wm, format);
+	wiiuse_speaker_rate(wm, rate);
+	wiiuse_speaker_volume(wm, vol);
+	wiiuse_speaker_config(wm);
+}
+
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData(JNIEnv *env, jobject obj, jint id, jbyteArray jbArray) {
+	jbyte *jbData = (*env)->GetByteArrayElements(env, jbArray, JNI_FALSE);
+	/* Todo: Check for data loss by using signed vs unsigned bytes */
+	/*int length = (int) (*env)->GetArrayLength(env, jbArray);
+	byte data[length];
 	int i = 0;
-	jshort *jShorts = (*env)->GetShortArrayElements(env, sArray, JNI_FALSE);
-	byte data[sizeof(jShorts)];
-	for (i = 0; i < sizeof(jShorts); ++i) {
-		data[i] = (byte) jShorts[i];
-	}
-	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), data);
-	(*env)->ReleaseShortArrayElements(env, sArray, jShorts, JNI_FALSE);
+	for (i = 0; i < length; ++i) {
+		data[i] = (byte) jbData[i];
+	}*/
+	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (byte*) jbData);
+	(*env)->ReleaseByteArrayElements(env, jbArray, jbData, JNI_FALSE);
+
 }

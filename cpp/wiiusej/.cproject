@@ -6,6 +6,7 @@
 		<cconfiguration id="cdt.managedbuild.config.gnu.mingw.exe.debug.1519811348">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mingw.exe.debug.1519811348" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 				<macros>
+					<stringMacro name="target" type="VALUE_TEXT" value="wiiusej"/>
 					<stringMacro name="jdk" type="VALUE_PATH_DIR" value="C:\Program Files (x86)\Java\jdk1.6.0_26"/>
 				</macros>
 				<externalSettings>
@@ -23,7 +24,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="dll" artifactName="wiiusej" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.debug.1519811348" name="Debug" parent="cdt.managedbuild.config.gnu.mingw.exe.debug" postbuildStep="./copy.bat">
+				<configuration artifactExtension="dll" artifactName="${target}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.debug.1519811348" name="Debug" parent="cdt.managedbuild.config.gnu.mingw.exe.debug" postbuildStep="./copy.bat">
 					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1519811348." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.895681267" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.debug.1030487368" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.debug"/>
@@ -323,6 +324,7 @@
 		<cconfiguration id="cdt.managedbuild.config.gnu.mingw.exe.release.905874158">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mingw.exe.release.905874158" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<macros>
+					<stringMacro name="target" type="VALUE_TEXT" value="wiiusej"/>
 					<stringMacro name="jdk" type="VALUE_PATH_DIR" value="C:\Program Files (x86)\Java\jdk1.6.0_26"/>
 				</macros>
 				<externalSettings>
@@ -340,7 +342,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="dll" artifactName="wiiusej" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.release.905874158" name="Release" parent="cdt.managedbuild.config.gnu.mingw.exe.release" postbuildStep="./copy.bat">
+				<configuration artifactExtension="dll" artifactName="${target}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.release.905874158" name="Release" parent="cdt.managedbuild.config.gnu.mingw.exe.release" postbuildStep="./copy.bat">
 					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.release.905874158." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.release.1641725860" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.release.209964646" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.release"/>
@@ -371,6 +373,7 @@
 									<listOptionValue builtIn="false" value="wiiuse"/>
 								</option>
 								<option id="gnu.c.link.option.ldflags.1604848740" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-Wl,--kill-at" valueType="string"/>
+								<option id="gnu.c.link.option.soname.2103161002" name="Shared object name (-Wl,-soname=)" superClass="gnu.c.link.option.soname" value="" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.657886763" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
