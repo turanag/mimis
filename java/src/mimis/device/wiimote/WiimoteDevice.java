@@ -53,6 +53,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     /* Worker */
     public void activate() throws ActivateException {
+        add(eventMapCycle.player);
         connect();
         try {
             wiimote = wiimoteService.getDevice(this);
@@ -61,7 +62,7 @@ public class WiimoteDevice extends Device implements GestureListener {
             log.error(e);
             throw new ActivateException();
         }
-        add(eventMapCycle.player);
+
         super.activate();
     }
 
@@ -110,13 +111,13 @@ public class WiimoteDevice extends Device implements GestureListener {
         switch (action) {
             case SHIFT:
                 log.debug("Shift");
-                reset();
+                /*reset();
                 add(eventMapCycle.mimis);
-                add(eventMapCycle.like);
+                add(eventMapCycle.like);*/
                 break;
             case UNSHIFT:
                 log.debug("Unshift");
-                reset();
+                //reset();
                 add(eventMapCycle.player);
                 break;
             case TRAIN:
