@@ -3,6 +3,7 @@ package mimis;
 import mimis.application.cmd.windows.gomplayer.GomPlayerApplication;
 import mimis.application.cmd.windows.winamp.WinampApplication;
 import mimis.application.cmd.windows.wmp.WMPApplication;
+import mimis.application.irtoy.ipod.iPodApplication;
 import mimis.application.itunes.iTunesApplication;
 import mimis.application.mpc.MPCApplication;
 import mimis.application.vlc.VLCApplication;
@@ -35,7 +36,8 @@ public class Main {
             new WMPApplication(),
             new MPCApplication(),
             new VLCApplication(),
-            new WinampApplication()};
+            new WinampApplication(),
+            new iPodApplication()};
         deviceArray = new Device[] {
             new LircDevice(),
             new WiimoteDevice(),

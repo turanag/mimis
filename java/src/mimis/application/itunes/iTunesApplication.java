@@ -15,7 +15,7 @@ import com.dt.iTunesController.iTunesEventsInterface;
 public class iTunesApplication extends Application implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
     protected static final String PROGRAM = "iTunes.exe";
-    protected static final boolean QUIT = true;
+    protected static final boolean QUIT = false;
 
     protected static final int VOLUME_CHANGE_RATE = 5;
     protected static final int VOLUME_SLEEP = 100;
@@ -28,7 +28,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     protected boolean quiting;
 
     public iTunesApplication() {
-        super(TITLE);        
+        super(TITLE);
         iTunes = new iTunes();
         volumeWorker = new VolumeWorker();
         handle = quiting = false;

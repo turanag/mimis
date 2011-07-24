@@ -36,16 +36,20 @@ public class LircService extends Worker {
     protected HashMap<String, LircButton[]> buttonMap;
     protected String send;
 
-    public LircService(HashMap<String, LircButton[]> buttonMap) {
-        this(buttonMap, IP, PORT);
+    public LircService() {
+        this(IP, PORT);
+        buttonMap = new HashMap<String, LircButton[]>();
         send = Native.getValue(Registry.CURRENT_USER, "Software\\LIRC", "password");
     }
 
-    public LircService(HashMap<String, LircButton[]> buttonMap, String ip, int port) {
-        this.buttonMap = buttonMap;
+    public LircService(String ip, int port) {
         this.ip = ip;
         this.port = port;
         lircButtonListenerList = new ArrayList<LircButtonListener>();
+    }
+
+    public void put(String name, LircButton[] LircButtonArray) {
+        buttonMap.put(name, LircButtonArray);
     }
 
     public void add(LircButtonListener lircButtonListener) {
@@ -97,9 +101,13 @@ public class LircService extends Worker {
 
     public void work() {
         try {
-            String string = bufferedReader.readLine();
+            String line = bufferedReader.readLine();
+            while (line.equals("BEGIN")) {
+                while (!bufferedReader.readLine().equals("END"));
+                line = bufferedReader.readLine();
+            }
             try {
-                LircButton lircButton = parseButton(new Scanner(string));
+                LircButton lircButton = parseButton(new Scanner(line));
                 for (LircButtonListener lircbuttonListener : lircButtonListenerList) {
                     lircbuttonListener.add(lircButton);
                 }
@@ -134,27 +142,16 @@ public class LircService extends Worker {
         throw new UnknownButtonException();
     }
 
-    public boolean send(LircButton button) {
-        return send(button, 0);
+    public void send(LircButton button) {
+        send(button, 0);
     }
 
-    public boolean send(LircButton button, int repeat) {
+    public void send(LircButton button, int repeat) {
         if (send == null) {
-            return false;
+            return;
         }
-        String command = String.format("%s %s %s\n", send, button.getName(), button.getCode());
-        log.debug(command);
+        String command = String.format("%s %s %s \n", send, button.getName(), button.getCode());
         printWriter.append(command);
         printWriter.flush();
-        try {
-            bufferedReader.readLine();
-            bufferedReader.readLine();
-            String result = bufferedReader.readLine();
-            bufferedReader.readLine();
-            return result.equals("SUCCESS");
-        } catch (IOException e) {
-            log.error(e);
-        }
-        return false;
     }
 }

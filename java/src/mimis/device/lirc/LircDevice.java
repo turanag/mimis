@@ -1,7 +1,5 @@
 package mimis.device.lirc;
 
-import java.util.HashMap;
-
 import mimis.Button;
 import mimis.Device;
 import mimis.device.lirc.remote.DenonRC176Button;
@@ -25,17 +23,12 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
 
     public LircDevice() {
         super(TITLE);
-
-        /* Initialise remotes */
-        HashMap<String, LircButton[]> buttonMap = new HashMap<String, LircButton[]>();
-        buttonMap.put(PhiliphsRCLE011Button.NAME, PhiliphsRCLE011Button.values());
-        buttonMap.put(DenonRC176Button.NAME, DenonRC176Button.values());
-        buttonMap.put(DenonRC176Button.NAME, DenonRC176Button.values());
-
         multiplexer = new Multiplexer(this);
-        lircService = new LircService(buttonMap);
+        lircService = new LircService();
+        lircService.put(PhiliphsRCLE011Button.NAME, PhiliphsRCLE011Button.values());
+        lircService.put(DenonRC176Button.NAME, DenonRC176Button.values());
+        lircService.put(DenonRC176Button.NAME, DenonRC176Button.values());
         lircService.add(this);
-
         eventMapCycle = new LircEventMapCycle();
     }
 

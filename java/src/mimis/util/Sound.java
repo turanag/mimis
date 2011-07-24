@@ -13,11 +13,22 @@ import wiiusej.Wiimote;
 import mimis.device.wiimote.WiimoteDevice;
 import mimis.device.wiimote.WiimoteService;
 
+//Sample Rate - equation is y = -280x + 7280, where x is the actual sample rate. ex: sample rate of 4200 = 0x0B
+//Freq (y=real, x=wii) y=-1070*ln(x)+4442.6 of 2788.1*e^(-0.041*x)
+
 public class Sound {
-    public static final byte PCM = 64;
-    public static final byte ADPCM = 0;
+    public static final byte PCM = 0x40;  // signed 8-bit PCM
+    public static final byte ADPCM = 0x00; // Yamaha 4-bit ADPCM
     public static final byte BLOCK_SIZE = 20;
 
+    public static final int yamaha_indexscale[] = {
+        230, 230, 230, 230, 307, 409, 512, 614,
+        230, 230, 230, 230, 307, 409, 512, 614};
+
+    public static final int yamaha_difflookup[] = {
+        1, 3, 5, 7, 9, 11, 13, 15,
+        -1, -3, -5, -7, -9, -11, -13, -15};
+        
     public Object object = new Object();
 
     public static void main(String[] args) {
@@ -30,16 +41,15 @@ public class Sound {
             WiimoteDevice wiimoteDevice = new WiimoteDevice();
             Wiimote wiimote = wiimoteService.getDevice(wiimoteDevice);
 
-            File file = new File("sound2.wav");
+            File file = new File("sound.wav");
 
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
             BufferedSound bufferedSound = bufferSound(audioInputStream);
 
             wiimote.activateSpeaker();
 
-            wiimote.setSpeakerConfig(ADPCM, bufferedSound.getSampleRate(), 0.1);
+            wiimote.setSpeakerConfig(PCM, bufferedSound.getSampleRate(), 1);
 
-            
             AudioFormat audioFormat = audioInputStream.getFormat();
             double sampleSizeInBytes = audioFormat.getSampleSizeInBits() / 8D;
             double samplesPerBlock = BLOCK_SIZE / sampleSizeInBytes;
@@ -83,15 +93,14 @@ public class Sound {
                 }
                 j += read;
             } while (j < BLOCK_SIZE);
-            int length = BLOCK_SIZE;
             for (j = 0; j < BLOCK_SIZE; ++j) {
                 if ((i * 20 + j) > size) {
-                    length = j;
                     break;
                 }
-                sound[i][j + 1] = (byte) (Math.random() * 0xff) ;//block[j];
+                sound[i][j] = block[j];
+                //sound[i][j] = 0x34;
+                sound[i][j] = (byte) (Math.random() * 0xff);
             }
-            sound[i][0] = (byte) (length << 3); // Todo: add later
         }
         audioInputStream.close();
         return new BufferedSound(sound, (int) audioFormat.getSampleRate(), audioFormat.getSampleSizeInBits());
