@@ -1,5 +1,7 @@
 #include "wiiuse.h"
 
+#define MIN(x,y) ((x) < (y) ? (x) : (y))
+
 #define WIIMOTE_GET_RUMBLE(wm) 				(WIIMOTE_IS_SET(wm, WIIMOTE_STATE_RUMBLE) ? 0x01 : 0x00)
 #define WIIMOTE_GET_SPEAKER_MAX_VOLUME(wm)	(wm->speaker.format == 0x00 ? 0x40 : 0xff)
 

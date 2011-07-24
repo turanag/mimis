@@ -56,14 +56,13 @@ void wiiuse_speaker_volume(struct wiimote_t* wm, double vol) {
 }
 
 void wiiuse_speaker_config(struct wiimote_t* wm) {
-	byte cfg[7] = {wm->speaker.format, 0x00, 0x00, wm->speaker.rate, wm->speaker.vol, 0x00, 0x00};
+	byte cfg[7] = {0x00, wm->speaker.format, 15, 25, wm->speaker.vol, 0x00, 0x00};
 	wiiuse_write_data(wm, WM_REG_SPEAKER, cfg, 7);
 }
 
-void wiiuse_speaker_data(struct wiimote_t* wm, byte* data) {
-	/* Todo: add data length dynamically */
-	//byte buf[21];
-	//WIIUSE_DEBUG("data length %d", sizeof(buf) / sizeof(byte));
-	//memcpy(buf, data, 21);
-	wiiuse_send(wm, WM_CMD_STREAM_DATA, data, 21);
+void wiiuse_speaker_data(struct wiimote_t* wm, byte* data, int len) {
+	byte buf[21] = {0x00};
+	buf[0] = len << 3;
+	memcpy(buf + 1, data, len);
+	wiiuse_send(wm, WM_CMD_STREAM_DATA, buf, 21);
 }

@@ -738,13 +738,13 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig(JNIEnv *env, jobj
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData(JNIEnv *env, jobject obj, jint id, jbyteArray jbArray) {
 	jbyte *jbData = (*env)->GetByteArrayElements(env, jbArray, JNI_FALSE);
 	/* Todo: Check for data loss by using signed vs unsigned bytes */
-	/*int length = (int) (*env)->GetArrayLength(env, jbArray);
-	byte data[length];
+	int len = (int) (*env)->GetArrayLength(env, jbArray);
+	/*byte data[length];
 	int i = 0;
 	for (i = 0; i < length; ++i) {
 		data[i] = (byte) jbData[i];
 	}*/
-	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (byte*) jbData);
+	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (byte*) jbData, len);
 	(*env)->ReleaseByteArrayElements(env, jbArray, jbData, JNI_FALSE);
 
 }

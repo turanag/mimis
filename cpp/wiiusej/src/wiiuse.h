@@ -665,7 +665,7 @@ WIIUSE_EXPORT extern void wiiuse_speaker_format(struct wiimote_t* wm, byte forma
 WIIUSE_EXPORT extern void wiiuse_speaker_volume(struct wiimote_t* wm, double vol);
 WIIUSE_EXPORT extern void wiiuse_speaker_rate(struct wiimote_t* wm, double freq);
 WIIUSE_EXPORT extern void wiiuse_speaker_config(struct wiimote_t* wm);
-WIIUSE_EXPORT extern void wiiuse_speaker_data(struct wiimote_t* wm, byte* data);
+WIIUSE_EXPORT extern void wiiuse_speaker_data(struct wiimote_t* wm, byte* data, int len);
 
 #ifdef __cplusplus
 }
