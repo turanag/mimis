@@ -1,5 +1,6 @@
 package mimis;
 
+import mimis.application.PhotoViewerApplication;
 import mimis.application.cmd.windows.gomplayer.GomPlayerApplication;
 import mimis.application.cmd.windows.winamp.WinampApplication;
 import mimis.application.cmd.windows.wmp.WMPApplication;
@@ -37,7 +38,8 @@ public class Main {
             new MPCApplication(),
             new VLCApplication(),
             new WinampApplication(),
-            new iPodApplication()};
+            new iPodApplication(),
+            new PhotoViewerApplication()};
         deviceArray = new Device[] {
             new LircDevice(),
             new WiimoteDevice(),

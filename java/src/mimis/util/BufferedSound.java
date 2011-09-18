@@ -11,8 +11,8 @@ public class BufferedSound {
         this.sampleSize = sampleSize;
     }
 
-    public byte[] getReport(int paramInt) {
-        return soundData[paramInt];
+    public byte[] getReport(int i) {
+        return soundData[i];
     }
 
     public int numReports() {

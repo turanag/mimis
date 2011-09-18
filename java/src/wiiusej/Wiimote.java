@@ -530,19 +530,19 @@ public class Wiimote implements WiiUseApiListener {
     }
 
     public void setSpeakerFormat(byte format) {
-        manager.setSpeakerFormat(format, format);
+        manager.setSpeakerFormat(id, format);
     }
 
-    public void setSpeakerRate(int rate) {
-        manager.setSpeakerRate(id, rate);        
+    public void setSpeakerRate(byte rate, byte freq) {
+        manager.setSpeakerRate(id, rate, freq);        
     }
 
     public void setSpeakerVolume(double volume) {
         manager.setSpeakerVolume(id, volume);        
     }
 
-    public void setSpeakerConfig(byte format, int rate, double volume) {
-        manager.setSpeakerConfig(id, format, rate, volume);        
+    public void setSpeakerConfig() {
+        manager.setSpeakerConfig(id);        
     }
 
     public void streamSpeakerData(byte[] block) {

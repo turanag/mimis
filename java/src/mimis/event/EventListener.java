@@ -37,10 +37,11 @@ public abstract class EventListener extends Worker {
     }
 
     public void stop() {
-        super.stop();
         synchronized (work) {
             work.notifyAll();
         }
+
+        super.stop();
     }
 
     public abstract void event(Event event);

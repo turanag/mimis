@@ -34,7 +34,7 @@ public class GomPlayerApplication extends WindowsApplication {
         log.trace("GomPlayerApplication begin: " + action);
         try {
             switch (action) {
-                case VOLUME_UP:                    
+                case VOLUME_UP:
                     volumeWorker.activate(1);    
                     break;
                 case VOLUME_DOWN:

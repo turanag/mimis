@@ -692,16 +692,16 @@ public class WiiUseApiManager extends Thread {
         wiiuse.setSpeakerFormat(id, format);
     }
 
-    public void setSpeakerRate(int id, int rate) {
-        wiiuse.setSpeakerRate(id, rate);        
+    public void setSpeakerRate(int id, byte rate, byte freq) {
+        wiiuse.setSpeakerRate(id, rate, freq);        
     }
 
     public void setSpeakerVolume(int id, double volume) {
         wiiuse.setSpeakerVolume(id, volume);        
     }
 
-    public void setSpeakerConfig(int id, byte format, int rate, double volume) {
-        wiiuse.setSpeakerConfig(id, format, rate, volume);        
+    public void setSpeakerConfig(int id) {
+        wiiuse.setSpeakerConfig(id);        
     }
 
     public void streamSpeakerData(int id, byte[] block) {

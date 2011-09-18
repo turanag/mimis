@@ -359,8 +359,8 @@ public class WiiUseApi {
     native void activateSpeaker(int id);
     native void deactivateSpeaker(int id);
     native void setSpeakerFormat(int id, byte format);
-    native void setSpeakerRate(int id, int rate);
+    native void setSpeakerRate(int id, byte rate, byte freq);
     native void setSpeakerVolume(int id, double volume);
-    native void setSpeakerConfig(int id, byte format, int rate, double volume);
+    native void setSpeakerConfig(int id);
     native void streamSpeakerData(int id, byte[] block);
 }
