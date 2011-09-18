@@ -333,7 +333,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFormat
  * Signature: (II)V
  */
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerRate
-  (JNIEnv *, jobject, jint, jint);
+  (JNIEnv *, jobject, jint, jbyte, jbyte);
 
 /*
  * Class:     wiiusej_WiiUseApi
@@ -349,7 +349,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume
  * Signature: (IBID)V
  */
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig
-  (JNIEnv *, jobject, jint, jbyte, jint, jdouble);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     wiiusej_WiiUseApi

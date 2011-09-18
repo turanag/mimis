@@ -376,8 +376,9 @@ typedef struct ir_t {
  */
 typedef struct speaker_t {
 	byte format;
-	byte vol;
 	byte rate;
+	byte freq;
+	byte vol;
 } speaker_t;
 
 
@@ -663,7 +664,7 @@ WIIUSE_EXPORT extern void wiiuse_speaker_activate(struct wiimote_t* wm);
 WIIUSE_EXPORT extern void wiiuse_speaker_deactivate(struct wiimote_t* wm);
 WIIUSE_EXPORT extern void wiiuse_speaker_format(struct wiimote_t* wm, byte format);
 WIIUSE_EXPORT extern void wiiuse_speaker_volume(struct wiimote_t* wm, double vol);
-WIIUSE_EXPORT extern void wiiuse_speaker_rate(struct wiimote_t* wm, double freq);
+WIIUSE_EXPORT extern void wiiuse_speaker_rate(struct wiimote_t* wm, byte rate, byte freq);
 WIIUSE_EXPORT extern void wiiuse_speaker_config(struct wiimote_t* wm);
 WIIUSE_EXPORT extern void wiiuse_speaker_data(struct wiimote_t* wm, byte* data, int len);
 

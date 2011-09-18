@@ -710,38 +710,28 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_deactivateSpeaker(JNIEnv *env, job
 }
 
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerFormat(JNIEnv *env, jobject obj, jint id, jbyte format) {
-	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
-	wiiuse_speaker_config(wm);
-	wiiuse_speaker_format(wm, format);
+	wiiuse_speaker_format(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), format);
 }
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerRate(JNIEnv *env, jobject obj, jint id, jint rate) {
-	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
-	wiiuse_speaker_rate(wm, rate);
-	wiiuse_speaker_config(wm);
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerRate(JNIEnv *env, jobject obj, jint id, jbyte rate, jbyte freq) {
+	wiiuse_speaker_rate(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), rate, freq);
 }
 
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerVolume(JNIEnv *env, jobject obj, jint id, jdouble vol) {
-	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
-	wiiuse_speaker_volume(wm, vol);
-	wiiuse_speaker_config(wm);
+	wiiuse_speaker_volume(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), vol);
 }
 
-JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig(JNIEnv *env, jobject obj, jint id, jbyte format, jint rate, jdouble vol) {
-	struct wiimote_t* wm = wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id);
-	wiiuse_speaker_format(wm, format);
-	wiiuse_speaker_rate(wm, rate);
-	wiiuse_speaker_volume(wm, vol);
-	wiiuse_speaker_config(wm);
+JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSpeakerConfig(JNIEnv *env, jobject obj, jint id) {
+	wiiuse_speaker_config(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id));
 }
 
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData(JNIEnv *env, jobject obj, jint id, jbyteArray jbArray) {
 	jbyte *jbData = (*env)->GetByteArrayElements(env, jbArray, JNI_FALSE);
 	/* Todo: Check for data loss by using signed vs unsigned bytes */
 	int len = (int) (*env)->GetArrayLength(env, jbArray);
-	/*byte data[length];
+	/*byte data[len];
 	int i = 0;
-	for (i = 0; i < length; ++i) {
+	for (i = 0; i < len; ++i) {
 		data[i] = (byte) jbData[i];
 	}*/
 	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (byte*) jbData, len);
