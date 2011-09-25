@@ -9,7 +9,6 @@ import mimis.device.panel.PanelDevice;
 import mimis.device.wiimote.WiimoteDevice;
 import mimis.event.EventRouter;
 import mimis.event.router.GlobalRouter;
-import mimis.exception.worker.ActivateException;
 import mimis.util.swing.Dialog;
 
 import org.apache.commons.logging.Log;
@@ -39,11 +38,7 @@ public class Client {
     public void start() {
         log.debug("Client");
         Mimis mimis = new Mimis(eventRouter, deviceArray);
-        try {
-            mimis.activate();
-        } catch (ActivateException e) {
-            log.fatal(e);
-        }
+        mimis.start();
     }
 
     public static void main(String[] args) {

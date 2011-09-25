@@ -20,7 +20,7 @@ public class RumblepadDevice extends JavaInputDevice {
         eventMapCycle = new RumblepadEventMapCycle(); 
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         add(eventMapCycle.mimis);
         add(eventMapCycle.player);

@@ -2,13 +2,12 @@ package mimis;
 
 import mimis.event.EventHandler;
 import mimis.exception.worker.DeactivateException;
-import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.sequence.EventMap;
 import mimis.sequence.SequenceParser;
 import mimis.sequence.State;
 
-public abstract class Device extends EventHandler implements Titled, Exitable {
+public abstract class Device extends EventHandler implements Titled {
     protected String title;
     protected SequenceParser sequenceParser;
 
@@ -22,20 +21,9 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     }
 
     /* Worker */
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         super.deactivate();
         sequenceParser.reset();
-    }
-
-    public void stop() {
-        if (active()) {
-            try {
-                deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
-        }
-        super.stop();
     }
 
     /* SequenceParser */
@@ -50,7 +38,7 @@ public abstract class Device extends EventHandler implements Titled, Exitable {
     protected void reset() {
         sequenceParser.reset();
     }
-    
+
     protected void add(State state) {
         sequenceParser.add(state);
     }

@@ -63,13 +63,19 @@ public class VLCApplication extends CMDApplication {
         }
     }
 
-    public void stop() {
-        super.stop();
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         volumeWorker.stop();
         seekWorker.stop();
         Native.terminate(program);
     }
-    
+
+    public void exit() {
+        super.exit();
+        volumeWorker.exit();
+        seekWorker.exit();
+    }
+
     public void begin(Action action) {
         log.trace("VLCApplication begin: " + action);
         try {
@@ -81,10 +87,10 @@ public class VLCApplication extends CMDApplication {
                     volumeWorker.activate("-");
                     break;
                 case FORWARD:
-                    seekWorker.activate(Amount.SMALL, "+");
+                    seekWorker.start(Amount.SMALL, "+");
                     break;
                 case REWIND:
-                    seekWorker.activate(Amount.SMALL, "-");
+                    seekWorker.start(Amount.SMALL, "-");
                     break;
             }
         } catch (ActivateException e) {
@@ -109,22 +115,14 @@ public class VLCApplication extends CMDApplication {
                 break;
             case FORWARD:
             case REWIND:
-                try {
-                    seekWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                seekWorker.stop();
                 break;
             case MUTE:
                 command("volume&val=" + toggleMute());
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.stop();
                 break;
             case SHUFFLE:
                 command("command=pl_random");
@@ -176,8 +174,8 @@ public class VLCApplication extends CMDApplication {
         protected Amount amount;
         protected String seekDirection;
 
-        public void activate(Amount amount, String seekDirection) throws ActivateException {
-            super.activate();
+        public void start(Amount amount, String seekDirection) {
+            super.start();
             this.amount = amount;
             this.seekDirection = seekDirection;
         }

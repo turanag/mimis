@@ -8,40 +8,30 @@ import mimis.Worker;
 
 public abstract class EventListener extends Worker {
     protected Queue<Event> eventQueue;
-    protected Object work;
 
     public EventListener() {
         eventQueue = new ConcurrentLinkedQueue<Event>();
-        work = new Object();
     }
 
     public void add(Event event) {
+        log.debug("[EventListener] Add event:" + event + " " + event.getTarget());
         eventQueue.add(event);
-        synchronized (work) {
-            work.notifyAll();
+        synchronized (this) {
+            notifyAll();
         }
     }
 
     public final void work() {
-        while (eventQueue.isEmpty()) {
-            synchronized (work) {
-                try {
-                    work.wait();
-                } catch (InterruptedException e) {}
-                if (!run) {
-                    return;
-                }
+        while (!eventQueue.isEmpty()) {
+            event(eventQueue.poll());
+        }
+        synchronized (this) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                log.info(e);
             }
         }
-        event(eventQueue.poll());
-    }
-
-    public void stop() {
-        synchronized (work) {
-            work.notifyAll();
-        }
-
-        super.stop();
     }
 
     public abstract void event(Event event);

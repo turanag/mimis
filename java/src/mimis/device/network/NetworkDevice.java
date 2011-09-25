@@ -28,28 +28,21 @@ public class NetworkDevice extends Device {
     public static final int PORT = 6789;
 
     protected Log log = LogFactory.getLog(NetworkDevice.class);
-    protected int port;
     protected Server server;
     protected ConcurrentLinkedQueue<Client> clientList;
 
     public NetworkDevice(int port) {
         super(TITLE);
-        this.port = port;
         clientList = new ConcurrentLinkedQueue<Client>();
+        server = new Server(port);
     }
 
     public NetworkDevice() {
         this(PORT);
     }
 
-    public void activate() throws ActivateException {
-        log.trace("Activate NetworkDevice");
-        try {
-            server = new Server(port);
-            server.activate();
-        } catch (IOException e) {
-            throw new ActivateException();
-        }
+    protected void activate() throws ActivateException {
+        server.start();
         super.activate();
     }
 
@@ -59,12 +52,17 @@ public class NetworkDevice extends Device {
                 client.stop();
             }
         }
-        return server == null ? active : (active = server.active());
+        return active = server.active();
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         super.deactivate();
         server.stop();
+    }
+
+    public synchronized void exit() {
+        super.exit();
+        server.exit();
     }
 
     protected void feedback(Feedback feedback) {
@@ -75,40 +73,55 @@ public class NetworkDevice extends Device {
 
     protected class Server extends Worker {
         protected ServerSocket serverSocket;
-
-        public Server(int port) throws IOException {
-            serverSocket = new ServerSocket(port);
-            eventRouter.add(new TextFeedback("[NetworkDevice] Wating for clients"));
+        protected int port;
+        
+        public Server(int port) {
+            this.port = port;
         }
 
-        public boolean active() {
-            return active = !serverSocket.isClosed();
+        protected void activate() throws ActivateException {
+            try {
+                serverSocket = new ServerSocket(port);
+            } catch (IOException e) {
+                throw new ActivateException();
+            }
+            super.activate();
         }
 
+        public synchronized boolean active() {
+            return active = serverSocket != null && !serverSocket.isClosed();
+        }
+    
+        protected synchronized void deactivate() throws DeactivateException {
+            super.deactivate();
+            try {
+                eventRouter.add(new TextFeedback("[NetworkDevice] Closing server socket"));
+                serverSocket.close();
+            } catch (IOException e) {
+                log.error(e);
+            } finally {
+                for (Client client : clientList) {
+                    client.stop();
+                }
+            }
+        }
+    
         public void work() {
             try {
+                eventRouter.add(new TextFeedback("[NetworkDevice] Wating for clients"));
                 Socket socket = serverSocket.accept();
                 Client client = new Client(socket);
-                try {
-                    client.activate();
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                client.start();
                 eventRouter.add(new TextFeedback("[NetworkDevice] Client connected: " + socket.getInetAddress()));
             } catch (IOException e) {
                 log.error(e);
             }
         }
 
-        public void stop() {
-            super.stop();
-            try {
-                serverSocket.close();
-            } catch (IOException e) {
-                log.error(e);
-            }
+        public synchronized void exit() {
+            super.exit();
             for (Client client : clientList) {
-                client.stop();
+                client.exit();
             }
         }
     }
@@ -151,8 +164,8 @@ public class NetworkDevice extends Device {
             }
         }
 
-        public void stop() {
-            super.stop();
+        protected void deactivate() throws DeactivateException {
+            super.deactivate();
             send(new Task(Target.SELF, Action.STOP));
             clientList.remove(this);
             try {

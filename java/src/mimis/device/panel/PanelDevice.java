@@ -18,7 +18,7 @@ public class PanelDevice extends Device {
         eventMapCycle = new PanelEventMapCycle();
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         panel = new Panel(this);
         panel.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -29,7 +29,8 @@ public class PanelDevice extends Device {
         return active = panel != null;
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
+        log.debug("deactive() " + panel);
         super.deactivate();
         panel.dispose();
         panel = null;

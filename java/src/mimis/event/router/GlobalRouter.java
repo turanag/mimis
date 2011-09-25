@@ -22,7 +22,7 @@ public class GlobalRouter extends EventRouter {
         this.port = port;
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         try {
             client = new Client(ip, port);
         } catch (IOException e) {
@@ -32,7 +32,8 @@ public class GlobalRouter extends EventRouter {
         super.activate();
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         client.stop();
     }
 
@@ -71,7 +72,8 @@ public class GlobalRouter extends EventRouter {
             }
         }
 
-        public void stop() {
+        protected void deactivate() throws DeactivateException {
+            super.deactivate();
             try {
                 objectInputStream.close();
                 objectOutputStream.close();

@@ -3,14 +3,11 @@ package mimis;
 import mimis.event.EventHandler;
 import mimis.event.Task;
 import mimis.event.feedback.TextFeedback;
-import mimis.exception.WorkerException;
-import mimis.exception.worker.DeactivateException;
-import mimis.manager.Exitable;
 import mimis.manager.Titled;
 import mimis.value.Action;
 import mimis.value.Signal;
 
-public abstract class Application extends EventHandler implements Titled, Exitable {
+public abstract class Application extends EventHandler implements Titled {
     protected String title;
     protected boolean active;
 
@@ -27,34 +24,19 @@ public abstract class Application extends EventHandler implements Titled, Exitab
             Task task = (Task) event;
             Action action = task.getAction();
             switch (action) {
-                case ACTIVATE:
+                case START:
                     if (task.getSignal().equals(Signal.BEGIN)) {
-                        try {
-                            if (active()) {
-                                eventRouter.add(new TextFeedback("Deactivate application"));
-                                deactivate();
-                            } else {
-                                eventRouter.add(new TextFeedback("Activate application"));
-                                activate();
-                            }
-                        } catch (WorkerException e) {
-                            log.error(e);
+                        if (active()) {
+                            eventRouter.add(new TextFeedback("Stop application"));
+                            stop();
+                        } else {
+                            eventRouter.add(new TextFeedback("Start application"));
+                            start();
                         }
                     }
                     return;
             }
         }
         super.event(event);
-    }
-
-    public void stop() {
-        super.stop();
-        if (active()) {
-            try {
-                deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
-        }
     }
 }

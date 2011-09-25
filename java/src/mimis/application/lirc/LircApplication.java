@@ -25,9 +25,14 @@ public class LircApplication extends Application {
         return active = lircService.active();
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException  {
         super.deactivate();
-        lircService.deactivate();
+        lircService.stop();
+    }
+
+    public void exit() {
+        super.exit();
+        lircService.exit();
     }
 
     public void send(LircButton button) {

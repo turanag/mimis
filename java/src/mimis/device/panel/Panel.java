@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import mimis.Mimis;
-import mimis.exception.worker.DeactivateException;
 import mimis.util.Swing;
 import mimis.util.swing.HoldButton;
 import mimis.util.swing.HoldButtonListener;
@@ -176,11 +175,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
-            try {
-                panelDevice.deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+            panelDevice.stop();
         }
     }
 }

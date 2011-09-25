@@ -32,8 +32,8 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
         eventMapCycle = new LircEventMapCycle();
     }
 
-    public void activate() throws ActivateException {
-        lircService.activate();
+    protected void activate() throws ActivateException {
+        lircService.start();
         add(eventMapCycle.denonRC176);
         add(eventMapCycle.philiphsRCLE011);
         add(eventMapCycle.samsungBN5901015A);
@@ -42,27 +42,27 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
 
     public boolean active() {
         if (active && !lircService.active()) {
-            try {
-                deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+            stop();
         } else if (!active) {
             if (Native.isRunning(PROGRAM)) {
-                try {
-                    activate();
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                start();
             }
         }
         return active;
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         log.debug("Deactivate LircDevice");
         super.deactivate();
-        lircService.deactivate();
+        lircService.stop();
+        multiplexer.stop();
+    }
+
+    public void exit() {
+        log.debug("Exit LircDevice");
+        super.exit();
+        lircService.exit();
+        multiplexer.exit();
     }
 
     public void add(LircButton lircButton) {
@@ -78,12 +78,5 @@ public class LircDevice extends Device implements LircButtonListener, SignalList
                 add(new Release((Button) object));
                 break;
         }
-    }
-
-    public void stop() {
-        log.debug("Stop LircDevice");
-        super.stop();
-        lircService.stop();
-        multiplexer.stop();
     }
 }

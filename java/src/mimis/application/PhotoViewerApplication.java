@@ -2,7 +2,6 @@ package mimis.application;
 
 import mimis.Worker;
 import mimis.application.robot.RobotApplication;
-import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 import mimis.value.Key;
@@ -22,23 +21,24 @@ public class PhotoViewerApplication extends RobotApplication {
         fullscreen = false;
     }
 
-    public void stop() {
-        super.stop();
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         zoomWorker.stop();
     }
 
+    public void exit() {
+        super.exit();
+        zoomWorker.exit();
+    }
+
     public void begin(Action action) {
-        try {
-            switch (action) {
-                case VOLUME_UP:
-                    zoomWorker.activate(1);    
-                    break;
-                case VOLUME_DOWN:
-                    zoomWorker.activate(-1);
-                    break;
-            }
-        } catch (ActivateException e) {
-            log.error(e);
+        switch (action) {
+            case VOLUME_UP:
+                zoomWorker.start(1);    
+                break;
+            case VOLUME_DOWN:
+                zoomWorker.start(-1);
+                break;
         }
     }
 
@@ -47,11 +47,7 @@ public class PhotoViewerApplication extends RobotApplication {
         switch (action) {
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    zoomWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                zoomWorker.stop();
                 break;
             case FORWARD:
                 break;
@@ -92,8 +88,8 @@ public class PhotoViewerApplication extends RobotApplication {
     protected class ZoomWorker extends Worker {
         protected int zoomDirection;
 
-        public void activate(int zoomDirection) throws ActivateException {
-            super.activate();
+        public void start(int zoomDirection) {
+            super.start();
             this.zoomDirection = zoomDirection;
         }
 

@@ -20,7 +20,7 @@ public class Extreme3DDevice extends JavaInputDevice {
         eventMapCycle = new Extreme3DEventMapCycle();
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         add(eventMapCycle.mimis);
         add(eventMapCycle.player);

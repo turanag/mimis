@@ -5,6 +5,7 @@ import mimis.event.EventRouter;
 import mimis.event.Feedback;
 import mimis.event.feedback.TextFeedback;
 import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
 import mimis.sequence.SequenceParser;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
@@ -55,16 +56,16 @@ public class Mimis extends EventHandler {
         deviceManager = new Manager<Device>(deviceArray);
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         log.debug("Create gui");
         gui = new GUI(this, applicationManager, deviceManager);
 
         log.debug("Activate event router");
-        eventRouter.activate();
+        eventRouter.start();
 
         log.debug("Activate managers");
-        applicationManager.activate();
-        deviceManager.activate();
+        applicationManager.start();
+        deviceManager.start();
 
         if (applicationCycle.size() > 0) {
             log.debug("Initialise application cycle");
@@ -74,8 +75,8 @@ public class Mimis extends EventHandler {
         super.activate();
     }
 
-    public void stop() {
-        super.stop();   
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();   
         log.debug("Stop GUI");
         gui.stop();
 
@@ -85,6 +86,16 @@ public class Mimis extends EventHandler {
         log.debug("Stop managers");
         applicationManager.stop();
         deviceManager.stop();
+    }
+    
+    public void exit() {
+        super.exit();
+        log.debug("Exit event router");
+        eventRouter.exit();
+
+        log.debug("Exit managers");
+        applicationManager.exit();
+        deviceManager.exit();
     }
 
     protected void end(Action action) {
@@ -98,7 +109,7 @@ public class Mimis extends EventHandler {
                 add(new TextFeedback("Previous application: " + applicationCycle.current().title()));
                 break;
             case EXIT:
-                stop();
+                exit();
                 break;
         }
     }

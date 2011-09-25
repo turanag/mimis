@@ -34,7 +34,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         handle = quiting = false;
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         synchronized (iTunes) {
             iTunes.connect();
             if (!handle) {
@@ -62,9 +62,9 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         return active;
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException  {
         super.deactivate();
-        volumeWorker.deactivate();
+        volumeWorker.stop();
         try {
             if (QUIT) {
                 quiting = true;
@@ -78,11 +78,6 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
         }
     }
 
-    public void stop() {
-        super.stop();
-        volumeWorker.stop();
-    }
-
     protected void begin(Action action) {
         log.trace("iTunesApplication begin: " + action);
         if (!active) return;
@@ -94,18 +89,10 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 iTunes.rewind();
                 break;
             case VOLUME_UP:
-                try {
-                    volumeWorker.activate(VOLUME_CHANGE_RATE);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.start(VOLUME_CHANGE_RATE);
                 break;
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.activate(-VOLUME_CHANGE_RATE);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.start(-VOLUME_CHANGE_RATE);
                 break;
         }
     }
@@ -134,11 +121,7 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.stop();
                 break;
             case SHUFFLE:
                 iTunes.toggleShuffle();
@@ -182,8 +165,8 @@ public class iTunesApplication extends Application implements iTunesEventsInterf
     protected class VolumeWorker extends Worker {
         protected int volumeChangeRate;
 
-        public void activate(int volumeChangeRate) throws ActivateException {
-            super.activate();
+        public void start(int volumeChangeRate) {
+            super.start();
             this.volumeChangeRate = volumeChangeRate;
         }
 

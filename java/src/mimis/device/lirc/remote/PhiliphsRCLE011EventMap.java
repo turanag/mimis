@@ -14,7 +14,7 @@ public class PhiliphsRCLE011EventMap extends EventMap {
         add(PhiliphsRCLE011Button.DOWN, new Task(Target.MIMIS, Action.PREVIOUS));
 
         /* Application */
-        add(PhiliphsRCLE011Button.POWER, new Task(Target.APPLICATION, Action.ACTIVATE));
+        add(PhiliphsRCLE011Button.POWER, new Task(Target.APPLICATION, Action.START));
         add(PhiliphsRCLE011Button.PROGRAM_UP, new Task(Target.APPLICATION, Action.NEXT));
         add(PhiliphsRCLE011Button.PROGRAM_DOWN, new Task(Target.APPLICATION, Action.PREVIOUS));
         add(PhiliphsRCLE011Button.LEFT, new Task(Target.APPLICATION, Action.REWIND));

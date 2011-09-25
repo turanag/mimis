@@ -7,9 +7,6 @@ import javax.swing.Action;
 import javax.swing.JToggleButton;
 
 import mimis.Worker;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,19 +26,11 @@ public class ManageButton<T extends Worker & Titled> extends JToggleButton imple
 
     public void mouseClicked(MouseEvent event) {
         if (manageable.active()) {
-            try {
-                log.trace("Uit");
-                manageable.deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+            log.trace("Stop");
+            manageable.stop();
         } else {
-            try {
-                log.trace("Aan");
-                manageable.activate();
-            } catch (ActivateException e) {
-                log.error(e);
-            }
+            log.trace("Start");
+            manageable.start();
         }        
     }
 

@@ -27,7 +27,7 @@ public abstract class JavaInputDevice extends Device {
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         try {
             JXInputDevice jxinputDevice = getDevice(name);
@@ -37,14 +37,12 @@ public abstract class JavaInputDevice extends Device {
             active = false;
             throw new ActivateException();
         }
-        javaInputListener.activate();
+        javaInputListener.start();
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         super.deactivate();
-        if (active) {
-            javaInputListener.deactivate();
-        }
+        javaInputListener.stop();
     }
 
     public void processEvent(JXInputAxisEvent event) {}

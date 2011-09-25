@@ -18,9 +18,14 @@ public class iPodApplication extends LircApplication {
         volumeWorker = new VolumeWorker();
     }
 
-    public void stop() {
-        super.stop();
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         volumeWorker.stop();
+    }
+
+    public void exit() {
+        super.exit();
+        volumeWorker.exit();
     }
 
     protected void begin(Action action) {
@@ -59,11 +64,7 @@ public class iPodApplication extends LircApplication {
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.stop();
                 break;
         }
     }

@@ -23,38 +23,40 @@ public class GomPlayerApplication extends WindowsApplication {
         volumeWorker = new VolumeWorker();
         seekWorker = new SeekWorker();
     }
-    
-    public void stop() {
-        super.stop();
+
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         volumeWorker.stop();
         seekWorker.stop();
     }
 
+    public void exit() {
+        super.exit();
+        volumeWorker.exit();
+        seekWorker.exit();
+    }
+
     public void begin(Action action) {
         log.trace("GomPlayerApplication begin: " + action);
-        try {
-            switch (action) {
-                case VOLUME_UP:
-                    volumeWorker.activate(1);    
-                    break;
-                case VOLUME_DOWN:
-                    volumeWorker.activate(-1);
-                    break;
-                case FORWARD:
-                    seekWorker.activate(Amount.SMALL, 1);
-                    break;
-                case REWIND:
-                    seekWorker.activate(Amount.SMALL, -1);
-                    break;
-                case NEXT:
-                    seekWorker.activate(Amount.MEDIUM, 1);
-                    break;
-                case PREVIOUS:
-                    seekWorker.activate(Amount.MEDIUM, -1);
-                    break;  
-            }
-        } catch (ActivateException e) {
-            log.error(e);
+        switch (action) {
+            case VOLUME_UP:
+                volumeWorker.start();    
+                break;
+            case VOLUME_DOWN:
+                volumeWorker.start();
+                break;
+            case FORWARD:
+                seekWorker.start(Amount.SMALL, 1);
+                break;
+            case REWIND:
+                seekWorker.start(Amount.SMALL, -1);
+                break;
+            case NEXT:
+                seekWorker.start(Amount.MEDIUM, 1);
+                break;
+            case PREVIOUS:
+                seekWorker.start(Amount.MEDIUM, -1);
+                break;  
         }
     }
 
@@ -71,19 +73,11 @@ public class GomPlayerApplication extends WindowsApplication {
             case REWIND:
             case NEXT:
             case PREVIOUS:
-                try {
-                    seekWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                seekWorker.stop();
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.stop();
                 break;
             case FULLSCREEN:
                 command(0x8154);
@@ -94,8 +88,8 @@ public class GomPlayerApplication extends WindowsApplication {
     protected class VolumeWorker extends Worker {
         protected int volumeChangeSign;
 
-        public void activate(int volumeChangeSign) throws ActivateException {
-            super.activate();
+        public void start(int volumeChangeSign) throws ActivateException {
+            super.start();
             this.volumeChangeSign = volumeChangeSign;
         }
 
@@ -109,8 +103,8 @@ public class GomPlayerApplication extends WindowsApplication {
         protected Amount amount;
         protected int seekDirection;
 
-        public void activate(Amount amount, int seekDirection) throws ActivateException {
-            super.activate();
+        public void start(Amount amount, int seekDirection) {
+            super.start();
             this.amount = amount;
             this.seekDirection = seekDirection;
         }

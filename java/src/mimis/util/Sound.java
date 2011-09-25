@@ -136,7 +136,7 @@ public class Sound {
                     cancel();
                     object.notifyAll();                    
                 }                
-            }            
+            }
         };
         timer.scheduleAtFixedRate(timerTask, 0, step);
     }

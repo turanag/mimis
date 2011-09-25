@@ -80,14 +80,14 @@ public class LircService extends Worker {
         super.activate();
     }
 
-    public boolean active() {
+    public synchronized boolean active() {
         if (active && !socket.isConnected()) {
             active = false;
         }
         return active;
     }
 
-    public void deactivate() throws DeactivateException {
+    public synchronized void deactivate() throws DeactivateException {
         log.trace("Deactivate LircService");
         super.deactivate();
         try {

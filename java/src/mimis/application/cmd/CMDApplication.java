@@ -34,6 +34,7 @@ public abstract class CMDApplication extends Application {
             command = replaceVariables(command);
             process = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
+            log.error(e);
             throw new ActivateException();
         }
     }
@@ -42,8 +43,9 @@ public abstract class CMDApplication extends Application {
         return active = Native.isRunning(program);
     }
 
-    public void deactivate() throws DeactivateException {
+    protected synchronized void deactivate() throws DeactivateException  {
         super.deactivate();
+        log.debug(process);
         if (process != null) {
             process.destroy();
         }

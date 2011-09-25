@@ -14,7 +14,6 @@ public abstract class WindowsApplication extends CMDApplication {
     protected final static int START_SLEEP = 500;
 
     protected String window;
-    protected Process process;
     protected int handle;
 
     public WindowsApplication(String program, String title, String window) {
@@ -43,7 +42,8 @@ public abstract class WindowsApplication extends CMDApplication {
         return super.active();
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         close();
     }
 

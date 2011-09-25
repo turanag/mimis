@@ -14,7 +14,7 @@ public class DenonRC176EventMap extends EventMap {
         add(DenonRC176Button.TUNER_DOWN, new Task(Target.MIMIS, Action.PREVIOUS));
 
         /* Application */
-        add(DenonRC176Button.AMP_POWER, new Task(Target.APPLICATION, Action.ACTIVATE));
+        add(DenonRC176Button.AMP_POWER, new Task(Target.APPLICATION, Action.START));
         add(DenonRC176Button.CD_NEXT, new Task(Target.APPLICATION, Action.NEXT));
         add(DenonRC176Button.CD_PREVIOUS, new Task(Target.APPLICATION, Action.PREVIOUS));
         add(DenonRC176Button.TAPE_REWIND, new Task(Target.APPLICATION, Action.REWIND));

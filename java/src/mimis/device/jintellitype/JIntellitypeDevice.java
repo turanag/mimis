@@ -28,7 +28,7 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         eventMapCycle = new JIntellitypeEventMapCycle();
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
@@ -56,14 +56,14 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         }
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         super.deactivate();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);
     }
 
-    public void stop() {
-        super.stop();
+    public void exit() {
+        super.exit();
         jit.cleanUp();
     }
 }

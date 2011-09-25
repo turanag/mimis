@@ -14,36 +14,42 @@ public abstract class Worker implements Runnable {
 
     protected boolean run = false;
     protected boolean active = false;
-    protected int work = 0;
+    protected boolean activate = false;
+    protected boolean deactivate = false;
 
-    public void start(boolean thread) {
-        run = true;
-        if (thread) {
-            log.debug("Start thread");
-            new Thread(this, getClass().getName()).start();
+    public final void start(boolean thread) {
+        if (!active) {
+            activate = true;
+        }
+        if (!run) {
+            run = true;
+            if (thread) {
+                log.debug("Start thread");
+                new Thread(this, getClass().getName()).start();
+            } else {
+                log.debug("Run directly");
+                run();
+            }
         } else {
-            log.debug("Run directly");
-            run();
+            log.debug("note");
+            notifyAll();
         }
     }
 
-    public void start() {
+    public synchronized final void start() {
         start(THREAD);
     }
 
-    public void stop() {
-        if (active()) {
-            try {
-                deactivate();
-            } catch (DeactivateException e) {
-                log.error(e);
-            }
+    public synchronized final void stop() {
+        if (active) {
+            deactivate = true;
         }
+        notifyAll();
+    }
+
+    public void exit() {
+        stop();
         run = false;
-        synchronized (this) {
-            notifyAll();
-        }
-        log.debug(String.format("%s: %d", getClass(), work));
     }
 
     protected void sleep(int time) {
@@ -64,33 +70,37 @@ public abstract class Worker implements Runnable {
         return active;
     }
 
-    public void activate() throws ActivateException {
-        activate(THREAD);
-    }
-
-    public void activate(boolean thread) {
+    protected void activate() throws ActivateException {
         active = true;
-        if (!run) {
-            start(thread);
-        }
-        synchronized (this) {
-            notifyAll();
-        }
     }
 
-    public void deactivate() throws DeactivateException {
+    protected void deactivate() throws DeactivateException {
         active = false;
-        synchronized (this) {
-            notifyAll();
-        }
     }
 
     public final void run() {
-        while (run) {
-            if (active()) {
-                ++work;
+        while (run || deactivate) {
+            //log.debug("run() run=" + run + ", active=" + active + ", activate=" + activate + ", deactivate=" + deactivate);
+            if (activate && !active) {
+                try {
+                    activate();
+                } catch (ActivateException e) {
+                    log.error(e);
+                } finally {
+                    activate = false;
+                }
+            } else if (deactivate && active) {
+                try {
+                   deactivate();
+                } catch (DeactivateException e) {
+                    log.error(e);
+                } finally {
+                    deactivate = false;
+                }
+            }
+            if (active) {
                 work();
-            } else {
+            } else if (run) {
                 try {
                     synchronized (this) {
                         wait();

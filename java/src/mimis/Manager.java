@@ -6,14 +6,14 @@ import java.util.Map;
 
 import javax.swing.JToggleButton;
 
-import mimis.manager.Exitable;
+import mimis.exception.worker.DeactivateException;
 import mimis.manager.ManageButton;
 import mimis.manager.Titled;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class Manager<T extends Worker & Titled & Exitable> extends Worker {
+public class Manager<T extends Worker & Titled> extends Worker {
     protected Log log = LogFactory.getLog(getClass());
     protected static final long serialVersionUID = 1L;
     protected static final int INTERVAL = 1000;
@@ -26,10 +26,17 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
         createButtons();
     }
 
-    public void stop() {
-        super.stop();
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
         for (T manageable : manageableArray) {
             manageable.stop();
+        }
+    }
+
+    public void exit() {
+        super.exit();
+        for (T manageable : manageableArray) {
+            manageable.exit();
         }
     }
 
@@ -50,6 +57,7 @@ public class Manager<T extends Worker & Titled & Exitable> extends Worker {
     }
 
     protected void work() {
+        /* Todo: timertask! */
         long before = Calendar.getInstance().getTimeInMillis();
         for (T manageable : manageableArray) {
             boolean active = manageable.active();

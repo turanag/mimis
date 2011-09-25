@@ -79,7 +79,7 @@ public class GUI extends JFrame {
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             log.debug("Window closing");
-            mimis.stop();
+            mimis.exit();
         }
     }
 

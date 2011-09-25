@@ -2,8 +2,6 @@ package mimis.application.cmd.windows.wmp;
 
 import mimis.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 
 public class WMPApplication extends WindowsApplication {
@@ -42,18 +40,10 @@ public class WMPApplication extends WindowsApplication {
                 command(18817);
                 break;
             case VOLUME_UP:
-                try {
-                    volumeWorker.activate(1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.start(1);
                 break;
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.activate(-1);
-                } catch (ActivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.start(-1);
                 break;
             case SHUFFLE:
                 command(18842);
@@ -75,11 +65,7 @@ public class WMPApplication extends WindowsApplication {
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                try {
-                    volumeWorker.deactivate();
-                } catch (DeactivateException e) {
-                    log.error(e);
-                }
+                volumeWorker.stop();
                 break;
         }
     }
@@ -87,8 +73,8 @@ public class WMPApplication extends WindowsApplication {
     protected class VolumeWorker extends Worker {
         protected int volumeChangeSign;
 
-        public void activate(int volumeChangeSign) throws ActivateException {
-            super.activate();
+        public void start(int volumeChangeSign) {
+            super.start();
             this.volumeChangeSign = volumeChangeSign;
         }
 
