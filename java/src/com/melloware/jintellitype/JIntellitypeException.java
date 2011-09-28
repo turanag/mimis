@@ -31,9 +31,10 @@ package com.melloware.jintellitype;
  * @version 1.3.1
  */
 public class JIntellitypeException extends RuntimeException {
+    protected static final long serialVersionUID = 1L;
 
-	
-	public JIntellitypeException() {
+
+    public JIntellitypeException() {
 		super();
 	}
 

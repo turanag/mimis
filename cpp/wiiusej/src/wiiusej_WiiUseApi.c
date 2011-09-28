@@ -20,7 +20,7 @@
 
 #include "wiiusej_WiiUseApi.h"
 #include "wiiuse.h"
-
+#include <jni.h>
 /*
  *	These are some identifiers for wiimotes
  *

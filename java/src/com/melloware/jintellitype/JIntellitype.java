@@ -76,7 +76,6 @@ public final class JIntellitype implements JIntellitypeConstants {
    /**
     * Handler is used by JNI code to keep different JVM instances separate
     */
-   @SuppressWarnings("unused")
    private final int handler = 0;
 
    /**

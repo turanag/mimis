@@ -31,7 +31,6 @@ public abstract class Worker implements Runnable {
                 run();
             }
         } else {
-            log.debug("note");
             notifyAll();
         }
     }

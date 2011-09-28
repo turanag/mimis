@@ -1,7 +1,6 @@
 #ifndef MIMIS_H_
 #define MIMIS_H_
 
-#include <windows.h>
 #include <jni.h>
 
 #ifdef __cplusplus

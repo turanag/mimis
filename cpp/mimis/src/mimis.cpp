@@ -1,4 +1,5 @@
 #include "mimis.h"
+#include <windows.h>
 #include <tlhelp32.h>
 
 bool getProcessEntry32(const char *program, PROCESSENTRY32 *pe32) {

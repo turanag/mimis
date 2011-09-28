@@ -33,7 +33,6 @@ import java.util.Properties;
  * @author Emil A. Lefkof III <info@melloware.com>
  * @version 1.3.1
  */
-@SuppressWarnings("")
 public final class Main {
 
     /**
