@@ -53,11 +53,6 @@ JNIEXPORT jboolean JNICALL Java_mimis_util_Native_isRunning
  */
 JNIEXPORT jboolean JNICALL Java_mimis_util_Native_terminate
   (JNIEnv *, jclass, jstring);
-/*
- * Class:     mimis_util_Native
- * Method:    getValue
- * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
- */
 
 /*
  * Class:     mimis_util_Native
