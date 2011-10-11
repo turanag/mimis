@@ -112,7 +112,7 @@ public class Device {
     }
 
     /**
-     * Adds a ButtonListener to the Device. Everytime a ManageButton has been
+     * Adds a ButtonListener to the Device. Everytime a WorkerButton has been
      * pressed or released, the Listener would be notified about this via
      * the corresponding Events.
      *

@@ -7,30 +7,33 @@ import javax.swing.Action;
 import javax.swing.JToggleButton;
 
 import mimis.Worker;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ManageButton<T extends Worker & Titled> extends JToggleButton implements MouseListener {
+public class WorkerButton extends JToggleButton implements MouseListener {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final long serialVersionUID = 1L;
-    protected T manageable;
+    protected Worker worker;
     protected Action action;
 
-    public ManageButton(T manageable) {
-        this.manageable = manageable;
-        setText(manageable.title());
+    public WorkerButton(Worker worker) {
+        this.worker = worker;
         setFocusable(false);
         addMouseListener(this);
+        if (worker instanceof Titled) {
+            setText(((Titled) worker).title());
+        }
     }
 
     public void mouseClicked(MouseEvent event) {
-        if (manageable.active()) {
+        if (worker.active()) {
             log.trace("Stop");
-            manageable.stop();
+            worker.stop();
         } else {
             log.trace("Start");
-            manageable.start();
+            worker.start();
         }        
     }
 

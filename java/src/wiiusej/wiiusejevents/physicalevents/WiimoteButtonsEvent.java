@@ -60,7 +60,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		super(id, buttonsJustPressed, buttonsJustReleased, buttonsHeld);
 	}
 
-	/* ManageButton ONE */
+	/* WorkerButton ONE */
 
 	public boolean isButtonOneJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_ONE);
@@ -78,7 +78,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_ONE);
 	}
 
-	/* ManageButton TWO */
+	/* WorkerButton TWO */
 
 	public boolean isButtonTwoJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_TWO);
@@ -96,7 +96,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_TWO);
 	}
 
-	/* ManageButton A */
+	/* WorkerButton A */
 
 	public boolean isButtonAJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_A);
@@ -114,7 +114,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_A);
 	}
 
-	/* ManageButton B */
+	/* WorkerButton B */
 
 	public boolean isButtonBJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_B);
@@ -132,7 +132,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_B);
 	}
 
-	/* ManageButton LEFT */
+	/* WorkerButton LEFT */
 
 	public boolean isButtonLeftJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_LEFT);
@@ -150,7 +150,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_LEFT);
 	}
 
-	/* ManageButton RIGHT */
+	/* WorkerButton RIGHT */
 
 	public boolean isButtonRightJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_RIGHT);
@@ -168,7 +168,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_RIGHT);
 	}
 
-	/* ManageButton UP */
+	/* WorkerButton UP */
 
 	public boolean isButtonUpJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_UP);
@@ -186,7 +186,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_UP);
 	}
 
-	/* ManageButton DOWN */
+	/* WorkerButton DOWN */
 
 	public boolean isButtonDownJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_DOWN);
@@ -204,7 +204,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_DOWN);
 	}
 
-	/* ManageButton - */
+	/* WorkerButton - */
 
 	public boolean isButtonMinusJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_MINUS);
@@ -222,7 +222,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_MINUS);
 	}
 
-	/* ManageButton + */
+	/* WorkerButton + */
 
 	public boolean isButtonPlusJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_PLUS);
@@ -240,7 +240,7 @@ public class WiimoteButtonsEvent extends ButtonsEvent {
 		return isButtonPressed(WIIMOTE_BUTTON_PLUS);
 	}
 
-	/* ManageButton HOME */
+	/* WorkerButton HOME */
 
 	public boolean isButtonHomeJustPressed() {
 		return isButtonJustPressed(WIIMOTE_BUTTON_HOME);
