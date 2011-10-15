@@ -27,6 +27,14 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
     protected Log log = LogFactory.getLog(getClass());
+    
+    public static void main(String[] args) {
+        Log log = LogFactory.getLog(WiimoteService.class);
+        WiimoteService wiimoteService = new WiimoteService();
+        for (Wiimote wm : wiimoteService.getWiimotes(1, false)) {
+            log.debug(wm);
+        }
+    }
 
     protected final boolean RUMBLE = false;
 
@@ -57,8 +65,8 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
                 wiimote.addWiiMoteEventListeners(this);
                 wiimoteList.add(id);
                 wiimoteDeviceMap.put(id, wiimoteDevice);
-                return wiimote;
             }
+            return wiimote;
         }
         throw new DeviceNotFoundException();
     }

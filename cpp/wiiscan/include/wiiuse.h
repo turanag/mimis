@@ -128,6 +128,7 @@
 #define EXP_NUNCHUK						1
 #define EXP_CLASSIC						2
 #define EXP_GUITAR_HERO_3				3
+#define EXP_BALANCE_BOARD				4
 
 /* IR correction types */
 typedef enum ir_position_t {
@@ -372,6 +373,17 @@ typedef struct ir_t {
 
 
 /**
+ *	@struct speaker_t
+ */
+typedef struct speaker_t {
+	byte format;
+	byte rate;
+	byte freq;
+	byte vol;
+} speaker_t;
+
+
+/**
  *	@struct joystick_t
  *	@brief Joystick calibration structure.
  *
@@ -452,6 +464,34 @@ typedef struct guitar_hero_3_t {
 
 
 /**
+ *	@struct balance_board_data_t
+ *	@brief Balance board l/r, t/b corner data data.
+ */
+typedef struct balance_board_data_t {
+	int tr;
+	int br;
+	int tl;
+	int bl;
+} balance_board_data_t;
+
+
+/**
+ *	@struct balance_board_t
+ *	@brief Balance board expansion device.
+ */
+typedef struct balance_board_t {
+	float tr;		/** Top Right weight */
+	float br;		/** Bottom Right weight */
+	float tl;		/** Top Left weight */
+	float bl;		/** Bottom Left weight */
+	struct balance_board_data_t raw;	/** Raw actual values */
+	struct balance_board_data_t cal_0;	/** Calibration values at 0kg */
+	struct balance_board_data_t cal_17;	/** Calibration values at 17kg */
+	struct balance_board_data_t cal_34;	/** Calibration values at 34kg */
+} balance_board_t;
+
+
+/**
  *	@struct expansion_t
  *	@brief Generic expansion device plugged into wiimote.
  */
@@ -462,6 +502,7 @@ typedef struct expansion_t {
 		struct nunchuk_t nunchuk;
 		struct classic_ctrl_t classic;
 		struct guitar_hero_3_t gh3;
+		struct balance_board_t bb;
 	};
 } expansion_t;
 
@@ -492,6 +533,7 @@ typedef struct wiimote_state_t {
 	struct vec3b_t exp_accel;
 	float exp_r_shoulder;
 	float exp_l_shoulder;
+	struct balance_board_data_t exp_bb_raw;
 
 	/* ir_t */
 	int ir_ax;
@@ -522,7 +564,9 @@ typedef enum WIIUSE_EVENT_TYPE {
 	WIIUSE_CLASSIC_CTRL_INSERTED,
 	WIIUSE_CLASSIC_CTRL_REMOVED,
 	WIIUSE_GUITAR_HERO_3_CTRL_INSERTED,
-	WIIUSE_GUITAR_HERO_3_CTRL_REMOVED
+	WIIUSE_GUITAR_HERO_3_CTRL_REMOVED,
+	WIIUSE_BALANCE_BOARD_CTRL_INSERTED,
+	WIIUSE_BALANCE_BOARD_CTRL_REMOVED
 } WIIUSE_EVENT_TYPE;
 
 /**
@@ -563,6 +607,7 @@ typedef struct wiimote_t {
 	WCONST struct gforce_t gforce;			/**< current gravity forces on each axis	*/
 
 	WCONST struct ir_t ir;					/**< IR data								*/
+	WCONST struct speaker_t speaker;		/**< speaker								*/
 
 	WCONST unsigned short btns;				/**< what buttons have just been pressed	*/
 	WCONST unsigned short btns_held;		/**< what buttons are being held down		*/
@@ -643,6 +688,18 @@ WIIUSE_EXPORT extern void wiiuse_set_ir_sensitivity(struct wiimote_t* wm, int le
 WIIUSE_EXPORT extern void wiiuse_set_nunchuk_orient_threshold(struct wiimote_t* wm, float threshold);
 WIIUSE_EXPORT extern void wiiuse_set_nunchuk_accel_threshold(struct wiimote_t* wm, int threshold);
 
+/* speaker.c */
+WIIUSE_EXPORT extern void wiiuse_speaker_enable(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_disable(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_mute(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_unmute(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_activate(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_deactivate(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_format(struct wiimote_t* wm, byte format);
+WIIUSE_EXPORT extern void wiiuse_speaker_volume(struct wiimote_t* wm, double vol);
+WIIUSE_EXPORT extern void wiiuse_speaker_rate(struct wiimote_t* wm, byte rate, byte freq);
+WIIUSE_EXPORT extern void wiiuse_speaker_config(struct wiimote_t* wm);
+WIIUSE_EXPORT extern void wiiuse_speaker_data(struct wiimote_t* wm, byte* data, int len);
 
 #ifdef __cplusplus
 }

@@ -66,7 +66,7 @@ DWORD __stdcall DelcomGetDeviceCount( DWORD Type );
 
 DWORD __stdcall DelcomReadDeviceVersion(HANDLE  );
 DWORD __stdcall DelcomReadDeviceSerialNum(LPSTR, HANDLE );
-DWORD __stdcall DelcomSendPacket( HANDLE, pPacketStruct, pPacketStruct); 
+DWORD __stdcall DelcomSendPacket( HANDLE, pPacketStruct, pPacketStruct);
 
 
 // USBDELVI - Visual Indicator Functions
@@ -123,6 +123,3 @@ DWORD __stdcall DelcomNumericDouble(HANDLE hUsb, double Number, DWORD Base );
 
 
 #endif
-
-
-

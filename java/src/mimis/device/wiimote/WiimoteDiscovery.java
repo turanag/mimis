@@ -4,24 +4,27 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import mimis.Worker;
+import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 
 public class WiimoteDiscovery extends Worker {
+    protected static final int TIMEOUT = 1000;
     protected WiimoteDevice wiimoteDevice;
     protected Process process;
     protected boolean disconnect;
 
     public WiimoteDiscovery(WiimoteDevice wiimoteDevice) {
         this.wiimoteDevice = wiimoteDevice;
-        disconnect = true;
     }
 
     protected boolean connect() {
-        return execute("-c nintendo");
+        log.debug("Connect");
+        return execute("-c nintendo"); // Nintendo RVL-CNT-01 RVL-WBC-01
     }
 
     protected boolean disconnect() {
+        log.debug("Disconnect");
         return execute("-d nintendo");
     }
 
@@ -31,7 +34,11 @@ public class WiimoteDiscovery extends Worker {
             process = Runtime.getRuntime().exec(command);
             Scanner scanner = new Scanner(process.getInputStream());
             while (scanner.hasNext()) {
-                if (scanner.next().equals("[OK]")) {
+                String line = scanner.nextLine();
+                if (line.contains("error: BluetoothSetServiceState()")) {
+                    disconnect = true;
+                    return false;
+                } else if (line.contains("[OK]")) {
                     return true;
                 }
             }
@@ -43,15 +50,6 @@ public class WiimoteDiscovery extends Worker {
         return false;
     }
 
-    protected void work() {
-        if (connect()) {
-            wiimoteDevice.connected();
-        } else if (disconnect) {
-            disconnect();
-            disconnect = false;
-        }
-    }
-
     public void activate() throws ActivateException {
         super.activate();
     }
@@ -60,6 +58,22 @@ public class WiimoteDiscovery extends Worker {
         super.deactivate();
         if (process != null) {
             process.destroy();
+        }
+    }
+
+    protected void work() {
+        if (disconnect) {
+            disconnect();
+            disconnect = false;
+        }
+        if (connect()) {
+            log.debug("Connected");
+            try {
+                sleep(TIMEOUT);
+                wiimoteDevice.connect();
+            } catch (DeviceNotFoundException e) {
+                disconnect = true;
+            }
         }
     }
 }

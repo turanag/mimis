@@ -25,8 +25,9 @@ import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 public class WiimoteDevice extends Device implements GestureListener {
     protected static final String TITLE = "Wiimote";
     protected static final int RUMBLE = 50;
-    protected static final int TIMEOUT = 200;
-    protected static final int LED_SLEEP = 50;
+    protected static final int CONNECTED_TIMEOUT = 500;
+    protected static final int LED_TIMEOUT = 1000;
+    protected static final int LED_SLEEP = 20;
 
     protected static WiimoteService wiimoteService;
     protected WiimoteEventMapCycle eventMapCycle;
@@ -36,6 +37,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected GestureDevice gestureDevice;
     protected int gestureId;
     protected LedWorker ledWorker;
+    protected boolean disconnect;
 
     static {
         WiimoteDevice.wiimoteService = new WiimoteService();
@@ -55,34 +57,32 @@ public class WiimoteDevice extends Device implements GestureListener {
     /* Worker */
     protected void activate() throws ActivateException {
         add(eventMapCycle.player);
-        connect();
+        wiimote = null;
         try {
-            wiimote = wiimoteService.getDevice(this);
-            ledWorker.start();
+            connect();
         } catch (DeviceNotFoundException e) {
-            log.error(e);
-            throw new ActivateException();
+            wiimoteDiscovery.start();
         }
         super.activate();
     }
 
-    public boolean active() {
+    public synchronized boolean active() {
         if (wiimote != null) {
-            if (!ledWorker.active()) {
-                ledWorker.start();
-            }
             connected = false;
             wiimote.getStatus();
-            synchronized (this) {
-                try {
-                    wait(TIMEOUT);
-                } catch (InterruptedException e) {
-                    log.error(e);
-                }
+            try {
+                wait(CONNECTED_TIMEOUT);
+            } catch (InterruptedException e) {
+                log.error(e);
             }
-            if (!connected) {                
-                active = false;
-                ledWorker.stop();
+            if (!connected) {
+                try {
+                    log.debug("!");
+                    connect();
+                } catch (DeviceNotFoundException e) {
+                    disconnect = true;
+                    stop();
+                }
             }
         }
         return active;
@@ -90,16 +90,25 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     protected void deactivate() throws DeactivateException {
         super.deactivate();
-        ledWorker.deactivate();
-        wiimoteDiscovery.deactivate();
+        ledWorker.stop();
+        wiimoteDiscovery.stop();
+        if (disconnect) {
+            if (wiimote != null) {
+                wiimote.disconnect();
+            }
+            wiimoteDiscovery.disconnect();
+            disconnect = false;
+            //start();
+        }
     }
 
     public void exit() {
         super.exit();
         ledWorker.exit();
-        /*if (wiimote != null) {
-            disconnect();
-        }*/
+        if (wiimote != null) {
+            wiimote.disconnect();
+            wiimote = null;
+        }
         wiimoteService.exit();
         wiimoteDiscovery.exit();
     }
@@ -109,13 +118,13 @@ public class WiimoteDevice extends Device implements GestureListener {
         switch (action) {
             case SHIFT:
                 log.debug("Shift");
-                /*reset();
+                reset();
                 add(eventMapCycle.mimis);
-                add(eventMapCycle.like);*/
+                add(eventMapCycle.like);
                 break;
             case UNSHIFT:
                 log.debug("Unshift");
-                //reset();
+                reset();
                 add(eventMapCycle.player);
                 break;
             case TRAIN:
@@ -159,36 +168,11 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     /* Connectivity */
-    public void connect() throws ActivateException {
-        wiimote = null;
-        try {
-            wiimote = wiimoteService.getDevice(this);
-            ledWorker.start();
-        } catch (DeviceNotFoundException e) {
-            wiimoteDiscovery.activate();
-        }
-    }
-
-    public void connected() {
-        try {
-            wiimote = wiimoteService.getDevice(this);
-            wiimoteDiscovery.stop();
-        } catch (DeviceNotFoundException e) {
-            log.error(e);
-        }
-    }
-
-    public void disconnect() {
-        wiimote.disconnect();
-        wiimote = null;
-    }
-
-    public void disconnected() {
-        try {
-            wiimoteDiscovery.activate();
-        } catch (ActivateException e) {
-            log.error(e);
-        }
+    public void connect() throws DeviceNotFoundException {
+        wiimote = wiimoteService.getDevice(this);
+        log.debug("Connected");
+        wiimoteDiscovery.stop();
+        ledWorker.start();
     }
 
     /* Listeners */
@@ -200,10 +184,10 @@ public class WiimoteDevice extends Device implements GestureListener {
                 Button button = WiimoteButton.create(pressed);
                 log.trace("Press: " + button);
                 add(new Press(button));
-            } else if (pressed == 0 && released != 0) {       
+            } else if (pressed == 0 && released != 0) {
                 Button button = WiimoteButton.create(released);
                 log.trace("Release: " + button);
-                add(new Release(button));            
+                add(new Release(button));
             }
         } catch (UnknownButtonException e) {}
     }
@@ -223,6 +207,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
         public LedWorker() {
             ledCycle = new ArrayCycle<Integer>();
+            ledCycle.add(1);
             ledCycle.add(3);
             ledCycle.add(6);
             ledCycle.add(12);
@@ -230,9 +215,15 @@ public class WiimoteDevice extends Device implements GestureListener {
             ledCycle.add(12);
             ledCycle.add(6);
             ledCycle.add(3);
+            ledCycle.add(1);
         }
 
-        public void deactivate() throws DeactivateException  {
+        public void activate() throws ActivateException {
+            sleep(LED_TIMEOUT);
+            super.activate();
+        }
+        
+        public void deactivate() throws DeactivateException {
             super.deactivate();
             setLeds(1);
         }
@@ -244,12 +235,8 @@ public class WiimoteDevice extends Device implements GestureListener {
 
         protected void setLeds(int leds) {
             if (wiimote != null) {
-                wiimote.setLeds(
-                    (leds & 1) > 0,
-                    (leds & 2) > 0,
-                    (leds & 4) > 0,
-                    (leds & 8) > 0);
-                    sleep(leds == 8 ? 200 : 100);
+                wiimote.setLeds((leds & 1) > 0, (leds & 2) > 0, (leds & 4) > 0, (leds & 8) > 0);
+                sleep((leds == 8 ? 2 : 1) * LED_SLEEP);
             }
         }
     }

@@ -48,6 +48,7 @@
 								<option id="gnu.c.compiler.option.include.paths.486668115" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include/win32&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.820612620" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -62,7 +63,8 @@
 								<option id="gnu.cpp.link.option.libs.102697521" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="wiiuse"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.2098946116" superClass="gnu.cpp.link.option.flags" value="-static-libgcc" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.2098946116" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--kill-at -static-libgcc" valueType="string"/>
+								<option id="gnu.cpp.link.option.strip.193866268" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1307869739" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -120,6 +122,7 @@
 								<option id="gnu.c.compiler.option.include.paths.13176781" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include/win32&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.839631863" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -134,7 +137,8 @@
 								<option id="gnu.cpp.link.option.libs.173366246" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="wiiuse"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.1334245987" superClass="gnu.cpp.link.option.flags" value="-static-libgcc" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.1334245987" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--kill-at -static-libgcc" valueType="string"/>
+								<option id="gnu.cpp.link.option.strip.611886908" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.790138545" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -165,4 +169,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 </cproject>
