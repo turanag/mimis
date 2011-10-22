@@ -77,7 +77,6 @@ public class WiimoteDevice extends Device implements GestureListener {
             }
             if (!connected) {
                 try {
-                    log.debug("!");
                     connect();
                 } catch (DeviceNotFoundException e) {
                     disconnect = true;
@@ -98,7 +97,6 @@ public class WiimoteDevice extends Device implements GestureListener {
             }
             wiimoteDiscovery.disconnect();
             disconnect = false;
-            //start();
         }
     }
 
@@ -168,11 +166,12 @@ public class WiimoteDevice extends Device implements GestureListener {
     }
 
     /* Connectivity */
-    public void connect() throws DeviceNotFoundException {
+    public synchronized void connect() throws DeviceNotFoundException {
         wiimote = wiimoteService.getDevice(this);
-        log.debug("Connected");
+        //wiimote.activateContinuous();
         wiimoteDiscovery.stop();
-        ledWorker.start();
+        //ledWorker.start();
+        sleep(10000);
     }
 
     /* Listeners */

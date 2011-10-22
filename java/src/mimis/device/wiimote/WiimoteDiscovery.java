@@ -9,6 +9,7 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 
 public class WiimoteDiscovery extends Worker {
+    protected static final String WIISCAN = "wiiscan-bb.exe";
     protected static final int TIMEOUT = 1000;
     protected WiimoteDevice wiimoteDevice;
     protected Process process;
@@ -29,7 +30,7 @@ public class WiimoteDiscovery extends Worker {
     }
 
     public boolean execute(String parameters) {
-        String command = "wiiscan.exe -l none " + parameters;
+        String command = WIISCAN + " -l none " + parameters;
         try {
             process = Runtime.getRuntime().exec(command);
             Scanner scanner = new Scanner(process.getInputStream());

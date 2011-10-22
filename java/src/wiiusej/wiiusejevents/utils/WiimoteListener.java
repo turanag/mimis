@@ -20,6 +20,8 @@ import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardInsertedEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.DisconnectionEvent;
@@ -142,4 +144,6 @@ public interface WiimoteListener extends java.util.EventListener {
 	 */
 	void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent e);
 
+	void onBalanceBoardInsertedEvent(BalanceBoardInsertedEvent e);
+	void onBalanceBoardRemovedEvent(BalanceBoardRemovedEvent e);
 }

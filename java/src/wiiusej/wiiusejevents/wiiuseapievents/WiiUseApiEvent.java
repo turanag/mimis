@@ -24,7 +24,6 @@ import wiiusej.wiiusejevents.GenericEvent;
  * @author guiguito
  */
 public abstract class WiiUseApiEvent extends GenericEvent{
-	
 	public static int NONE_EVENT = 0;
 	public static int GENERIC_EVENT = 1;
 	public static int STATUS_EVENT = 2;
@@ -36,7 +35,9 @@ public abstract class WiiUseApiEvent extends GenericEvent{
 	public static int WIIUSE_CLASSIC_CTRL_REMOVED = 8;
 	public static int WIIUSE_GUITAR_HERO_3_CTRL_INSERTED = 9;
 	public static int WIIUSE_GUITAR_HERO_3_CTRL_REMOVED = 10;
-	
+	public static int WIIUSE_BALANCE_BOARD_CTRL_INSERTED = 11;
+	public static int WIIUSE_BALANCE_BOARD_CTRL_REMOVED = 12;
+
 	/* Event Type */
 	private int eventType;
 	

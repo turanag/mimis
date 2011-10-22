@@ -20,6 +20,8 @@ import javax.swing.event.EventListenerList;
 
 import wiiusej.wiiusejevents.utils.WiiUseApiListener;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardInsertedEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.DisconnectionEvent;
@@ -327,7 +329,11 @@ public class Wiimote implements WiiUseApiListener {
 				notifyClassicControllerInsertedEventListeners((ClassicControllerInsertedEvent) e);
 			} else if (e.getEventType() == WiiUseApiEvent.WIIUSE_CLASSIC_CTRL_REMOVED) {
 				notifyClassicControllerRemovedEventListeners((ClassicControllerRemovedEvent) e);
-			}
+			} else if (e.getEventType() == WiiUseApiEvent.WIIUSE_BALANCE_BOARD_CTRL_INSERTED) {
+				notifyBalanceBoardInsertedEventListeners((BalanceBoardInsertedEvent) e);
+			} else if (e.getEventType() == WiiUseApiEvent.WIIUSE_BALANCE_BOARD_CTRL_REMOVED) {
+                notifyBalanceBoardRemovedEventListeners((BalanceBoardRemovedEvent) e);
+            }
 			/*
 			 * events not managed yet || e.getEventType() == WIIUSE_READ_DATA
 			 * WiiUseApiEvent.WIIUSE_CLASSIC_CTRL_INSERTED || e.getEventType() ==
@@ -486,6 +492,18 @@ public class Wiimote implements WiiUseApiListener {
 			listener.onClassicControllerRemovedEvent(evt);
 		}
 	}
+
+    protected void notifyBalanceBoardInsertedEventListeners(BalanceBoardInsertedEvent evt) {
+        for (WiimoteListener listener : getWiiMoteEventListeners()) {
+            listener.onBalanceBoardInsertedEvent(evt);
+        }
+    }
+
+   protected void notifyBalanceBoardRemovedEventListeners(BalanceBoardRemovedEvent evt) {
+        for (WiimoteListener listener : getWiiMoteEventListeners()) {
+            listener.onBalanceBoardRemovedEvent(evt);
+        }
+    }
 	
 	@Override
 	public String toString() {

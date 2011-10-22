@@ -16,6 +16,7 @@
  */
 package wiiusej.wiiusejevents.wiiuseapievents;
 
+import wiiusej.wiiusejevents.physicalevents.BalanceBoardEvent;
 import wiiusej.wiiusejevents.physicalevents.ClassicControllerEvent;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.GuitarHeroEvent;
@@ -405,6 +406,12 @@ public class WiimoteEvent extends WiiUseApiEvent {
 				center2);
 	}
 
+    public void setBalanceBoardEvent(float topRight, float bottomRight,
+            float bottomLeft, float topLeft) {
+        expansionEvent = new BalanceBoardEvent(getWiimoteId(), topRight,
+                bottomRight, bottomLeft, topLeft);
+    }
+
 	@Override
 	public String toString() {
 		String out = "";
@@ -437,5 +444,4 @@ public class WiimoteEvent extends WiiUseApiEvent {
 
 		return out;
 	}
-
 }

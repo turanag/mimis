@@ -16,6 +16,8 @@ import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardInsertedEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.DisconnectionEvent;
@@ -30,8 +32,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     
     public static void main(String[] args) {
         Log log = LogFactory.getLog(WiimoteService.class);
-        WiimoteService wiimoteService = new WiimoteService();
-        for (Wiimote wm : wiimoteService.getWiimotes(1, false)) {
+        for (Wiimote wm : WiiUseApiManager.getWiimotes(1, false)) {
             log.debug(wm);
         }
     }
@@ -88,6 +89,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onStatusEvent(StatusEvent event) {
+        log.debug(event);
         if (event.isConnected()) {
             WiimoteDevice wiimoteDevice = getWiimoteDevice(event);            
             wiimoteDevice.connected = true;
@@ -106,4 +108,12 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     public void onGuitarHeroRemovedEvent(GuitarHeroRemovedEvent event) {}
     public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent event) {}
     public void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent event) {}
+
+    public void onBalanceBoardInsertedEvent(BalanceBoardInsertedEvent e) {
+        log.debug(e);        
+    }
+
+    public void onBalanceBoardRemovedEvent(BalanceBoardRemovedEvent e) {
+        
+    }
 }

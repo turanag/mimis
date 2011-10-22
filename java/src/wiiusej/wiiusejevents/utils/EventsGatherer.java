@@ -16,6 +16,8 @@
  */
 package wiiusej.wiiusejevents.utils;
 
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardInsertedEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.DisconnectionEvent;
@@ -362,6 +364,14 @@ public class EventsGatherer {
 		}
 	}
 
+    public void addBalanceBoardEventToPreparedWiimoteEvent(float topRight,
+            float bottomRight, float bottomLeft, float topLeft) {
+        if (genericEvent != null) {
+            genericEvent.setBalanceBoardEvent(topRight, bottomRight,
+                    bottomLeft, topLeft);
+        }
+    }
+	
 	/**
 	 * Add the prepared WiimoteEvent to the gatherer.
 	 */
@@ -483,6 +493,16 @@ public class EventsGatherer {
 				id);
 		addEvent(evt);
 	}
+
+    public void addBalanceBoardInsertedEvent(int id) {
+        BalanceBoardInsertedEvent evt = new BalanceBoardInsertedEvent(id);
+        addEvent(evt);
+    }
+
+    public void addBalanceBoardRemovedEvent(int id) {
+        BalanceBoardRemovedEvent evt = new BalanceBoardRemovedEvent(id);
+        addEvent(evt);
+    }
 
 	/**
 	 * Return an array containing the events.

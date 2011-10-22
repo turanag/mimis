@@ -20,7 +20,6 @@
 
 #include "wiiusej_WiiUseApi.h"
 #include "wiiuse.h"
-#include <jni.h>
 /*
  *	These are some identifiers for wiimotes
  *
@@ -86,7 +85,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_init
 
 /**
  * Close connection to the wiimote with the given id.
- * 
+ *
  * @param id the id of the wiimote to disconnect.Must be 1 or 2.
  */
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_closeConnection
@@ -96,10 +95,10 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_closeConnection
 
 /**
  * Get unique id of a wiimote in the wiimotes array.
- * Please make sure you call an existing index with a 
+ * Please make sure you call an existing index with a
  * wiimote initialized at this index,
  * other wise you'll get a wrong value.
- * @param index index of the wiimote in the wiimotes array. 
+ * @param index index of the wiimote in the wiimotes array.
  */
 JNIEXPORT jint JNICALL Java_wiiusej_WiiUseApi_getUnId
 (JNIEnv *env, jobject obj, jint index) {
@@ -303,7 +302,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setSensorBarBelowScreen
 }
 
 /**
- * Set virtual screen resolution. It is used to automatically 
+ * Set virtual screen resolution. It is used to automatically
  * compute the position of a cursor on this virtual screen
  *  using the sensor bar. These results come in the IREvent.
  * @param id the id of the wiimote concerned
@@ -317,7 +316,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setVirtualScreenResolution
 
 /**
  * Get status from the wiimotes and send it through call backs.
- * 
+ *
  * @param id the id of the wiimote. Must be 1 or 2.
  */
 JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_getStatus
@@ -327,7 +326,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_getStatus
 
 /**
  * Set the normal and expansion handshake timeouts.
- * 
+ *
  * @param id
  *            the id of the wiimote concerned.
  * @param normalTimeout
@@ -343,7 +342,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setTimeout
 
 /**
  * Set the IR sensitivity.
- * 
+ *
  * @param id
  *            the id of the wiimote concerned.
  * @param level
@@ -378,7 +377,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_setNunchukAccelerationThreshold
 
 /**
  * Force the bluetooth stack type.(useful only for windows)
- * 
+ *
  * @param bluetoothStackType
  *            must be WiiUseApi.WIIUSE_STACK_UNKNOWN or WiiUseApi.WIIUSE_STACK_MS or
  *            WiiUseApi.WIIUSE_STACK_BLUESOLEIL.
@@ -418,7 +417,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 			switch (wiimotes[i]->event) {
 				case WIIUSE_EVENT:
 				/* a generic event occured */
-					
+
 				//printf("Generic event\n");
 				mid = (*env)->GetMethodID(env, cls, "prepareWiiMoteEvent", "(ISSS)V");
 				if (mid == 0) {
@@ -483,7 +482,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 							wiimotes[i]->gforce.x, wiimotes[i]->gforce.y, wiimotes[i]->gforce.z,
 							wiimotes[i]->accel.x, wiimotes[i]->accel.y, wiimotes[i]->accel.z);
 				}
-				
+
 				/* Expansions support support*/
 				if (WIIUSE_USING_EXP(wiimotes[i])) {
 					/* Nunchuk support */
@@ -511,8 +510,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 								nc->js.max.x,nc->js.max.y,
 								nc->js.min.x,nc->js.min.y,
 								nc->js.center.x,nc->js.center.y);
-					} 
-					else if (wiimotes[i]->exp.type == EXP_GUITAR_HERO_3) {
+					} else if (wiimotes[i]->exp.type == EXP_GUITAR_HERO_3) {
 						/* put guitar hero values in wiimote generic event */
 						mid = (*env)->GetMethodID(env, cls,
 								"addGuitarHeroEventToPreparedWiimoteEvent", "(SSSFFFSSSSSS)V");
@@ -531,7 +529,7 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 								gh->js.max.x,gh->js.max.y,
 								gh->js.min.x,gh->js.min.y,
 								gh->js.center.x,gh->js.center.y);
-					}if (wiimotes[i]->exp.type == EXP_CLASSIC) {
+					} else if (wiimotes[i]->exp.type == EXP_CLASSIC) {
 						/* put classic controller values in wiimote generic event */
 						mid = (*env)->GetMethodID(env, cls,
 								"addClassicControllerEventToPreparedWiimoteEvent", "(SSSFFFFSSSSSSFFSSSSSS)V");
@@ -555,12 +553,25 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 								cl->rjs.max.x,cl->rjs.max.y,
 								cl->rjs.min.x,cl->rjs.min.y,
 								cl->rjs.center.x,cl->rjs.center.y);
+					} else if (wiimotes[i]->exp.type == EXP_BALANCE_BOARD) {
+						/* put balance board values in wiimote generic event */
+						mid = (*env)->GetMethodID(env, cls,
+								"addBalanceBoardEventToPreparedWiimoteEvent", "(FFFF)V");
+						if (mid == 0) {
+							return;
+						}
+						struct balance_board_t* bb = (balance_board_t*)&wiimotes[i]->exp.bb;
+						(*env)->CallVoidMethod(env, gath, mid,
+								/* weight */
+								bb->tr,
+								bb->br,
+								bb->bl,
+								bb->tl);
 					}
 				}
 
 				/* add generic event to java object used to gather events in c environment */
-				mid = (*env)->GetMethodID(env, cls, "addWiimoteEvent",
-						"()V");
+				mid = (*env)->GetMethodID(env, cls, "addWiimoteEvent", "()V");
 				if (mid == 0) {
 					return;
 				}
@@ -633,6 +644,24 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_specialPoll
 				case WIIUSE_CLASSIC_CTRL_REMOVED:
 				/* the classic controller disconnected */
 				mid = (*env)->GetMethodID(env, cls, "addClassicControllerRemovedEvent", "(I)V");
+				if (mid == 0) {
+					return;
+				}
+				(*env)->CallVoidMethod(env, gath, mid, wiimotes[i]->unid);
+				break;
+
+				case WIIUSE_BALANCE_BOARD_CTRL_INSERTED:
+				/* the balance board was just connected */
+				mid = (*env)->GetMethodID(env, cls, "addBalanceBoardInsertedEvent", "(I)V");
+				if (mid == 0) {
+					return;
+				}
+				(*env)->CallVoidMethod(env, gath, mid, wiimotes[i]->unid);
+				break;
+
+				case WIIUSE_BALANCE_BOARD_CTRL_REMOVED:
+				/* the balance board disconnected */
+				mid = (*env)->GetMethodID(env, cls, "addBalanceBoardRemovedEvent", "(I)V");
 				if (mid == 0) {
 					return;
 				}
@@ -736,5 +765,4 @@ JNIEXPORT void JNICALL Java_wiiusej_WiiUseApi_streamSpeakerData(JNIEnv *env, job
 	}*/
 	wiiuse_speaker_data(wiiuse_get_by_id(wiimotes, nbMaxWiimotes, id), (byte*) jbData, len);
 	(*env)->ReleaseByteArrayElements(env, jbArray, jbData, JNI_FALSE);
-
 }

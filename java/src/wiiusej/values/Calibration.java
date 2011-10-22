@@ -12,11 +12,6 @@ public class Calibration {
             (short) (gAcceleration.getX() - zeroAcceleration.getX()),
             (short) (gAcceleration.getY() - zeroAcceleration.getY()),
             (short) (gAcceleration.getZ() - zeroAcceleration.getZ()));
-        System.out.println(zeroAcceleration);
-        System.out.println(gAcceleration);
-        System.out.println(differenceAcceleration);
-        System.out.println("<");
-        //System.exit(0);
     }
 
     public RawAcceleration getZeroAcceleration() {
