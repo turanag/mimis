@@ -6,8 +6,8 @@
 	</target>
 
 	<!-- Jar -->
-	<property name="jar.dir" value="."/>
 	<target name="jar">
+		<property name="jar.dir" value="."/>
 		<jar destfile="${jar.dir}/main.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="mimis.Main" />
@@ -43,15 +43,15 @@
 	</target>
 
 	<!-- Launch4j -->
-	<property name="launch4j.dir" location="C:\Program Files (x86)\Launch4j" />
-	<path id="launch4j">
-		<pathelement location="${launch4j.dir}/launch4j.jar"/>
-		<pathelement location="${launch4j.dir}/lib/xstream.jar"/>
-	</path>
-	<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask">
-		<classpath refid="launch4j" />
-	</taskdef>
-	<target name="launch4j">
+	<target name="launch4j" depends="jar">
+		<property name="launch4j.dir" location="C:\Program Files (x86)\Launch4j" />
+		<path id="launch4j">
+			<pathelement location="${launch4j.dir}/launch4j.jar"/>
+			<pathelement location="${launch4j.dir}/lib/xstream.jar"/>
+		</path>
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask">
+			<classpath refid="launch4j" />
+		</taskdef>
 		<launch4j configFile="launch4j.xml" />
 		<delete file="launch4j.log" />
 	</target>

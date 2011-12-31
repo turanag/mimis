@@ -1,10 +1,16 @@
 package mimis.event;
 
 import mimis.Event;
+import mimis.sequence.SequenceParser;
 import mimis.value.Action;
 
 public abstract class EventHandler extends EventListener {
     protected static EventRouter eventRouter;
+    protected static SequenceParser sequenceParser;
+
+    static {
+        //sequenceParser = new SequenceParser();
+    }
 
     public static void initialise(EventRouter eventRouter) {
         EventHandler.eventRouter = eventRouter;

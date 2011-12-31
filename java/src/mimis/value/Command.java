@@ -65,4 +65,20 @@ public enum Command {
     public int getCode() {
         return code;
     }
+
+    public enum System {
+        MOVE     (0xf010),
+        MAXIMIZE (0xf030),
+        MINIMIZE (0xf020);
+        
+        protected int code;
+
+        private System(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
 }

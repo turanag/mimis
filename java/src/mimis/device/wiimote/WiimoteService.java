@@ -89,7 +89,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onStatusEvent(StatusEvent event) {
-        log.debug(event);
+        //log.debug(event);
         if (event.isConnected()) {
             WiimoteDevice wiimoteDevice = getWiimoteDevice(event);            
             wiimoteDevice.connected = true;
@@ -99,7 +99,10 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
         }
     }
 
-    public void onIrEvent(IREvent event) {}
+    public void onIrEvent(IREvent event) {
+        getWiimoteDevice(event).onIrEvent(event);
+    }
+
     public void onExpansionEvent(ExpansionEvent event) {}
     public void onDisconnectionEvent(DisconnectionEvent event) {}
     public void onNunchukInsertedEvent(NunchukInsertedEvent event) {}

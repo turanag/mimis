@@ -54,8 +54,8 @@
 												char* file = __FILE__;															\
 												int i = strlen(file) - 1;														\
 												for (; i && (file[i] != '\\'); --i);											\
-												fprintf(stderr, "[DEBUG] %s:%i: " fmt "\n", file+i+1, __LINE__, ##__VA_ARGS__);	\
-												fflush(stderr);																	\
+												fprintf(stdout, "[DEBUG] %s:%i: " fmt "\n", file+i+1, __LINE__, ##__VA_ARGS__);	\
+												fflush(stdout);																	\
 											} while (0)
 	#else
 		#define WIIUSE_DEBUG(fmt, ...)	fprintf(stderr, "[DEBUG] " __FILE__ ":%i: " fmt "\n", __LINE__, ##__VA_ARGS__)

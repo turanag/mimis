@@ -53,7 +53,6 @@ static void nunchuk_pressed_buttons(struct nunchuk_t* nc, byte now);
  *	@return	Returns 1 if handshake was successful, 0 if not.
  */
 int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, byte* data, unsigned short len) {
-	int i;
 	int offset = 0;
 
 	nc->btns = 0;
@@ -63,10 +62,6 @@ int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, byte* data, un
 	/* set the smoothing to the same as the wiimote */
 	nc->flags = &wm->flags;
 	nc->accel_calib.st_alpha = wm->accel_calib.st_alpha;
-
-	/* decrypt data */
-	for (i = 0; i < len; ++i)
-		data[i] = (data[i] ^ 0x17) + 0x17;
 
 	if (data[offset] == 0xFF) {
 		/*
@@ -137,12 +132,6 @@ void nunchuk_disconnected(struct nunchuk_t* nc) {
  *	@param msg		The message specified in the event packet.
  */
 void nunchuk_event(struct nunchuk_t* nc, byte* msg) {
-	int i;
-
-	/* decrypt data */
-	for (i = 0; i < 6; ++i)
-		msg[i] = (msg[i] ^ 0x17) + 0x17;
-
 	/* get button states */
 	nunchuk_pressed_buttons(nc, msg[5]);
 

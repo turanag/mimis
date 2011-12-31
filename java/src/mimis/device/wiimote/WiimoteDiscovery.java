@@ -9,7 +9,7 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 
 public class WiimoteDiscovery extends Worker {
-    protected static final String WIISCAN = "wiiscan-bb.exe";
+    protected static final String WIISCAN = "wiiscan.exe";
     protected static final int TIMEOUT = 1000;
     protected WiimoteDevice wiimoteDevice;
     protected Process process;
@@ -30,12 +30,13 @@ public class WiimoteDiscovery extends Worker {
     }
 
     public boolean execute(String parameters) {
-        String command = WIISCAN + " -l none " + parameters;
+        String command = WIISCAN + " -l wiiuse " + parameters;
         try {
             process = Runtime.getRuntime().exec(command);
             Scanner scanner = new Scanner(process.getInputStream());
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
+                log.error(line);
                 if (line.contains("error: BluetoothSetServiceState()")) {
                     disconnect = true;
                     return false;

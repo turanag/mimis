@@ -640,7 +640,7 @@ void handshake_expansion(struct wiimote_t* wm, byte* data, unsigned short len) {
 
 	if (!data) {
 		byte* handshake_buf;
-		byte buf = 0x00;
+		byte buf = 0x55;
 
 		if (WIIMOTE_IS_SET(wm, WIIMOTE_STATE_EXP))
 			disable_expansion(wm);
@@ -651,7 +651,9 @@ void handshake_expansion(struct wiimote_t* wm, byte* data, unsigned short len) {
 		wm->timeout = wm->exp_timeout;
 		#endif
 
-		wiiuse_write_data(wm, WM_EXP_MEM_ENABLE, &buf, 1);
+		wiiuse_write_data(wm, WM_EXP_MEM_ENABLE1, &buf, 1);
+		buf = 0x00;
+		wiiuse_write_data(wm, WM_EXP_MEM_ENABLE2, &buf, 1);
 
 		/* get the calibration data */
 		handshake_buf = malloc(EXP_HANDSHAKE_LEN * sizeof(byte));

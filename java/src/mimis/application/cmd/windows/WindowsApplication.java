@@ -38,6 +38,7 @@ public abstract class WindowsApplication extends CMDApplication {
     public boolean active() {
         if (!active) {
             handle = Native.getHandle(window);
+            system(Command.System.MAXIMIZE);     
         }
         return super.active();
     }
@@ -62,6 +63,14 @@ public abstract class WindowsApplication extends CMDApplication {
     protected int user(int wParam, int lParam) {
         return Native.sendMessage(handle, Windows.WM_USER, wParam, lParam);
         //return Windows.sendMessage(handle, Windows.WM_USER + wParam, 0, 0);
+    }
+
+    protected void system(Command.System system) {
+        system(system, 0);
+    }
+
+    protected void system(Command.System system, int lParam) {
+        Native.sendMessage(handle, Windows.WM_SYSCOMMAND, system.getCode(), lParam);
     }
 
     protected void key(Type type, int code) {

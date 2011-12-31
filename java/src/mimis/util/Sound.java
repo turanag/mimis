@@ -37,8 +37,8 @@ public class Sound {
     public static void main(String[] args) {
         /*File file = new File("sound.wav");
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
-            AudioFormat au = audioInputStream.getFormat();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
+            AudioFormat au = inputStream.getFormat();
             System.out.println(au.getSampleRate());// Hz
             System.out.println(au.getSampleSizeInBits());// bits
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class Sound {
 
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
             AudioFormat audioFormat = audioInputStream.getFormat();
-           // BufferedSound bufferedSound = bufferSound(audioInputStream);
+           // BufferedSound bufferedSound = bufferSound(inputStream);
             System.out.println(audioInputStream.getFormat().getSampleRate());
             System.out.println(audioInputStream.getFormat().getFrameRate());
 

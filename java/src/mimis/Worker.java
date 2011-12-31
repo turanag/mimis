@@ -79,7 +79,6 @@ public abstract class Worker implements Runnable {
 
     public final void run() {
         while (run || deactivate) {
-            //log.debug("run() run=" + run + ", active=" + active + ", activate=" + activate + ", deactivate=" + deactivate);
             if (activate && !active) {
                 try {
                     activate();

@@ -19,6 +19,7 @@ import org.wiigee.event.GestureListener;
 import org.wiigee.util.Log;
 
 import wiiusej.Wiimote;
+import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
@@ -27,7 +28,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected static final int RUMBLE = 50;
     protected static final int CONNECTED_TIMEOUT = 500;
     protected static final int LED_TIMEOUT = 1000;
-    protected static final int LED_SLEEP = 20;
+    protected static final int LED_SLEEP = 50;
 
     protected static WiimoteService wiimoteService;
     protected WiimoteEventMapCycle eventMapCycle;
@@ -41,7 +42,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     static {
         WiimoteDevice.wiimoteService = new WiimoteService();
-        Log.setLevel(0);
+        Log.setLevel(Log.DEBUG);
     }
 
     public WiimoteDevice() {
@@ -160,8 +161,8 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public void feedback(Feedback feedback) {
         if (wiimote != null && active()) {
-            log.debug("Wiimote rumble feedback");
-            wiimote.rumble(RUMBLE);
+            //log.debug("Wiimote rumble feedback");
+            //wiimote.rumble(RUMBLE);
         }
     }
 
@@ -170,8 +171,8 @@ public class WiimoteDevice extends Device implements GestureListener {
         wiimote = wiimoteService.getDevice(this);
         //wiimote.activateContinuous();
         wiimoteDiscovery.stop();
-        //ledWorker.start();
-        sleep(10000);
+        ledWorker.start();
+        //sleep(10000);
     }
 
     /* Listeners */
@@ -193,6 +194,10 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
         gestureDevice.add(event.getGforce());
+    }
+
+    public void onIrEvent(IREvent event) {
+        
     }
 
     public void gestureReceived(GestureEvent event) {
