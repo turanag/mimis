@@ -1,13 +1,11 @@
 package wiiusej.wiiusejevents.physicalevents;
 
 public class BalanceBoardEvent extends ExpansionEvent {
-    protected BalanceBoardButtonsEvent buttonsEvent;
     protected JoystickEvent balanceBoardJoystickEvent;
 
     public BalanceBoardEvent(int id, float topRight, float bottomRight,
             float bottomLeft, float topLeft) {
         super(id);
-        
         System.out.println(String.format("%f %f %f %f", topRight, bottomRight, bottomLeft, topLeft));
         /*balanceBoardJoystickEvent = new JoystickEvent(id, angle,
                 magnitude, max1, max2, min1, min2, center1, center2);*/

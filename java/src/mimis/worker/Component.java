@@ -61,6 +61,7 @@ public abstract class Component extends Listener<Input> {
 
     public void input(Input input) {
         if (input instanceof Task) {
+            log.debug("task " + ((Task) input).getAction());
             task((Task) input);
         } else if (input instanceof Feedback) {
             feedback((Feedback) input);

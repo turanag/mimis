@@ -16,14 +16,20 @@ public abstract class WindowsApplication extends CMDApplication {
     protected String window;
     protected int handle;
 
+    public WindowsApplication(String title, String window) {
+        this(null, title, window);
+    }
+
     public WindowsApplication(String program, String title, String window) {
         super(program, title);
         this.window = window;
         handle = 0;
     }
 
-    public void activate() throws ActivateException {
-        super.activate();
+    protected void activate() throws ActivateException {
+        if (program != null) {
+            super.activate();
+        }
         handle = Native.getHandle(window);
         if (handle < 1) {
             sleep(START_SLEEP);
@@ -36,15 +42,21 @@ public abstract class WindowsApplication extends CMDApplication {
     }
 
     public boolean active() {
-        if (!active) {
+        if (!active || program == null) {
             handle = Native.getHandle(window);
-            system(Command.System.MAXIMIZE);     
+            if (handle > 0 && program == null) {
+                start();
+            }
         }
-        return super.active();
+        return program == null ? handle > 0 : super.active();
     }
 
     protected void deactivate() throws DeactivateException {
-        super.deactivate();
+        if (process == null) {
+            active = false;
+        } else {
+            super.deactivate();
+        }
         close();
     }
 
@@ -62,7 +74,6 @@ public abstract class WindowsApplication extends CMDApplication {
 
     protected int user(int wParam, int lParam) {
         return Native.sendMessage(handle, Windows.WM_USER, wParam, lParam);
-        //return Windows.sendMessage(handle, Windows.WM_USER + wParam, 0, 0);
     }
 
     protected void system(Command.System system) {
@@ -75,7 +86,8 @@ public abstract class WindowsApplication extends CMDApplication {
 
     protected void key(Type type, int code) {
         int scanCode = Native.mapVirtualKey(code, Windows.MAPVK_VK_TO_VSC);
-        Native.postMessage(handle, type.getCode(), code, 1 | (scanCode << 16));
+        Native.postMessage(handle, type.getCode(), code, 1 | (scanCode << 16) | 1 << 30);
+        sleep(200);
     }
 
     protected void key(Type type, char character) {

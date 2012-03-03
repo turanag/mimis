@@ -53,7 +53,7 @@ public class WMPApplication extends WindowsApplication {
                 break;
         }
     }
-    
+
     public void end(Action action) {
         log.trace("WMPApplication end: " + action);
         switch (action) {
@@ -69,7 +69,7 @@ public class WMPApplication extends WindowsApplication {
                 break;
         }
     }
-    
+
     protected class VolumeWorker extends Worker {
         protected int volumeChangeSign;
 

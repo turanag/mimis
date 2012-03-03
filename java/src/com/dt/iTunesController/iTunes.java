@@ -1,6 +1,7 @@
 package com.dt.iTunesController;
 
 import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.DispatchEvents;
 
@@ -17,7 +18,7 @@ public class iTunes {
     ActiveXComponent iTunes;
     iTunesEvents iTunesEvents;
     DispatchEvents dispatchEvents;
-
+   
     /**
      * Initiate iTunes Controller.
      * @return 
@@ -25,7 +26,7 @@ public class iTunes {
     public void connect() {
         iTunes = new ActiveXComponent("iTunes.Application");
     }
-    
+
     /**
      * Add an event handler to the iTunes controller.
      * @param itef The class that will handle the iTunes events.
@@ -530,5 +531,9 @@ public class iTunes {
 
     public void playlistAddCurrentTrack(String name) {
         playlistAddTrack(name, getCurrentTrack());
+    }
+
+    public void release() {
+        ComThread.Release();
     }
 }

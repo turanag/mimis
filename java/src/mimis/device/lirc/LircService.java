@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +65,7 @@ public class LircService extends Worker {
         log.trace("Activate LircService");
         try {
             socket = new Socket(ip, port);
+            socket.setSoTimeout(SLEEP);
 
             inputStream = socket.getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -87,7 +89,7 @@ public class LircService extends Worker {
         return active;
     }
 
-    public synchronized void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         log.trace("Deactivate LircService");
         super.deactivate();
         try {
@@ -114,6 +116,7 @@ public class LircService extends Worker {
             } catch (UnknownButtonException e) {
                 log.error(e);
             }
+        } catch (SocketTimeoutException e) {
         } catch (IOException e) {
             log.error(e);
         }

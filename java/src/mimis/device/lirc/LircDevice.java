@@ -75,6 +75,10 @@ public class LircDevice extends Component implements LircButtonListener, SignalL
     }
 
     public void add(Signal signal, Button button) {
+        add(signal, button, true);
+    }
+
+    public void add(Signal signal, Button button, boolean general) {
         switch (signal) {
             case BEGIN:
                 route(new Press(button));
@@ -84,15 +88,17 @@ public class LircDevice extends Component implements LircButtonListener, SignalL
                 break;
         }
 
-        String string = button.toString();
-        for (Button colorButton : ColorButton.values()) {
-            if (colorButton.toString().equals(string)) {
-                add(signal, ColorButton.valueOf(string));
+        if (general) {
+            String string = button.toString();
+            for (Button colorButton : ColorButton.values()) {
+                if (colorButton.toString().equals(string)) {
+                    add(signal, ColorButton.valueOf(string), false);
+                }
             }
-        }
-        for (Button numberButton : NumberButton.values()) {
-            if (numberButton.toString().equals(string)) {
-                add(signal, ColorButton.valueOf(string));
+            for (Button numberButton : NumberButton.values()) {
+                if (numberButton.toString().equals(string)) {
+                    add(signal, NumberButton.valueOf(string), false);
+                }
             }
         }
     }    

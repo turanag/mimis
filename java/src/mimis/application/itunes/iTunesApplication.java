@@ -2,7 +2,6 @@ package mimis.application.itunes;
 
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.util.Native;
 import mimis.value.Action;
 import mimis.worker.Component;
 import mimis.worker.Worker;
@@ -14,8 +13,7 @@ import com.dt.iTunesController.iTunesEventsInterface;
 
 public class iTunesApplication extends Component implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
-    protected static final String PROGRAM = "iTunes.exe";
-    protected static final boolean QUIT = false;
+    protected static final boolean EVENTS = false;
 
     protected static final int VOLUME_CHANGE_RATE = 5;
     protected static final int VOLUME_SLEEP = 100;
@@ -24,35 +22,29 @@ public class iTunesApplication extends Component implements iTunesEventsInterfac
 
     protected iTunes iTunes;
     protected VolumeWorker volumeWorker;
-    protected boolean handle;
-    protected boolean quiting;
+    protected boolean events, handle;
 
     public iTunesApplication() {
-        super(TITLE);
-        iTunes = new iTunes();
-        volumeWorker = new VolumeWorker();
-        handle = quiting = false;
+        this(EVENTS);
     }
 
-    protected void activate() throws ActivateException {
-        synchronized (iTunes) {
-            iTunes.connect();
-            if (!handle) {
-                iTunes.addEventHandler(this);
-                handle = true;
-            }
+    public iTunesApplication(boolean events) {
+        super(TITLE);
+        this.events = events;
+        volumeWorker = new VolumeWorker();
+        handle = false;
+    }
+
+    protected synchronized void activate() throws ActivateException {
+        iTunes = new iTunes();
+        iTunes.connect();
+        if (events) {
+            iTunes.addEventHandler(this);
         }
         super.activate();
     }
 
-    public boolean active() {
-        if (!active && !quiting && Native.isRunning(PROGRAM)) {
-            try {
-                activate();
-            } catch (ActivateException e) {
-                log.error(e);
-            }
-        }
+    public synchronized boolean active() {
         try {
             iTunes.getMute();
             active = true;
@@ -62,20 +54,27 @@ public class iTunesApplication extends Component implements iTunesEventsInterfac
         return active;
     }
 
-    protected void deactivate() throws DeactivateException  {
-        super.deactivate();
-        volumeWorker.stop();
-        try {
-            if (QUIT) {
-                quiting = true;
-                synchronized (iTunes) {
-                    iTunes.quit();
-                }
-                quiting = false;
+    protected synchronized void deactivate() throws DeactivateException  {
+        if (events) {
+            exit();
+        } else {
+            super.deactivate();
+            volumeWorker.stop();
+            try {
+                iTunes.release();
+            } catch (Exception e) {
+                log.error(e);
+                throw new DeactivateException();
             }
-        } catch (Exception e) {
-            throw new DeactivateException();
         }
+    }
+
+    public synchronized void exit() {
+        try {
+            iTunes.quit();
+        } catch (Exception e) {}
+        volumeWorker.exit();
+        super.exit();
     }
 
     protected void begin(Action action) {

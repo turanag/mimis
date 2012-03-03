@@ -3,6 +3,7 @@ package mimis.application.cmd.windows.winamp;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
+import mimis.value.Command;
 import mimis.worker.Worker;
 
 public class WinampApplication extends WindowsApplication {
@@ -48,7 +49,7 @@ public class WinampApplication extends WindowsApplication {
         seekWorker = new SeekWorker();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         volumeWorker.stop();
         seekWorker.stop();
@@ -82,6 +83,7 @@ public class WinampApplication extends WindowsApplication {
         log.trace("WinampApplication end: " + action);
         switch (action) {
             case PLAY:
+                log.debug("play");
                 switch (user(0, IPC_ISPLAYING)) {
                     case STATUS_STOPPED:
                         command(WINAMP_BUTTON2);
@@ -127,6 +129,7 @@ public class WinampApplication extends WindowsApplication {
                 command(WINAMP_FILE_QUIT);
                 break;
             case VISUALISER:
+                system(Command.System.MAXIMIZE);
                 command(WINAMP_VISPLUGIN);
                 break;
         }

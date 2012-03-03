@@ -23,7 +23,7 @@ public abstract class CMDApplication extends Component {
         this.title = title;
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         super.activate();
         String path = getPath();
         if (path == null) {
@@ -40,12 +40,16 @@ public abstract class CMDApplication extends Component {
     }
 
     public boolean active() {
-        return active = Native.isRunning(program);
+        boolean running = Native.isRunning(program);
+        if (!active && running) {
+            active = true;
+            start();
+        }
+        return active = running;
     }
 
     protected synchronized void deactivate() throws DeactivateException  {
         super.deactivate();
-        log.debug(process);
         if (process != null) {
             process.destroy();
         }

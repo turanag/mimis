@@ -10,10 +10,6 @@ import mimis.worker.Component;
 public class RobotApplication extends Component {
     protected Robot robot;
 
-    public RobotApplication(String title) {
-        super(title);
-    }
-
     public void activate() throws ActivateException {
         try {
             robot = new Robot();
@@ -24,7 +20,7 @@ public class RobotApplication extends Component {
         }
         super.activate();
     }
-    
+
     public void press(Key key) {
         robot.keyPress(key.getCode());
     }

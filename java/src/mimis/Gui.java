@@ -5,10 +5,7 @@ import java.awt.TextArea;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import mimis.exception.worker.ActivateException;
@@ -41,7 +38,7 @@ public class Gui extends Component {
         createFrame(buttonManagerArray);
     }
 
-    public void activate() throws ActivateException {
+    protected void activate() throws ActivateException {
         listen(Feedback.class);
         super.activate();
     }
@@ -67,12 +64,7 @@ public class Gui extends Component {
         JPanel controlPanel = new JPanel(new GridLayout(1, 0));
         for (ButtonManager buttonManager  : buttonManagerArray) {
             if (buttonManager.count() > 0) {
-                JPanel panel = new JPanel(new GridLayout(0, 1));
-                panel.add(new JLabel(buttonManager.getTitle(), SwingConstants.CENTER));
-                for (JToggleButton button : buttonManager.getButtons()) {
-                    panel.add(button);
-                }                
-                controlPanel.add(panel);
+                controlPanel.add(buttonManager.createPanel());
             }
         }
         return controlPanel;

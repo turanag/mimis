@@ -9,9 +9,11 @@ import org.apache.commons.logging.LogFactory;
 public abstract class Worker implements Runnable {
     protected Log log = LogFactory.getLog(getClass());
 
-    protected static final boolean THREAD = true;
+    protected static final boolean THREAD = false;
+    protected static final boolean INTERRUPT = false;
     protected static final int SLEEP = 100;
 
+    protected boolean interrupt;
     protected boolean run = false;
     protected boolean active = false;
     protected boolean activate = false;
@@ -24,11 +26,11 @@ public abstract class Worker implements Runnable {
         if (!run) {
             run = true;
             if (thread) {
-                log.debug("Start thread");
-                new Thread(this, getClass().getName()).start();
-            } else {
                 log.debug("Run directly");
                 run();
+            } else {
+                log.debug("Start thread");
+                new Thread(this, getClass().getName()).start();
             }
         } else {
             notifyAll();

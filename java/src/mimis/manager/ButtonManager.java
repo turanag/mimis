@@ -1,10 +1,14 @@
 package mimis.manager;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.border.TitledBorder;
 
 import mimis.worker.Worker;
 
@@ -19,7 +23,7 @@ public class ButtonManager extends Manager {
     }
 
     public ButtonManager(String title, Worker... workerArray) {
-        this.workerArray = workerArray;
+        super(workerArray);
         this.title = title;
         createButtons();
     }
@@ -27,22 +31,47 @@ public class ButtonManager extends Manager {
     public String getTitle() {
         return title;
     }
-    
-    public JToggleButton[] getButtons() {
-        return buttonMap.values().toArray(new JToggleButton[]{});
+
+    public WorkerButton[] getButtons() {
+        return buttonMap.values().toArray(new WorkerButton[]{});
     }
 
     protected void createButtons() {
         buttonMap = new HashMap<Worker, WorkerButton>();
-        for (Worker worker : workerArray) {
+        for (Worker worker : workerList) {
             WorkerButton button = new WorkerButton(worker);
             buttonMap.put(worker, button);
         }
     }
 
+    public JPanel createPanel() {        
+        /* Initialize components */
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        JPanel panel = new JPanel(gridBagLayout);
+
+        /* Set border */
+        TitledBorder border = new TitledBorder(getTitle());
+        border.setTitleJustification(TitledBorder.CENTER);
+        panel.setBorder(border);
+
+        /* Initialize constraints */
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+    
+        /* Add buttons */
+        for (JToggleButton button : getButtons()) {
+            gridBagLayout.setConstraints(button, gridBagConstraints);
+            panel.add(button);
+        }
+        return panel;
+    }
+
     protected void work() {
         long before = Calendar.getInstance().getTimeInMillis();
-        for (Worker worker : workerArray) {
+        for (Worker worker : workerList) {
             buttonMap.get(worker).setPressed(worker.active());
         }
         long after = Calendar.getInstance().getTimeInMillis();

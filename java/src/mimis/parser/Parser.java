@@ -62,7 +62,7 @@ public class Parser extends Component {
     }
 
     public void input(State state) {
-        log.trace("input(State)");
+        //log.trace("input(State)");
         Component component = state.getComponent();
         if (!activeMap.containsKey(component)) {
             activeMap.put(component, new ArrayList<Active>());

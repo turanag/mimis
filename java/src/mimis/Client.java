@@ -1,23 +1,24 @@
 package mimis;
 
+import mimis.exception.worker.ActivateException;
 import mimis.util.swing.Dialog;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-public class Client {
-    protected Log log = LogFactory.getLog(getClass());
-
+public class Client extends Main {
     public static final String IP = "127.0.0.1";
     public static final int PORT = 6789;
 
     public Client(String ip, int port) {
+        super();
         //eventRouter = new GlobalRouter(ip, port);
+    }
+
+    public void activate() throws ActivateException {
+        super.activate();
     }
 
     public static void main(String[] args) {
         String ip = Dialog.question("Server IP:", IP);
         int port = Integer.valueOf(Dialog.question("Server Port:", PORT));
-        //new Client(ip, port).start();
+        new Client(ip, port).start();
     }
 }

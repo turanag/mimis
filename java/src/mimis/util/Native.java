@@ -8,28 +8,6 @@ public class Native {
         System.loadLibrary("mimis");
     }
 
-    public void start() {
-        int handle = getHandle("Winamp v1.x");
-        System.out.println(handle);
-        //sendMessage(handle, Windows.WM_CLOSE, 0, 0);
-        /*
-        while (true) {//Winamp v1.x
-            System.out.println(isRunning("winamp.exe"));
-            //System.out.println(new Native().terminate("winamp.exe"));
-            //System.out.println(new Native().running("wmplayer.exe"));
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }*/
-    }
-
-    public static void main(String[] args) {
-        new Native().start();
-    }
-
     public native static int getHandle(String window);
 
     public static int sendMessage(int handle, Windows windows, int wParam, int lParam) {
