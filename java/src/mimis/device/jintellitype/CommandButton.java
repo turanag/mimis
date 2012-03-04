@@ -1,7 +1,7 @@
 package mimis.device.jintellitype;
 
-import mimis.Button;
 import mimis.exception.button.UnknownButtonException;
+import mimis.input.Button;
 
 import com.melloware.jintellitype.JIntellitype;
 

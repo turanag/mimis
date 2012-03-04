@@ -1,6 +1,6 @@
 package mimis.input.state;
 
-import mimis.Button;
+import mimis.input.Button;
 
 public class Release extends State {
     protected static final long serialVersionUID = 1L;

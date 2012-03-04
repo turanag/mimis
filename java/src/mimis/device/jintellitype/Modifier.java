@@ -1,6 +1,6 @@
 package mimis.device.jintellitype;
 
-import mimis.Button;
+import mimis.input.Button;
 
 import com.melloware.jintellitype.JIntellitype;
 

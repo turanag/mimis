@@ -1,4 +1,4 @@
-package mimis;
+package mimis.input;
 
 import mimis.input.Input;
 

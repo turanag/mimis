@@ -1,6 +1,6 @@
 package mimis.input.state;
 
-import mimis.Button;
+import mimis.input.Button;
 import mimis.input.Input;
 import mimis.input.state.State;
 import mimis.worker.Component;

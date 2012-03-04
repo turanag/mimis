@@ -1,6 +1,5 @@
 package mimis.device.javainput;
 
-import mimis.Button;
 import mimis.device.Device;
 import mimis.exception.ButtonException;
 import mimis.exception.button.UnknownButtonException;
@@ -8,6 +7,7 @@ import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.input.Button;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
 import mimis.worker.Component;

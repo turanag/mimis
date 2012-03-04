@@ -1,6 +1,6 @@
 package mimis.device.lirc;
 
-import mimis.Button;
+import mimis.input.Button;
 
 public interface LircButton extends Button {
     public static final String NAME = null;

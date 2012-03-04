@@ -2,11 +2,10 @@ package mimis.device.jintellitype;
 
 import java.util.ArrayList;
 
-import mimis.Button;
+import mimis.input.Button;
 import mimis.value.Key;
 
 import com.melloware.jintellitype.JIntellitype;
-
 
 public class Hotkey implements Button {
     protected static final long serialVersionUID = 1L;

@@ -1,7 +1,7 @@
 package mimis.device.javainput.rumblepad;
 
-import mimis.Button;
 import mimis.exception.button.UnknownButtonException;
+import mimis.input.Button;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 
 public enum RumblepadButton implements Button {

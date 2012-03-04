@@ -2,7 +2,7 @@ package mimis.state;
 
 import java.util.HashMap;
 
-import mimis.Button;
+import mimis.input.Button;
 import mimis.input.Input;
 import mimis.input.Task;
 import mimis.input.state.Press;

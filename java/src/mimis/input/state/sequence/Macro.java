@@ -2,8 +2,8 @@ package mimis.input.state.sequence;
 
 import java.util.ArrayList;
 
-import mimis.Button;
 import mimis.exception.macro.StateOrderException;
+import mimis.input.Button;
 import mimis.input.state.Hold;
 import mimis.input.state.Press;
 import mimis.input.state.Release;

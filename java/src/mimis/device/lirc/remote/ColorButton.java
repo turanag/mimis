@@ -1,6 +1,6 @@
 package mimis.device.lirc.remote;
 
-import mimis.Button;
+import mimis.input.Button;
 
 public enum ColorButton implements Button {
     RED, GREEN, YELLOW, BLUE;

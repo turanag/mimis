@@ -1,7 +1,7 @@
 package mimis.device.wiimote;
 
-import mimis.Button;
 import mimis.exception.button.UnknownButtonException;
+import mimis.input.Button;
 
 public enum WiimoteButton implements Button {
     TWO   (0x0001),

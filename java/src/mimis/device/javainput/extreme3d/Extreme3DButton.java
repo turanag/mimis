@@ -1,7 +1,7 @@
 package mimis.device.javainput.extreme3d;
 
-import mimis.Button;
 import mimis.exception.button.UnknownButtonException;
+import mimis.input.Button;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 
 public enum Extreme3DButton implements Button {

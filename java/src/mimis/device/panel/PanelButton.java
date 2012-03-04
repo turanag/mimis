@@ -1,6 +1,6 @@
 package mimis.device.panel;
 
-import mimis.Button;
+import mimis.input.Button;
 
 public enum PanelButton implements Button {
     PREVIOUS,
