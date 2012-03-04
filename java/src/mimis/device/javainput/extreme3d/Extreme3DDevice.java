@@ -6,6 +6,7 @@ import mimis.device.javainput.JavaInputDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.worker.ActivateException;
+import mimis.value.Action;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
@@ -22,9 +23,9 @@ public class Extreme3DDevice extends JavaInputDevice {
 
     protected void activate() throws ActivateException {
         super.activate();
-        add(taskMapCycle.mimis);
-        add(taskMapCycle.player);
-        add(taskMapCycle.like);
+        parser(Action.ADD, taskMapCycle.mimis);
+        parser(Action.ADD, taskMapCycle.player);
+        parser(Action.ADD, taskMapCycle.like);
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

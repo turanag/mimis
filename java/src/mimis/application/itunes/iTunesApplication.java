@@ -1,5 +1,6 @@
 package mimis.application.itunes;
 
+import mimis.application.Application;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
@@ -11,7 +12,7 @@ import com.dt.iTunesController.ITTrack;
 import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
-public class iTunesApplication extends Component implements iTunesEventsInterface {
+public class iTunesApplication extends Component implements Application, iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
     protected static final boolean EVENTS = false;
 
@@ -22,7 +23,7 @@ public class iTunesApplication extends Component implements iTunesEventsInterfac
 
     protected iTunes iTunes;
     protected VolumeWorker volumeWorker;
-    protected boolean events, handle;
+    protected boolean events;
 
     public iTunesApplication() {
         this(EVENTS);
@@ -32,7 +33,6 @@ public class iTunesApplication extends Component implements iTunesEventsInterfac
         super(TITLE);
         this.events = events;
         volumeWorker = new VolumeWorker();
-        handle = false;
     }
 
     protected synchronized void activate() throws ActivateException {

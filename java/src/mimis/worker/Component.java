@@ -4,7 +4,9 @@ import mimis.input.Feedback;
 import mimis.input.Input;
 import mimis.input.Task;
 import mimis.input.state.State;
+import mimis.parser.ParserInput;
 import mimis.router.Router;
+import mimis.state.TaskMap;
 import mimis.value.Action;
 
 public abstract class Component extends Listener<Input> {
@@ -100,4 +102,8 @@ public abstract class Component extends Listener<Input> {
     protected void action(Action action) {}
     protected void begin(Action action) {}
     protected void end(Action action) {}
+
+    protected void parser(Action action, TaskMap taskMap) {
+        route(new ParserInput(action, taskMap));
+    }
 }

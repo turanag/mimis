@@ -1,6 +1,8 @@
 package mimis.device.lirc;
 
 import mimis.Button;
+import mimis.application.cmd.CMDApplication;
+import mimis.device.Device;
 import mimis.device.lirc.button.ColorButton;
 import mimis.device.lirc.button.NumberButton;
 import mimis.device.lirc.remote.DenonRC176Button;
@@ -10,24 +12,22 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
-import mimis.parser.ParserInput;
 import mimis.util.Multiplexer;
 import mimis.util.Native;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Action;
 import mimis.value.Signal;
-import mimis.worker.Component;
 
-public class LircDevice extends Component implements LircButtonListener, SignalListener<Button> {
-    protected static final String TITLE = "Lirc";
+public class LircDevice extends CMDApplication implements Device, LircButtonListener, SignalListener<Button> {
     protected final static String PROGRAM = "winlirc.exe";
+    protected static final String TITLE = "Lirc";
 
     protected Multiplexer<Button> multiplexer;
     protected LircService lircService;
     protected LircTaskMapCycle taskMapCycle;
 
     public LircDevice() {
-        super(TITLE);
+        super(PROGRAM, TITLE);
         multiplexer = new Multiplexer<Button>(this);
         lircService = new LircService();
         lircService.put(PhiliphsRCLE011Button.NAME, PhiliphsRCLE011Button.values());
@@ -38,19 +38,22 @@ public class LircDevice extends Component implements LircButtonListener, SignalL
     }
 
     protected void activate() throws ActivateException {
-        lircService.start();
-        route(new ParserInput(Action.ADD, taskMapCycle.denonRC176));
-        route(new ParserInput(Action.ADD, taskMapCycle.philiphsRCLE011));
-        route(new ParserInput(Action.ADD, taskMapCycle.samsungBN5901015A));
         super.activate();
+        lircService.start();
+        parser(Action.ADD, taskMapCycle.denonRC176);
+        parser(Action.ADD, taskMapCycle.philiphsRCLE011);
+        parser(Action.ADD, taskMapCycle.samsungBN5901015A);
     }
 
     public boolean active() {
-        if (active && !lircService.active()) {
-            stop();
-        } else if (!active) {
-            if (Native.isRunning(PROGRAM)) {
-                start();
+        if (detect) {
+            if (active && !lircService.active()) {
+                stop();
+            } else if (!active) {
+                running = Native.isRunning(PROGRAM);
+                if (running) {
+                    start();
+                }
             }
         }
         return active;

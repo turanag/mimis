@@ -1,6 +1,7 @@
 package mimis.device.wiimote;
 
 import mimis.Button;
+import mimis.device.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
@@ -9,7 +10,6 @@ import mimis.exception.worker.DeactivateException;
 import mimis.input.Feedback;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
-import mimis.parser.ParserInput;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.worker.Component;
@@ -24,7 +24,7 @@ import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
-public class WiimoteDevice extends Component implements GestureListener {
+public class WiimoteDevice extends Component implements Device, GestureListener {
     protected static final String TITLE = "Wiimote";
     protected static final int RUMBLE = 50;
     protected static final int CONNECTED_TIMEOUT = 500;
@@ -58,7 +58,7 @@ public class WiimoteDevice extends Component implements GestureListener {
 
     /* Worker */
     protected void activate() throws ActivateException {
-        add(taskMapCycle.player);
+        parser(Action.ADD, taskMapCycle.player);
         wiimote = null;
         try {
             connect();
@@ -118,15 +118,15 @@ public class WiimoteDevice extends Component implements GestureListener {
         switch (action) {
             case SHIFT:
                 log.debug("Shift");
-                route(new ParserInput(Action.RESET, taskMapCycle.player));
-                add(taskMapCycle.mimis);
-                add(taskMapCycle.like);
+                parser(Action.RESET, taskMapCycle.player);
+                parser(Action.ADD, taskMapCycle.mimis);
+                parser(Action.ADD, taskMapCycle.like);
                 break;
             case UNSHIFT:
                 log.debug("Unshift");
-                route(new ParserInput(Action.RESET, taskMapCycle.mimis));
-                route(new ParserInput(Action.RESET, taskMapCycle.like));
-                add(taskMapCycle.player);
+                parser(Action.RESET, taskMapCycle.mimis);
+                parser(Action.RESET, taskMapCycle.like);
+                parser(Action.ADD, taskMapCycle.player);
                 break;
             case TRAIN:
                 log.debug("Gesture train");
@@ -185,11 +185,11 @@ public class WiimoteDevice extends Component implements GestureListener {
             if (pressed != 0 && released == 0) {
                 Button button = WiimoteButton.create(pressed);
                 log.trace("Press: " + button);
-                add(new Press(button));
+                route(new Press(button));
             } else if (pressed == 0 && released != 0) {
                 Button button = WiimoteButton.create(released);
                 log.trace("Release: " + button);
-                add(new Release(button));
+                route(new Release(button));
             }
         } catch (UnknownButtonException e) {}
     }

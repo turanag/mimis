@@ -16,39 +16,47 @@ public abstract class CMDApplication extends Component {
     protected String program;
     protected String title;
     protected Process process;
+    protected boolean detect, running;
 
     public CMDApplication(String program, String title) {
         super(title);
         this.program = program;
         this.title = title;
+        detect = true;
     }
 
     protected void activate() throws ActivateException {
+        detect = true;
+        if (!running) {
+            String path = getPath();
+            if (path == null) {
+                throw new ActivateException();
+            }
+            try {
+                String command = path.startsWith("\"") ? path : String.format("\"%s\"", path);
+                command = replaceVariables(command);
+                process = Runtime.getRuntime().exec(command);
+            } catch (IOException e) {
+                log.error(e);
+                throw new ActivateException();
+            }
+        }
         super.activate();
-        String path = getPath();
-        if (path == null) {
-            throw new ActivateException();
-        }
-        try {
-            String command = path.startsWith("\"") ?  path : String.format("\"%s\"", path);
-            command = replaceVariables(command);
-            process = Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            log.error(e);
-            throw new ActivateException();
-        }
     }
 
     public boolean active() {
-        boolean running = Native.isRunning(program);
-        if (!active && running) {
-            active = true;
-            start();
+        if (detect) {
+            running = Native.isRunning(program);
+            if (!active && running) {
+                active = true;
+                start();
+            }
         }
-        return active = running;
+        return active;
     }
 
-    protected synchronized void deactivate() throws DeactivateException  {
+    protected synchronized void deactivate() throws DeactivateException {
+        detect = false;
         super.deactivate();
         if (process != null) {
             process.destroy();

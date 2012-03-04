@@ -2,18 +2,20 @@ package mimis.device.jintellitype;
 
 import java.util.ArrayList;
 
+import mimis.device.Device;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
+import mimis.value.Action;
 import mimis.worker.Component;
 
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
-public class JIntellitypeDevice extends Component implements HotkeyListener, IntellitypeListener {
+public class JIntellitypeDevice extends Component implements Device, HotkeyListener, IntellitypeListener {
     protected static final String TITLE = "Keyboard";
 
     protected JIntellitypeTaskMapCycle taskMapCycle;
@@ -32,16 +34,16 @@ public class JIntellitypeDevice extends Component implements HotkeyListener, Int
         super.activate();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
-        add(taskMapCycle.mimis);
-        add(taskMapCycle.player);
+        parser(Action.ADD, taskMapCycle.mimis);
+        parser(Action.ADD, taskMapCycle.player);
     }
 
     public void onIntellitype(int command) {
         if (active) {
             try {
             CommandButton commandButton = CommandButton.create(command);
-            add(new Press(commandButton));
-            add(new Release(commandButton));
+            route(new Press(commandButton));
+            route(new Release(commandButton));
             } catch (UnknownButtonException e) {
                 log.error(e);
             }
@@ -51,8 +53,8 @@ public class JIntellitypeDevice extends Component implements HotkeyListener, Int
     public void onHotKey(int id) {
         if (active) {
             Hotkey hotkey = hotkeyList.get(id);
-            add(new Press(hotkey));
-            add(new Release(hotkey));
+            route(new Press(hotkey));
+            route(new Release(hotkey));
         }
     }
 

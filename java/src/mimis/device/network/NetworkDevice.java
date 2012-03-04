@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import mimis.device.Device;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.Feedback;
@@ -22,7 +23,7 @@ import mimis.worker.Worker;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class NetworkDevice extends Component {
+public class NetworkDevice extends Component implements Device {
     protected static final String TITLE = "Network";
     public static final int PORT = 6789;
 

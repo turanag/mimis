@@ -10,7 +10,6 @@ public abstract class Worker implements Runnable {
     protected Log log = LogFactory.getLog(getClass());
 
     protected static final boolean THREAD = false;
-    protected static final boolean INTERRUPT = false;
     protected static final int SLEEP = 100;
 
     protected boolean interrupt;

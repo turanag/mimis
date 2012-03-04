@@ -1,14 +1,14 @@
 package mimis.device.panel;
 
+import mimis.device.Device;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
-import mimis.parser.ParserInput;
 import mimis.value.Action;
 import mimis.worker.Component;
 
-public class PanelDevice extends Component {
+public class PanelDevice extends Component implements Device {
     protected static final String TITLE = "Panel";
     protected Panel panel;
     protected PanelTaskMapCycle taskMapCycle;
@@ -20,7 +20,7 @@ public class PanelDevice extends Component {
 
     protected void activate() throws ActivateException {
         panel = new Panel(this);
-        route(new ParserInput(Action.ADD, taskMapCycle.player));
+        parser(Action.ADD, taskMapCycle.player);
         super.activate();
     }
 

@@ -1,6 +1,7 @@
 package mimis.device.javainput;
 
 import mimis.Button;
+import mimis.device.Device;
 import mimis.exception.ButtonException;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
@@ -16,7 +17,7 @@ import de.hardcode.jxinput.event.JXInputAxisEvent;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
-public abstract class JavaInputDevice extends Component {
+public abstract class JavaInputDevice extends Component implements Device {
     protected String name;
 
     public JavaInputDevice(String title, String name) {
@@ -50,9 +51,9 @@ public abstract class JavaInputDevice extends Component {
     public void processEvent(JXInputButtonEvent event) throws ButtonException {
         Button button = getButton(event);
         if (event.getButton().getState()) {
-            add(new Press(button));
+            route(new Press(button));
         } else {
-            add(new Release(button));
+            route(new Release(button));
         }
     }
 
@@ -60,10 +61,10 @@ public abstract class JavaInputDevice extends Component {
         Button button = getButton(event);
         if (event.getDirectional().isCentered()) {
             if (previousDirectionalButton != null) {
-                add(new Release(previousDirectionalButton));
+                route(new Release(previousDirectionalButton));
             }
         } else {
-            add(new Press(button));
+            route(new Press(button));
             previousDirectionalButton = button;
         }
     }

@@ -10,7 +10,7 @@ import mimis.value.Target;
 public class WiimoteTaskMapCycle extends TaskMapCycle {
     protected static final long serialVersionUID = 1L;
 
-    public TaskMap mimis, player, gesture, like, shift;
+    public TaskMap mimis, player, gesture, like;
 
     public WiimoteTaskMapCycle() {
         /* Mimis */
