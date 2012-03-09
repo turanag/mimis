@@ -16,12 +16,15 @@
  */
 package wiiusej.wiiusejevents;
 
+import java.io.Serializable;
+
 /**
  * Abstract mother class representing an event with a wiimote id.
  * 
  * @author guiguito
  */
-public abstract class GenericEvent {
+public abstract class GenericEvent implements Serializable {
+    protected static final long serialVersionUID = 1L;
 	
 	/* ID */
 	private int wiimoteId = -1;

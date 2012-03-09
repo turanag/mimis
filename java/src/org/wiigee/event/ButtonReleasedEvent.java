@@ -34,16 +34,15 @@ import org.wiigee.device.Device;
  * @author Benjamin 'BePo' Poppinga
  */
 public class ButtonReleasedEvent extends ActionStopEvent {
+    int button;
 
-        int button;
+    public ButtonReleasedEvent(Device source, int button) {
+        super(source);
+        this.button = button;
+    }
 
-	public ButtonReleasedEvent(Device source, int button) {
-		super(source);
-                this.button = button;
-	}
+    public int getButton() {
+        return this.button;
+    }
 
-        public int getButton() {
-            return this.button;
-        }
-	
 }

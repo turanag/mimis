@@ -20,10 +20,10 @@ public class WiimoteTaskMapCycle extends TaskMapCycle {
 
         /* Gesture */
         gesture = new TaskMap();
-        gesture.add(WiimoteButton.A, new Task(Action.TRAIN));
-        gesture.add(WiimoteButton.B, new Task(Action.SAVE));
-        gesture.add(WiimoteButton.DOWN, new Task(Action.LOAD));
-        gesture.add(WiimoteButton.HOME, new Task(Action.RECOGNIZE));
+        gesture.add(WiimoteButton.A, new Task(Action.TRAIN, Target.SELF));
+        gesture.add(WiimoteButton.B, new Task(Action.SAVE, Target.SELF));
+        gesture.add(WiimoteButton.DOWN, new Task(Action.LOAD, Target.SELF));
+        gesture.add(WiimoteButton.HOME, new Task(Action.RECOGNIZE, Target.SELF));
         add(gesture);
 
         /* Player */

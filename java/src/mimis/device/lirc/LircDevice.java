@@ -2,14 +2,14 @@ package mimis.device.lirc;
 
 import mimis.application.cmd.CMDApplication;
 import mimis.device.Device;
-import mimis.device.lirc.button.ColorButton;
-import mimis.device.lirc.button.NumberButton;
 import mimis.device.lirc.remote.DenonRC176Button;
 import mimis.device.lirc.remote.PhiliphsRCLE011Button;
 import mimis.device.lirc.remote.SamsungBN5901015AButton;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.Button;
+import mimis.input.button.ColorButton;
+import mimis.input.button.NumberButton;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
 import mimis.util.Multiplexer;

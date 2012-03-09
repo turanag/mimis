@@ -173,7 +173,7 @@ public class Device {
         this.processingunit.saveGesture(id, filename);
     }
 
-    // ###### Event-Methoden
+    // ###### Event-Methods
     /** Fires an acceleration event.
      * @param vector Consists of three values:
      * acceleration on X, Y and Z axis.

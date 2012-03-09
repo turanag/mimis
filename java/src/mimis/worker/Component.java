@@ -1,8 +1,11 @@
 package mimis.worker;
 
+import mimis.input.Button;
 import mimis.input.Feedback;
 import mimis.input.Input;
 import mimis.input.Task;
+import mimis.input.state.Press;
+import mimis.input.state.Release;
 import mimis.input.state.State;
 import mimis.parser.ParserInput;
 import mimis.router.Router;
@@ -62,11 +65,21 @@ public abstract class Component extends Listener<Input> {
     }
 
     public void input(Input input) {
-        if (input instanceof Task) {
-            log.debug("task " + ((Task) input).getAction());
+        if (input instanceof State) {
+            state((State) input);
+        } else if (input instanceof Task) {
             task((Task) input);
         } else if (input instanceof Feedback) {
             feedback((Feedback) input);
+        }
+    }
+
+    protected void state(State state) {
+        Button button = state.getButton();
+        if (state instanceof Press) {
+            press(button);
+        } else if (state instanceof Release) {
+            release(button);
         }
     }
 
@@ -98,6 +111,8 @@ public abstract class Component extends Listener<Input> {
         }
     }
 
+    protected void press(Button button) {}
+    protected void release(Button button) {}
     protected void feedback(Feedback feedback) {}
     protected void action(Action action) {}
     protected void begin(Action action) {}

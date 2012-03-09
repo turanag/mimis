@@ -16,12 +16,15 @@
  */
 package wiiusej.values;
 
+import java.io.Serializable;
+
 /**
  * Class that represents the orientation of the wiimote.
  * 
  * @author guiguito
  */
-public class Orientation {
+public class Orientation implements Serializable {
+    protected static final long serialVersionUID = 1L;
 
 	private float roll;
 	private float pitch;

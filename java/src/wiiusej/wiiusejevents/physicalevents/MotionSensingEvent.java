@@ -27,8 +27,9 @@ import wiiusej.wiiusejevents.GenericEvent;
  * @author guiguito
  */
 public class MotionSensingEvent extends GenericEvent {
+    protected static final long serialVersionUID = 1L;
 
-	/* Motion Sensing */
+    /* Motion Sensing */
 	private Orientation orientation;
 	private GForce gforce;
 	private RawAcceleration acceleration;

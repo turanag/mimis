@@ -1,4 +1,4 @@
-package mimis.device.lirc.button;
+package mimis.input.button;
 
 import mimis.input.Button;
 

@@ -16,12 +16,15 @@
  */
 package wiiusej.values;
 
+import java.io.Serializable;
+
 /**
  * Represents raw acceleration on each axis.
  * 
  * @author guiguito
  */
-public class RawAcceleration {
+public class RawAcceleration implements Serializable {
+    protected static final long serialVersionUID = 1L;
 
 	private short x;
 	private short y;

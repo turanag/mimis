@@ -2,6 +2,7 @@ package mimis.device.wiimote;
 
 import mimis.device.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
+import mimis.device.wiimote.motion.MotionDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
@@ -12,6 +13,7 @@ import mimis.input.state.Press;
 import mimis.input.state.Release;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
+import mimis.value.Signal;
 import mimis.worker.Component;
 import mimis.worker.Worker;
 
@@ -37,6 +39,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     protected Wiimote wiimote;
     protected boolean connected;
     protected GestureDevice gestureDevice;
+    protected MotionDevice motionDevice;
     protected int gestureId;
     protected LedWorker ledWorker;
     protected boolean disconnect;
@@ -52,12 +55,15 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         wiimoteDiscovery = new WiimoteDiscovery(this);
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
+        motionDevice = new MotionDevice(this);
         gestureId = 0;
         ledWorker = new LedWorker();
     }
 
     /* Worker */
     protected void activate() throws ActivateException {
+        motionDevice.setRouter(router);
+        motionDevice.start();
         parser(Action.ADD, taskMapCycle.player);
         wiimote = null;
         try {
@@ -93,6 +99,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         super.deactivate();
         ledWorker.stop();
         wiimoteDiscovery.stop();
+        motionDevice.stop();
         if (disconnect) {
             if (wiimote != null) {
                 wiimote.disconnect();
@@ -111,6 +118,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         }
         wiimoteService.exit();
         wiimoteDiscovery.exit();
+        motionDevice.exit();
     }
 
     /* Events */
@@ -128,35 +136,46 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                 parser(Action.RESET, taskMapCycle.like);
                 parser(Action.ADD, taskMapCycle.player);
                 break;
+            case RECOGNIZE:
+                log.debug("Gesture recognize press");
+                gestureDevice.recognize(Signal.BEGIN);
+                break;
             case TRAIN:
-                log.debug("Gesture train");
-                gestureDevice.train();
+                log.debug("Gesture train press");
+                gestureDevice.train(Signal.BEGIN);
+                break;
+            case CLOSE:
+                log.debug("Gesture close press");
+                gestureDevice.close(Signal.BEGIN);
                 break;
             case SAVE:
                 log.debug("Gesture save");
-                gestureDevice.close();
-                gestureDevice.saveGesture(gestureId, "C:\\gesture-" + gestureId);
+                gestureDevice.close(Signal.END);
+                gestureDevice.saveGesture(gestureId, "tmp/gesture #" + gestureId);
                 ++gestureId;
                 break;
             case LOAD:
                 log.debug("Gesture load");
                 for (int i = 0; i < gestureId; ++i) {
-                    gestureDevice.loadGesture("C:\\gesture-" + i);
+                    gestureDevice.loadGesture("tmp/gesture #" + gestureId);
                 }
-                break;
-            case RECOGNIZE:
-                log.debug("Gesture recognize");
-                gestureDevice.recognize();
                 break;
         }
     }
 
     public void end(Action action) {
         switch (action) {
-            case TRAIN:
             case RECOGNIZE:
-                log.debug("Gesture stop");
-                gestureDevice.stop();
+                log.debug("Gesture recognize release");
+                gestureDevice.recognize(Signal.END);
+                break;
+            case TRAIN:
+                log.debug("Gesture train release");
+                gestureDevice.train(Signal.END);
+                break;
+            case CLOSE:
+                log.debug("Gesture close release");
+                gestureDevice.close(Signal.END);
                 break;
         }
     }
@@ -172,9 +191,9 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     public synchronized void connect() throws DeviceNotFoundException {
         wiimote = wiimoteService.getDevice(this);
         //wiimote.activateContinuous();
+        wiimote.activateMotionSensing();
         wiimoteDiscovery.stop();
         ledWorker.start();
-        //sleep(10000);
     }
 
     /* Listeners */
@@ -196,6 +215,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
         gestureDevice.add(event.getGforce());
+        motionDevice.add(event);
     }
 
     public void onIrEvent(IREvent event) {
@@ -203,6 +223,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     }
 
     public void gestureReceived(GestureEvent event) {
+        log.debug(event.isValid());
         if (event.isValid()) {
             System.out.printf("id #%d, prob %.0f%%, valid %b\n", event.getId(), 100 * event.getProbability(), event.isValid());
         }

@@ -16,12 +16,15 @@
  */
 package wiiusej.values;
 
+import java.io.Serializable;
+
 /**
  * Represents gravity force on each axis.
  * 
  * @author guiguito
  */
-public class GForce {
+public class GForce implements Serializable {
+    protected static final long serialVersionUID = 1L;
 
 	private float x;
 	private float y;

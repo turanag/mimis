@@ -112,7 +112,7 @@ public class TriggeredProcessingUnit extends ProcessingUnit {
 			Log.write("Recognition started!");
 			this.analyzing=true;
 		}
-			
+			System.err.println(analyzing + " " + learning + " " + event.isCloseGestureInitEvent());
 		// CloseGestureButton = starts the training of the model with multiple
 		// recognized gestures, contained in trainsequence
 		if((!this.analyzing && !this.learning) && 

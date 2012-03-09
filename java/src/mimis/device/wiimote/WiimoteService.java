@@ -89,7 +89,6 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onStatusEvent(StatusEvent event) {
-        //log.debug(event);
         if (event.isConnected()) {
             WiimoteDevice wiimoteDevice = getWiimoteDevice(event);            
             wiimoteDevice.connected = true;
