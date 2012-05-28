@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import mimis.Mimis;
+import mimis.Gui;
 import mimis.util.Swing;
 import mimis.util.swing.HoldButton;
 import mimis.util.swing.HoldButtonListener;
@@ -20,7 +20,6 @@ import org.apache.commons.logging.LogFactory;
 public class Panel extends JFrame implements HoldButtonListener {
     protected static final long serialVersionUID = 1L;
     protected Log log = LogFactory.getLog(getClass());
-
     protected final static String TITLE = "MIMIS Panel Device";
 
     protected PanelDevice panelDevice;
@@ -42,7 +41,7 @@ public class Panel extends JFrame implements HoldButtonListener {
     Panel(PanelDevice panelDevice) {
         super(TITLE);
         this.panelDevice = panelDevice;
-        setIconImage(Swing.getImage(Mimis.ICON));
+        setIconImage(Swing.getImage(Gui.ICON));
         createControls();
         layoutControls();
         pack();

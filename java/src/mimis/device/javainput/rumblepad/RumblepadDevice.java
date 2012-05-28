@@ -13,18 +13,18 @@ public class RumblepadDevice extends JavaInputDevice {
     protected static final String TITLE = "RumblePad";
     protected static final String NAME = "Logitech RumblePad 2 USB";
 
-    protected static RumblepadEventMapCycle eventMapCycle;
+    protected static RumblepadTaskMapCycle taskMapCycle;
 
     public RumblepadDevice() {
         super(TITLE, NAME);
-        eventMapCycle = new RumblepadEventMapCycle(); 
+        taskMapCycle = new RumblepadTaskMapCycle(); 
     }
 
     protected void activate() throws ActivateException {
         super.activate();
-        add(eventMapCycle.mimis);
-        add(eventMapCycle.player);
-        add(eventMapCycle.like);
+        add(taskMapCycle.mimis);
+        add(taskMapCycle.player);
+        add(taskMapCycle.like);
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

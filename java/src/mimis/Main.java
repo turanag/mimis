@@ -1,61 +1,111 @@
 package mimis;
 
-import mimis.application.PhotoViewerApplication;
-import mimis.application.cmd.windows.gomplayer.GomPlayerApplication;
-import mimis.application.cmd.windows.winamp.WinampApplication;
-import mimis.application.cmd.windows.wmp.WMPApplication;
+import mimis.application.TestApplication;
 import mimis.application.itunes.iTunesApplication;
-import mimis.application.lirc.ipod.iPodApplication;
-import mimis.application.mpc.MPCApplication;
-import mimis.application.vlc.VLCApplication;
-import mimis.device.javainput.extreme3d.Extreme3DDevice;
-import mimis.device.javainput.rumblepad.RumblepadDevice;
-import mimis.device.jintellitype.JIntellitypeDevice;
 import mimis.device.lirc.LircDevice;
-import mimis.device.network.NetworkDevice;
 import mimis.device.panel.PanelDevice;
-import mimis.device.wiimote.WiimoteDevice;
-import mimis.event.EventRouter;
-import mimis.event.router.LocalRouter;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
+import mimis.input.Feedback;
+import mimis.input.Task;
+import mimis.manager.ButtonManager;
+import mimis.manager.Manager;
+import mimis.parser.Parser;
+import mimis.router.Router;
+import mimis.util.ArrayCycle;
+import mimis.value.Action;
+import mimis.value.Target;
+import mimis.worker.Component;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-public class Main {
-    protected Log log = LogFactory.getLog(getClass());
-
-    protected EventRouter eventRouter;
-    protected Application[] applicationArray;
-    protected Device[] deviceArray;
+public class Main extends Component {
+    protected TestApplication app;
+    protected Manager manager;
+    protected ButtonManager applicationManager, deviceManager;
+    protected Gui gui;
+    protected ArrayCycle<Component> componentCycle;
 
     public Main() {
-        eventRouter = new LocalRouter();        
-        applicationArray = new Application[] {
-            new iTunesApplication(),
-            new GomPlayerApplication(),
-            new WMPApplication(),
-            new MPCApplication(),
-            new VLCApplication(),
-            new WinampApplication(),
-            new iPodApplication(),
-            new PhotoViewerApplication()};
-        deviceArray = new Device[] {
-            new LircDevice(),
-            new WiimoteDevice(),
-            new PanelDevice(),
-            new JIntellitypeDevice(),
-            new RumblepadDevice(),
-            new Extreme3DDevice(),
-            new NetworkDevice()};
+        this.router = new Router();
     }
 
-    public void start() {
-        log.debug("Main");
-        Mimis mimis = new Mimis(eventRouter, applicationArray, deviceArray);
-        mimis.start();
+    public void activate() throws ActivateException {      
+        /* Create gui from application and device managers */
+        Component[] applicationArray = initialize(false, app = new TestApplication(), new iTunesApplication());
+        applicationManager = new ButtonManager("Applications", applicationArray);
+        deviceManager = new ButtonManager("Devices", initialize(false, new PanelDevice(), new LircDevice()));
+        gui = new Gui(this, applicationManager, deviceManager);
+
+        /* Create general manager */
+        manager = new Manager(initialize(true, router, new Parser(), gui));
+
+        /* Start managers */
+        applicationManager.start();
+        deviceManager.start();
+        manager.start();
+
+        /* Initialize component cycle */
+        componentCycle = new ArrayCycle<Component>(applicationArray);
+
+        listen(Task.class);
+        super.activate();
+
+        app.start();
+        app.test();
+    }
+
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
+
+        log.debug("Stop managers");
+        applicationManager.stop();
+        deviceManager.stop();
+        manager.stop();
+    }
+
+    public void exit() {
+        super.exit();
+
+        log.debug("Exit managers");
+        applicationManager.exit();
+        deviceManager.exit();
+        manager.exit();
+    }
+
+    public Component[] initialize(boolean start, Component... componentArray) {
+        for (Component component : componentArray) {
+            component.setRouter(router);
+            if (start) {
+                component.start();
+            }
+        }
+        return componentArray;
+    }
+
+    public void task(Task task) {
+        if (task.getTarget().equals(Target.CURRENT)) {
+            componentCycle.current().add(task);
+        } else {
+            super.task(task);
+        }
+    }
+
+    public void end(Action action) {
+        switch (action) {
+            case NEXT:
+                log.debug("Next component");
+                route(new Feedback("Next component: " + componentCycle.next().getTitle()));
+                break;
+            case PREVIOUS:
+                log.debug("Previous component");
+                route(new Feedback("Previous component: " + componentCycle.previous().getTitle()));
+                break;
+            case EXIT:
+                exit();
+                break;
+        }
     }
 
     public static void main(String[] args) {
-        new Main().start();
+        new Main().start(false);
     }
 }

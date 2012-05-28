@@ -1,18 +1,19 @@
 package mimis.device.wiimote;
 
 import mimis.Button;
-import mimis.Device;
-import mimis.Worker;
 import mimis.device.wiimote.gesture.GestureDevice;
-import mimis.event.Feedback;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.sequence.state.Press;
-import mimis.sequence.state.Release;
+import mimis.input.Feedback;
+import mimis.input.state.Press;
+import mimis.input.state.Release;
+import mimis.parser.ParserInput;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
+import mimis.worker.Component;
+import mimis.worker.Worker;
 
 import org.wiigee.event.GestureEvent;
 import org.wiigee.event.GestureListener;
@@ -23,7 +24,7 @@ import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 
-public class WiimoteDevice extends Device implements GestureListener {
+public class WiimoteDevice extends Component implements GestureListener {
     protected static final String TITLE = "Wiimote";
     protected static final int RUMBLE = 50;
     protected static final int CONNECTED_TIMEOUT = 500;
@@ -31,7 +32,7 @@ public class WiimoteDevice extends Device implements GestureListener {
     protected static final int LED_SLEEP = 50;
 
     protected static WiimoteService wiimoteService;
-    protected WiimoteEventMapCycle eventMapCycle;
+    protected WiimoteTaskMapCycle taskMapCycle;
     protected WiimoteDiscovery wiimoteDiscovery;
     protected Wiimote wiimote;
     protected boolean connected;
@@ -47,7 +48,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     public WiimoteDevice() {
         super(TITLE);
-        eventMapCycle = new WiimoteEventMapCycle();
+        taskMapCycle = new WiimoteTaskMapCycle();
         wiimoteDiscovery = new WiimoteDiscovery(this);
         gestureDevice = new GestureDevice();
         gestureDevice.add(this);
@@ -57,7 +58,7 @@ public class WiimoteDevice extends Device implements GestureListener {
 
     /* Worker */
     protected void activate() throws ActivateException {
-        add(eventMapCycle.player);
+        add(taskMapCycle.player);
         wiimote = null;
         try {
             connect();
@@ -117,14 +118,15 @@ public class WiimoteDevice extends Device implements GestureListener {
         switch (action) {
             case SHIFT:
                 log.debug("Shift");
-                reset();
-                add(eventMapCycle.mimis);
-                add(eventMapCycle.like);
+                route(new ParserInput(Action.RESET, taskMapCycle.player));
+                add(taskMapCycle.mimis);
+                add(taskMapCycle.like);
                 break;
             case UNSHIFT:
                 log.debug("Unshift");
-                reset();
-                add(eventMapCycle.player);
+                route(new ParserInput(Action.RESET, taskMapCycle.mimis));
+                route(new ParserInput(Action.RESET, taskMapCycle.like));
+                add(taskMapCycle.player);
                 break;
             case TRAIN:
                 log.debug("Gesture train");

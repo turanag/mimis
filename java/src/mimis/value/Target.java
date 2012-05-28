@@ -1,5 +1,5 @@
 package mimis.value;
 
 public enum Target {
-    ALL, MIMIS, DEVICES, APPLICATIONS, APPLICATION, SELF;
+    ALL, MAIN, DEVICES, APPLICATIONS, SELF, CURRENT;
 }

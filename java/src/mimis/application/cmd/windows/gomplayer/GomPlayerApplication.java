@@ -1,11 +1,11 @@
 package mimis.application.cmd.windows.gomplayer;
 
-import mimis.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 import mimis.value.Amount;
+import mimis.worker.Worker;
 
 public class GomPlayerApplication extends WindowsApplication {
     protected final static String PROGRAM = "GOM.exe";

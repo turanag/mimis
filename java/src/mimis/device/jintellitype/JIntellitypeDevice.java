@@ -2,21 +2,21 @@ package mimis.device.jintellitype;
 
 import java.util.ArrayList;
 
-import mimis.Device;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.sequence.state.Press;
-import mimis.sequence.state.Release;
+import mimis.input.state.Press;
+import mimis.input.state.Release;
+import mimis.worker.Component;
 
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
-public class JIntellitypeDevice extends Device implements HotkeyListener, IntellitypeListener {
+public class JIntellitypeDevice extends Component implements HotkeyListener, IntellitypeListener {
     protected static final String TITLE = "Keyboard";
 
-    protected JIntellitypeEventMapCycle eventMapCycle;
+    protected JIntellitypeTaskMapCycle taskMapCycle;
     protected ArrayList<Hotkey> hotkeyList;
     protected JIntellitype jit;
 
@@ -25,15 +25,15 @@ public class JIntellitypeDevice extends Device implements HotkeyListener, Intell
         hotkeyList = new ArrayList<Hotkey>();
         jit = JIntellitype.getInstance();
         Hotkey.initialise(hotkeyList, jit);
-        eventMapCycle = new JIntellitypeEventMapCycle();
+        taskMapCycle = new JIntellitypeTaskMapCycle();
     }
 
     protected void activate() throws ActivateException {
         super.activate();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
-        add(eventMapCycle.mimis);
-        add(eventMapCycle.player);
+        add(taskMapCycle.mimis);
+        add(taskMapCycle.player);
     }
 
     public void onIntellitype(int command) {

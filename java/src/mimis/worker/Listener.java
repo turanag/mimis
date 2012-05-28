@@ -3,7 +3,6 @@ package mimis.worker;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import mimis.Worker;
 
 public abstract class Listener<E> extends Worker {
     protected Queue<E> queue;
@@ -12,11 +11,9 @@ public abstract class Listener<E> extends Worker {
         queue = new ConcurrentLinkedQueue<E>();
     }
 
-    public void add(E element) {
+    public synchronized void add(E element) {
         queue.add(element);
-        synchronized (this) {
-            notifyAll();
-        }
+        notifyAll();
     }
 
     public final void work() {

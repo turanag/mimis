@@ -9,6 +9,8 @@ import com.melloware.jintellitype.JIntellitype;
 
 
 public class Hotkey implements Button {
+    protected static final long serialVersionUID = 1L;
+
     protected static ArrayList<Hotkey> hotkeyList;
     protected static JIntellitype jit;
 

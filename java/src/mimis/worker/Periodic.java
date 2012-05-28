@@ -3,7 +3,6 @@ package mimis.worker;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import mimis.Worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 

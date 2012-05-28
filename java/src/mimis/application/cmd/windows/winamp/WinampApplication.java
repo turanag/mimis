@@ -1,9 +1,9 @@
 package mimis.application.cmd.windows.winamp;
 
-import mimis.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
+import mimis.worker.Worker;
 
 public class WinampApplication extends WindowsApplication {
     protected final static String PROGRAM = "winamp.exe";

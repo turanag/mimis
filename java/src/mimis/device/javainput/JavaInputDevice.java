@@ -1,22 +1,22 @@
 package mimis.device.javainput;
 
 import mimis.Button;
-import mimis.Device;
 import mimis.exception.ButtonException;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.sequence.state.Press;
-import mimis.sequence.state.Release;
+import mimis.input.state.Press;
+import mimis.input.state.Release;
+import mimis.worker.Component;
 import de.hardcode.jxinput.JXInputDevice;
 import de.hardcode.jxinput.JXInputManager;
 import de.hardcode.jxinput.event.JXInputAxisEvent;
 import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
-public abstract class JavaInputDevice extends Device {
+public abstract class JavaInputDevice extends Component {
     protected String name;
 
     public JavaInputDevice(String title, String name) {

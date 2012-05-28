@@ -3,10 +3,10 @@ package mimis.device.wiimote;
 import java.io.IOException;
 import java.util.Scanner;
 
-import mimis.Worker;
 import mimis.exception.device.DeviceNotFoundException;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.worker.Worker;
 
 public class WiimoteDiscovery extends Worker {
     protected static final String WIISCAN = "wiiscan.exe";

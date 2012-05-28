@@ -4,8 +4,9 @@ import mimis.Button;
 
 import com.melloware.jintellitype.JIntellitype;
 
-
 public class Modifier implements Button {
+    protected static final long serialVersionUID = 1L;
+
     public static final int
         ALT = JIntellitype.MOD_ALT,
         CTRL = JIntellitype.MOD_CONTROL,

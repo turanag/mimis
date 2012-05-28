@@ -3,11 +3,11 @@ package mimis.application.robot;
 import java.awt.AWTException;
 import java.awt.Robot;
 
-import mimis.Application;
 import mimis.exception.worker.ActivateException;
 import mimis.value.Key;
+import mimis.worker.Component;
 
-public class RobotApplication extends Application {
+public class RobotApplication extends Component {
     protected Robot robot;
 
     public RobotApplication(String title) {

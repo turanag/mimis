@@ -13,18 +13,18 @@ public class Extreme3DDevice extends JavaInputDevice {
     protected static final String TITLE = "Extreme 3D";
     protected static final String NAME = "Logitech Extreme 3D";
 
-    protected static Extreme3DEventMapCycle eventMapCycle;
+    protected static Extreme3DTaskMapCycle taskMapCycle;
 
     public Extreme3DDevice() {
         super(TITLE, NAME);
-        eventMapCycle = new Extreme3DEventMapCycle();
+        taskMapCycle = new Extreme3DTaskMapCycle();
     }
 
     protected void activate() throws ActivateException {
         super.activate();
-        add(eventMapCycle.mimis);
-        add(eventMapCycle.player);
-        add(eventMapCycle.like);
+        add(taskMapCycle.mimis);
+        add(taskMapCycle.player);
+        add(taskMapCycle.like);
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

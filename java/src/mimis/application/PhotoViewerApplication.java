@@ -1,10 +1,10 @@
 package mimis.application;
 
-import mimis.Worker;
 import mimis.application.robot.RobotApplication;
 import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 import mimis.value.Key;
+import mimis.worker.Worker;
 
 public class PhotoViewerApplication extends RobotApplication {
     protected final static String TITLE = "Photo Viewer";

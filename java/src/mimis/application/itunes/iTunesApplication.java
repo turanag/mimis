@@ -1,18 +1,18 @@
 package mimis.application.itunes;
 
-import mimis.Application;
-import mimis.Worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Action;
+import mimis.worker.Component;
+import mimis.worker.Worker;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;
 import com.dt.iTunesController.iTunes;
 import com.dt.iTunesController.iTunesEventsInterface;
 
-public class iTunesApplication extends Application implements iTunesEventsInterface {
+public class iTunesApplication extends Component implements iTunesEventsInterface {
     protected static final String TITLE = "iTunes";
     protected static final String PROGRAM = "iTunes.exe";
     protected static final boolean QUIT = false;

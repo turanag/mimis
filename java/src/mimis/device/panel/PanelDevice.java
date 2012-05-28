@@ -1,28 +1,27 @@
 package mimis.device.panel;
 
-import javax.swing.WindowConstants;
-
-import mimis.Device;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
-import mimis.sequence.state.Press;
-import mimis.sequence.state.Release;
+import mimis.input.state.Press;
+import mimis.input.state.Release;
+import mimis.parser.ParserInput;
+import mimis.value.Action;
+import mimis.worker.Component;
 
-public class PanelDevice extends Device {
+public class PanelDevice extends Component {
     protected static final String TITLE = "Panel";
     protected Panel panel;
-    protected PanelEventMapCycle eventMapCycle;
+    protected PanelTaskMapCycle taskMapCycle;
 
     public PanelDevice() {
         super(TITLE);
-        eventMapCycle = new PanelEventMapCycle();
+        taskMapCycle = new PanelTaskMapCycle();
     }
 
     protected void activate() throws ActivateException {
-        super.activate();
         panel = new Panel(this);
-        panel.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        add(eventMapCycle.player);
+        route(new ParserInput(Action.ADD, taskMapCycle.player));
+        super.activate();
     }
 
     public boolean active() {
@@ -30,17 +29,16 @@ public class PanelDevice extends Device {
     }
 
     protected void deactivate() throws DeactivateException {
-        log.debug("deactive() " + panel);
         super.deactivate();
         panel.dispose();
         panel = null;
     }
 
     public void buttonPressed(PanelButton panelButton) {
-        add(new Press(panelButton));
+        route(new Press(panelButton));
     }
 
     public void buttonReleased(PanelButton panelButton) {
-        add(new Release(panelButton));
+        route(new Release(panelButton));
     }
 }

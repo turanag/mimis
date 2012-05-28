@@ -1,32 +1,32 @@
 package mimis.util;
 
-import mimis.Worker;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Signal;
+import mimis.worker.Worker;
 
-public class Multiplexer extends Worker {
+public class Multiplexer<T> extends Worker {
     public static final int TIMEOUT = 150;
 
     protected int threshold;
-    protected Object object;
-    protected SignalListener signalListener;
+    protected T type;
+    protected SignalListener<T> signalListener;
     protected boolean end;
 
-    public Multiplexer(SignalListener signalListener) {
+    public Multiplexer(SignalListener<T> signalListener) {
         this(signalListener, TIMEOUT);
     }
 
-    public Multiplexer(SignalListener signalListener, int treshold) {
+    public Multiplexer(SignalListener<T> signalListener, int treshold) {
         this.signalListener = signalListener;
     }
 
-    public synchronized void add(Object object) {
-        if (this.object == null) {
+    public synchronized void add(T object) {
+        if (this.type == null) {
             signalListener.add(Signal.BEGIN, object);
-            this.object = object;
+            this.type = object;
             end = true;
             start();
-        } else if (this.object.equals(object)) {
+        } else if (this.type.equals(object)) {
             end = false;
             notifyAll();
         } else {
@@ -45,8 +45,8 @@ public class Multiplexer extends Worker {
             }
         } catch (InterruptedException e) {}
         if (end) {
-            signalListener.add(Signal.END, object);
-            object = null;
+            signalListener.add(Signal.END, type);
+            type = null;
             stop();
         }
         end = !end;

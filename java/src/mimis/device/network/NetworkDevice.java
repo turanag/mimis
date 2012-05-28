@@ -9,21 +9,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import mimis.Device;
-import mimis.Event;
-import mimis.Worker;
-import mimis.event.Feedback;
-import mimis.event.Task;
-import mimis.event.feedback.TextFeedback;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
+import mimis.input.Feedback;
+import mimis.input.Input;
+import mimis.input.Task;
 import mimis.value.Action;
 import mimis.value.Target;
+import mimis.worker.Component;
+import mimis.worker.Worker;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class NetworkDevice extends Device {
+public class NetworkDevice extends Component {
     protected static final String TITLE = "Network";
     public static final int PORT = 6789;
 
@@ -95,7 +94,7 @@ public class NetworkDevice extends Device {
         protected synchronized void deactivate() throws DeactivateException {
             super.deactivate();
             try {
-                eventRouter.add(new TextFeedback("[NetworkDevice] Closing server socket"));
+                route(new Feedback("[NetworkDevice] Closing server socket"));
                 serverSocket.close();
             } catch (IOException e) {
                 log.error(e);
@@ -108,11 +107,11 @@ public class NetworkDevice extends Device {
     
         public void work() {
             try {
-                eventRouter.add(new TextFeedback("[NetworkDevice] Wating for clients"));
+                route(new Feedback("[NetworkDevice] Wating for clients"));
                 Socket socket = serverSocket.accept();
                 Client client = new Client(socket);
                 client.start();
-                eventRouter.add(new TextFeedback("[NetworkDevice] Client connected: " + socket.getInetAddress()));
+                route(new Feedback("[NetworkDevice] Client connected: " + socket.getInetAddress()));
             } catch (IOException e) {
                 log.error(e);
             }
@@ -151,9 +150,9 @@ public class NetworkDevice extends Device {
                 Object object;
                 do {
                     object = objectInputStream.readObject();
-                    if (object instanceof Event) {
+                    if (object instanceof Input) {
                         log.trace(object);
-                        eventRouter.add((Event) object);
+                        route((Input) object);
                     }
                 } while (object != null);
             } catch (IOException e) {
@@ -166,7 +165,7 @@ public class NetworkDevice extends Device {
 
         protected void deactivate() throws DeactivateException {
             super.deactivate();
-            send(new Task(Target.SELF, Action.STOP));
+            send(new Task(Action.STOP, Target.SELF));
             clientList.remove(this);
             try {
                 inputStream.close();
@@ -175,7 +174,7 @@ public class NetworkDevice extends Device {
             } catch (IOException e) {
                 log.error(e);
             }
-            eventRouter.add(new TextFeedback("[NetworkDevice] Client disconnected: " + socket.getInetAddress()));
+            route(new Feedback("[NetworkDevice] Client disconnected: " + socket.getInetAddress()));
         }
 
         public void send(Object object) {

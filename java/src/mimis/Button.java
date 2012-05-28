@@ -1,3 +1,7 @@
 package mimis;
 
-public interface Button {}
+import mimis.input.Input;
+
+public interface Button extends Input {
+    //public String getCode();
+}
