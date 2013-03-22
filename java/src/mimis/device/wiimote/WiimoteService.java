@@ -30,12 +30,12 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
     protected Log log = LogFactory.getLog(getClass());
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Log log = LogFactory.getLog(WiimoteService.class);
         for (Wiimote wm : WiiUseApiManager.getWiimotes(1, false)) {
             log.debug(wm);
         }
-    }
+    }*/
 
     protected final boolean RUMBLE = false;
 
@@ -81,10 +81,11 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onButtonsEvent(WiimoteButtonsEvent event) {
-        getWiimoteDevice(event).onButtonsEvent(event);
+    	getWiimoteDevice(event).onButtonsEvent(event);
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
+
         getWiimoteDevice(event).onMotionSensingEvent(event);
     }
 
