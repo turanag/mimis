@@ -1,1 +1,1 @@
-copy mimis.dll ..\..\Mimis\mimis.dll
+copy mimis.dll ..\..\..\java\mimis.dll
