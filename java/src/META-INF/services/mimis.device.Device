@@ -1,0 +1,7 @@
+mimis.device.javainput.extreme3d.Extreme3DDevice
+mimis.device.javainput.rumblepad.RumblepadDevice
+mimis.device.jintellitype.JIntellitypeDevice
+mimis.device.lirc.LircDevice
+mimis.device.network.NetworkDevice
+mimis.device.panel.PanelDevice
+mimis.device.wiimote.WiimoteDevice
