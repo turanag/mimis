@@ -1,8 +1,13 @@
-/cpp/wiipair/.settings
-/cpp/wiipair/Release/src
 /java/bin
-
-/cpp/wiiuse/Debug/src
 /cpp/wiipair/.settings
+/cpp/wiipair/Debug/src
 /cpp/wiipair/Release/src
+/cpp/wiiuse/.settings
 /cpp/wiiuse/Debug/src
+/cpp/wiiuse/Release/src
+/cpp/wiiusej/.settings
+/cpp/wiiusej/Debug/src
+/cpp/wiiusej/Release/src
+/cpp/mimis/.settings
+/cpp/mimis/Debug/src
+/cpp/mimis/Release/src
