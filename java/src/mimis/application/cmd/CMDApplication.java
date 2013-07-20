@@ -3,13 +3,14 @@ package mimis.application.cmd;
 import java.io.IOException;
 import java.util.Map;
 
+import mimis.application.Application;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Registry;
 import mimis.worker.Component;
 
-public abstract class CMDApplication extends Component {
+public abstract class CMDApplication extends Component implements Application {
     protected final static Registry REGISTRY = Registry.LOCAL_MACHINE;
     protected final static String KEY = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths";
 
