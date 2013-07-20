@@ -13,7 +13,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Wiiuse"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Wiiuse/Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="wiiuse"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="wiiuse" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -87,7 +87,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Wiiuse"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Wiiuse/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="wiiuse"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="wiiuse" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -184,4 +184,6 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
