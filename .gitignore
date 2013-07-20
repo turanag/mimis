@@ -1,11 +1,13 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/cpp/wiipair/.settings
-/cpp/wiipair/Release/src
-=======
 /java/bin
->>>>>>> c9d82ef8e884d27d6c5215d5b2fb851cf81162f8
-=======
+/cpp/wiipair/.settings
+/cpp/wiipair/Debug/src
+/cpp/wiipair/Release/src
+/cpp/wiiuse/.settings
 /cpp/wiiuse/Debug/src
->>>>>>> develop-wiiuse
+/cpp/wiiuse/Release/src
+/cpp/wiiusej/.settings
+/cpp/wiiusej/Debug/src
+/cpp/wiiusej/Release/src
+/cpp/mimis/.settings
 /cpp/mimis/Debug/src
+/cpp/mimis/Release/src
