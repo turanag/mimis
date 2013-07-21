@@ -1,28 +1,19 @@
 package mimis;
 
+import java.util.ArrayList;
+import java.util.ServiceLoader;
+
 import javax.swing.UIManager;
 
-import mimis.application.cmd.windows.gomplayer.GomPlayerApplication;
-import mimis.application.cmd.windows.photoviewer.PhotoViewerApplication;
-import mimis.application.cmd.windows.winamp.WinampApplication;
-import mimis.application.cmd.windows.wmp.WMPApplication;
-import mimis.application.itunes.iTunesApplication;
-import mimis.application.lirc.ipod.iPodApplication;
-import mimis.application.mpc.MPCApplication;
-import mimis.application.vlc.VLCApplication;
-import mimis.device.javainput.extreme3d.Extreme3DDevice;
-import mimis.device.javainput.rumblepad.RumblepadDevice;
-import mimis.device.jintellitype.JIntellitypeDevice;
-import mimis.device.lirc.LircDevice;
-import mimis.device.network.NetworkDevice;
-import mimis.device.panel.PanelDevice;
-import mimis.device.wiimote.WiimoteDevice;
+import mimis.application.Application;
+import mimis.device.Device;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.Task;
 import mimis.manager.ButtonManager;
 import mimis.manager.CurrentButtonManager;
 import mimis.value.Action;
+import mimis.worker.Component;
 
 public class Main extends Mimis {
     protected CurrentButtonManager applicationManager;
@@ -36,19 +27,32 @@ public class Main extends Mimis {
         
     }
 
+    public static Component[] getApplications() {
+    	ArrayList<Component> componentList = new ArrayList<Component>();
+    	for (Application application : ServiceLoader.load(mimis.application.Application.class)) {
+    		if (application instanceof Component) {
+    			componentList.add((Component) application);
+    		}
+    	}
+    	return componentList.toArray(new Component[]{});
+    }
+
+    public static Component[] getDevices() {
+    	ArrayList<Component> componentList = new ArrayList<Component>();
+    	for (Device device : ServiceLoader.load(mimis.device.Device.class)) {
+    		if (device instanceof Component) {
+    			componentList.add((Component) device);
+    		}
+    	}
+    	return componentList.toArray(new Component[]{});
+    }
+
     public Main() {
-        super(
-            new WinampApplication(), new GomPlayerApplication(), new WMPApplication(), new MPCApplication(), // WindowsApplication
-            new VLCApplication(),         // CMDApplication
-            new iPodApplication(),        // LircApplication
-            new PhotoViewerApplication(), // RobotApplication
-            new iTunesApplication());     // Component
+        super(getApplications());
 
         /* Create gui from application and device managers */
         applicationManager = new CurrentButtonManager(router, componentCycle, "Applications", currentArray);
-        deviceManager = new ButtonManager("Devices", initialize(false,
-            new Extreme3DDevice(), new RumblepadDevice(), // JavaInputDevice
-            new JIntellitypeDevice(), new PanelDevice(), new LircDevice(), new WiimoteDevice(), new NetworkDevice())); // Component
+        deviceManager = new ButtonManager("Devices", initialize(false, getDevices()));
         gui = new Gui(this, applicationManager, deviceManager);
         manager.add(initialize(false, gui));
     }
@@ -61,7 +65,7 @@ public class Main extends Mimis {
         applicationManager.start();
         deviceManager.start();
 
-        /* Force display of currenct component when gui started */
+        /* Force display of current component when gui started */
         gui.start();
         while (!gui.active());
         end(Action.CURRENT);
