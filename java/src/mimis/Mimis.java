@@ -74,6 +74,8 @@ public abstract class Mimis extends Component {
             case EXIT:
                 exit();
                 break;
+			default:
+				break;
         }
     }
 }

@@ -5,8 +5,6 @@ import java.util.ServiceLoader;
 
 import javax.swing.UIManager;
 
-import mimis.application.Application;
-import mimis.device.Device;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.input.Task;
@@ -28,20 +26,18 @@ public class Main extends Mimis {
     }
 
     public static Component[] getApplications() {
-    	ArrayList<Component> componentList = new ArrayList<Component>();
-    	for (Application application : ServiceLoader.load(mimis.application.Application.class)) {
-    		if (application instanceof Component) {
-    			componentList.add((Component) application);
-    		}
-    	}
-    	return componentList.toArray(new Component[]{});
+    	return  getComponents(mimis.application.Application.class);
     }
 
     public static Component[] getDevices() {
+    	return getComponents(mimis.device.Device.class);
+    }
+
+    public static Component[] getComponents(Class<?> clazz) {
     	ArrayList<Component> componentList = new ArrayList<Component>();
-    	for (Device device : ServiceLoader.load(mimis.device.Device.class)) {
-    		if (device instanceof Component) {
-    			componentList.add((Component) device);
+    	for (Object object : ServiceLoader.load(clazz)) {
+    		if (object instanceof Component) {
+    			componentList.add((Component) object);
     		}
     	}
     	return componentList.toArray(new Component[]{});
@@ -95,6 +91,8 @@ public class Main extends Mimis {
             case PREVIOUS:
                 applicationManager.currentChanged();
                 break;
+			default:
+				break;
         }
     }
 

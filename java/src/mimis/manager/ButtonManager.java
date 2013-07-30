@@ -2,7 +2,6 @@ package mimis.manager;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,12 +69,8 @@ public class ButtonManager extends Manager {
     }
 
     protected void work() {
-        long before = Calendar.getInstance().getTimeInMillis();
         for (Worker worker : workerList) {
             buttonMap.get(worker).setPressed(worker.active());
         }
-        long after = Calendar.getInstance().getTimeInMillis();
-        int sleep = INTERVAL - (int) (after - before);
-        sleep(sleep);
     }
 }
