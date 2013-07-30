@@ -64,11 +64,11 @@ public abstract class Mimis extends Component {
                 route(new Feedback("Current component: " + componentCycle.current().getTitle()));
                 break;
             case NEXT:
-                log.debug("Next component");
+                logger.debug("Next component");
                 route(new Feedback("Next component: " + componentCycle.next().getTitle()));
                 break;
             case PREVIOUS:
-                log.debug("Previous component");
+                logger.debug("Previous component");
                 route(new Feedback("Previous component: " + componentCycle.previous().getTitle()));
                 break;
             case EXIT:

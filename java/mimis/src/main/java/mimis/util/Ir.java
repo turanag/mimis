@@ -95,7 +95,7 @@ public class Ir extends WiimoteDevice implements LircButtonListener {
     public void onIrEvent(IREvent event) {
         // log.debug(event);
         raw = new Point(event.getAx(), event.getAy());
-        log.debug(String.format("%d %d", raw.x, raw.y));
+        logger.debug(String.format("%d %d", raw.x, raw.y));
         if (t != null && r != null && b != null && l != null) {
             double w = r.getX(raw.y) - l.getX(raw.y);
             double h = t.getY(raw.x) - b.getY(raw.x);

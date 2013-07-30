@@ -22,7 +22,7 @@ public class MPCApplication extends WindowsApplication {
     }
 
     public void begin(Action action) {
-        log.trace("MPCApplication: " + action);
+        logger.trace("MPCApplication: " + action);
         switch (action) {
            case FORWARD:
                 seekWorker.start(1);
@@ -40,7 +40,7 @@ public class MPCApplication extends WindowsApplication {
     }
     
     public void end(Action action) {
-        log.trace("MPCApplication: " + action);
+        logger.trace("MPCApplication: " + action);
         switch (action) {
             case PLAY:
                 command(889);

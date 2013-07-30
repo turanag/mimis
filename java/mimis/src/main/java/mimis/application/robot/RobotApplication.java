@@ -15,7 +15,7 @@ public class RobotApplication extends Component {
             robot = new Robot();
             robot.setAutoWaitForIdle(true);
         } catch (AWTException e) {
-            log.error(e);
+            logger.error("", e);
             throw new ActivateException();
         }
         super.activate();

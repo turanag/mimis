@@ -38,7 +38,7 @@ public abstract class CMDApplication extends Component implements Application {
                 command = replaceVariables(command);
                 process = Runtime.getRuntime().exec(command);
             } catch (IOException e) {
-                log.error(e);
+                logger.error(e.getMessage());
                 throw new ActivateException();
             }
         }

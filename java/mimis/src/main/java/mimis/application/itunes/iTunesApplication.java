@@ -63,7 +63,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
             try {
                 iTunes.release();
             } catch (Exception e) {
-                log.error(e);
+                logger.error("", e);
                 throw new DeactivateException();
             }
         }
@@ -78,7 +78,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
     }
 
     protected void begin(Action action) {
-        log.trace("iTunesApplication begin: " + action);
+        logger.trace("iTunesApplication begin: " + action);
         if (!active) return;
         switch (action) {
             case FORWARD:
@@ -97,7 +97,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
     }
 
     protected void end(Action action) {
-        log.trace("iTunesApplication end: " + action);
+        logger.trace("iTunesApplication end: " + action);
         if (!active) return;
         switch (action) {
             case PLAY:
@@ -144,13 +144,13 @@ public class iTunesApplication extends Component implements Application, iTunesE
     public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
     public void onPlayerPlayEvent(ITTrack iTrack) {
         if (active) {
-            log.trace("iTunesEvent: play");
+            logger.trace("iTunesEvent: play");
         }
     }
 
     public void onPlayerStopEvent(ITTrack iTrack) {
         if (active) {
-            log.trace("iTunesEvent: stop");
+            logger.trace("iTunesEvent: stop");
         }
     }
 

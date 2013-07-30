@@ -36,7 +36,7 @@ public abstract class Component extends Listener<Input> {
 
     public void listen(Class<? extends Input> clazz) {
         if (router == null) {
-            log.error("Router not set");
+            logger.error("Router not set");
         } else {
             router.listen(this, clazz);
         }
@@ -44,7 +44,7 @@ public abstract class Component extends Listener<Input> {
 
     public void ignore(Class<? extends Input> clazz) {
         if (router == null) {
-            log.error("Router not set");
+            logger.error("Router not set");
         } else {
             router.ignore(this, clazz);
         }
@@ -52,7 +52,7 @@ public abstract class Component extends Listener<Input> {
 
     public void route(Input input) {
         if (router == null) {
-            log.error("Router not set");
+            logger.error("Router not set");
         } else {
             if (input instanceof State) {
                 State state = (State) input;

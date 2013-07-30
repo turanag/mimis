@@ -62,7 +62,7 @@ public class WinampApplication extends WindowsApplication {
     }
 
     public void begin(Action action) {
-        log.trace("WinampApplication begin: " + action);
+        logger.trace("WinampApplication begin: " + action);
         switch (action) {
             case VOLUME_UP:
                 volumeWorker.start(1);
@@ -80,10 +80,10 @@ public class WinampApplication extends WindowsApplication {
     }
 
     public void end(Action action) {
-        log.trace("WinampApplication end: " + action);
+        logger.trace("WinampApplication end: " + action);
         switch (action) {
             case PLAY:
-                log.debug("play");
+                logger.debug("play");
                 switch (user(0, IPC_ISPLAYING)) {
                     case STATUS_STOPPED:
                         command(WINAMP_BUTTON2);

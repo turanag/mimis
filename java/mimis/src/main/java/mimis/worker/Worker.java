@@ -3,11 +3,11 @@ package mimis.worker;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Worker implements Runnable {
-    protected Log log = LogFactory.getLog(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
@@ -33,10 +33,10 @@ public abstract class Worker implements Runnable {
         if (!run) {
             run = true;
             if (thread) {
-                log.debug("Start thread");
+                logger.debug("Start thread");
                 new Thread(this, getClass().getName()).start();
             } else {
-                log.debug("Run directly");
+                logger.debug("Run directly");
                 run();
             }
         } else {
@@ -66,7 +66,7 @@ public abstract class Worker implements Runnable {
                 Thread.sleep(time);
             }
         } catch (InterruptedException e) {
-            log.info(e);
+            logger.info("", e);
         }
     }
 
@@ -92,7 +92,7 @@ public abstract class Worker implements Runnable {
                 try {
                     activate();
                 } catch (ActivateException e) {
-                    log.error(e);
+                    logger.error("", e);
                 } finally {
                     activate = false;
                 }
@@ -100,7 +100,7 @@ public abstract class Worker implements Runnable {
                 try {
                    deactivate();
                 } catch (DeactivateException e) {
-                    log.error(e);
+                    logger.error("", e);
                 } finally {
                     deactivate = false;
                 }
@@ -113,7 +113,7 @@ public abstract class Worker implements Runnable {
                         wait();
                     }
                 } catch (InterruptedException e) {
-                    log.info(e);
+                    logger.info("", e);
                 }
             }
         }

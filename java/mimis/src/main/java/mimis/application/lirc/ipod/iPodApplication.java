@@ -29,28 +29,28 @@ public class iPodApplication extends LircApplication {
     }
 
     protected void begin(Action action) {
-        log.trace("iPodApplication begin: " + action);
+        logger.trace("iPodApplication begin: " + action);
         if (!active) return;
         switch (action) {
             case VOLUME_UP:
                 try {
                     volumeWorker.activate(1);
                 } catch (ActivateException e) {
-                    log.error(e);
+                    logger.error("", e);
                 }
                 break;
             case VOLUME_DOWN:
                 try {
                     volumeWorker.activate(-1);
                 } catch (ActivateException e) {
-                    log.error(e);
+                    logger.error("", e);
                 }
                 break;
         }
     }
 
     protected void end(Action action) {
-        log.trace("iPodApplication end: " + action);
+        logger.trace("iPodApplication end: " + action);
         if (!active) return;
         switch (action) {
             case PLAY:

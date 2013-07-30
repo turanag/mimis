@@ -32,7 +32,7 @@ public abstract class JavaInputDevice extends Component implements Device {
         super.activate();
         try {
             JXInputDevice jxinputDevice = getDevice(name);
-            log.debug(jxinputDevice);
+            logger.debug(jxinputDevice.getName());
             javaInputListener = new JavaInputListener(this, jxinputDevice);
         } catch (DeviceNotFoundException e) {
             active = false;

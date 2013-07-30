@@ -25,7 +25,7 @@ public class GlobalRouter extends Router {
         try {
             client = new Client(ip, port);
         } catch (IOException e) {
-            log.error(e);
+            logger.error("", e);
             throw new ActivateException();
         }
         super.activate();
@@ -40,7 +40,7 @@ public class GlobalRouter extends Router {
         try {
             client.send(task);
         } catch (IOException e) {
-            log.error(e);
+            logger.error("", e);
         }
     }
 
@@ -65,9 +65,9 @@ public class GlobalRouter extends Router {
                     }                 
                 } while (object != null);
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             } catch (ClassNotFoundException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
 
@@ -78,7 +78,7 @@ public class GlobalRouter extends Router {
                 objectOutputStream.close();
                 socket.close();      
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
 

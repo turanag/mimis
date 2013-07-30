@@ -55,11 +55,11 @@ public class VLCApplication extends CMDApplication {
             URL url = new URL(request);
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             int response = httpUrlConnection.getResponseCode();
-            log.trace("Response: " + response);
+            logger.trace("Response: " + response);
         } catch (MalformedURLException e) {
-            log.error(e);
+            logger.error("", e);
         } catch (IOException e) {
-            log.error(e);
+            logger.error("", e);
         }
     }
 
@@ -77,7 +77,7 @@ public class VLCApplication extends CMDApplication {
     }
 
     public void begin(Action action) {
-        log.trace("VLCApplication begin: " + action);
+        logger.trace("VLCApplication begin: " + action);
         try {
             switch (action) {
                 case VOLUME_UP:                    
@@ -94,12 +94,12 @@ public class VLCApplication extends CMDApplication {
                     break;
             }
         } catch (ActivateException e) {
-            log.error(e);
+            logger.error("", e);
         }
     }
     
     public void end(Action action) {
-        log.trace("VLCApplication end: " + action);
+        logger.trace("VLCApplication end: " + action);
         switch (action) {
             case PLAY:
                 command("pl_pause");

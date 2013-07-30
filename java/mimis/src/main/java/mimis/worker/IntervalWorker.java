@@ -28,7 +28,7 @@ public class IntervalWorker extends Worker {
                      wait();
                  }
              } catch (InterruptedException e) {
-                 log.info(e);
+                 logger.info("", e);
              }
         }
     }
@@ -47,7 +47,7 @@ public class IntervalWorker extends Worker {
             try {
             	super.activate();
             } catch (ActivateException e) {
-                log.error(e);
+                logger.error("", e);
             } finally {
                 activate = false;
             }
@@ -55,7 +55,7 @@ public class IntervalWorker extends Worker {
             try {            	
             	super.deactivate();
             } catch (DeactivateException e) {
-				log.error(e);
+				logger.error("", e);
 			} finally {
                 deactivate = false;
             }

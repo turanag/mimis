@@ -19,7 +19,7 @@ public class WMPApplication extends WindowsApplication {
     }
 
     public void begin(Action action) {
-        log.trace("WMPApplication begin: " + action);
+        logger.trace("WMPApplication begin: " + action);
         switch (action) {
             case PLAY:
                 command(18808);
@@ -55,7 +55,7 @@ public class WMPApplication extends WindowsApplication {
     }
 
     public void end(Action action) {
-        log.trace("WMPApplication end: " + action);
+        logger.trace("WMPApplication end: " + action);
         switch (action) {
             case FORWARD:
                 command(18813);

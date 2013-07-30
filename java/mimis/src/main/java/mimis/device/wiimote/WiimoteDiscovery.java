@@ -20,12 +20,12 @@ public class WiimoteDiscovery extends Worker {
     }
 
     protected boolean connect() {
-        log.debug("Connect");
+        logger.debug("Connect");
         return execute("-c nintendo"); // Nintendo RVL-CNT-01 RVL-WBC-01
     }
 
     protected boolean disconnect() {
-        log.debug("Disconnect");
+        logger.debug("Disconnect");
         return execute("-d nintendo");
     }
 
@@ -44,7 +44,7 @@ public class WiimoteDiscovery extends Worker {
                 }
             }
         } catch (IOException e) {
-            log.error(e);
+            logger.error("", e);
         } finally {
             process = null;
         }
@@ -68,7 +68,7 @@ public class WiimoteDiscovery extends Worker {
             disconnect = false;
         }
         if (connect()) {
-            log.debug("Connected");
+            logger.debug("Connected");
             try {
                 sleep(TIMEOUT);
                 wiimoteDevice.connect();

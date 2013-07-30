@@ -37,7 +37,7 @@ public class GomPlayerApplication extends WindowsApplication {
     }
 
     public void begin(Action action) {
-        log.trace("GomPlayerApplication begin: " + action);
+        logger.trace("GomPlayerApplication begin: " + action);
         switch (action) {
             case VOLUME_UP:
                 volumeWorker.start();    
@@ -61,7 +61,7 @@ public class GomPlayerApplication extends WindowsApplication {
     }
 
     public void end(Action action) {
-        log.trace("GomPlayerApplication end: " + action);
+        logger.trace("GomPlayerApplication end: " + action);
         switch (action) {
             case PLAY:
                 command(0x800C);

@@ -1,16 +1,14 @@
 subprojects {
+	version = '0.1'
+
     apply plugin: 'java'
     apply plugin: 'eclipse'
+	apply plugin: 'cpp-lib'
 
     repositories {
        mavenCentral()
     }
 
     dependencies {
-    }
-
-    version = '0.1'
-
-    jar {
     }
 }

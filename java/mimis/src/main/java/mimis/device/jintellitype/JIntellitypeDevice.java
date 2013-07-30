@@ -45,7 +45,7 @@ public class JIntellitypeDevice extends Component implements Device, HotkeyListe
             route(new Press(commandButton));
             route(new Release(commandButton));
             } catch (UnknownButtonException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
     }

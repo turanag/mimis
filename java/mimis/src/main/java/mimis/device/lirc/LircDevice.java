@@ -60,14 +60,14 @@ public class LircDevice extends CMDApplication implements Device, LircButtonList
     }
 
     protected void deactivate() throws DeactivateException {
-        log.debug("Deactivate LircDevice");
+        logger.debug("Deactivate LircDevice");
         super.deactivate();
         lircService.stop();
         multiplexer.stop();
     }
 
     public void exit() {
-        log.debug("Exit LircDevice");
+        logger.debug("Exit LircDevice");
         super.exit();
         lircService.exit();
         multiplexer.exit();

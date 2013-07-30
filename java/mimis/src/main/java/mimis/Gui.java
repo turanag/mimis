@@ -28,7 +28,7 @@ public class Gui extends Component {
             protected static final long serialVersionUID = 1L;
             protected void processWindowEvent(WindowEvent event) {
                 if (event.getID() == WindowEvent.WINDOW_CLOSING) {
-                    log.debug("Window closing");
+                    logger.debug("Window closing");
                     component.exit();
                 }
             }

@@ -25,7 +25,7 @@ public abstract class Listener<E> extends Worker {
                 try {
                     wait();                
                 } catch (InterruptedException e) {
-                    log.info(e);
+                    logger.info("", e);
                 }
             }
         }

@@ -45,7 +45,7 @@ public class PhotoViewerApplication extends WindowsApplication {
     }
 
     public void end(Action action) {
-        log.trace("PhotoViewerApplication end: " + action);
+        logger.trace("PhotoViewerApplication end: " + action);
         switch (action) {
             case VOLUME_UP:
             case VOLUME_DOWN:

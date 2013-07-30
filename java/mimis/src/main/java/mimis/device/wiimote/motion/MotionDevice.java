@@ -60,7 +60,7 @@ public class MotionDevice extends Component {
     public void release(Button button) {
         if (button instanceof LircButton) {
             PhiliphsRCLE011Button lircButton = (PhiliphsRCLE011Button) button;
-            log.debug(lircButton);
+            logger.debug(lircButton.getName());
             switch (lircButton) {
                 case CLOCK:
                     action = Action.TRAIN;
@@ -84,24 +84,24 @@ public class MotionDevice extends Component {
             if (replay == false) {
                 release(ColorButton.YELLOW);
             } else {
-                log.debug("Set file to #" + id);
+                logger.debug("Set file to #" + id);
             }
         } else if (button instanceof ColorButton) {
             ColorButton colorButton = (ColorButton) button;
-            log.debug(colorButton.name());
+            logger.debug(colorButton.name());
             synchronized (motionList) {
                 switch (colorButton) {
                     case GREEN:
-                        log.debug("Start capturing motion");
+                        logger.debug("Start capturing motion");
                         motionList.clear();
                         start = System.currentTimeMillis();
                         break;
                     case RED:
                         if (replayWorker.active()) {
-                            log.debug("Stop replaying motion");
+                            logger.debug("Stop replaying motion");
                             replayWorker.stop();
                         } else {
-                            log.debug("Writing motion to file #" + id);
+                            logger.debug("Writing motion to file #" + id);
                             try {                            
                                 FileOutputStream fileOutputStream = new FileOutputStream(String.format("tmp/motion #%d.bin", id));
                                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -111,14 +111,14 @@ public class MotionDevice extends Component {
                                 }
                                 objectOutputStream.close();
                             } catch (IOException e) {
-                                log.error(e);
+                                logger.error("", e);
                             }
                             motionList.clear();
                             start = -1;
                         }
                         break;
                     case YELLOW:
-                        log.debug("Replaying motion from file #" + id);
+                        logger.debug("Replaying motion from file #" + id);
                         replay = true;
                         replayWorker.start();
                         break;
@@ -149,22 +149,22 @@ public class MotionDevice extends Component {
                 super.activate();
                 return;
             } catch (FileNotFoundException e) {
-                log.error(e);
+                logger.error("", e);
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             } catch (ClassNotFoundException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
 
         protected void deactivate() throws DeactivateException {
-            log.debug(String.format("Replay stopped (%d ms)", time));
+            logger.debug(String.format("Replay stopped (%d ms)", time));
             wiimoteDevice.end(action);
             replay = false;
             try {
                 objectInputStream.close();
             } catch (IOException e) {
-                log.debug(e);
+                logger.debug("", e);
             }
             super.deactivate();
         }
@@ -178,9 +178,9 @@ public class MotionDevice extends Component {
                     time = motionData.getTime();                    
                     return;
                 } catch (IOException e) {
-                    log.error(e);
+                    logger.error("", e);
                 } catch (ClassNotFoundException e) {
-                    log.error(e);
+                    logger.error("", e);
                 }
             }
             stop();

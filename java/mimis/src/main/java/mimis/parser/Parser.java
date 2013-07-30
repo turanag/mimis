@@ -42,7 +42,7 @@ public class Parser extends Component {
     }
 
     public void input(ParserInput parserInput) {
-        log.trace("input(ParserInput)");
+        logger.trace("input(ParserInput)");
         Action action = parserInput.getAction();
         try {
             switch (action) {
@@ -57,7 +57,7 @@ public class Parser extends Component {
                     return;
             }
         } catch (NullPointerException e) {
-            log.error("Illegal use of ParserInput");
+            logger.error("Illegal use of ParserInput");
         }
     }
 
@@ -96,7 +96,7 @@ public class Parser extends Component {
     }
 
     protected void add(TaskMap taskMap) {
-        log.trace("add(TaskMap)");
+        logger.trace("add(TaskMap)");
         this.taskMap.putAll(taskMap);
         sequenceList.addAll(taskMap.keySet());
     }

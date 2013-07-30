@@ -98,7 +98,7 @@ public class NetworkDevice extends Component implements Device {
                 route(new Feedback("[NetworkDevice] Closing server socket"));
                 serverSocket.close();
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             } finally {
                 for (Client client : clientList) {
                     client.stop();
@@ -114,7 +114,7 @@ public class NetworkDevice extends Component implements Device {
                 client.start();
                 route(new Feedback("[NetworkDevice] Client connected: " + socket.getInetAddress()));
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
 
@@ -152,15 +152,15 @@ public class NetworkDevice extends Component implements Device {
                 do {
                     object = objectInputStream.readObject();
                     if (object instanceof Input) {
-                        log.trace(object);
+                        logger.trace("", object);
                         route((Input) object);
                     }
                 } while (object != null);
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
                 stop();
             } catch (ClassNotFoundException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
 
@@ -173,7 +173,7 @@ public class NetworkDevice extends Component implements Device {
                 outputStream.close();
                 socket.close();    
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             }
             route(new Feedback("[NetworkDevice] Client disconnected: " + socket.getInetAddress()));
         }
@@ -182,7 +182,7 @@ public class NetworkDevice extends Component implements Device {
             try {
                 objectOutputStream.writeObject(object);
             } catch (IOException e) {
-                log.error(e);
+                logger.error("", e);
             }
         }
     }

@@ -70,7 +70,7 @@ public class Main extends Mimis {
     protected void deactivate() throws DeactivateException {
         super.deactivate();
 
-        log.debug("Stop managers");
+        logger.debug("Stop managers");
         applicationManager.stop();
         deviceManager.stop();
     }
@@ -78,7 +78,7 @@ public class Main extends Mimis {
     public void exit() {
         super.exit();
 
-        log.debug("Exit managers");
+        logger.debug("Exit managers");
         applicationManager.exit();
         deviceManager.exit();
     }
