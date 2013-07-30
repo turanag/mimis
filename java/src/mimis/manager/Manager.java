@@ -2,12 +2,12 @@ package mimis.manager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 
 import mimis.exception.worker.DeactivateException;
+import mimis.worker.IntervalWorker;
 import mimis.worker.Worker;
 
-public class Manager extends Worker {
+public class Manager extends IntervalWorker {
     protected static final int INTERVAL = 1000;
 
     protected ArrayList<Worker> workerList;
@@ -44,12 +44,8 @@ public class Manager extends Worker {
     }
 
     protected void work() {
-        long before = Calendar.getInstance().getTimeInMillis();
         for (Worker worker : workerList) {
             worker.active();
         }
-        long after = Calendar.getInstance().getTimeInMillis();
-        int sleep = INTERVAL - (int) (after - before);
-        sleep(sleep);
     }
 }

@@ -9,23 +9,24 @@ import org.apache.commons.logging.LogFactory;
 public abstract class Worker implements Runnable {
     protected Log log = LogFactory.getLog(getClass());
 
-    protected static final boolean THREAD = false;
+    protected static final boolean THREAD = true;
     protected static final int SLEEP = 100;
 
     protected boolean thread = true;
-    protected boolean interrupt;
     protected boolean run = false;
     protected boolean active = false;
     protected boolean activate = false;
     protected boolean deactivate = false;
 
-    public Worker() {}
-
     public Worker(boolean thread) {
     	this.thread = thread;
     }
 
-    public synchronized final void start(boolean thread) {
+    public Worker() {
+    	this(THREAD);
+    }
+
+    public synchronized void start(boolean thread) {
         if (!active) {
             activate = true;
         }
@@ -43,11 +44,11 @@ public abstract class Worker implements Runnable {
         }
     }
 
-    public synchronized final void start() {
+    public synchronized void start() {
         start(thread);
     }
 
-    public synchronized final void stop() {
+    public synchronized void stop() {
         if (active) {
             deactivate = true;
         }
@@ -85,7 +86,7 @@ public abstract class Worker implements Runnable {
         active = false;
     }
 
-    public final void run() {
+    public void run() {
         while (run || deactivate) {
             if (activate && !active) {
                 try {

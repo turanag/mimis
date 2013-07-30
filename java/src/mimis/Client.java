@@ -1,6 +1,7 @@
 package mimis;
 
 import mimis.exception.worker.ActivateException;
+import mimis.router.GlobalRouter;
 import mimis.util.swing.Dialog;
 
 public class Client extends Main {
@@ -9,7 +10,7 @@ public class Client extends Main {
 
     public Client(String ip, int port) {
         super();
-        //eventRouter = new GlobalRouter(ip, port);
+        router = new GlobalRouter(ip, port);
     }
 
     public void activate() throws ActivateException {
