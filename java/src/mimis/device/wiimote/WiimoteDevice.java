@@ -1,5 +1,7 @@
 package mimis.device.wiimote;
 
+import java.io.IOException;
+
 import mimis.device.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.device.wiimote.motion.MotionDevice;
@@ -184,8 +186,8 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     /* Connectivity */
     public synchronized void connect() throws DeviceNotFoundException {
         wiimote = wiimoteService.getDevice(this);
-        wiimote.activateContinuous();
-        wiimote.activateMotionSensing();
+        //wiimote.activateContinuous();
+        //wiimote.activateMotionSensing();
         ledWorker.start();
     }
 

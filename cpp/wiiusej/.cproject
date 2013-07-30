@@ -13,7 +13,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/WiiuseJ"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/WiiuseJ/Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="wiiusej"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="wiiusej" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -39,6 +39,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.716839450" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include/win32&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.842669563" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -88,7 +89,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/WiiuseJ"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/WiiuseJ/Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="wiiusej"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="wiiusej" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -114,6 +115,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1188267253" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include/win32&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1449486447" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -125,7 +127,7 @@
 									<listOptionValue builtIn="false" value="&quot;${jdk}/include/win32&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.227749697" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.227749697" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.839631863" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.so.release.901924366" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.so.release">
@@ -173,4 +175,5 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
