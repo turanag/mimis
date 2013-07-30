@@ -1,0 +1,198 @@
+package mimis.application.vlc;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import mimis.application.cmd.CMDApplication;
+import mimis.exception.worker.ActivateException;
+import mimis.exception.worker.DeactivateException;
+import mimis.util.Native;
+import mimis.value.Action;
+import mimis.value.Amount;
+import mimis.value.Registry;
+import mimis.worker.Worker;
+
+public class VLCApplication extends CMDApplication {
+    protected final static Registry REGISTRY = Registry.CLASSES_ROOT;
+    protected final static String KEY = "Applications\\vlc.exe\\shell\\Open\\command";
+    protected final static String PROGRAM = "vlc.exe";
+    protected final static String TITLE = "VLC media player";
+
+    protected static final int POSTION_CHANGE_RATE = 1;
+    protected static final int VOLUME_CHANGE_RATE = 20;
+
+    protected static final String HOST = "localhost";
+    protected static final int PORT = 8080;
+
+    protected static final int VOLUME_SLEEP = 100;
+    protected static final int SEEK_SLEEP = 100;
+    
+    protected VolumeWorker volumeWorker;
+    protected SeekWorker seekWorker;
+    
+    protected int volume = 255;
+    protected boolean muted = false;
+
+    public VLCApplication() {
+        super(PROGRAM, TITLE);
+        volumeWorker = new VolumeWorker();
+        seekWorker = new SeekWorker();
+    }
+
+    public String getPath() {
+        Pattern pattern = Pattern.compile("\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(Native.getValue(REGISTRY, KEY));
+        return matcher.find() ? matcher.group(1) : null;
+    }
+
+    public void command(String command) {
+        String request = String.format("http://%s:%d/requests/status.xml?command=%s", HOST, PORT, command);
+        try {
+            URL url = new URL(request);
+            HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
+            int response = httpUrlConnection.getResponseCode();
+            log.trace("Response: " + response);
+        } catch (MalformedURLException e) {
+            log.error(e);
+        } catch (IOException e) {
+            log.error(e);
+        }
+    }
+
+    protected void deactivate() throws DeactivateException {
+        super.deactivate();
+        volumeWorker.stop();
+        seekWorker.stop();
+        Native.terminate(program);
+    }
+
+    public void exit() {
+        super.exit();
+        volumeWorker.exit();
+        seekWorker.exit();
+    }
+
+    public void begin(Action action) {
+        log.trace("VLCApplication begin: " + action);
+        try {
+            switch (action) {
+                case VOLUME_UP:                    
+                    volumeWorker.activate("+");    
+                    break;
+                case VOLUME_DOWN:
+                    volumeWorker.activate("-");
+                    break;
+                case FORWARD:
+                    seekWorker.start(Amount.SMALL, "+");
+                    break;
+                case REWIND:
+                    seekWorker.start(Amount.SMALL, "-");
+                    break;
+            }
+        } catch (ActivateException e) {
+            log.error(e);
+        }
+    }
+    
+    public void end(Action action) {
+        log.trace("VLCApplication end: " + action);
+        switch (action) {
+            case PLAY:
+                command("pl_pause");
+                break;
+            case PAUSE:
+                command("pl_pause");
+                break;
+            case NEXT:
+                command("pl_next");
+                break;
+            case PREVIOUS:
+                command("pl_previous");
+                break;
+            case FORWARD:
+            case REWIND:
+                seekWorker.stop();
+                break;
+            case MUTE:
+                command("volume&val=" + toggleMute());
+                break;
+            case VOLUME_UP:
+            case VOLUME_DOWN:
+                volumeWorker.stop();
+                break;
+            case SHUFFLE:
+                command("command=pl_random");
+                break;
+            case REPEAT:
+                command("command=pl_repeat");
+                break;
+        }
+    }
+    
+    protected void volumeUp() {
+        if (!muted) {
+            volume += VOLUME_CHANGE_RATE;
+            command("volume&val=+" + VOLUME_CHANGE_RATE);
+        }
+    }
+    
+    protected void volumeDown() {
+        if (!muted) {
+            volume -= VOLUME_CHANGE_RATE;
+            command("volume&val=-" + VOLUME_CHANGE_RATE);
+        }
+    }
+
+    protected int toggleMute() {
+        return (muted = !muted) ? 0 : volume;
+    }
+
+    public String getTitle() {
+        return TITLE;
+    }
+    
+    protected class VolumeWorker extends Worker {
+        protected String volumeChangeSign;
+
+        public void activate(String volumeChangeSign) throws ActivateException {
+            super.activate();
+            this.volumeChangeSign = volumeChangeSign;
+        }
+
+        public void work() {
+            volume += VOLUME_CHANGE_RATE;
+            command("volume&val=" + volumeChangeSign + VOLUME_CHANGE_RATE);
+            sleep(VOLUME_SLEEP);
+        }
+    };
+
+    protected class SeekWorker extends Worker {
+        protected Amount amount;
+        protected String seekDirection;
+
+        public void start(Amount amount, String seekDirection) {
+            super.start();
+            this.amount = amount;
+            this.seekDirection = seekDirection;
+        }
+
+        public void work() {
+            switch (amount) {
+                case SMALL:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE);
+                    break;
+                case MEDIUM:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE * 2);
+                    break;
+                case LARGE:
+                    command("command=seek&val=" + seekDirection + POSTION_CHANGE_RATE * 3);
+                    break;
+            }
+            sleep(SEEK_SLEEP);
+        }
+    };
+}
