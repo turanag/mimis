@@ -1,6 +1,5 @@
 bin
-Debug/src
-Release/src
 .gradle
 .settings
 build
+src
